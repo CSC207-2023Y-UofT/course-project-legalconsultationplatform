@@ -1,4 +1,4 @@
-package question;
+package questionentities;
 
 import java.util.List;
 import java.util.ArrayList;
@@ -17,7 +17,7 @@ public class Question {
     private boolean isClose;
     private int rating;
     private List<Post> posts;
-
+    private Integer questionId;
     /**
      * Constructs a new question
      *
@@ -108,4 +108,21 @@ public class Question {
     public void addPosts(Post post) {
         this.posts.add(post);
     }
+
+    /**
+     *
+     *
+     * @return an int id represents the question
+     */
+    public Integer getQuestionId() {
+        return questionId;
+    }
+    /**
+     *
+     * @param questionId set the id for the question
+     */
+    public void setQuestionId(Integer questionId) {
+        this.questionId = questionId;
+    }
+
 }
