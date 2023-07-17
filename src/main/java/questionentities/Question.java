@@ -125,6 +125,12 @@ public class Question {
     }
 
     /**
+     *
+     * @param posts a list of posts
+     */
+    public void setPosts(List<Post> posts) {this.posts = posts;}
+
+    /**
      * add post to the post list
      *
      * @param post a Post object to be added to the post list
