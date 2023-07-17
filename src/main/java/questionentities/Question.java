@@ -1,5 +1,6 @@
 package questionentities;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -10,22 +11,45 @@ import java.util.ArrayList;
  * whether the question has been taken and who took the question, and a list of post belongs to the question.
  */
 public class Question {
-
+    private final int questionId;
+    private final LocalDate createAt;
     private final int askedByClient;
+    private final LocalDate legalDeadline;
     private boolean isTaken;
     private int takenByAttorney;
     private boolean isClose;
     private int rating;
     private List<Post> posts;
-    private Integer questionId;
+
+
+    public Question(int questionId, LocalDate createAt, int askedByClient, LocalDate legalDeadline) {
+        this.questionId = questionId;
+        this.createAt = createAt;
+        this.askedByClient = askedByClient;
+        this.legalDeadline = legalDeadline;
+        this.posts = new ArrayList<Post>();
+    }
+
+    public Question(int questionId, LocalDate createAt, int askedByClient, boolean isTaken, int takenByAttorney,
+                    boolean isClose, int rating, List<Post> posts, LocalDate legalDeadline) {
+        this.questionId = questionId;
+        this.createAt = createAt;
+        this.askedByClient = askedByClient;
+        this.isTaken = isTaken;
+        this.takenByAttorney = takenByAttorney;
+        this.isClose = isClose;
+        this.rating = rating;
+        this.posts = posts;
+        this.legalDeadline = legalDeadline;
+    }
+
     /**
-     * Constructs a new question
      *
-     * @param clientId id of the client who asked the question
+     *
+     * @return an int id represents the question
      */
-    public Question(int clientId) {
-        askedByClient = clientId;
-        posts = new ArrayList<Post>();
+    public int getQuestionId() {
+        return questionId;
     }
 
     /**
@@ -101,28 +125,18 @@ public class Question {
     }
 
     /**
+     *
+     * @param posts a list of posts
+     */
+    public void setPosts(List<Post> posts) {this.posts = posts;}
+
+    /**
      * add post to the post list
      *
      * @param post a Post object to be added to the post list
      */
     public void addPosts(Post post) {
         this.posts.add(post);
-    }
-
-    /**
-     *
-     *
-     * @return an int id represents the question
-     */
-    public Integer getQuestionId() {
-        return questionId;
-    }
-    /**
-     *
-     * @param questionId set the id for the question
-     */
-    public void setQuestionId(Integer questionId) {
-        this.questionId = questionId;
     }
 
 }
