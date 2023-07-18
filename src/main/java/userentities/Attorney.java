@@ -1,4 +1,4 @@
 package userentities;
 
-public class Attorney {
+public class Attorney implements User{
 }
