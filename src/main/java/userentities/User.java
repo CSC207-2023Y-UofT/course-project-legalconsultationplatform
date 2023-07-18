@@ -1,6 +1,11 @@
 package userentities;
 
+import java.util.List;
+import questionentities.Question;
+
 public interface User {
-    int getUserID();
+    int getUserId();
     String getPassword();
+    List<Question> getQuestionsList();
+    void addQuestion(Question question);
 }

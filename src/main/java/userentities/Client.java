@@ -1,7 +1,12 @@
 package userentities;
 
+import questionentities.Question;
+
+import java.util.ArrayList;
+import java.util.List;
+
 public class Client implements User{
-    private final int userID;
+    private final int userId;
     private final String password;
     private final String stateAbb;
     private final String postalCode;
@@ -11,11 +16,12 @@ public class Client implements User{
     private final String maritalStatus;
     private final int numberOfHousehold;
     private final float annualIncome;
+    private List<Question> questionsList;
 
-    Client(int userID, String password, String stateAbb, String postalCode,
+    Client(int userId, String password, String stateAbb, String postalCode,
            String ethnicity, int age, String gender, String maritalStatus,
            int numberOfHousehold, float annualIncome){
-        this.userID = userID;
+        this.userId = userId;
         this.password = password;
         this.stateAbb = stateAbb;
         this.postalCode = postalCode;
@@ -25,10 +31,11 @@ public class Client implements User{
         this.maritalStatus = maritalStatus;
         this.numberOfHousehold = numberOfHousehold;
         this.annualIncome = annualIncome;
+        this.questionsList = new ArrayList<Question>();
     }
     @Override
-    public int getUserID() {
-        return userID;
+    public int getUserId() {
+        return userId;
     }
     @Override
     public String getPassword() {
@@ -65,5 +72,14 @@ public class Client implements User{
 
     public float getAnnualIncome() {
         return annualIncome;
+    }
+
+    @Override
+    public List<Question> getQuestionsList() {
+        return questionsList;
+    }
+    @Override
+    public void addQuestion(Question question) {
+        questionsList.add(question);
     }
 }
