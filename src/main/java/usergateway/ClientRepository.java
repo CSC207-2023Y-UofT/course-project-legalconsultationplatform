@@ -3,9 +3,6 @@ package usergateway;
 import questionentities.Question;
 import userentities.User;
 
-import java.util.HashMap;
-import java.util.Map;
-
 public class ClientRepository implements UserGateway{
     @Override
     public boolean existsById(int userId) {
