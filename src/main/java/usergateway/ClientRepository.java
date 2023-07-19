@@ -6,7 +6,6 @@ import userentities.User;
 import java.util.HashMap;
 import java.util.Map;
 
-// TODO: implement this class
 public class ClientRepository implements UserGateway{
     @Override
     public boolean existsById(int userId) {
@@ -20,6 +19,11 @@ public class ClientRepository implements UserGateway{
 
     @Override
     public User getUser(int userId) {
+        return null;
+    }
+
+    @Override
+    public String getPassword(int userId) {
         return null;
     }
 
