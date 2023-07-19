@@ -1,9 +1,16 @@
-package usergateway;
+package gateway;
 
 import questionentities.Question;
 import userentities.User;
 
+// TODO: implement this class
 public class ClientRepository implements UserGateway{
+    final DatabaseConnection databaseConnection;
+
+    public ClientRepository(DatabaseConnection databaseConnection) {
+        this.databaseConnection = databaseConnection;
+    }
+
     @Override
     public boolean existsById(int userId) {
         return false;
@@ -26,6 +33,11 @@ public class ClientRepository implements UserGateway{
 
     @Override
     public void updateQuestionList(Question question) {
+
+    }
+
+    @Override
+    public void addUser(User user) {
 
     }
 }
