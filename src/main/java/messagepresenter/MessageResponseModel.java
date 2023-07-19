@@ -1,4 +1,4 @@
 package messagepresenter;
 
-public class MessageResponseModel {
+public class MessageResponseModel{
 }

@@ -1,13 +1,9 @@
-package userentities;
+package clientregister;
 
-import questionentities.Question;
-
-import java.util.ArrayList;
-import java.util.List;
-
-public class Client implements User{
+public class ClientRegisterRequestModel {
     private final int userId;
     private final String password;
+    private final String password2;
     private final String stateAbb;
     private final String postalCode;
     private final String ethnicity;
@@ -16,13 +12,15 @@ public class Client implements User{
     private final String maritalStatus;
     private final int numberOfHousehold;
     private final float annualIncome;
-    private List<Question> questionsList;
 
-    public Client(int userId, String password, String stateAbb, String postalCode,
-                  String ethnicity, int age, String gender, String maritalStatus,
-                  int numberOfHousehold, float annualIncome){
+    public ClientRegisterRequestModel(int userId, String password,
+                                      String password2, String stateAbb,
+                                      String postalCode, String ethnicity,
+                                      int age, String gender, String maritalStatus,
+                                      int numberOfHousehold, float annualIncome) {
         this.userId = userId;
         this.password = password;
+        this.password2 = password2;
         this.stateAbb = stateAbb;
         this.postalCode = postalCode;
         this.ethnicity = ethnicity;
@@ -31,15 +29,18 @@ public class Client implements User{
         this.maritalStatus = maritalStatus;
         this.numberOfHousehold = numberOfHousehold;
         this.annualIncome = annualIncome;
-        this.questionsList = new ArrayList<Question>();
     }
-    @Override
+
     public int getUserId() {
         return userId;
     }
-    @Override
+
     public String getPassword() {
         return password;
+    }
+
+    public String getPassword2() {
+        return password2;
     }
 
     public String getStateAbb() {
@@ -72,14 +73,5 @@ public class Client implements User{
 
     public float getAnnualIncome() {
         return annualIncome;
-    }
-
-    @Override
-    public List<Question> getQuestionsList() {
-        return questionsList;
-    }
-    @Override
-    public void addQuestion(Question question) {
-        questionsList.add(question);
     }
 }
