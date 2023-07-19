@@ -1,6 +1,6 @@
 package clientregister;
 
-import messagepresenter.MessageResponseModel;
+import presenter.MessageResponseModel;
 
 public interface ClientRegisterInputBoundary {
     MessageResponseModel create(ClientRegisterRequestModel requestModel);
