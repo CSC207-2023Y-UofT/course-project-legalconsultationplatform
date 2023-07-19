@@ -1,5 +1,7 @@
 package askquestion;
 
+import presenter.TheQuestionResponseModel;
+
 public interface QuestionInputBoundary {
-    QuestionResponseModel createQuestion(QuestionRequestModel questionRequestModel);
+    TheQuestionResponseModel createQuestion(QuestionRequestModel questionRequestModel);
 }

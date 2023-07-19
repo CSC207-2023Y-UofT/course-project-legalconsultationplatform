@@ -1,8 +1,11 @@
 package askquestion;
 
+import gateway.QuestionGateway;
 import presenter.TheQuestionOutputBoundary;
+import presenter.TheQuestionResponseModel;
 import questionentities.Question;
-import questiongateway.QuestionGateway;
+
+import java.time.LocalDate;
 import java.util.Random;
 
 public class AskQuestionInteractor implements QuestionInputBoundary{
@@ -17,12 +20,21 @@ public class AskQuestionInteractor implements QuestionInputBoundary{
         this.questionFactory = questionFactory;
     }
 
-    public QuestionResponseModel createQuestion(QuestionRequestModel questionRequestModel){
+    public TheQuestionResponseModel createQuestion(QuestionRequestModel questionRequestModel){
         Random rand = new Random();
         int upperbound = 10000000;
         int int_random = rand.nextInt(upperbound);
-        while questionGateway.int_random
-        Question question = questionFactory.create();
-        return null;
+        boolean ifExists = questionGateway.checkExistsByName(int_random);
+        while (ifExists) {
+            int_random = rand.nextInt(upperbound);
+            ifExists = questionGateway.checkExistsByName(int_random);
+        }
+        LocalDate now = LocalDate.now();
+        Question question = questionFactory.create(int_random, now, questionRequestModel.getAskedByClient(), questionRequestModel.getLegalDeadline());
+        questionGateway.saveQuestion(question);
+
+        TheQuestionResponseModel theQuestionResponseModel = new TheQuestionResponseModel();
+        // 理论上说，response model里要放东西，然后prepareSuccess里面要放这个responseModel.
+        return theQuestionOutputBoundary.prepareSuccess();
     }
 }
