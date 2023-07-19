@@ -4,5 +4,5 @@ public interface ViewOutputBoundary {
     ViewResponseModel prepareFail(String msg);
 
     // TODO: complete method signature
-    ViewResponseModel prepareSuccess();
+    ViewResponseModel prepareSuccess(String msg);
 }
