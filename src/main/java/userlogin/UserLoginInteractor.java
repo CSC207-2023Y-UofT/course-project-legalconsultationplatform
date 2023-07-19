@@ -2,7 +2,7 @@ package userlogin;
 
 import presenter.LoginOutputBoundary;
 import presenter.LoginResponseModel;
-import usergateway.UserGateway;
+import gateway.UserGateway;
 
 public class UserLoginInteractor implements UserLoginInputBoundary{
     final UserGateway userGateway;
