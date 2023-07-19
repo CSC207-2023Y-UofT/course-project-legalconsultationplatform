@@ -44,4 +44,19 @@ public class Attorney implements User{
     public void addQuestion(Question question) {
         questionsList.add(question);
     }
+
+    @Override
+    public boolean isQuestionSelectable(Question question) {
+        boolean isClose = question.isClose();
+        boolean isTaken = question.isTaken();
+        int takenByAttorney = question.getTakenByAttorney();
+
+        if (isClose) {
+            return false;
+        } else if (! isTaken) {
+            return false;
+        } else {
+            return takenByAttorney == userId;
+        }
+    }
 }

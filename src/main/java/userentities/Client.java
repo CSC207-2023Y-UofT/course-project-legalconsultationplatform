@@ -82,4 +82,9 @@ public class Client implements User{
     public void addQuestion(Question question) {
         questionsList.add(question);
     }
+
+    @Override
+    public boolean isQuestionSelectable(Question question) {
+        return true;
+    }
 }
