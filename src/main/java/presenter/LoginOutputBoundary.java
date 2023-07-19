@@ -1,6 +1,6 @@
 package presenter;
 
-public interface TheQuestionOutputBoundary {
+public interface LoginOutputBoundary {
     TheQuestionResponseModel prepareFail(String msg);
     TheQuestionResponseModel prepareSuccess();
 }
