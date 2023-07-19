@@ -1,6 +1,7 @@
 package userselectquestion;
 
-import screenpresenter.ScreenResponseModel;
+import presenter.TheQuestionResponseModel;
+import presenter.TheQuestionResponseModel;
 
 public class SelectQuestionControl {
     final SelectInputBoundary selectInputBoundary;
@@ -8,7 +9,7 @@ public class SelectQuestionControl {
     public SelectQuestionControl(SelectInputBoundary selectInputBoundary) {
         this.selectInputBoundary = selectInputBoundary;
     }
-    public ScreenResponseModel selectQuestion(int questionId, int userId) {
+    public TheQuestionResponseModel selectQuestion(int questionId, int userId) {
         SelectRequestModel selectRequestModel =  new SelectRequestModel(questionId, userId);
         return selectInputBoundary.selectQuestion(selectRequestModel);
     }

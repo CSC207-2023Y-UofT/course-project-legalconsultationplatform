@@ -2,26 +2,26 @@ package userselectquestion;
 
 import questionentities.Question;
 import questiongateway.QuestionGateway;
-import screenpresenter.ScreenOutputBoundary;
-import screenpresenter.ScreenResponseModel;
+import presenter.TheQuestionResponseModel;
+import presenter.TheQuestionOutputBoundary;
 import userentities.User;
 import usergateway.UserGateway;
 import usergateway.UserGatewayFactory;
 
 public class SelectQuestionInteractor implements SelectInputBoundary{
     final QuestionGateway questionGateway;
-    final ScreenOutputBoundary screenOutputBoundary;
+    final TheQuestionOutputBoundary theQuestionOutputBoundary;
     final UserGatewayFactory userGatewayFactory;
 
-    public SelectQuestionInteractor(QuestionGateway questionGateway, ScreenOutputBoundary screenOutputBoundary,
+    public SelectQuestionInteractor(QuestionGateway questionGateway, TheQuestionOutputBoundary theQuestionOutputBoundary,
                                     UserGatewayFactory userGatewayFactory) {
         this.questionGateway = questionGateway;
-        this.screenOutputBoundary = screenOutputBoundary;
+        this.theQuestionOutputBoundary = theQuestionOutputBoundary;
         this.userGatewayFactory = userGatewayFactory;
     }
 
     @Override
-    public ScreenResponseModel selectQuestion(SelectRequestModel selectRequestModel) {
+    public TheQuestionResponseModel selectQuestion(SelectRequestModel selectRequestModel) {
         int userId = selectRequestModel.getUserId();
         int questionId = selectRequestModel.getQuestionId();
 
@@ -31,10 +31,12 @@ public class SelectQuestionInteractor implements SelectInputBoundary{
         Question question = questionGateway.getQuestion(questionId);
 
         boolean isQuestionSelectable = user.isQuestionSelectable(question);
+
+        // TODO: complete method call after finishing the presenter class
         if (isQuestionSelectable) {
-            return screenOutputBoundary.prepareSuccess();
+            return theQuestionOutputBoundary.prepareSuccess();
         } else {
-            return screenOutputBoundary.prepareFail("This question is not accessible.");
+            return theQuestionOutputBoundary.prepareFail("This question is not accessible.");
         }
     }
 }
