@@ -54,7 +54,7 @@ public class Attorney implements User{
         if (isClose) {
             return false;
         } else if (! isTaken) {
-            return false;
+            return true;
         } else {
             return takenByAttorney == userId;
         }
