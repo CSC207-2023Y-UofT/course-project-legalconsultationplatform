@@ -1,10 +1,16 @@
-package usergateway;
+package gateway;
 
 import questionentities.Question;
 import userentities.User;
 
 // TODO: implement this class
-public class AttorneyRepository implements UserGateway{
+public class ClientRepository implements UserGateway{
+    final DatabaseConnection databaseConnection;
+
+    public ClientRepository(DatabaseConnection databaseConnection) {
+        this.databaseConnection = databaseConnection;
+    }
+
     @Override
     public boolean existsById(int userId) {
         return false;
@@ -24,8 +30,14 @@ public class AttorneyRepository implements UserGateway{
     public String getPassword(int userId) {
         return null;
     }
+
     @Override
     public void updateQuestionList(Question question) {
+
+    }
+
+    @Override
+    public void addUser(User user) {
 
     }
 }
