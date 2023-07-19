@@ -5,17 +5,18 @@ import questiongateway.QuestionGateway;
 import screenpresenter.ScreenOutputBoundary;
 import screenpresenter.ScreenResponseModel;
 import usergateway.UserGateway;
+import usergateway.UserGatewayFactory;
 
 public class SelectQuestionInteractor implements SelectInputBoundary{
     final QuestionGateway questionGateway;
     final ScreenOutputBoundary screenOutputBoundary;
-    final UserGateway userGateway;
+    final UserGatewayFactory userGatewayFactory;
 
     public SelectQuestionInteractor(QuestionGateway questionGateway, ScreenOutputBoundary screenOutputBoundary,
-                                    UserGateway userGateway) {
+                                    UserGatewayFactory userGatewayFactory) {
         this.questionGateway = questionGateway;
         this.screenOutputBoundary = screenOutputBoundary;
-        this.userGateway = userGateway;
+        this.userGatewayFactory = userGatewayFactory;
     }
 
     @Override
