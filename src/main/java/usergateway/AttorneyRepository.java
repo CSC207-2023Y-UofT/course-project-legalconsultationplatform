@@ -28,4 +28,9 @@ public class AttorneyRepository implements UserGateway{
     public void updateQuestionList(Question question) {
 
     }
+
+    @Override
+    public void addUser(User user) {
+
+    }
 }
