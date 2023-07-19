@@ -18,7 +18,10 @@ public class AskQuestionInteractor implements QuestionInputBoundary{
     }
 
     public QuestionResponseModel createQuestion(QuestionRequestModel questionRequestModel){
-        Random rand = new Random()
+        Random rand = new Random();
+        int upperbound = 10000000;
+        int int_random = rand.nextInt(upperbound);
+        while questionGateway.int_random
         Question question = questionFactory.create();
         return null;
     }
