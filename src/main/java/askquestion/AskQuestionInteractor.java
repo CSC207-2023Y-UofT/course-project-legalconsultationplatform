@@ -1,22 +1,25 @@
 package askquestion;
 
+import presenter.TheQuestionOutputBoundary;
 import questionentities.Question;
 import questiongateway.QuestionGateway;
-import screenpresenter.ScreenOutputBoundary;
+import java.util.Random;
 
 public class AskQuestionInteractor implements QuestionInputBoundary{
     final QuestionGateway questionGateway;
-    final ScreenOutputBoundary screenOutputBoundary;
+    final TheQuestionOutputBoundary theQuestionOutputBoundary;
     final QuestionFactory questionFactory;
 
-    public AskQuestionInteractor(QuestionGateway questionGateway, ScreenOutputBoundary screenOutputBoundary,
+    public AskQuestionInteractor(QuestionGateway questionGateway, TheQuestionOutputBoundary theQuestionOutputBoundary,
                              QuestionFactory questionFactory){
         this.questionGateway = questionGateway;
-        this.screenOutputBoundary = screenOutputBoundary;
+        this.theQuestionOutputBoundary = theQuestionOutputBoundary;
         this.questionFactory = questionFactory;
     }
 
     public QuestionResponseModel createQuestion(QuestionRequestModel questionRequestModel){
-        Question question = questionFactory.create(questionRequestModel);
+        Random rand = new Random()
+        Question question = questionFactory.create();
+        return null;
     }
 }
