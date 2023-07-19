@@ -18,6 +18,11 @@ public class QuestionRepo implements QuestionGateway{
     }
 
     @Override
+    public boolean checkExistsByName(int questionId){
+        return false;
+    }
+
+    @Override
     public Question getQuestion(int questionId) {
         return null;
     }
