@@ -1,4 +1,4 @@
-package questiongateway;
+package gateway;
 
 import questionentities.Post;
 import questionentities.Question;
