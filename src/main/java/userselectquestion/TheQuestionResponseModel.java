@@ -1,4 +1,6 @@
 package userselectquestion;
 
-public class TheQuestionResponseModel {
+import screenpresenter.ScreenResponseModel;
+
+public class TheQuestionResponseModel extends ScreenResponseModel {
 }

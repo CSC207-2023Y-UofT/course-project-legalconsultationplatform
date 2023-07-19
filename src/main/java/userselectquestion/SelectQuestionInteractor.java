@@ -3,6 +3,7 @@ package userselectquestion;
 import questionentities.Question;
 import questiongateway.QuestionGateway;
 import screenpresenter.ScreenOutputBoundary;
+import screenpresenter.ScreenResponseModel;
 import usergateway.UserGateway;
 
 public class SelectQuestionInteractor implements SelectInputBoundary{
@@ -18,7 +19,7 @@ public class SelectQuestionInteractor implements SelectInputBoundary{
     }
 
     @Override
-    public TheQuestionResponseModel selectQuestion(SelectRequestModel selectRequestModel) {
+    public ScreenResponseModel selectQuestion(SelectRequestModel selectRequestModel) {
         return null;
     }
 }

@@ -1,5 +1,7 @@
 package userselectquestion;
 
+import screenpresenter.ScreenResponseModel;
+
 public interface SelectInputBoundary {
-    TheQuestionResponseModel selectQuestion(SelectRequestModel selectRequestModel);
+    ScreenResponseModel selectQuestion(SelectRequestModel selectRequestModel);
 }
