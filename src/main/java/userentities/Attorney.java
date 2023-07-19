@@ -44,4 +44,10 @@ public class Attorney implements User{
     public void addQuestion(Question question) {
         questionsList.add(question);
     }
+
+    @Override
+    public boolean isQuestionCloseable(Question question){
+        boolean isTaken = question.isTaken();
+        return isTaken;
+    }
 }

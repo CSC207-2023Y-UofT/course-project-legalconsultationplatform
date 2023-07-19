@@ -82,4 +82,10 @@ public class Client implements User{
     public void addQuestion(Question question) {
         questionsList.add(question);
     }
+
+    @Override
+    public boolean isQuestionCloseable(Question question) {
+        boolean isClose = question.isClose();
+        return !isClose;
+    }
 }
