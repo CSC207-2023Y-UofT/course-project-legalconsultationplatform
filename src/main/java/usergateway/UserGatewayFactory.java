@@ -1,7 +1,7 @@
 package usergateway;
 
 public class UserGatewayFactory {
-    public static UserGateway createUserGateway(int userId) {
+    public UserGateway createUserGateway(int userId) {
         UserGateway userGateway;
         if (isClient(userId)) {
             userGateway = new ClientRepository();
