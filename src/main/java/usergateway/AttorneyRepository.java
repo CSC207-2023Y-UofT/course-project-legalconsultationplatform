@@ -24,7 +24,6 @@ public class AttorneyRepository implements UserGateway{
     public String getPassword(int userId) {
         return null;
     }
-
     @Override
     public void updateQuestionList(Question question) {
 
