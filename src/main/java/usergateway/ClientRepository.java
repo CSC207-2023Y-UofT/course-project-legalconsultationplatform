@@ -24,6 +24,11 @@ public class ClientRepository implements UserGateway{
     }
 
     @Override
+    public String getPassword(int userId) {
+        return null;
+    }
+
+    @Override
     public void updateQuestionList(Question question) {
 
     }
