@@ -2,7 +2,7 @@ package clientregister;
 import presenter.MessageOutputBoundary;
 import presenter.MessageResponseModel;
 import userentities.Client;
-import usergateway.UserGateway;
+import gateway.UserGateway;
 
 
 class ClientRegisterInteractor implements ClientRegisterInputBoundary{
