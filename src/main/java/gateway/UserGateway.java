@@ -1,4 +1,4 @@
-package usergateway;
+package gateway;
 
 import userentities.User;
 import questionentities.Question;
@@ -10,5 +10,4 @@ public interface UserGateway {
     String getPassword(int userId);
     void updateQuestionList(Question question);
     void addUser(User user);
-
 }
