@@ -12,6 +12,7 @@ import java.util.ArrayList;
  */
 public class Question {
     private final int questionId;
+    private final String type;
     private final LocalDate createAt;
     private final int askedByClient;
     private final LocalDate legalDeadline;
@@ -21,18 +22,23 @@ public class Question {
     private int rating;
     private List<Post> posts;
 
+    public static final int MISSING_RATING = -1;
 
-    public Question(int questionId, LocalDate createAt, int askedByClient, LocalDate legalDeadline) {
+
+    public Question(int questionId, String type, LocalDate createAt, int askedByClient, LocalDate legalDeadline) {
         this.questionId = questionId;
+        this.type = type;
         this.createAt = createAt;
         this.askedByClient = askedByClient;
         this.legalDeadline = legalDeadline;
+        this.rating = MISSING_RATING;
         this.posts = new ArrayList<Post>();
     }
 
-    public Question(int questionId, LocalDate createAt, int askedByClient, boolean isTaken, int takenByAttorney,
+    public Question(int questionId, String type, LocalDate createAt, int askedByClient, boolean isTaken, int takenByAttorney,
                     boolean isClose, int rating, List<Post> posts, LocalDate legalDeadline) {
         this.questionId = questionId;
+        this.type = type;
         this.createAt = createAt;
         this.askedByClient = askedByClient;
         this.isTaken = isTaken;
@@ -50,6 +56,10 @@ public class Question {
      */
     public int getQuestionId() {
         return questionId;
+    }
+
+    public String getType() {
+        return type;
     }
 
     /**
