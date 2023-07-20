@@ -37,7 +37,7 @@ public class AskQuestionInteractor implements QuestionInputBoundary{
         Question question = questionFactory.create(int_random, questionRequestModel.getQuestionCategory(), now, questionRequestModel.getAskedByClient(), questionRequestModel.getLegalDeadline());
         questionGateway.saveQuestion(question);
 
-        clientGateway.updateQuestionList(question);
+        clientGateway.updateQuestionList(questionRequestModel.getAskedByClient(), question);
 
         TheQuestionResponseModel theQuestionResponseModel = new TheQuestionResponseModel();
         // 理论上说，response model里要放东西，然后prepareSuccess里面要放这个responseModel.
