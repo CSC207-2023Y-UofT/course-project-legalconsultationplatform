@@ -7,8 +7,8 @@ import java.time.LocalDate;
 public class QuestionControl {
     final QuestionInputBoundary questionInput;
 
-    public QuestionControl(QuestionInputBoundary questionInputBoundary){
-        this.questionInput = questionInputBoundary;
+    public QuestionControl(QuestionInputBoundary questionInput){
+        this.questionInput = questionInput;
     }
 
     TheQuestionResponseModel createQuestion(String questionCategory, int createAt, int askedByClient, LocalDate legalDeadline){
