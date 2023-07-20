@@ -14,7 +14,7 @@ public class AskQuestionInteractor implements QuestionInputBoundary{
     final TheQuestionOutputBoundary theQuestionOutputBoundary;
     final QuestionFactory questionFactory;
 
-    final UserGateway userGateway; // 需要client gateway， 且缺constructor
+    // 需要client gateway， 且缺constructor
 
     public AskQuestionInteractor(QuestionGateway questionGateway, TheQuestionOutputBoundary theQuestionOutputBoundary,
                              QuestionFactory questionFactory){
@@ -33,7 +33,7 @@ public class AskQuestionInteractor implements QuestionInputBoundary{
             ifExists = questionGateway.checkExistsByName(int_random);
         }
         LocalDate now = LocalDate.now();
-        Question question = questionFactory.create(int_random, now, questionRequestModel.getAskedByClient(), questionRequestModel.getLegalDeadline());
+        Question question = questionFactory.create(int_random, questionRequestModel.getQuestionCategory(), now, questionRequestModel.getAskedByClient(), questionRequestModel.getLegalDeadline());
         questionGateway.saveQuestion(question);
 
         TheQuestionResponseModel theQuestionResponseModel = new TheQuestionResponseModel();
