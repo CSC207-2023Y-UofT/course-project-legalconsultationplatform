@@ -4,18 +4,18 @@ import java.time.LocalDate;
 
 public class QuestionRequestModel {
     private String questionCategory;
-    private int createAt;
+    private LocalDate createAt;
     private int askedByClient;
     private LocalDate legalDeadline = null;
 
-    public QuestionRequestModel(String questionCategory, int createAt, int askedByClient, LocalDate legalDeadline) {
+    public QuestionRequestModel(String questionCategory, LocalDate createAt, int askedByClient, LocalDate legalDeadline) {
         this.questionCategory = questionCategory;
         this.createAt = createAt;
         this.askedByClient = askedByClient;
         this.legalDeadline = legalDeadline;
     }
 
-    public QuestionRequestModel(String questionCategory, int createAt, int askedByClient) {
+    public QuestionRequestModel(String questionCategory, LocalDate createAt, int askedByClient) {
         this.questionCategory = questionCategory;
         this.createAt = createAt;
         this.askedByClient = askedByClient;
@@ -29,11 +29,11 @@ public class QuestionRequestModel {
         this.questionCategory = questionCategory;
     }
 
-    public int getCreateAt() {
+    public LocalDate getCreateAt() {
         return createAt;
     }
 
-    public void setCreateAt(int createAt) {
+    public void setCreateAt(LocalDate createAt) {
         this.createAt = createAt;
     }
 
