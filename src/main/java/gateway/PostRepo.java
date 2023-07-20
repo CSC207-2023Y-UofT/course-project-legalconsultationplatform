@@ -1,4 +1,5 @@
 package gateway;
 
-public class PostRepo {
+public class PostRepo implements PostGateway{
+    DatabaseConnection databaseConnection;
 }
