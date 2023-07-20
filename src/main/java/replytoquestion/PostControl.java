@@ -2,6 +2,8 @@ package replytoquestion;
 
 import presenter.MessageResponseModel;
 
+import java.time.LocalDate;
+
 public class PostControl {
     final PostInputBoundary postInput;
 
@@ -9,8 +11,10 @@ public class PostControl {
         this.postInput = postInput;
     }
 
-    MessageResponseModel createPost(S){
+    MessageResponseModel createPost(int questionId, LocalDate createAt, String postText){
+        PostRequestModel postRequestModel = new PostRequestModel(questionId, createAt, postText);
 
+        return postInput.createPost(postRequestModel);
     }
 
 }
