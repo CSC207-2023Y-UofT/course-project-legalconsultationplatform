@@ -1,10 +1,8 @@
 package attorneybrowsequestion;
 
-import screenpresenter.ScreenResponseModel;
+import presenter.ViewResponseModel;
 
 public interface BrowseInputBoundary {
-    public ScreenResponseModel prepareFail(String msg);
-    public ScreenResponseModel prepareSuccess();
 
-    BrowseRespondModel browseQuestion(BrowseRequestModel browseRequestModel);
+     ViewResponseModel browseQuestion();
 }
