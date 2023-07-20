@@ -31,6 +31,8 @@ public class CloseQuestionInteractor implements CloseInputBoundary{
         boolean isQuestionCloseable = user.isQuestionCloseable(question);
 
         if(isQuestionCloseable){
+            question.setClose(true);
+            questionGateway.updateIsClose(questionId, true);
             return messageOutputBoundary.prepareSuccess("The question has been succeccfully closed");
         }
         else{
