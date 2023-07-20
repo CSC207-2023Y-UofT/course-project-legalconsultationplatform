@@ -4,12 +4,10 @@ import java.time.LocalDate;
 
 public class PostRequestModel {
     private int questionId;
-    private LocalDate createAt;
     private String postText;
 
-    public PostRequestModel(int questionId, LocalDate createAt, String postText){
+    public PostRequestModel(int questionId, String postText){
         this.questionId = questionId;
-        this.createAt = createAt;
         this.postText = postText;
     }
 
@@ -19,14 +17,6 @@ public class PostRequestModel {
 
     public void setQuestionId(int questionId) {
         this.questionId = questionId;
-    }
-
-    public LocalDate getCreateAt() {
-        return createAt;
-    }
-
-    public void setCreateAt(LocalDate createAt) {
-        this.createAt = createAt;
     }
 
     public String getPostText() {

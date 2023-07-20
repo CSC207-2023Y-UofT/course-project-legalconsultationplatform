@@ -11,8 +11,8 @@ public class PostControl {
         this.postInput = postInput;
     }
 
-    MessageResponseModel createPost(int questionId, LocalDate createAt, String postText){
-        PostRequestModel postRequestModel = new PostRequestModel(questionId, createAt, postText);
+    MessageResponseModel createPost(int questionId, String postText){
+        PostRequestModel postRequestModel = new PostRequestModel(questionId, postText);
 
         return postInput.createPost(postRequestModel);
     }
