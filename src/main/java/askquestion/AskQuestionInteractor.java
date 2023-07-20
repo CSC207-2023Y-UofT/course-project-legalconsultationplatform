@@ -1,7 +1,6 @@
 package askquestion;
 
 import gateway.QuestionGateway;
-import gateway.UserGateway;
 import presenter.TheQuestionOutputBoundary;
 import presenter.TheQuestionResponseModel;
 import questionentities.Question;
