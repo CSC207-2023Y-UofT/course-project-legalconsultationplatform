@@ -9,6 +9,8 @@ public class PostControl {
         this.postInput = postInput;
     }
 
-    MessageResponseModel createPost(){}
+    MessageResponseModel createPost(S){
+
+    }
 
 }
