@@ -1,24 +1,41 @@
 package userclosequestion;
 
+import presenter.MessageOutputBoundary;
+import presenter.MessageResponseModel;
 import presenter.TheQuestionOutputBoundary;
 import presenter.TheQuestionResponseModel;
+import questionentities.Question;
 import questiongateway.QuestionGateway;
+import userentities.User;
+import usergateway.UserGateway;
 import usergateway.UserGatewayFactory;
 
 public class CloseQuestionInteractor implements CloseInputBoundary{
     final QuestionGateway questionGateway;
-    final TheQuestionOutputBoundary theQuestionOutputBoundary;
+    final MessageOutputBoundary messageOutputBoundary;
     final UserGatewayFactory userGatewayFactory;
 
-    public CloseQuestionInteractor(QuestionGateway questionGateway, TheQuestionOutputBoundary theQuestionOutputBoundary,
-                                   UserGatewayFactory userGatewayFactory) {
+    public CloseQuestionInteractor(QuestionGateway questionGateway, MessageOutputBoundary messageOutputBoundary, UserGatewayFactory userGatewayFactory) {
         this.questionGateway = questionGateway;
-        this.theQuestionOutputBoundary = theQuestionOutputBoundary;
+        this.messageOutputBoundary = messageOutputBoundary;
         this.userGatewayFactory = userGatewayFactory;
     }
 
     @Override
-    public TheQuestionResponseModel closeQuestion(CloseRequestModel colseRequestModel) {
-        return null;
+    public MessageResponseModel closeQuestion(CloseRequestModel closeRequestModel) {
+        int userId = closeRequestModel.getUserId();;
+        int questionId = closeRequestModel.getQuestionId();
+        UserGateway userGateway = userGatewayFactory.createUserGateway(userId);
+        User user = userGateway.getUser(userId);
+        Question question = questionGateway.getQuestion(questionId);
+        boolean isQuestionCloseable = user.isQuestionCloseable(question);
+
+        if(isQuestionCloseable){
+            return messageOutputBoundary.prepareSuccess("The question has been succeccfully closed");
+        }
+        else{
+            return messageOutputBoundary.prepareFail("This question cannot close");
+        }
+
     }
 }

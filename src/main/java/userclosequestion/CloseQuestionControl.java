@@ -1,5 +1,6 @@
 package userclosequestion;
 
+import presenter.MessageResponseModel;
 import presenter.TheQuestionResponseModel;
 
 public class CloseQuestionControl {
@@ -8,7 +9,7 @@ public class CloseQuestionControl {
     public CloseQuestionControl(CloseInputBoundary closeInputBoundary) {
         this.closeInputBoundary = closeInputBoundary;
     }
-    public TheQuestionResponseModel closeQuestion(int questionId, int userId){
+    public MessageResponseModel closeQuestion(int questionId, int userId){
         CloseRequestModel closeRequestModel = new CloseRequestModel(questionId, userId);
         return closeInputBoundary.closeQuestion(closeRequestModel);
     }

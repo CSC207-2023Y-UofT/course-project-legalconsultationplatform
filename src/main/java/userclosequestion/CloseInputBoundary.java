@@ -1,7 +1,8 @@
 package userclosequestion;
 
+import presenter.MessageResponseModel;
 import presenter.TheQuestionResponseModel;
 
 public interface CloseInputBoundary {
-    TheQuestionResponseModel closeQuestion(CloseRequestModel colseRequestModel);
+    MessageResponseModel closeQuestion(CloseRequestModel closeRequestModel);
 }
