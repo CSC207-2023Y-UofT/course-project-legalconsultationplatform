@@ -5,6 +5,9 @@ import questionentities.Post;
 public class PostRepo implements PostGateway{
     DatabaseConnection databaseConnection;
 
+    public PostRepo(DatabaseConnection databaseConnection){
+        this.databaseConnection = databaseConnection;
+    }
     @Override
     public void savePost(Post post) {
 
