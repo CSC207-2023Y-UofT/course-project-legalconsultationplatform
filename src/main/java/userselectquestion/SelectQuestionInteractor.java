@@ -1,12 +1,13 @@
 package userselectquestion;
 
 import questionentities.Question;
-import questiongateway.QuestionGateway;
+import gateway.QuestionGateway;
 import presenter.TheQuestionResponseModel;
 import presenter.TheQuestionOutputBoundary;
 import userentities.User;
-import usergateway.UserGateway;
-import usergateway.UserGatewayFactory;
+import gateway.UserGateway;
+import gateway.UserGatewayFactory;
+import gateway.DatabaseConnection;
 
 public class SelectQuestionInteractor implements SelectInputBoundary{
     final QuestionGateway questionGateway;
