@@ -32,7 +32,7 @@ public class ClientRepository implements UserGateway{
     }
 
     @Override
-    public void updateQuestionList(Question question) {
+    public void updateQuestionList(int userId, Question question) {
 
     }
 

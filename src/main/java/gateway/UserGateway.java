@@ -8,6 +8,6 @@ public interface UserGateway {
     boolean isClient(int userId);
     User getUser(int userId);
     String getPassword(int userId);
-    void updateQuestionList(Question question);
+    void updateQuestionList(int userId, Question question);
     void addUser(User user);
 }
