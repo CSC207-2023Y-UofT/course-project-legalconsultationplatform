@@ -1,5 +1,6 @@
 package askquestion;
 
+import gateway.ClientGateway;
 import gateway.QuestionGateway;
 import presenter.TheQuestionOutputBoundary;
 import presenter.TheQuestionResponseModel;
@@ -13,13 +14,14 @@ public class AskQuestionInteractor implements QuestionInputBoundary{
     final TheQuestionOutputBoundary theQuestionOutputBoundary;
     final QuestionFactory questionFactory;
 
-    // 需要client gateway， 且缺constructor
+    final ClientGateway clientGateway;
 
     public AskQuestionInteractor(QuestionGateway questionGateway, TheQuestionOutputBoundary theQuestionOutputBoundary,
-                             QuestionFactory questionFactory){
+                             QuestionFactory questionFactory, ClientGateway clientGateway){
         this.questionGateway = questionGateway;
         this.theQuestionOutputBoundary = theQuestionOutputBoundary;
         this.questionFactory = questionFactory;
+        this.clientGateway = clientGateway;
     }
 
     public TheQuestionResponseModel createQuestion(QuestionRequestModel questionRequestModel){
