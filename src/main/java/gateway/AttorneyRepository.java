@@ -32,7 +32,7 @@ public class AttorneyRepository implements UserGateway{
     }
     @Override
     public void updateQuestionList(int userId, Question question) {
-
+        getUser(userId).addQuestion(question);
     }
     @Override
     public void addUser(User user) {
