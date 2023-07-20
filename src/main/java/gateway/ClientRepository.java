@@ -33,7 +33,7 @@ public class ClientRepository implements UserGateway{
 
     @Override
     public void updateQuestionList(int userId, Question question) {
-
+        getUser(userId).addQuestion(question);
     }
 
     @Override
