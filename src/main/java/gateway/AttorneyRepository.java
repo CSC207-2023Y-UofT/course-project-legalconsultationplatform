@@ -17,11 +17,6 @@ public class AttorneyRepository implements AttorneyGateway{
     }
 
     @Override
-    public boolean isClient(int userId) {
-        return false;
-    }
-
-    @Override
     public User getUser(int userId) {
         return null;
     }
@@ -30,9 +25,7 @@ public class AttorneyRepository implements AttorneyGateway{
     public String getPassword(int userId) {
         return null;
     }
-    @Override
-    public void updateAnswerList(int userId, Question question) {
-    }
+
     @Override
     public void updateQuestionList(int userId, Question question) {
 
