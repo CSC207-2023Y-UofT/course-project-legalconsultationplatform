@@ -44,4 +44,9 @@ public class Attorney implements User{
     public void addQuestion(Question question) {
         questionsList.add(question);
     }
+
+    @Override
+    public boolean isClient() {
+        return false;
+    }
 }
