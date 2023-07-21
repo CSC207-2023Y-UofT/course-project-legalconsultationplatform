@@ -4,7 +4,7 @@ import questionentities.Question;
 import userentities.User;
 
 // TODO: implement this class
-public class ClientRepository implements UserGateway{
+public class ClientRepository implements ClientGateway{
     final DatabaseConnection databaseConnection;
 
     public ClientRepository(DatabaseConnection databaseConnection) {
