@@ -4,7 +4,7 @@ import questionentities.Question;
 import userentities.User;
 
 // TODO: implement this class
-public class ClientRepository implements UserGateway{
+public class ClientRepository implements ClientGateway{
     final DatabaseConnection databaseConnection;
 
     public ClientRepository(DatabaseConnection databaseConnection) {
@@ -23,11 +23,6 @@ public class ClientRepository implements UserGateway{
 
     @Override
     public User getUser(int userId) {
-        return null;
-    }
-
-    @Override
-    public String getPassword(int userId) {
         return null;
     }
 
