@@ -19,17 +19,27 @@ class ClientRegisterInteractor implements ClientRegisterInputBoundary{
     }
     @Override
     public MessageResponseModel create(ClientRegisterRequestModel requestModel){
-        if (userGateway.existsById(requestModel.getUserId())){
+        int inputUserId = requestModel.getUserId();
+        String inputPassword1 = requestModel.getPassword();
+        String inputPassword2 = requestModel.getPassword2();
+        String inputStateAbb = requestModel.getStateAbb();
+        String inputPostalCode = requestModel.getPostalCode();
+        String inputEthnicity = requestModel.getEthnicity();
+        int inputAge = requestModel.getAge();
+        String inputGender = requestModel.getGender();
+        String inputMaritalStatus = requestModel.getMaritalStatus();
+        int inputNumberOfHousehold = requestModel.getNumberOfHousehold();
+        float inputAnnualIncome = requestModel.getAnnualIncome();
+
+        if (userGateway.existsById(inputUserId)){
             return outputBoundary.prepareFail("UserId already exists");
-        } else if (!requestModel.getPassword().equals(requestModel.getPassword2())) {
+        } else if (!inputPassword1.equals(inputPassword2)) {
             return outputBoundary.prepareFail("Passwords does not match");
-        } else if (requestModel.getPassword().length() <= 8){
+        } else if (inputPassword1.length() <= 8){
             return outputBoundary.prepareFail("Password is invalid");
         }
-        Client client = clientFactory.create(requestModel.getUserId(), requestModel.getPassword(),
-                requestModel.getStateAbb(), requestModel.getPostalCode(), requestModel.getEthnicity(),
-                requestModel.getAge(), requestModel.getGender(), requestModel.getMaritalStatus(),
-                requestModel.getNumberOfHousehold(), requestModel.getAnnualIncome());
+        Client client = clientFactory.create(inputUserId, inputPassword1, inputStateAbb, inputPostalCode, inputEthnicity,
+                inputAge, inputGender, inputMaritalStatus, inputNumberOfHousehold, inputAnnualIncome);
         userGateway.addUser(client);
         return outputBoundary.prepareSuccess("Client successfully registered");
     }
