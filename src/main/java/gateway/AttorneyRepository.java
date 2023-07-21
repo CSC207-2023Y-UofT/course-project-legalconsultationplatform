@@ -4,7 +4,7 @@ import questionentities.Question;
 import userentities.User;
 
 // TODO: implement this class
-public class AttorneyRepository implements UserGateway{
+public class AttorneyRepository implements AttorneyGateway{
     final DatabaseConnection databaseConnection;
 
     public AttorneyRepository(DatabaseConnection databaseConnection) {
@@ -31,8 +31,11 @@ public class AttorneyRepository implements UserGateway{
         return null;
     }
     @Override
+    public void updateAnswerList(int userId, Question question) {
+    }
+    @Override
     public void updateQuestionList(int userId, Question question) {
-        getUser(userId).addQuestion(question);
+
     }
     @Override
     public void addUser(User user) {
