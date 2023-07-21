@@ -18,7 +18,7 @@ public class UserLoginInteractor implements UserLoginInputBoundary{
         if (!userGateway.existsById(requestModel.getUserId())) {
             return outputBoundary.prepareFail("UserId does not exist");
         }
-        else if (!requestModel.getPassword().equals(userGateway.getPassword(requestModel.getUserId()))) {
+        else if (!requestModel.getPassword().equals(userGateway.getUser(requestModel.getUserId()).getPassword())) {
             return outputBoundary.prepareFail("Password is incorrect");
         }
         return outputBoundary.prepareSuccess();
