@@ -4,7 +4,7 @@ import questionentities.Question;
 import userentities.User;
 
 // TODO: implement this class
-public class AttorneyRepository implements UserGateway{
+public class AttorneyRepository implements AttorneyGateway{
     final DatabaseConnection databaseConnection;
 
     public AttorneyRepository(DatabaseConnection databaseConnection) {
