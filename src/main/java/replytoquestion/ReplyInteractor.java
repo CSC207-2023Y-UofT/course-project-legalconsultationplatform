@@ -17,8 +17,9 @@ public class ReplyInteractor implements PostInputBoundary{
     final MessageOutputBoundary messageOutputBoundary;
     final PostFactory postFactory;
 
-    public ReplyInteractor(QuestionGateway questionGateway, MessageOutputBoundary messageOutputBoundary, PostFactory postFactory){
+    public ReplyInteractor(QuestionGateway questionGateway, PostGateway postGateway, MessageOutputBoundary messageOutputBoundary, PostFactory postFactory){
         this.questionGateway = questionGateway;
+        this.postGateway = postGateway;
         this.messageOutputBoundary = messageOutputBoundary;
         this.postFactory = postFactory;
     }
@@ -28,14 +29,18 @@ public class ReplyInteractor implements PostInputBoundary{
         Random rand = new Random();
         int upperbound = 10000000;
         int int_random = rand.nextInt(upperbound);
-        boolean ifExists = postGateway.checkExistsByName(int_random);
+        boolean ifExists = postGateway.checkExistsById(int_random);
         while (ifExists) {
             int_random = rand.nextInt(upperbound);
-            ifExists = questionGateway.checkExistsByName(int_random);
+            ifExists = postGateway.checkExistsById(int_random);
         }
-        Post post = postFactory.create(postRequestModel.getQuestionId(), now, postRequestModel.getPostText());
+        Post post = postFactory.create(int_random, postRequestModel.getQuestionId(), now, postRequestModel.getPostText());
         questionGateway.updatePosts(postRequestModel.getQuestionId(), post);
 
-        return null;
+        postGateway.savePost(post);
+
+        MessageResponseModel messageResponseModel = new MessageResponseModel(); // 需要后续补充
+        String message = new String("success");
+        return messageOutputBoundary.prepareSuccess(message);
     }
 }
