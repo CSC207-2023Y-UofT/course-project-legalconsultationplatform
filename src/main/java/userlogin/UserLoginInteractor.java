@@ -3,6 +3,7 @@ package userlogin;
 import presenter.LoginOutputBoundary;
 import presenter.LoginResponseModel;
 import gateway.UserGateway;
+import userentities.User;
 
 public class UserLoginInteractor implements UserLoginInputBoundary{
     final UserGateway userGateway;
@@ -15,10 +16,14 @@ public class UserLoginInteractor implements UserLoginInputBoundary{
     }
     @Override
     public LoginResponseModel login(UserLoginRequestModel requestModel){
-        if (!userGateway.existsById(requestModel.getUserId())) {
+        int inputUserId = requestModel.getUserId();
+        String inputPassword = requestModel.getPassword();
+        if (!userGateway.existsById(inputUserId)) {
             return outputBoundary.prepareFail("UserId does not exist");
         }
-        else if (!requestModel.getPassword().equals(userGateway.getUser(requestModel.getUserId()).getPassword())) {
+        User filedUser = userGateway.getUser(inputUserId);
+        String filedPassword = filedUser.getPassword();
+        if (!inputPassword.equals(filedPassword)) {
             return outputBoundary.prepareFail("Password is incorrect");
         }
         return outputBoundary.prepareSuccess();
