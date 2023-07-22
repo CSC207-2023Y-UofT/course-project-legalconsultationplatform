@@ -36,6 +36,9 @@ public class AskQuestionInteractor implements QuestionInputBoundary{
         return int_random;
     }
     public TheQuestionResponseModel createQuestion(QuestionRequestModel questionRequestModel){
+        if (questionRequestModel.getQuestionCategory() == null){
+            return theQuestionOutputBoundary.prepareFail("fail");
+        }
         Random rand = new Random();
         int upperbound = 10000000;
         LocalDate now = LocalDate.now();
