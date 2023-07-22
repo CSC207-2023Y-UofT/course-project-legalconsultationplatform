@@ -23,9 +23,8 @@ public class ReplyInteractor implements PostInputBoundary{
         this.messageOutputBoundary = messageOutputBoundary;
         this.postFactory = postFactory;
     }
-    @Override
-    public MessageResponseModel createPost(PostRequestModel postRequestModel) {
-        LocalDate now = LocalDate.now();
+
+    public int getRandomId(){
         Random rand = new Random();
         int upperbound = 10000000;
         int int_random = rand.nextInt(upperbound);
@@ -34,7 +33,13 @@ public class ReplyInteractor implements PostInputBoundary{
             int_random = rand.nextInt(upperbound);
             ifExists = postGateway.checkExistsById(int_random);
         }
-        Post post = postFactory.create(int_random, postRequestModel.getQuestionId(), now, postRequestModel.getPostText());
+        return int_random;
+    }
+
+    @Override
+    public MessageResponseModel createPost(PostRequestModel postRequestModel) {
+        LocalDate now = LocalDate.now();
+        Post post = postFactory.create(getRandomId(), postRequestModel.getQuestionId(), now, postRequestModel.getPostText());
         questionGateway.updatePosts(postRequestModel.getQuestionId(), post);
 
         postGateway.savePost(post);
