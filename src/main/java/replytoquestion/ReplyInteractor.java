@@ -48,9 +48,11 @@ public class ReplyInteractor implements PostInputBoundary{
         if (!user.isClient()){
             Question question = questionGateway.getQuestion(postRequestModel.getQuestionId());
             if (question.isClose()){
-                return messageOutputBoundary.prepareFail("fail");
+                return messageOutputBoundary.prepareFail("The question is closed already.");
             } else if (question.isTaken()) {
-                
+                if (question.getTakenByAttorney() != user.getUserId()){
+                    return messageOutputBoundary.prepareFail("The question is taken by other attorneys.");
+                }
             }
         }
         Post post = postFactory.create(getRandomId(), postRequestModel.getQuestionId(), now, postRequestModel.getPostText());
