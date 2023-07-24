@@ -6,12 +6,14 @@ package screen;
  * @author qhc
  */
 public class AttorneyHomePage extends javax.swing.JFrame {
-
+    int userId;
     /**
      * Creates new form river
      */
-    public AttorneyHomePage() {
+    public AttorneyHomePage(int userId, xxx control) {
         initComponents();
+        this.userId = userId;
+
     }
 
     /**
