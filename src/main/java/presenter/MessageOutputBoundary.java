@@ -1,4 +1,4 @@
-package messagepresenter;
+package presenter;
 
 public interface MessageOutputBoundary {
     MessageResponseModel prepareFail(String msg);
