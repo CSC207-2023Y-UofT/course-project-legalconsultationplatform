@@ -54,6 +54,9 @@ public class ReplyInteractor implements PostInputBoundary{
                     return messageOutputBoundary.prepareFail("The question is taken by other attorneys.");
                 }
             }
+            else{
+                question.setTakenByAttorney(user.getUserId());
+            }
         }
         Post post = postFactory.create(getRandomId(), postRequestModel.getQuestionId(), now, postRequestModel.getPostText());
         questionGateway.updatePosts(postRequestModel.getQuestionId(), post);
