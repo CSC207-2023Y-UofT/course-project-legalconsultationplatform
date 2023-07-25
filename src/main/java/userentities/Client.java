@@ -2,21 +2,31 @@ package userentities;
 
 import questionentities.Question;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Client implements User{
-    private final int userId;
-    private final String password;
-    private final String stateAbb;
-    private final String postalCode;
-    private final String ethnicity;
-    private final int age;
-    private final String gender;
-    private final String maritalStatus;
-    private final int numberOfHousehold;
-    private final float annualIncome;
+    @Id
+    private int userId;
+    private String password;
+    private String stateAbb;
+    private String postalCode;
+    private String ethnicity;
+    private int age;
+    private String gender;
+    private String maritalStatus;
+    private int numberOfHousehold;
+    private float annualIncome;
+
+    @OneToMany
     private List<Question> questionsList;
+
+    public Client() {
+    }
 
     Client(int userId, String password, String stateAbb, String postalCode,
            String ethnicity, int age, String gender, String maritalStatus,
