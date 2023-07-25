@@ -2,25 +2,36 @@ package userentities;
 
 import questionentities.Question;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
 
+@Entity
 public class Client implements User{
-    private final int userId;
-    private final String password;
-    private final String stateAbb;
-    private final String postalCode;
-    private final String ethnicity;
-    private final int age;
-    private final String gender;
-    private final String maritalStatus;
-    private final int numberOfHousehold;
-    private final float annualIncome;
+    @Id
+    private int userId;
+    private String password;
+    private String stateAbb;
+    private String
+            postalCode;
+    private String ethnicity;
+    private int age;
+    private String gender;
+    private String maritalStatus;
+    private int numberOfHousehold;
+    private float annualIncome;
+    @OneToMany
     private List<Question> questionsList;
 
-    Client(int userId, String password, String stateAbb, String postalCode,
-           String ethnicity, int age, String gender, String maritalStatus,
-           int numberOfHousehold, float annualIncome){
+    public Client() {
+
+    }
+
+    public Client(int userId, String password, String stateAbb, String postalCode,
+                  String ethnicity, int age, String gender, String maritalStatus,
+                  int numberOfHousehold, float annualIncome){
         this.userId = userId;
         this.password = password;
         this.stateAbb = stateAbb;
@@ -33,6 +44,7 @@ public class Client implements User{
         this.annualIncome = annualIncome;
         this.questionsList = new ArrayList<Question>();
     }
+
     @Override
     public int getUserId() {
         return userId;
@@ -82,4 +94,5 @@ public class Client implements User{
     public void addQuestion(Question question) {
         questionsList.add(question);
     }
+
 }
