@@ -14,24 +14,23 @@ public class Client implements User{
     private int userId;
     private String password;
     private String stateAbb;
-    private String
-            postalCode;
+    private String postalCode;
     private String ethnicity;
     private int age;
     private String gender;
     private String maritalStatus;
     private int numberOfHousehold;
     private float annualIncome;
+
     @OneToMany
     private List<Question> questionsList;
 
     public Client() {
-
     }
 
-    public Client(int userId, String password, String stateAbb, String postalCode,
-                  String ethnicity, int age, String gender, String maritalStatus,
-                  int numberOfHousehold, float annualIncome){
+    Client(int userId, String password, String stateAbb, String postalCode,
+           String ethnicity, int age, String gender, String maritalStatus,
+           int numberOfHousehold, float annualIncome){
         this.userId = userId;
         this.password = password;
         this.stateAbb = stateAbb;
@@ -44,7 +43,6 @@ public class Client implements User{
         this.annualIncome = annualIncome;
         this.questionsList = new ArrayList<Question>();
     }
-
     @Override
     public int getUserId() {
         return userId;
@@ -95,4 +93,8 @@ public class Client implements User{
         questionsList.add(question);
     }
 
+    @Override
+    public boolean isClient() {
+        return true;
+    }
 }
