@@ -17,4 +17,9 @@ public class PostRepo implements PostGateway{
     public Post getPost(int postId) {
         return null;
     }
+
+    @Override
+    public boolean checkExistsById(int postId) {
+        return false;
+    }
 }
