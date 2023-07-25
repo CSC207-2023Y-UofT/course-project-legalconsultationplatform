@@ -27,7 +27,7 @@ public class AttorneyRepository implements AttorneyGateway{
     }
 
     @Override
-    public void updateQuestionList(Question question) {
+    public void updateQuestionList(int userId, Question question) {
 
     }
     @Override

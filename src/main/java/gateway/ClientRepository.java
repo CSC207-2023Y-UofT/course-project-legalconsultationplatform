@@ -27,7 +27,7 @@ public class ClientRepository implements ClientGateway{
     }
 
     @Override
-    public void updateQuestionList(Question question) {
+    public void updateQuestionList(int userId, Question question) {
 
     }
 
