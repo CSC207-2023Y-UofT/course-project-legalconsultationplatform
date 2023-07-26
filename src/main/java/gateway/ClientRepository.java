@@ -8,6 +8,8 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import javax.xml.crypto.Data;
+import java.util.Date;
 
 // TODO: implement this class
 public class ClientRepository implements ClientGateway{
@@ -53,19 +55,6 @@ public class ClientRepository implements ClientGateway{
         } finally {
             entityManager.close();
         }
-    }
-
-    public static void main(String[] args) {
-        DatabaseConnection databaseConnection = new DatabaseConnection();
-        ClientRepository clientRepository = new ClientRepository(databaseConnection);
-
-        Client client = new Client(10000000, "simonliu1122", "AB", "12345",
-                "Chinese", 21, "Male", "No", 3, 15000);
-
-        EntityManagerFactory emf = Persistence.createEntityManagerFactory("objectdb://localhost/db");
-        emf.createEntityManager();
-        emf.close();
-
     }
 }
 

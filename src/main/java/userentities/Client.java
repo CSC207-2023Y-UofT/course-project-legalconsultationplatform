@@ -28,7 +28,7 @@ public class Client implements User{
     public Client() {
     }
 
-    Client(int userId, String password, String stateAbb, String postalCode,
+    public Client(int userId, String password, String stateAbb, String postalCode,
            String ethnicity, int age, String gender, String maritalStatus,
            int numberOfHousehold, float annualIncome){
         this.userId = userId;

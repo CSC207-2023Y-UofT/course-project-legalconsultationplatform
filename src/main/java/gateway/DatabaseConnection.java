@@ -4,17 +4,18 @@ import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
 public class DatabaseConnection {
-    private static final String REMOTE_SERVER_ADDRESS = "192.168.2.28";
-    private static final int SERVER_PORT = 6136;
-    private static final String DATABASE_FOLDER = "CSC207Project";
-    private static final String DATABASE_FILE = "legal_consultation_database.odb";
-    private static final String URL =
-            "objectdb://" + REMOTE_SERVER_ADDRESS + ":" + SERVER_PORT + "/" + DATABASE_FOLDER + "/" + DATABASE_FILE;
+
+    private static final String URL = "objectdb:127.0.0.1:6136/db/";
+    private String fileName;
     private EntityManagerFactory entityManagerFactory;
+
+    public DatabaseConnection(String fileName) {
+        this.fileName = fileName;
+    }
 
     public EntityManager getEntityManager() {
         if (entityManagerFactory == null) {
-            entityManagerFactory = Persistence.createEntityManagerFactory(URL);
+            entityManagerFactory = Persistence.createEntityManagerFactory(URL + fileName + ".odb");
         }
         return entityManagerFactory.createEntityManager();
     }
