@@ -81,6 +81,22 @@ public class Question {
 
     /**
      *
+     * @return the timestamp when the client start the creation
+     */
+    public LocalDate getCreateAt() {
+        return createAt;
+    }
+
+    /**
+     *
+     * @return the legal deadline of the question
+     */
+    public LocalDate getLegalDeadline() {
+        return legalDeadline;
+    }
+
+    /**
+     *
      * @return true iff the question has been answered by an attorney
      */
     public boolean isTaken() {
