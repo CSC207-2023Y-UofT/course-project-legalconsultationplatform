@@ -97,4 +97,9 @@ public class Client implements User{
     public boolean isClient() {
         return true;
     }
+
+    @Override
+    public boolean isQuestionSelectable(Question question) {
+        return true;
+    }
 }

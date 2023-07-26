@@ -9,4 +9,5 @@ public interface User {
     List<Question> getQuestionsList();
     void addQuestion(Question question);
     boolean isClient();
+    boolean isQuestionSelectable(Question question);
 }
