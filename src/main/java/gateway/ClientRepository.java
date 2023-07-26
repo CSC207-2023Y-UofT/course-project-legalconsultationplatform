@@ -1,15 +1,18 @@
 package gateway;
 
 import questionentities.Question;
+import userentities.Client;
 import userentities.User;
 
-// TODO: implement this class
-public class ClientRepository implements UserGateway{
-    final DatabaseConnection databaseConnection;
+import javax.persistence.EntityManager;
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.EntityTransaction;
+import javax.persistence.Persistence;
+import javax.xml.crypto.Data;
+import java.util.Date;
 
-    public ClientRepository(DatabaseConnection databaseConnection) {
-        this.databaseConnection = databaseConnection;
-    }
+// TODO: implement this class
+public class ClientRepository implements ClientGateway{
 
     @Override
     public boolean existsById(int userId) {
@@ -27,17 +30,27 @@ public class ClientRepository implements UserGateway{
     }
 
     @Override
-    public String getPassword(int userId) {
-        return null;
-    }
-
-    @Override
-    public void updateQuestionList(Question question) {
+    public void updateQuestionList(int userId, Question question) {
 
     }
 
     @Override
     public void addUser(User user) {
-
+        EntityManagerFactory entityManagerFactory = DatabaseConnection.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            entityManager.persist(user);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
     }
 }
+

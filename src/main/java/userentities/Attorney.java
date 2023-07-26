@@ -1,16 +1,25 @@
 package userentities;
 
 import questionentities.Question;
+
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.util.List;
 import java.util.ArrayList;
 
+@Entity
 public class Attorney implements User{
-
-    private final int userId;
-    private final String password;
-    private final String stateAbb;
-    private final String postalCode;
+    @Id
+    private int userId;
+    private String password;
+    private String stateAbb;
+    private String postalCode;
+    @OneToMany
     private List<Question> questionsList;
+
+    public Attorney() {
+    }
 
     public Attorney(int userId, String password, String stateAbb, String postalCode) {
         this.userId = userId;
@@ -46,17 +55,7 @@ public class Attorney implements User{
     }
 
     @Override
-    public boolean isQuestionSelectable(Question question) {
-        boolean isClose = question.isClose();
-        boolean isTaken = question.isTaken();
-        int takenByAttorney = question.getTakenByAttorney();
-
-        if (isClose) {
-            return false;
-        } else if (! isTaken) {
-            return true;
-        } else {
-            return takenByAttorney == userId;
-        }
+    public boolean isClient() {
+        return false;
     }
 }

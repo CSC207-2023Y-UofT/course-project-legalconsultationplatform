@@ -4,12 +4,7 @@ import questionentities.Question;
 import userentities.User;
 
 // TODO: implement this class
-public class AttorneyRepository implements UserGateway{
-    final DatabaseConnection databaseConnection;
-
-    public AttorneyRepository(DatabaseConnection databaseConnection) {
-        this.databaseConnection = databaseConnection;
-    }
+public class AttorneyRepository implements AttorneyGateway{
 
     @Override
     public boolean existsById(int userId) {
@@ -27,11 +22,7 @@ public class AttorneyRepository implements UserGateway{
     }
 
     @Override
-    public String getPassword(int userId) {
-        return null;
-    }
-    @Override
-    public void updateQuestionList(Question question) {
+    public void updateQuestionList(int userId, Question question) {
 
     }
     @Override
