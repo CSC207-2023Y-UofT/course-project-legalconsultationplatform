@@ -13,11 +13,6 @@ import java.util.Date;
 
 // TODO: implement this class
 public class ClientRepository implements ClientGateway{
-    final DatabaseConnection databaseConnection;
-
-    public ClientRepository(DatabaseConnection databaseConnection) {
-        this.databaseConnection = databaseConnection;
-    }
 
     @Override
     public boolean existsById(int userId) {
@@ -41,7 +36,8 @@ public class ClientRepository implements ClientGateway{
 
     @Override
     public void addUser(User user) {
-        EntityManager entityManager = databaseConnection.getEntityManager();
+        EntityManagerFactory entityManagerFactory = DatabaseConnection.getEntityManagerFactory();
+        EntityManager entityManager = entityManagerFactory.createEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
         try {
             transaction.begin();

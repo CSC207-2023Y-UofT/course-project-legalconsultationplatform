@@ -5,22 +5,17 @@ import javax.persistence.Persistence;
 
 public class DatabaseConnection {
 
-    private static final String URL = "objectdb:127.0.0.1:6136/db/";
-    private String fileName;
-    private EntityManagerFactory entityManagerFactory;
+    private static final String URL = "objectdb:127.0.0.1:6136/db/LegalConsultationDB.odb";
+    private static EntityManagerFactory entityManagerFactory;
 
-    public DatabaseConnection(String fileName) {
-        this.fileName = fileName;
-    }
-
-    public EntityManager getEntityManager() {
+    public static EntityManagerFactory getEntityManagerFactory() {
         if (entityManagerFactory == null) {
-            entityManagerFactory = Persistence.createEntityManagerFactory(URL + fileName + ".odb");
+            entityManagerFactory = Persistence.createEntityManagerFactory(URL);
         }
-        return entityManagerFactory.createEntityManager();
+        return entityManagerFactory;
     }
 
-    public void closeEntityManager() {
+    public static void closeEntityManagerFactory() {
         if (entityManagerFactory != null && entityManagerFactory.isOpen()) {
             entityManagerFactory.close();
         }
