@@ -2,8 +2,6 @@ package userentities;
 
 import java.util.List;
 import questionentities.Question;
-
-import javax.persistence.Entity;
 import javax.persistence.MappedSuperclass;
 import javax.persistence.OneToMany;
 

@@ -84,5 +84,10 @@ public class ClientRepository implements ClientGateway{
         }
     }
 
+    public static void main(String[] args) {
+        ClientRepository clientRepository = new ClientRepository();
+        User user = clientRepository.getUser(10000001);
+        System.out.println(user.getUserId());
+    }
 }
 
