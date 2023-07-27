@@ -44,134 +44,43 @@ public class Question {
         this.posts = new ArrayList<Post>();
     }
 
-    public Question(int questionId, String type, LocalDate createAt, int askedByClient, boolean isTaken, int takenByAttorney,
-                    boolean isClose, int rating, List<Post> posts, LocalDate legalDeadline) {
-        this.questionId = questionId;
-        this.type = type;
-        this.createAt = createAt;
-        this.askedByClient = askedByClient;
-        this.isTaken = isTaken;
-        this.takenByAttorney = takenByAttorney;
-        this.isClose = isClose;
-        this.rating = rating;
-        this.posts = posts;
-        this.legalDeadline = legalDeadline;
-    }
+    public int getQuestionId() {return questionId;}
 
-    /**
-     *
-     *
-     * @return an int id represents the question
-     */
-    public int getQuestionId() {
-        return questionId;
-    }
+    public String getType() {return type;}
 
-    public String getType() {
-        return type;
-    }
+    public LocalDate getCreateAt() {return createAt;}
 
-    /**
-     *
-     * @return the client id of the client who asked the question
-     */
-    public int getAskedByClient() {
-        return askedByClient;
-    }
+    public int getAskedByClient() {return askedByClient;}
 
-    /**
-     *
-     * @return the timestamp when the client start the creation
-     */
-    public LocalDate getCreateAt() {
-        return createAt;
-    }
+    public LocalDate getLegalDeadline() {return legalDeadline;}
 
-    /**
-     *
-     * @return the legal deadline of the question
-     */
-    public LocalDate getLegalDeadline() {
-        return legalDeadline;
-    }
+    public boolean isTaken() {return isTaken;}
 
-    /**
-     *
-     * @return true iff the question has been answered by an attorney
-     */
-    public boolean isTaken() {
-        return isTaken;
-    }
+    public int getTakenByAttorney() {return takenByAttorney;}
 
-    /**
-     *
-     * @param taken whether the question has been taken
-     */
-    public void setIsTaken(boolean taken) {
-        isTaken = taken;
-    }
+    public boolean isClose() {return isClose;}
 
-    /**
-     *
-     * @return the attorney id of the attorney who answered the question
-     */
-    public int getTakenByAttorney() {
-        return takenByAttorney;
-    }
+    public int getRating() {return rating;}
 
-    /**
-     *
-     * @param takenByAttorney the attorney id of the attorney who answered the question
-     */
-    public void setTakenByAttorney(int takenByAttorney) {
-        this.takenByAttorney = takenByAttorney;
-    }
+    public List<Post> getPosts() {return posts;}
 
-    /**
-     *
-     * @return true iff the question has been closed
-     */
-    public boolean isClose() {
-        return isClose;
-    }
+    public void setQuestionId(int questionId) {this.questionId = questionId;}
 
-    /**
-     *
-     * @param close whether the question has been closed
-     */
-    public void setClose(boolean close) {
-        isClose = close;
-    }
+    public void setType(String type) {this.type = type;}
 
-    /**
-     *
-     * @param rating rating of the question
-     */
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
+    public void setCreateAt(LocalDate createAt) {this.createAt = createAt;}
 
-    /**
-     *
-     * @return a list of posts that belongs to the question thread
-     */
-    public List<Post> getPosts() {
-        return posts;
-    }
+    public void setAskedByClient(int askedByClient) {this.askedByClient = askedByClient;}
 
-    /**
-     *
-     * @param posts a list of posts
-     */
-    public void setPosts(List<Post> posts) {this.posts = posts;}
+    public void setLegalDeadline(LocalDate legalDeadline) {this.legalDeadline = legalDeadline;}
 
-    /**
-     * add post to the post list
-     *
-     * @param post a Post object to be added to the post list
-     */
-    public void addPosts(Post post) {
-        this.posts.add(post);
-    }
+    public void setTaken(boolean taken) {isTaken = taken;}
 
+    public void setTakenByAttorney(int takenByAttorney) {this.takenByAttorney = takenByAttorney;}
+
+    public void setClose(boolean close) {isClose = close;}
+
+    public void setRating(int rating) {this.rating = rating;}
+
+    public void addPosts(Post post) {this.posts.add(post);}
 }
