@@ -3,6 +3,7 @@ package gateway;
 import userentities.User;
 import questionentities.Question;
 
+
 public interface UserGateway {
     boolean existsById(int userId);
     boolean isClient(int userId);
