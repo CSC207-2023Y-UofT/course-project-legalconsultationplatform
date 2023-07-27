@@ -84,11 +84,5 @@ public class ClientRepository implements ClientGateway{
         }
     }
 
-    public static void main(String[] args) {
-        ClientRepository cr = new ClientRepository();
-        Client c = new Client();
-        cr.addUser(c);
-    }
-
 }
 
