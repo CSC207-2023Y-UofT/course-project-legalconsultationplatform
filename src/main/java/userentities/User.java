@@ -11,4 +11,5 @@ public interface User {
     void addQuestion(Question question);
     boolean isClient();
     boolean isQuestionCloseable(Question question);
+    boolean isQuestionSelectable(Question question);
 }
