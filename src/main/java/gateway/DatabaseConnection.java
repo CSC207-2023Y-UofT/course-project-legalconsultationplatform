@@ -5,14 +5,14 @@ import javax.persistence.Persistence;
 
 public class DatabaseConnection {
 
-    private static final String URL = "objectdb/db/LegalConsultationDB.odb";
+    private static final String URL = "objectdb:127.0.0.1:6136/db/LegalConsultationDB.odb";
     private static EntityManagerFactory entityManagerFactory;
 
-    public static EntityManager getEntityManager() {
+    public static EntityManagerFactory getEntityManagerFactory() {
         if (entityManagerFactory == null) {
             entityManagerFactory = Persistence.createEntityManagerFactory(URL);
         }
-        return entityManagerFactory.createEntityManager();
+        return entityManagerFactory;
     }
 
     public static void closeEntityManagerFactory() {
@@ -21,3 +21,4 @@ public class DatabaseConnection {
         }
     }
 }
+
