@@ -24,7 +24,7 @@ public class AttorneyRepositoryTest {
 
     List<Question> expectedQuestionsList = new ArrayList<Question>();
 
-    Attorney attorney = new Attorney(expectedAttorneyId, expectedPassword, expectedStateAbb, expectedPostalCode);
+    Attorney attorney = new Attorney();
 
     DatabaseConnection database = new DatabaseConnection();
     AttorneyRepository attorneyRepository = new AttorneyRepository();
