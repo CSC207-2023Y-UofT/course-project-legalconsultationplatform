@@ -5,7 +5,7 @@ import javax.persistence.Persistence;
 
 public class DatabaseConnection {
 
-    private static final String URL = "objectdb:127.0.0.1:6136/db/LegalConsultationDB.odb";
+    private static final String URL = "objectdb://localhost:6136/myapp.odb;admin";
     private static EntityManagerFactory entityManagerFactory;
 
     public static EntityManager getEntityManager() {
