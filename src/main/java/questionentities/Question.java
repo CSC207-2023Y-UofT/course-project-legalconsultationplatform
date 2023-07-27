@@ -52,6 +52,8 @@ public class Question {
 
     public int getAskedByClient() {return askedByClient;}
 
+    public LocalDate getLegalDeadline() {return legalDeadline;}
+
     public boolean isTaken() {return isTaken;}
 
     public int getTakenByAttorney() {return takenByAttorney;}
