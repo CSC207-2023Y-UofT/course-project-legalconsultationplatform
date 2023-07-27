@@ -47,7 +47,7 @@ public class ReplyInteractor implements PostInputBoundary{
         User user = userGateway.getUser(postRequestModel.getUserId());
         Question question = questionGateway.getQuestion(postRequestModel.getQuestionId());
         boolean isQuestionReplyable = user.isQuestionReplyable(question);
-        Post post = postFactory.create(getRandomId(), postRequestModel.getQuestionId(), now, postRequestModel.getPostText(), postRequestModel.getUserId();
+        Post post = postFactory.create(getRandomId(), postRequestModel.getQuestionId(), now, postRequestModel.getPostText(), postRequestModel.getUserId());
         questionGateway.updatePosts(postRequestModel.getQuestionId(), post);
         postGateway.savePost(post);
         MessageResponseModel messageResponseModel = new MessageResponseModel(); // 需要后续补充
