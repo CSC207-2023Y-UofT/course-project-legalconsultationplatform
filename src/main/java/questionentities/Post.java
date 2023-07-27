@@ -1,13 +1,20 @@
 package questionentities;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import java.time.LocalDate;
 
+@Entity
 public class Post {
-    private final int questionId;
-    private final int postId;
-    private final LocalDate createAt;
-    private final String postText;
+    private int questionId;
+    @Id
+    private int postId;
+    private LocalDate createAt;
+    private String postText;
 
+    public Post() {
+    }
 
     public Post(int questionId, int postId, LocalDate createAt, String postText){
         this.questionId = questionId;

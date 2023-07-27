@@ -1,5 +1,8 @@
 package questionentities;
 
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
@@ -10,20 +13,26 @@ import java.util.ArrayList;
  * Each question thread contain information about the type of the question, the client who asked the question,
  * whether the question has been taken and who took the question, and a list of post belongs to the question.
  */
+@Entity
 public class Question {
-    private final int questionId;
-    private final String type;
-    private final LocalDate createAt;
-    private final int askedByClient;
-    private final LocalDate legalDeadline;
+    @Id
+    private int questionId;
+    private String type;
+    private LocalDate createAt;
+    private int askedByClient;
+    private LocalDate legalDeadline;
     private boolean isTaken;
     private int takenByAttorney;
     private boolean isClose;
     private int rating;
+    @OneToMany
     private List<Post> posts;
 
     public static final int MISSING_RATING = -1;
 
+
+    public Question() {
+    }
 
     public Question(int questionId, String type, LocalDate createAt, int askedByClient, LocalDate legalDeadline) {
         this.questionId = questionId;
