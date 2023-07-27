@@ -8,11 +8,11 @@ public class DatabaseConnection {
     private static final String URL = "objectdb:127.0.0.1:6136/db/LegalConsultationDB.odb";
     private static EntityManagerFactory entityManagerFactory;
 
-    public static EntityManagerFactory getEntityManagerFactory() {
+    public static EntityManager getEntityManager() {
         if (entityManagerFactory == null) {
             entityManagerFactory = Persistence.createEntityManagerFactory(URL);
         }
-        return entityManagerFactory;
+        return entityManagerFactory.createEntityManager();
     }
 
     public static void closeEntityManagerFactory() {
