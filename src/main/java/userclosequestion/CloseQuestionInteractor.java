@@ -5,10 +5,10 @@ import presenter.MessageResponseModel;
 import presenter.TheQuestionOutputBoundary;
 import presenter.TheQuestionResponseModel;
 import questionentities.Question;
-import questiongateway.QuestionGateway;
+import gateway.QuestionGateway;
 import userentities.User;
-import usergateway.UserGateway;
-import usergateway.UserGatewayFactory;
+import gateway.UserGateway;
+import gateway.UserGatewayFactory;
 
 public class CloseQuestionInteractor implements CloseInputBoundary{
     final QuestionGateway questionGateway;

@@ -77,6 +77,17 @@ public class Attorney implements User{
     }
 
     @Override
+    public boolean isQuestionCloseable(Question question){
+        boolean isTaken = question.isTaken();
+        int takenByAttorney = question.getTakenByAttorney();
+        if (! isTaken) {
+            return false;
+        } else {
+            return takenByAttorney == userId;
+        }
+    }
+
+    @Override
     public boolean isClient() {
         return false;
     }

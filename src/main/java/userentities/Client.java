@@ -131,4 +131,9 @@ public class Client implements User{
         return true;
     }
 
+    @Override
+    public boolean isQuestionCloseable(Question question) {
+        boolean isClose = question.isClose();
+        return !isClose;
+    }
 }
