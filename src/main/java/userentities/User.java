@@ -16,5 +16,5 @@ public interface User {
     List<Question> getQuestionsList();
     void addQuestion(Question question);
     boolean isClient();
-    boolean isUserReplyable(User user);
+    boolean isQuestionReplyable(Question question);
 }

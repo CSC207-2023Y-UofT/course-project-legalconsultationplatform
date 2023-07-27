@@ -45,27 +45,18 @@ public class ReplyInteractor implements PostInputBoundary{
     public MessageResponseModel createPost(PostRequestModel postRequestModel) {
         LocalDate now = LocalDate.now();
         User user = userGateway.getUser(postRequestModel.getUserId());
-        boolean isUserReplyable = user.
-        if (user){
-            Question question = questionGateway.getQuestion(postRequestModel.getQuestionId());
-            if (question.isClose()){
-                return messageOutputBoundary.prepareFail("The question is closed already.");
-            } else if (question.isTaken()) {
-                if (question.getTakenByAttorney() != user.getUserId()){
-                    return messageOutputBoundary.prepareFail("The question is taken by other attorneys.");
-                }
-            }
-            else{
-                question.setTakenByAttorney(user.getUserId());
-            }
-        }
-        Post post = postFactory.create(getRandomId(), postRequestModel.getQuestionId(), now, postRequestModel.getPostText());
+        Question question = questionGateway.getQuestion(postRequestModel.getQuestionId());
+        boolean isQuestionReplyable = user.isQuestionReplyable(question);
+        Post post = postFactory.create(getRandomId(), postRequestModel.getQuestionId(), now, postRequestModel.getPostText(), postRequestModel.getUserId();
         questionGateway.updatePosts(postRequestModel.getQuestionId(), post);
-
         postGateway.savePost(post);
-
         MessageResponseModel messageResponseModel = new MessageResponseModel(); // 需要后续补充
         String message = new String("success");
-        return messageOutputBoundary.prepareSuccess(message);
+        if (isQuestionReplyable) {
+            return messageOutputBoundary.prepareSuccess(message);
+        }
+        else{
+            return messageOutputBoundary.prepareFail("You are not allowed to send this reply.");
+        }
     }
 }

@@ -132,11 +132,22 @@ public class Client implements User{
     }
 
     @Override
-    public boolean isUserReplyable(User user) {
-        if(!user.isClient()){
-
+    public boolean isQuestionReplyable(Question question) {
+        if (question.isClose()){
+            return false;
         }
-        return false;
+        else if(question.isTaken()){
+            if (question.getTakenByAttorney() != userId){
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+        else{
+            question.setTakenByAttorney(userId);
+            return true;
+        }
     }
 
 }
