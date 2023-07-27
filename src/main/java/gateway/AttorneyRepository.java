@@ -17,6 +17,11 @@ public class AttorneyRepository implements AttorneyGateway{
     }
 
     @Override
+    public boolean existsByName(String userName) {
+        return false;
+    }
+
+    @Override
     public boolean isClient(int userId) {
         return false;
     }

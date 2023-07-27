@@ -7,13 +7,15 @@ import java.util.ArrayList;
 public class Attorney implements User{
 
     private final int userId;
+    private final String userName;
     private final String password;
     private final String stateAbb;
     private final String postalCode;
     private List<Question> questionsList;
 
-    public Attorney(int userId, String password, String stateAbb, String postalCode) {
+    public Attorney(int userId, String userName, String password, String stateAbb, String postalCode) {
         this.userId = userId;
+        this.userName = userName;
         this.password = password;
         this.stateAbb = stateAbb;
         this.postalCode = postalCode;
@@ -23,6 +25,12 @@ public class Attorney implements User{
     public int getUserId() {
         return userId;
     }
+
+    @Override
+    public String getUserName() {
+        return userName;
+    }
+
     @Override
     public String getPassword() {
         return password;

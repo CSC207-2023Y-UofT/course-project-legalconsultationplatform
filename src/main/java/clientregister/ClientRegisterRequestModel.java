@@ -1,7 +1,7 @@
 package clientregister;
 
 public class ClientRegisterRequestModel {
-    private final int userId;
+    private final String userName;
     private final String password;
     private final String password2;
     private final String stateAbb;
@@ -13,12 +13,12 @@ public class ClientRegisterRequestModel {
     private final int numberOfHousehold;
     private final float annualIncome;
 
-    public ClientRegisterRequestModel(int userId, String password,
+    public ClientRegisterRequestModel(int userId, String userName, String password,
                                       String password2, String stateAbb,
                                       String postalCode, String ethnicity,
                                       int age, String gender, String maritalStatus,
                                       int numberOfHousehold, float annualIncome) {
-        this.userId = userId;
+        this.userName = userName;
         this.password = password;
         this.password2 = password2;
         this.stateAbb = stateAbb;
@@ -31,8 +31,8 @@ public class ClientRegisterRequestModel {
         this.annualIncome = annualIncome;
     }
 
-    public int getUserId() {
-        return userId;
+    public String getUserName() {
+        return userName;
     }
 
     public String getPassword() {

@@ -5,6 +5,7 @@ import questionentities.Question;
 
 public interface UserGateway {
     boolean existsById(int userId);
+    boolean existsByName(String userName);
     boolean isClient(int userId);
     User getUser(int userId);
     void updateQuestionList(Question question);
