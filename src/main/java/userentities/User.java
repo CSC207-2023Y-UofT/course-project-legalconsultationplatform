@@ -8,5 +8,5 @@ public interface User {
     String getPassword();
     List<Question> getQuestionsList();
     void addQuestion(Question question);
-    boolean isClient();
+
 }
