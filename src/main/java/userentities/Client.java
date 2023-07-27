@@ -131,4 +131,12 @@ public class Client implements User{
         return true;
     }
 
+    @Override
+    public boolean isUserReplyable(User user) {
+        if(!user.isClient()){
+
+        }
+        return false;
+    }
+
 }

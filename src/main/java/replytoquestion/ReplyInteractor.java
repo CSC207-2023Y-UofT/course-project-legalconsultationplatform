@@ -45,7 +45,8 @@ public class ReplyInteractor implements PostInputBoundary{
     public MessageResponseModel createPost(PostRequestModel postRequestModel) {
         LocalDate now = LocalDate.now();
         User user = userGateway.getUser(postRequestModel.getUserId());
-        if (!user.isClient()){
+        boolean isUserReplyable = user.
+        if (user){
             Question question = questionGateway.getQuestion(postRequestModel.getQuestionId());
             if (question.isClose()){
                 return messageOutputBoundary.prepareFail("The question is closed already.");
