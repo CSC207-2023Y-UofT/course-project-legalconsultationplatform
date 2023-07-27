@@ -27,9 +27,7 @@ public class AttorneyRepositoryTest {
     Attorney attorney = new Attorney(expectedAttorneyId, expectedPassword, expectedStateAbb, expectedPostalCode);
 
     DatabaseConnection database = new DatabaseConnection();
-    AttorneyRepository attorneyRepository = new AttorneyRepository(database);
-
-    attorneyRepository.
+    AttorneyRepository attorneyRepository = new AttorneyRepository();
 
 
 }

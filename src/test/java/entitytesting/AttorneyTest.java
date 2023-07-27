@@ -14,11 +14,6 @@ public class AttorneyTest {
         String expectedPassword = "a";
         String expectedStateAbb = "Test";
 
-        Post post = new Post(expectedQuestionId, expectedPostId, expectedCreateAt, testText);
-        assertEquals(expectedQuestionId, post.getQuestionId(), "QuestionId is wrong.");
-        assertEquals(expectedPostId, post.getPostId(), "PostId is wrong.");
-        assertEquals(expectedCreateAt, post.getCreateAt(), "CreateAt is wrong.");
-        assertEquals(testText, post.getPostText(), "PostText is wrong.");
     }
 
 }

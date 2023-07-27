@@ -52,5 +52,6 @@ public class ClientRepository implements ClientGateway{
             entityManager.close();
         }
     }
+
 }
 
