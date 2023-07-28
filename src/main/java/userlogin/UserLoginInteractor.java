@@ -26,6 +26,6 @@ public class UserLoginInteractor implements UserLoginInputBoundary{
         if (!inputPassword.equals(filedPassword)) {
             return outputBoundary.prepareFail("Password is incorrect");
         }
-        return outputBoundary.prepareSuccess();
+        return outputBoundary.prepareSuccess(inputUserId);
     }
 }

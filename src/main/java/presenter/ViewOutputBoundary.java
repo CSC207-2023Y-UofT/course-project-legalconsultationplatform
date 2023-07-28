@@ -1,7 +1,7 @@
 package presenter;
 
 public interface ViewOutputBoundary {
-    ViewResponseModel prepareFail(String msg);
+    String prepareFail(String msg);
   
     // TODO: complete method signature
     ViewResponseModel prepareSuccess();

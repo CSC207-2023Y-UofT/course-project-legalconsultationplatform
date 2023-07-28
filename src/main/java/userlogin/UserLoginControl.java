@@ -9,7 +9,7 @@ public class UserLoginControl {
         this.inputBoundary = inputBoundary;
     }
 
-    LoginResponseModel login(int userId, String password){
+    public LoginResponseModel login(int userId, String password){
         UserLoginRequestModel requestModel = new UserLoginRequestModel(userId, password);
         return inputBoundary.login(requestModel);
     }
