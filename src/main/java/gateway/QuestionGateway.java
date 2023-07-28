@@ -12,7 +12,7 @@ public interface QuestionGateway {
     List<Question> getNotTakenQuestion();
     List<Question> getNotClosedQuestion();
     void updateIsTaken(int questionId, boolean iaTaken);
-    void updateTakenByAttorney(int questionId, boolean attorneyId);
+    void updateTakenByAttorney(int questionId, int attorneyId);
     void updateIsClose(int questionId, boolean isClose);
     void updateRating(int questionId, int rating);
     void updatePosts(int questionId, Post post);
