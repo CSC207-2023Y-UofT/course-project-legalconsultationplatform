@@ -6,6 +6,7 @@ import javax.persistence.OneToMany;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * This is a class representing a question thread.
@@ -83,4 +84,19 @@ public class Question {
     public void setRating(int rating) {this.rating = rating;}
 
     public void addPosts(Post post) {this.posts.add(post);}
+
+    @Override
+    public int hashCode() {return Objects.hashCode(questionId);}
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Question)) return false;
+        Question otherQuestion = (Question) obj;
+        return questionId == otherQuestion.questionId;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("This is a %s type question asked by %d", type, askedByClient);
+    }
 }
