@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Objects;
 
 @Entity
 public class Attorney implements User{
@@ -105,5 +106,20 @@ public class Attorney implements User{
         } else {
             return takenByAttorney == userId;
         }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (! (obj instanceof Attorney)) return false;
+        Attorney otherAttorney = (Attorney) obj;
+        return userId == otherAttorney.userId;
+    }
+
+    @Override
+    public int hashCode() {return Objects.hashCode(userId);}
+
+    @Override
+    public String toString() {
+        return String.format("[Attorney]: %s", name);
     }
 }
