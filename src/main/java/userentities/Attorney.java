@@ -77,7 +77,33 @@ public class Attorney implements User{
     }
 
     @Override
+    public boolean isQuestionCloseable(Question question){
+        boolean isTaken = question.isTaken();
+        int takenByAttorney = question.getTakenByAttorney();
+        if (! isTaken) {
+            return false;
+        } else {
+            return takenByAttorney == userId;
+        }
+    }
+
+    @Override
     public boolean isClient() {
         return false;
+    }
+
+    @Override
+    public boolean isQuestionSelectable(Question question) {
+        boolean isClose = question.isClose();
+        boolean isTaken = question.isTaken();
+        int takenByAttorney = question.getTakenByAttorney();
+
+        if (isClose) {
+            return false;
+        } else if (! isTaken) {
+            return true;
+        } else {
+            return takenByAttorney == userId;
+        }
     }
 }

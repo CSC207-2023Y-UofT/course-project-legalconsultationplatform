@@ -16,4 +16,6 @@ public interface User {
     List<Question> getQuestionsList();
     void addQuestion(Question question);
     boolean isClient();
+    boolean isQuestionCloseable(Question question);
+    boolean isQuestionSelectable(Question question);
 }
