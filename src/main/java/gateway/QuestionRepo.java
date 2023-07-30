@@ -6,11 +6,6 @@ import questionentities.Question;
 import java.util.List;
 
 public class QuestionRepo implements QuestionGateway{
-    DatabaseConnection databaseConnection;
-
-    public QuestionRepo(DatabaseConnection databaseConnection) {
-        this.databaseConnection = databaseConnection;
-    }
 
     @Override
     public void saveQuestion(Question question) {

@@ -1,7 +1,10 @@
 package gateway;
 
 import questionentities.Question;
+import userentities.Attorney;
 import userentities.User;
+
+import java.util.List;
 
 // TODO: implement this class
 public class AttorneyRepository implements AttorneyGateway{
@@ -27,6 +30,10 @@ public class AttorneyRepository implements AttorneyGateway{
     }
     @Override
     public void addUser(User user) {
+    }
 
+    @Override
+    public List<Attorney> getAllAttorney() {
+        return null;
     }
 }
