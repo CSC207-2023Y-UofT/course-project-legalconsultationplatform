@@ -30,7 +30,6 @@ public class ClientRepository implements ClientGateway{
     public void updateQuestionList(Question question) {
 
     }
-
     @Override
     public void addUser(User user) {
 
