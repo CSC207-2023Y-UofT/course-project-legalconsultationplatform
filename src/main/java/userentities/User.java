@@ -5,6 +5,7 @@ import questionentities.Question;
 
 public interface User {
     int getUserId();
+    String getUserName();
     String getPassword();
     String getEmail();
     List<Question> getQuestionsList();
