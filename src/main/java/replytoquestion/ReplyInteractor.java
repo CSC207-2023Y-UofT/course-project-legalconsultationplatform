@@ -2,6 +2,7 @@ package replytoquestion;
 
 import gateway.PostGateway;
 import gateway.QuestionGateway;
+import gateway.RandomNumberGenerator;
 import gateway.UserGateway;
 import presenter.MessageOutputBoundary;
 import presenter.MessageResponseModel;
@@ -29,25 +30,14 @@ public class ReplyInteractor implements PostInputBoundary{
         this.userGateway = userGateway;
     }
 
-    public int getRandomId(){
-        Random rand = new Random();
-        int upperbound = 10000000;
-        int int_random = rand.nextInt(upperbound);
-        boolean ifExists = postGateway.checkExistsById(int_random);
-        while (ifExists) {
-            int_random = rand.nextInt(upperbound);
-            ifExists = postGateway.checkExistsById(int_random);
-        }
-        return int_random;
-    }
-
     @Override
     public MessageResponseModel createPost(PostRequestModel postRequestModel) {
+        RandomNumberGenerator randomNumberGenerator = new RandomNumberGenerator();
         LocalDate now = LocalDate.now();
         User user = userGateway.getUser(postRequestModel.getUserId());
         Question question = questionGateway.getQuestion(postRequestModel.getQuestionId());
         boolean isQuestionReplyable = user.isQuestionReplyable(question);
-        Post post = postFactory.create(getRandomId(), postRequestModel.getQuestionId(), now, postRequestModel.getPostText(), postRequestModel.getUserId());
+        Post post = postFactory.create(randomNumberGenerator.generatePostId(9), postRequestModel.getQuestionId(), now, postRequestModel.getPostText(), postRequestModel.getUserId());
         questionGateway.updatePosts(postRequestModel.getQuestionId(), post);
         postGateway.savePost(post);
         MessageResponseModel messageResponseModel = new MessageResponseModel(); // 需要后续补充

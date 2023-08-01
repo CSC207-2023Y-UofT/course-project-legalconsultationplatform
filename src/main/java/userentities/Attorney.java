@@ -39,6 +39,11 @@ public class Attorney implements User{
     }
 
     @Override
+    public String getUserName() {
+        return null;
+    }
+
+    @Override
     public String getPassword() {return password;}
 
     public String getName() {return name;}
@@ -78,6 +83,11 @@ public class Attorney implements User{
 
     @Override
     public boolean isClient() {
+        return false;
+    }
+
+    @Override
+    public boolean isQuestionReplyable(Question question) {
         return false;
     }
 }
