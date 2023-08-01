@@ -15,6 +15,8 @@ public class Main {
         client.setUserId(12345678);
         client.setPassword("abcdefgh");
 
+        DatabaseConnection databaseConnection = new DatabaseConnection(); // Data
+
         JFrame application = new JFrame("Legal Consultation Platform");
         CardLayout cardlayout = new CardLayout();
         JPanel screens = new JPanel(cardlayout);
@@ -24,8 +26,9 @@ public class Main {
         UserLoginInputBoundary userLoginInteractor = new UserLoginInteractor(repo, boundary);
         UserLoginControl control = new UserLoginControl(userLoginInteractor);
 
-        TheQuestionOutputBoundary theQuestionOutputBoundary = ;
-        AskQuestionInteractor askQuestionInteractor = new AskQuestionInteractor(repo, theQuestionOutputBoundary);
+        TheQuestionOutputBoundary theQuestionOutputBoundary = new AskQuestionResponseFormatter(cardlayout, screens);
+        QuestionGateway questionGateway = new QuestionRepo();
+        AskQuestionInteractor askQuestionInteractor = new AskQuestionInteractor(theQuestionOutputBoundary);
 
         LoginUI loginUI = new LoginUI(control);
         screens.add(loginUI, "login");
