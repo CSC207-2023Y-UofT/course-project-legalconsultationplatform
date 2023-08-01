@@ -1,6 +1,8 @@
-package userlogin;
+package presenter;
 
-import presenter.LoginResponseModel;
+import userlogin.LoginResponseModel;
+import userlogin.UserLoginInputBoundary;
+import userlogin.UserLoginRequestModel;
 
 public class UserLoginControl {
     final UserLoginInputBoundary inputBoundary;

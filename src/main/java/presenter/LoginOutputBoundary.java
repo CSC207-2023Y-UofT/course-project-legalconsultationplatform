@@ -1,6 +1,8 @@
 package presenter;
 
+import userlogin.LoginResponseModel;
+
 public interface LoginOutputBoundary {
     LoginResponseModel prepareFail(String msg);
-    LoginResponseModel prepareSuccess(int inputUserId);
+    LoginResponseModel prepareSuccess(LoginResponseModel response);
 }
