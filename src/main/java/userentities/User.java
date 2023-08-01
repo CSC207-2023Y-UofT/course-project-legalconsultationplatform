@@ -10,6 +10,7 @@ import javax.persistence.OneToMany;
 @MappedSuperclass
 public interface User {
     int getUserId();
+    String getUserName();
     String getPassword();
     String getEmail();
     @OneToMany
