@@ -3,7 +3,6 @@ import presenter.MessageOutputBoundary;
 import presenter.MessageResponseModel;
 import userentities.Client;
 import gateway.UserGateway;
-import org.apache.commons.validator.routines.EmailValidator;
 
 
 class ClientRegisterInteractor implements ClientRegisterInputBoundary{
@@ -21,6 +20,7 @@ class ClientRegisterInteractor implements ClientRegisterInputBoundary{
     @Override
     public MessageResponseModel create(ClientRegisterRequestModel requestModel){
         String inputUserName = requestModel.getUserName();
+        String inputEmail = requestModel.getEmail();
         String inputPassword1 = requestModel.getPassword();
         String inputPassword2 = requestModel.getPassword2();
         String inputStateAbb = requestModel.getStateAbb();
@@ -32,12 +32,19 @@ class ClientRegisterInteractor implements ClientRegisterInputBoundary{
         int inputNumberOfHousehold = requestModel.getNumberOfHousehold();
         float inputAnnualIncome = requestModel.getAnnualIncome();
 
+        CredentialChecker checker = new CredentialChecker();
         if (userGateway.existsByName(inputUserName)){
             return outputBoundary.prepareFail("User name already exists");
         } else if (!inputPassword1.equals(inputPassword2)) {
             return outputBoundary.prepareFail("Passwords does not match");
-        } else if (inputPassword1.length() <= 8){
-            return outputBoundary.prepareFail("Password is invalid");
+        } else if (inputPassword1.length() < 8){
+            return outputBoundary.prepareFail("Password is less than 8 characters");
+        } else if (!checker.checkEmail(inputEmail)){
+            return outputBoundary.prepareFail("Email is invalid");
+        } else if (!checker.checkAge(inputAge)){
+            return outputBoundary.prepareFail("Age is invalid");
+        } else if (!checker.checkPostalCode(inputPostalCode)){
+            return outputBoundary.prepareFail("Postal Code is invalid");
         }
         RandomNumberGenerator generator = new RandomNumberGenerator();
         int randomUserId = generator.generateClientId(8);
@@ -46,8 +53,9 @@ class ClientRegisterInteractor implements ClientRegisterInputBoundary{
             randomUserId = generator.generateClientId(8);
             exists = userGateway.existsById(randomUserId);
         }
-        Client client = clientFactory.create(randomUserId, inputUserName, inputPassword1, inputStateAbb, inputPostalCode, inputEthnicity,
-                inputAge, inputGender, inputMaritalStatus, inputNumberOfHousehold, inputAnnualIncome);
+        Client client = clientFactory.create(randomUserId, inputUserName, inputEmail,
+                inputPassword1, inputStateAbb, inputPostalCode, inputEthnicity, inputAge,
+                inputGender, inputMaritalStatus, inputNumberOfHousehold, inputAnnualIncome);
         userGateway.addUser(client);
         return outputBoundary.prepareSuccess("Client successfully registered");
     }

@@ -8,6 +8,7 @@ import java.util.List;
 public class Client implements User{
     private final int userId;
     private final String userName;
+    private final String email;
     private final String password;
     private final String stateAbb;
     private final String postalCode;
@@ -19,11 +20,12 @@ public class Client implements User{
     private final float annualIncome;
     private List<Question> questionsList;
 
-    public Client(int userId, String userName, String password, String stateAbb, String postalCode,
+    public Client(int userId, String userName, String email, String password, String stateAbb, String postalCode,
                   String ethnicity, int age, String gender, String maritalStatus,
                   int numberOfHousehold, float annualIncome){
         this.userId = userId;
         this.userName = userName;
+        this.email = email;
         this.password = password;
         this.stateAbb = stateAbb;
         this.postalCode = postalCode;
@@ -45,6 +47,9 @@ public class Client implements User{
         return userName;
     }
 
+    public String getEmail() {
+        return email;
+    }
     @Override
     public String getPassword() {
         return password;
