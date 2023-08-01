@@ -36,7 +36,7 @@ public class ClientRepositoryTest {
 
         Client client = new Client();
 
-        client.setUserId(1111112);
+        client.setUserId(1111113);
 
         ClientRepository clientRepository = new ClientRepository();
 
@@ -45,7 +45,7 @@ public class ClientRepositoryTest {
         int expectedQuestionId = 1000000;
         String expectedType = "test type";
         LocalDate expectedCreateAt = LocalDate.now();
-        int expectedAskedByClient = 1111112;
+        int expectedAskedByClient = 1111113;
         LocalDate expectedLegalDeadline = LocalDate.now();
 
         Question question = new Question(expectedQuestionId, expectedType, expectedCreateAt, expectedAskedByClient, expectedLegalDeadline);
