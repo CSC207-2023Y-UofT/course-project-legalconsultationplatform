@@ -2,6 +2,8 @@ package gateway;
 
 import questionentities.Post;
 import questionentities.Question;
+
+import java.time.LocalDate;
 import java.util.List;
 
 public interface QuestionGateway {
@@ -16,4 +18,6 @@ public interface QuestionGateway {
     void updateIsClose(int questionId, boolean isClose);
     void updateRating(int questionId, int rating);
     void updatePosts(int questionId, Post post);
+    void updateTakenAt(int questionId, LocalDate time);
+    public void deleteQuestion(int postId);
 }
