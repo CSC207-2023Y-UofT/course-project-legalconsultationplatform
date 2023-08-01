@@ -1,5 +1,5 @@
 package presenter;
-import screen.AttorneyHomePage;
+import screen.AttorneyHomePageUI;
 import screen.UserCreationFailed;
 import userlogin.LoginResponseModel;
 
@@ -26,7 +26,7 @@ public class LoginResponseFormatter implements LoginOutputBoundary{
     public LoginResponseModel prepareSuccess(LoginResponseModel response) {
         LocalDateTime responseTime = LocalDateTime.parse(response.getCreationTime());
         response.setCreationTime(responseTime.format(DateTimeFormatter.ofPattern("hh:mm:ss")));
-        AttorneyHomePage AttorneyHomePage = new AttorneyHomePage();
+        AttorneyHomePageUI AttorneyHomePage = new AttorneyHomePageUI();
         screens.add(AttorneyHomePage, "AttorneyHomePage");
         cardLayout.show(screens, "AttorneyHomePage");
         return response;
