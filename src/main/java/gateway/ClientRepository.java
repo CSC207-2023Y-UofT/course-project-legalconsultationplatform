@@ -26,6 +26,11 @@ public class ClientRepository implements ClientGateway{
     }
 
     @Override
+    public boolean existsByName(String userName) {
+        return false;
+    }
+
+    @Override
     public boolean isClient(int userId) {
         EntityManager entityManager = DatabaseConnection.getEntityManager();
         try {
