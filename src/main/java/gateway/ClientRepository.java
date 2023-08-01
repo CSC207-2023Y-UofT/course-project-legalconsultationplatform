@@ -13,6 +13,5 @@ import java.util.Date;
 
 // TODO: implement this class
 public class ClientRepository extends UserRepository implements ClientGateway{
-
 }
 
