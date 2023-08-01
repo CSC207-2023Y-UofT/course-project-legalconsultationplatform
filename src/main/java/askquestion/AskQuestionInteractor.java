@@ -2,6 +2,7 @@ package askquestion;
 
 import gateway.ClientGateway;
 import gateway.QuestionGateway;
+import gateway.RandomNumberGenerator;
 import presenter.TheQuestionOutputBoundary;
 import presenter.TheQuestionResponseModel;
 import questionentities.Question;
@@ -24,25 +25,13 @@ public class AskQuestionInteractor implements QuestionInputBoundary{
         this.clientGateway = clientGateway;
     }
 
-    public int getRandomId(){
-        Random rand = new Random();
-        int upperbound = 10000000;
-        int int_random = rand.nextInt(upperbound);
-        boolean ifExists = questionGateway.checkExistsByName(int_random);
-        while (ifExists) {
-            int_random = rand.nextInt(upperbound);
-            ifExists = questionGateway.checkExistsByName(int_random);
-        }
-        return int_random;
-    }
     public TheQuestionResponseModel createQuestion(QuestionRequestModel questionRequestModel){
+        RandomNumberGenerator randomNumberGenerator = new RandomNumberGenerator();
         if (questionRequestModel.getQuestionCategory() == null){
             return theQuestionOutputBoundary.prepareFail("fail");
         }
-        Random rand = new Random();
-        int upperbound = 10000000;
         LocalDate now = LocalDate.now();
-        Question question = questionFactory.create(getRandomId(), questionRequestModel.getQuestionCategory(), now, questionRequestModel.getAskedByClient(), questionRequestModel.getLegalDeadline());
+        Question question = questionFactory.create(randomNumberGenerator.generateQuestionId(9), questionRequestModel.getQuestionCategory(), now, questionRequestModel.getAskedByClient(), questionRequestModel.getLegalDeadline());
         questionGateway.saveQuestion(question);
 
         clientGateway.updateQuestionList(questionRequestModel.getAskedByClient(), question);
