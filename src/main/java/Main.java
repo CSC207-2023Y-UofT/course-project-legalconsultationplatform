@@ -1,3 +1,4 @@
+import askquestion.AskQuestionInteractor;
 import screen.*;
 import userentities.Client;
 import userlogin.*;
@@ -20,8 +21,11 @@ public class Main {
         application.add(screens);
 
         LoginOutputBoundary boundary = new LoginResponseFormatter(cardlayout, screens);
-        UserLoginInputBoundary interactor = new UserLoginInteractor(repo, boundary);
-        UserLoginControl control = new UserLoginControl(interactor);
+        UserLoginInputBoundary userLoginInteractor = new UserLoginInteractor(repo, boundary);
+        UserLoginControl control = new UserLoginControl(userLoginInteractor);
+
+        TheQuestionOutputBoundary theQuestionOutputBoundary = ;
+        AskQuestionInteractor askQuestionInteractor = new AskQuestionInteractor(repo, theQuestionOutputBoundary);
 
         LoginUI loginUI = new LoginUI(control);
         screens.add(loginUI, "login");

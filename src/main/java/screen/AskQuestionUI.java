@@ -6,6 +6,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.LocalDate;
 
 import static javax.swing.JOptionPane.showMessageDialog;
 
@@ -20,7 +21,8 @@ public class AskQuestionUI extends JPanel implements ActionListener{
     QuestionControl control;
     JTextField questionCategory = new JTextField(15);
     // 有问题
-    JPasswordField password = new JPasswordField(15);
+    JTextField clientId = new JTextField(15);
+    JTextField legalDeadline = new JTextField(15);
     /**
      * Creates new form UserLogin
      */
@@ -31,8 +33,9 @@ public class AskQuestionUI extends JPanel implements ActionListener{
         JLabel title = new JLabel("Ask Question Screen");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        LabelTextPanel userIdInfo = new LabelTextPanel(new JLabel("UserId"), userId);
-        LabelTextPanel passwordInfo = new LabelTextPanel(new JLabel("Password"), password);
+        LabelTextPanel questionCategoryInfo = new LabelTextPanel(new JLabel("questionCategory"), questionCategory);
+        LabelTextPanel clientIdInfo = new LabelTextPanel(new JLabel("clientId"), clientId);
+        LabelTextPanel legalDeadlineInfo = new LabelTextPanel(new JLabel("legalDeadline"), legalDeadline);
         JButton buttonToSubmit = new JButton("Submit");
 
         JPanel buttons = new JPanel();
@@ -42,8 +45,9 @@ public class AskQuestionUI extends JPanel implements ActionListener{
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(title);
-        this.add(userIdInfo);
-        this.add(passwordInfo);
+        this.add(questionCategoryInfo);
+        this.add(clientIdInfo);
+        this.add(legalDeadlineInfo);
         this.add(buttons);
 
     }
@@ -52,7 +56,7 @@ public class AskQuestionUI extends JPanel implements ActionListener{
         System.out.println("Click" + evt.getActionCommand());
 
         try {
-            control.login(Integer.parseInt(userId.getText()), String.valueOf(password.getPassword()));
+            control.createQuestion(questionCategory.getText(), LocalDate.now(), Integer.parseInt(clientId.getText()), LocalDate.parse(legalDeadline.getText()));
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(this, e.getMessage());
