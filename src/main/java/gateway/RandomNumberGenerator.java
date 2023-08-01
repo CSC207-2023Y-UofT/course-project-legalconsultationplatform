@@ -1,4 +1,4 @@
-package clientregister;
+package gateway;
 import java.util.Random;
 
 public class RandomNumberGenerator {
