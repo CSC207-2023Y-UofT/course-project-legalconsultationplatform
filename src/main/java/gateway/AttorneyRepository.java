@@ -5,11 +5,6 @@ import userentities.User;
 
 // TODO: implement this class
 public class AttorneyRepository implements AttorneyGateway{
-    final DatabaseConnection databaseConnection;
-
-    public AttorneyRepository(DatabaseConnection databaseConnection) {
-        this.databaseConnection = databaseConnection;
-    }
 
     @Override
     public boolean existsById(int userId) {
@@ -32,7 +27,7 @@ public class AttorneyRepository implements AttorneyGateway{
     }
 
     @Override
-    public void updateQuestionList(Question question) {
+    public void updateQuestionList(int userId, Question question) {
 
     }
     @Override

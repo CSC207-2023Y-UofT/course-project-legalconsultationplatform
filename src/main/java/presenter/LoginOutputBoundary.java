@@ -1,6 +1,6 @@
 package presenter;
 
 public interface LoginOutputBoundary {
-    TheQuestionResponseModel prepareFail(String msg);
-    TheQuestionResponseModel prepareSuccess();
+    LoginResponseModel prepareFail(String msg);
+    LoginResponseModel prepareSuccess();
 }

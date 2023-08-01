@@ -8,6 +8,6 @@ public interface UserGateway {
     boolean existsByName(String userName);
     boolean isClient(int userId);
     User getUser(int userId);
-    void updateQuestionList(Question question);
+    void updateQuestionList(int userId, Question question);
     void addUser(User user);
 }
