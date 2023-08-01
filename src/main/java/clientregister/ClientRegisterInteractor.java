@@ -1,5 +1,4 @@
 package clientregister;
-import gateway.RandomNumberGenerator;
 import presenter.MessageOutputBoundary;
 import presenter.MessageResponseModel;
 import userentities.Client;
