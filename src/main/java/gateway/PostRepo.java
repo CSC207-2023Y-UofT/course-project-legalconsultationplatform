@@ -1,17 +1,14 @@
 package gateway;
 
 import questionentities.Post;
-import userentities.User;
+import questionentities.Question;
+import userentities.Client;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
 public class PostRepo implements PostGateway{
-    DatabaseConnection databaseConnection;
 
-    public PostRepo(DatabaseConnection databaseConnection){
-        this.databaseConnection = databaseConnection;
-    }
     @Override
     public void savePost(Post post) {
         EntityManager entityManager = DatabaseConnection.getEntityManager();
@@ -50,4 +47,23 @@ public class PostRepo implements PostGateway{
             entityManager.close();
         }
     }
+
+    @Override
+    public void deletePost(int postId) {
+        EntityManager em = DatabaseConnection.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            Post post = em.find(Post.class, postId);
+            em.remove(post);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
 }

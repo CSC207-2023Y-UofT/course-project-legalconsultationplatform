@@ -28,6 +28,7 @@ public class Client implements User{
     private List<Question> questionsList;
 
     public Client() {
+        this.questionsList = new ArrayList<Question>();
     }
 
     public Client(int userId, String userName, String email, String password, String stateAbb, String postalCode,
