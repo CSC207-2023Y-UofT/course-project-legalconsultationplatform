@@ -24,6 +24,7 @@ public class Question {
     private LocalDate legalDeadline;
     private boolean isTaken;
     private int takenByAttorney;
+    private LocalDate takenAt;
     private boolean isClose;
     private int rating;
     @OneToMany
@@ -64,6 +65,8 @@ public class Question {
 
     public int getTakenByAttorney() {return takenByAttorney;}
 
+    public LocalDate getTakenAt() {return takenAt;}
+
     public boolean isClose() {return isClose;}
 
     public int getRating() {return rating;}
@@ -84,9 +87,26 @@ public class Question {
 
     public void setTakenByAttorney(int takenByAttorney) {this.takenByAttorney = takenByAttorney;}
 
+    public void setTakenAt(LocalDate takenAt) {this.takenAt = takenAt;}
+
     public void setClose(boolean close) {isClose = close;}
 
     public void setRating(int rating) {this.rating = rating;}
 
     public void addPosts(Post post) {this.posts.add(post);}
+
+    @Override
+    public int hashCode() {return Objects.hashCode(questionId);}
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Question)) return false;
+        Question otherQuestion = (Question) obj;
+        return questionId == otherQuestion.questionId;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("This is a %s type question asked by %d", type, askedByClient);
+    }
 }
