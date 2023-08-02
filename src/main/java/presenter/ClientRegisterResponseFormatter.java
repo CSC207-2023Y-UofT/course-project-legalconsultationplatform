@@ -1,5 +1,5 @@
 package presenter;
-import screen.UserCreationFailed;
+import screen.FailMessage;
 import clientregister.ClientRegisterResponseModel;
 
 import javax.swing.*;
@@ -18,7 +18,7 @@ public class ClientRegisterResponseFormatter implements ClientRegisterOutputBoun
 
     @Override
     public ClientRegisterResponseModel prepareFail(String msg) {
-        throw new UserCreationFailed(msg);
+        throw new FailMessage(msg);
     }
 
     @Override

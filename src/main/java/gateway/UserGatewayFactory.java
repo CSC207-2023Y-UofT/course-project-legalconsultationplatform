@@ -4,7 +4,6 @@ public class UserGatewayFactory {
 
     public UserGateway createUserGateway(int userId) {
         UserGateway userGateway;
-
         if (isClient(userId)) {
             userGateway = new ClientRepository();
         } else {
@@ -14,7 +13,7 @@ public class UserGatewayFactory {
     }
 
     // TODO: implement this method
-    private static boolean isClient(int userId) {
+    private static boolean isClient(int userId) throws {
         return false;
     }
 }

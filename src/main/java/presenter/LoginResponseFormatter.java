@@ -1,6 +1,6 @@
 package presenter;
 import screen.AttorneyHomePageUI;
-import screen.UserCreationFailed;
+import screen.FailMessage;
 import userlogin.LoginResponseModel;
 
 import javax.swing.*;
@@ -19,7 +19,7 @@ public class LoginResponseFormatter implements LoginOutputBoundary{
 
     @Override
     public LoginResponseModel prepareFail(String msg) {
-        throw new UserCreationFailed(msg);
+        throw new FailMessage(msg);
     }
 
     @Override

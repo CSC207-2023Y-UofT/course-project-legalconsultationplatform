@@ -1,12 +1,9 @@
 package presenter;
-import screen.AttorneyHomePageUI;
 import screen.ClientHomePageUI;
-import screen.UserCreationFailed;
+import screen.FailMessage;
 
 import javax.swing.*;
 import java.awt.*;
-import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
 
 public class AskQuestionResponseFormatter implements TheQuestionOutputBoundary{
     CardLayout cardLayout;
@@ -19,7 +16,7 @@ public class AskQuestionResponseFormatter implements TheQuestionOutputBoundary{
 
     @Override
     public TheQuestionResponseModel prepareFail(String msg) {
-        throw new UserCreationFailed(msg);
+        throw new FailMessage(msg);
     }
 
     @Override
