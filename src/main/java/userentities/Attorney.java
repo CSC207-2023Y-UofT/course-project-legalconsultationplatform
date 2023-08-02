@@ -20,6 +20,8 @@ public class Attorney implements User{
     private String postalCode;
     @OneToMany
     private List<Question> questionsList;
+    @OneToMany
+    private List<Question> recommendations;
 
     public Attorney() {
     }
@@ -32,6 +34,7 @@ public class Attorney implements User{
         this.stateAbb = stateAbb;
         this.postalCode = postalCode;
         this.questionsList = new ArrayList<Question>();
+        this.recommendations = new ArrayList<Question>();
     }
 
     @Override
@@ -71,6 +74,17 @@ public class Attorney implements User{
     public void setStateAbb(String stateAbb) {this.stateAbb = stateAbb;}
 
     public void setPostalCode(String postalCode) {this.postalCode = postalCode;}
+
+    public List<Question> getRecommendations() {return recommendations;}
+
+    public void addRecommendation(Question question) {
+        if (recommendations == null) {
+            recommendations = new ArrayList<Question>();
+        }
+        if (! recommendations.contains(question)) {
+            recommendations.add(question);
+        }
+    }
 
     @Override
     public void addQuestion(Question question) {

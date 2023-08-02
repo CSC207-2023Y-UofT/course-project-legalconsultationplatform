@@ -26,6 +26,17 @@ public class MatchingHandler {
         this.questionGateway = questionGateway;
     }
 
+    public void updateMatching(MatchingResult matchingResult) {
+        attorneyGateway.clearAllRecommendations();
+
+        for (Matching matching: matchingResult.getMatchingResult()){
+            Attorney attorney = (Attorney) attorneyGateway.getUser(matching.getAttorneyId());
+            Question question = questionGateway.getQuestion(matching.getQuestionId());
+            attorney.addRecommendation(question);
+            attorneyGateway.updateRecommendations(matching.getAttorneyId());
+        }
+    }
+
     // TODO: figure out how to decouple matchMap
     public MatchingResult getMatching() {
         List<Question> questionList = questionGateway.getNotTakenQuestion();

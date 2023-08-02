@@ -36,4 +36,14 @@ public class AttorneyRepository implements AttorneyGateway{
     public List<Attorney> getAllAttorney() {
         return null;
     }
+
+    @Override
+    public void clearAllRecommendations() {
+
+    }
+
+    @Override
+    public void updateRecommendations(int Userid) {
+
+    }
 }
