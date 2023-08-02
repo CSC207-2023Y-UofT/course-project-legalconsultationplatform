@@ -4,7 +4,6 @@ import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import java.time.LocalDate;
-import java.util.Objects;
 
 @Entity
 public class Post {
@@ -53,19 +52,4 @@ public class Post {
     public void setPostText(String postText) {this.postText = postText;}
 
     public void setBelongsTo(int belongsTo) {this.belongsTo = belongsTo;}
-
-    @Override
-    public int hashCode() {return Objects.hashCode(postId);}
-
-    @Override
-    public boolean equals(Object obj) {
-        if (!(obj instanceof Post)) return false;
-        Post otherPost = (Post) obj;
-        return postId == otherPost.postId;
-    }
-
-    @Override
-    public String toString() {
-        return String.format("This is a post in %d belongs to %d", questionId, belongsTo);
-    }
 }
