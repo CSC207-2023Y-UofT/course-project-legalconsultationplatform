@@ -1,7 +1,5 @@
 package presenter;
 
-import com.objectdb.o.SLP;
-
 import java.time.LocalDate;
 import java.time.LocalTime;
 

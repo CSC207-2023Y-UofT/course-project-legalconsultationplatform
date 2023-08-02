@@ -131,6 +131,15 @@ public class Client implements User{
         return true;
     }
 
+    @Override
+    public boolean isQuestionCloseable(Question question) {
+        return false;
+    }
+
+    @Override
+    public boolean isQuestionSelectable(Question question) {
+        return false;
+    }
 
 
 }

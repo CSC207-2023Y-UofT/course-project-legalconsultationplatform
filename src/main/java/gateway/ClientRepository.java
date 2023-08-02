@@ -23,5 +23,9 @@ public class ClientRepository extends UserRepository implements ClientGateway{
         }
     }
 
+    @Override
+    public boolean existsByName(String inputUserName) {
+        return false;
+    }
 }
 

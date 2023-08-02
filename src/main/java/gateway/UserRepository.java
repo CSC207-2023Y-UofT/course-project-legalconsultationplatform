@@ -7,7 +7,6 @@ import userentities.User;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-import static javax.jdo.JDOHelper.makeDirty;
 
 abstract class UserRepository implements UserGateway{
 
@@ -40,7 +39,7 @@ abstract class UserRepository implements UserGateway{
         try {
             transaction.begin();
             user.addQuestion(question);
-            makeDirty(user, "questionsList");
+            // makeDirty(user, "questionsList");
             transaction.commit();
         } catch (Exception e) {
             if (transaction.isActive()) {

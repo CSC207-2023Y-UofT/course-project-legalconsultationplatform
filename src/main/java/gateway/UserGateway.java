@@ -9,4 +9,6 @@ public interface UserGateway {
     void updateQuestionList(int userId, Question question);
     void addUser(User user);
     void deleteUser(int userId);
+
+    boolean existsByName(String inputUserName);
 }
