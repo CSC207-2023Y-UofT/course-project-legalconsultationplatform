@@ -26,12 +26,18 @@ public class MatchingHandler {
         this.questionGateway = questionGateway;
     }
 
-    public List<Map<Integer, Integer>> getMatching() {
+    // TODO: figure out how to decouple matchMap
+    public MatchingResult getMatching() {
         List<Question> questionList = questionGateway.getNotTakenQuestion();
         List<Attorney> attorneyList = attorneyGateway.getAllAttorney();
         Map<Map<Integer, Integer>, Double> weights = constructWeight(questionList, attorneyList);
 
-        return pythonMatching(getQuestionIdList(questionList), getAttorneyIdList(attorneyList), weights);
+        List<Map<Integer, Integer>> matchingResult = pythonMatching(getQuestionIdList(questionList), getAttorneyIdList(attorneyList), weights);
+        List<Matching> matchingList = new ArrayList<Matching>();
+        for (Map<Integer, Integer> matchMap: matchingResult) {
+            matchingList.add(new Matching());
+        }
+        return new MatchingResult(matchingList);
     }
 
     private double getProb(Client client, Question question, Attorney attorney) throws JepException {
