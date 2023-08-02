@@ -4,6 +4,7 @@ import gateway.PostGateway;
 import gateway.QuestionGateway;
 import clientregister.RandomNumberGenerator;
 import gateway.UserGateway;
+import gateway.UserGatewayFactory;
 import presenter.MessageOutputBoundary;
 import presenter.MessageResponseModel;
 import questionentities.Post;
@@ -20,20 +21,22 @@ public class ReplyInteractor implements PostInputBoundary{
     final PostGateway postGateway;
     final MessageOutputBoundary messageOutputBoundary;
     final PostFactory postFactory;
-    final UserGateway userGateway;
+    final UserGatewayFactory userGatewayFactory;
 
-    public ReplyInteractor(QuestionGateway questionGateway, PostGateway postGateway, MessageOutputBoundary messageOutputBoundary, PostFactory postFactory, UserGateway userGateway){
+    public ReplyInteractor(QuestionGateway questionGateway, PostGateway postGateway, MessageOutputBoundary messageOutputBoundary, PostFactory postFactory, UserGatewayFactory userGatewayFactory){
         this.questionGateway = questionGateway;
         this.postGateway = postGateway;
         this.messageOutputBoundary = messageOutputBoundary;
         this.postFactory = postFactory;
-        this.userGateway = userGateway;
+        this.userGatewayFactory = userGatewayFactory;
     }
 
     @Override
     public MessageResponseModel createPost(PostRequestModel postRequestModel) {
         RandomNumberGenerator randomNumberGenerator = new RandomNumberGenerator();
         LocalDate now = LocalDate.now();
+
+        UserGateway userGateway = userGatewayFactory.createUserGateway(postRequestModel.getUserId());
         User user = userGateway.getUser(postRequestModel.getUserId());
         Question question = questionGateway.getQuestion(postRequestModel.getQuestionId());
         boolean isQuestionReplyable = user.isQuestionReplyable(question);

@@ -145,7 +145,12 @@ public class Client implements User{
 
     @Override
     public boolean isQuestionReplyable(Question question) {
-        return false;
+        if (!question.isClose()){
+            return true;
+        }
+        else {
+            return false;
+        }
     }
 
     @Override

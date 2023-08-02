@@ -110,6 +110,21 @@ public class Attorney implements User{
 
     @Override
     public boolean isQuestionReplyable(Question question) {
+        if (!question.isClose()){
+            if (question.isTaken()) {
+                if (question.getTakenByAttorney() == userId){
+                    return true;
+                }
+                else {
+                    return false;
+                }
+            }
+            else {
+                question.setTaken(true);
+                question.setTakenByAttorney(userId);
+                return true;
+            }
+        }
         return false;
     }
 
