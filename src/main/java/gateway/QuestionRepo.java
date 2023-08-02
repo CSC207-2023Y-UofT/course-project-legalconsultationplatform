@@ -6,14 +6,10 @@ import userentities.User;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import java.time.LocalDate;
 import java.util.List;
 
 public class QuestionRepo implements QuestionGateway{
-    DatabaseConnection databaseConnection;
-
-    public QuestionRepo(DatabaseConnection databaseConnection) {
-        this.databaseConnection = databaseConnection;
-    }
 
     @Override
     public void saveQuestion(Question question) {
@@ -56,17 +52,34 @@ public class QuestionRepo implements QuestionGateway{
 
     @Override
     public List<Question> getAllQuestion() {
-        return null;
+        EntityManager em = DatabaseConnection.getEntityManager();
+        try {
+            return em.createQuery("SELECT q FROM Question q", Question.class).getResultList();
+        } finally {
+            em.close();
+        }
     }
 
     @Override
     public List<Question> getNotTakenQuestion() {
-        return null;
+        EntityManager em = DatabaseConnection.getEntityManager();
+        try {
+            return em.createQuery("SELECT q FROM Question q WHERE q.isTaken = False", Question.class)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
     }
 
     @Override
     public List<Question> getNotClosedQuestion() {
-        return null;
+        EntityManager em = DatabaseConnection.getEntityManager();
+        try {
+            return em.createQuery("SELECT q FROM Question q WHERE q.isClose = False", Question.class)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
     }
 
     @Override
@@ -77,6 +90,11 @@ public class QuestionRepo implements QuestionGateway{
             em.getTransaction().begin();
             question.setTaken(isTaken);
             em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
         } finally {
             em.close();
         }
@@ -90,6 +108,11 @@ public class QuestionRepo implements QuestionGateway{
             em.getTransaction().begin();
             question.setTakenByAttorney(attorneyId);
             em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
         } finally {
             em.close();
         }
@@ -103,6 +126,11 @@ public class QuestionRepo implements QuestionGateway{
             em.getTransaction().begin();
             question.setClose(isClose);
             em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
         } finally {
             em.close();
         }
@@ -116,6 +144,11 @@ public class QuestionRepo implements QuestionGateway{
             em.getTransaction().begin();
             question.setRating(rating);
             em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
         } finally {
             em.close();
         }
@@ -129,8 +162,50 @@ public class QuestionRepo implements QuestionGateway{
             em.getTransaction().begin();
             question.addPosts(post);
             em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
         } finally {
             em.close();
         }
     }
+
+    @Override
+    public void updateTakenAt(int questionId, LocalDate time) {
+        EntityManager em = DatabaseConnection.getEntityManager();
+        Question question = em.find(Question.class, questionId);
+        try {
+            em.getTransaction().begin();
+            question.setTakenAt(time);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public void deleteQuestion(int postId) {
+        EntityManager em = DatabaseConnection.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            Question question = em.find(Question.class, postId);
+            em.remove(question);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
 }
