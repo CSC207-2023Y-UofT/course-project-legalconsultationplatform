@@ -5,7 +5,7 @@ import userentities.Client;
 import gateway.UserGateway;
 
 
-class ClientRegisterInteractor implements ClientRegisterInputBoundary{
+public class ClientRegisterInteractor implements ClientRegisterInputBoundary{
     final UserGateway userGateway;
     final MessageOutputBoundary outputBoundary;
     final ClientFactory clientFactory;
