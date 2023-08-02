@@ -12,7 +12,7 @@ import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.*;
 ;
 
-public class AskQuestionUseCaseTest {
+public class ReplyUseCaseTest {
     @Test
     public void UseCaseTest(){
         ClientRepository repo = new ClientRepository();
