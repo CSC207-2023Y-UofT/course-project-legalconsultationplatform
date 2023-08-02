@@ -34,7 +34,7 @@ public class SelectQuestionInteractor implements SelectInputBoundary{
         Question question = questionGateway.getQuestion(questionId);
 
         boolean isQuestionSelectable = user.isQuestionSelectable(question);
-        TheQuestionResponseModel tempResponseModel = new TheQuestionResponseModel(111111, LocalDate.now());
+        TheQuestionResponseModel tempResponseModel = new TheQuestionResponseModel(questionId, LocalDate.now());
 
         // TODO: complete method call after finishing the presenter class
         if (isQuestionSelectable) {
