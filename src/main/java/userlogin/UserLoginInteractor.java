@@ -1,23 +1,26 @@
 package userlogin;
 
+import gateway.UserGatewayFactory;
 import presenter.LoginOutputBoundary;
 import presenter.LoginResponseModel;
 import gateway.UserGateway;
 import userentities.User;
 
 public class UserLoginInteractor implements UserLoginInputBoundary{
-    final UserGateway userGateway;
+    final UserGatewayFactory userGatewayFactory;
     final LoginOutputBoundary outputBoundary;
 
-    public UserLoginInteractor(UserGateway userGateway,
+    public UserLoginInteractor(UserGatewayFactory userGatewayFactory,
                                LoginOutputBoundary outputBoundary) {
-        this.userGateway = userGateway;
+        this.userGatewayFactory = userGatewayFactory;
         this.outputBoundary = outputBoundary;
     }
     @Override
     public LoginResponseModel login(UserLoginRequestModel requestModel){
         int inputUserId = requestModel.getUserId();
         String inputPassword = requestModel.getPassword();
+        UserGateway userGateway = userGatewayFactory.createUserGateway(inputUserId);
+
         if (!userGateway.existsById(inputUserId)) {
             return outputBoundary.prepareFail("UserId does not exist");
         }

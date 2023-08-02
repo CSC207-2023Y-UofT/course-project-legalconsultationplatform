@@ -14,7 +14,16 @@ public class UserGatewayFactory {
     }
 
     // TODO: implement this method
-    private static boolean isClient(int userId) {
-        return false;
+    private static boolean isClient(int userId) throws FailMessage {
+        try {
+            if (Integer.toString(userId).startsWith("1")) {
+                return false;
+            } else if (Integer.toString(userId).startsWith("2")) {
+                return true;
+            } else {
+                throw new FailMessage("UserId does not exist");
+            }
+        } catch (FailMessage e) {
+            System.out.println(e.getMessage());
+        }
     }
-}
