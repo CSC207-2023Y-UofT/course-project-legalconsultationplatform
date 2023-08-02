@@ -54,7 +54,7 @@ public class MatchingHandler {
     private double getProb(Client client, Question question, Attorney attorney) throws JepException {
         try (Interpreter jep = new SharedInterpreter()) {
             // Run python scrip of ml algo
-            jep.runScript("/Users/liuyifan/Desktop/CSC207Project/course-project-onlinelegalconsultation/Matching Algo/main.py");
+            jep.runScript("");
 
             // Serialize all entity
             String serializedClient = serializeEntity(client);
@@ -67,10 +67,11 @@ public class MatchingHandler {
         }
     }
 
+    // TODO: figure out how to return the correct value
     private List<Map<Integer, Integer>> pythonMatching(List<Integer> questions, List<Integer> attorneys, Map<Map<Integer, Integer>, Double> weights) {
         try (Interpreter jep = new SharedInterpreter()) {
 
-            jep.runScript("/Users/liuyifan/Desktop/CSC207Project/course-project-onlinelegalconsultation/Matching Algo/main.py");
+            jep.runScript("");
 
             String serializedQuestions= serializeEntity(questions);
             String serializedAttorneys = serializeEntity(attorneys);
