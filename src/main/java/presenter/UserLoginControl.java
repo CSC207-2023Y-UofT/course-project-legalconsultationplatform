@@ -1,6 +1,8 @@
-package userlogin;
+package presenter;
 
-import presenter.LoginResponseModel;
+import userlogin.LoginResponseModel;
+import userlogin.UserLoginInputBoundary;
+import userlogin.UserLoginRequestModel;
 
 public class UserLoginControl {
     final UserLoginInputBoundary inputBoundary;
@@ -9,7 +11,7 @@ public class UserLoginControl {
         this.inputBoundary = inputBoundary;
     }
 
-    LoginResponseModel login(int userId, String password){
+    public LoginResponseModel login(int userId, String password){
         UserLoginRequestModel requestModel = new UserLoginRequestModel(userId, password);
         return inputBoundary.login(requestModel);
     }

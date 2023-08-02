@@ -1,5 +1,6 @@
 package askquestion;
 
+import clientregister.RandomNumberGenerator;
 import gateway.ClientGateway;
 import gateway.QuestionGateway;
 import presenter.TheQuestionOutputBoundary;
@@ -24,31 +25,19 @@ public class AskQuestionInteractor implements QuestionInputBoundary{
         this.clientGateway = clientGateway;
     }
 
-    public int getRandomId(){
-        Random rand = new Random();
-        int upperbound = 10000000;
-        int int_random = rand.nextInt(upperbound);
-        boolean ifExists = questionGateway.checkExistsByName(int_random);
-        while (ifExists) {
-            int_random = rand.nextInt(upperbound);
-            ifExists = questionGateway.checkExistsByName(int_random);
-        }
-        return int_random;
-    }
+
     public TheQuestionResponseModel createQuestion(QuestionRequestModel questionRequestModel){
+        RandomNumberGenerator randomNumberGenerator = new RandomNumberGenerator();
         if (questionRequestModel.getQuestionCategory() == null){
             return theQuestionOutputBoundary.prepareFail("fail");
         }
-        Random rand = new Random();
-        int upperbound = 10000000;
         LocalDate now = LocalDate.now();
-        Question question = questionFactory.create(getRandomId(), questionRequestModel.getQuestionCategory(), now, questionRequestModel.getAskedByClient(), questionRequestModel.getLegalDeadline());
+        Question question = questionFactory.create(randomNumberGenerator.generateQuestionId(9), questionRequestModel.getQuestionCategory(), questionRequestModel.getTitle(), now, questionRequestModel.getAskedByClient(), questionRequestModel.getLegalDeadline());
         questionGateway.saveQuestion(question);
 
         clientGateway.updateQuestionList(questionRequestModel.getAskedByClient(), question);
 
-        TheQuestionResponseModel theQuestionResponseModel = new TheQuestionResponseModel();
-        // 理论上说，response model里要放东西，然后prepareSuccess里面要放这个responseModel.
-        return theQuestionOutputBoundary.prepareSuccess();
+        TheQuestionResponseModel theQuestionResponseModel = new TheQuestionResponseModel(questionRequestModel.getAskedByClient(), now);
+        return theQuestionOutputBoundary.prepareSuccess(theQuestionResponseModel);
     }
 }

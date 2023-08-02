@@ -9,6 +9,8 @@ import gateway.UserGateway;
 import gateway.UserGatewayFactory;
 import gateway.DatabaseConnection;
 
+import java.time.LocalDate;
+
 public class SelectQuestionInteractor implements SelectInputBoundary{
     final QuestionGateway questionGateway;
     final TheQuestionOutputBoundary theQuestionOutputBoundary;
@@ -32,10 +34,11 @@ public class SelectQuestionInteractor implements SelectInputBoundary{
         Question question = questionGateway.getQuestion(questionId);
 
         boolean isQuestionSelectable = user.isQuestionSelectable(question);
+        TheQuestionResponseModel tempResponseModel = new TheQuestionResponseModel(questionId, LocalDate.now());
 
         // TODO: complete method call after finishing the presenter class
         if (isQuestionSelectable) {
-            return theQuestionOutputBoundary.prepareSuccess();
+            return theQuestionOutputBoundary.prepareSuccess(tempResponseModel);
         } else {
             return theQuestionOutputBoundary.prepareFail("This question is not accessible.");
         }
