@@ -12,7 +12,7 @@ public class AttorneyRepository implements AttorneyGateway{
     }
 
     @Override
-    public boolean isClient(int userId) {
+    public boolean existsByName(String userName) {
         return false;
     }
 
@@ -27,6 +27,11 @@ public class AttorneyRepository implements AttorneyGateway{
     }
     @Override
     public void addUser(User user) {
+
+    }
+
+    @Override
+    public void deleteUser(int userId) {
 
     }
 }

@@ -1,13 +1,12 @@
-package presenter;
+package userlogin;
 
-import java.time.LocalDate;
 import java.time.LocalTime;
 
-public class TheQuestionResponseModel {
+public class LoginResponseModel {
     int userId;
-    LocalDate creationTime;
+    String creationTime;
 
-    public TheQuestionResponseModel(int userId, LocalDate creationTime) {
+    public LoginResponseModel(int userId, String creationTime) {
         this.userId = userId;
         this.creationTime = creationTime;
     }
@@ -15,7 +14,7 @@ public class TheQuestionResponseModel {
     public int getUserId() {
         return userId;
     }
-    public LocalDate getCreationTime() {
+    public String getCreationTime() {
         return creationTime;
     }
 
@@ -23,7 +22,7 @@ public class TheQuestionResponseModel {
         this.userId = userId;
     }
 
-    public void setCreationTime(LocalDate creationTime) {
+    public void setCreationTime(String creationTime) {
         this.creationTime = creationTime;
     }
 }
