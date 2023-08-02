@@ -124,7 +124,12 @@ public class Client implements User{
 
     @Override
     public void addQuestion(Question question) {
-        questionsList.add(question);
+        if (questionsList == null) {
+            questionsList = new ArrayList<>();
+        }
+        if (! questionsList.contains(question)) {
+            questionsList.add(question);
+        }
     }
 
     @Override
