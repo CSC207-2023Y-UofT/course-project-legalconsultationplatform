@@ -7,6 +7,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 public class Client implements User{
@@ -123,7 +124,12 @@ public class Client implements User{
 
     @Override
     public void addQuestion(Question question) {
-        questionsList.add(question);
+        if (questionsList == null) {
+            questionsList = new ArrayList<>();
+        }
+        if (! questionsList.contains(question)) {
+            questionsList.add(question);
+        }
     }
 
     @Override
@@ -133,13 +139,38 @@ public class Client implements User{
 
     @Override
     public boolean isQuestionCloseable(Question question) {
-        return false;
+        boolean isClose = question.isClose();
+        return !isClose;
     }
 
     @Override
     public boolean isQuestionSelectable(Question question) {
-        return false;
+        return true;
     }
 
+    @Override
+    public boolean isQuestionReplyable(Question question) {
+        if (!question.isClose()){
+            return true;
+        } else {
+            return false;
+        }
+    }
 
+    @Override
+    public int hashCode() {return Objects.hashCode(userId);}
+
+    @Override
+    public boolean equals(Object obj) {
+        if (!(obj instanceof Client)) return false;
+        Client otherClient = (Client) obj;
+        return userId == otherClient.userId;
+    }
+
+    @Override
+    public String toString() {
+        return String.format("[Client]: %s", userName);
+    }
 }
+
+
