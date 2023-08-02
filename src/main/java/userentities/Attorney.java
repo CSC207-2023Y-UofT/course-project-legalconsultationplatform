@@ -112,14 +112,8 @@ public class Attorney implements User{
     public boolean isQuestionReplyable(Question question) {
         if (!question.isClose()){
             if (question.isTaken()) {
-                if (question.getTakenByAttorney() == userId){
-                    return true;
-                }
-                else {
-                    return false;
-                }
-            }
-            else {
+                return question.getTakenByAttorney() == userId;
+            } else {
                 question.setTaken(true);
                 question.setTakenByAttorney(userId);
                 return true;

@@ -147,8 +147,7 @@ public class Client implements User{
     public boolean isQuestionReplyable(Question question) {
         if (!question.isClose()){
             return true;
-        }
-        else {
+        } else {
             return false;
         }
     }

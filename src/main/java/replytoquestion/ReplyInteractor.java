@@ -43,10 +43,8 @@ public class ReplyInteractor implements PostInputBoundary{
         Post post = postFactory.create(randomNumberGenerator.generatePostId(9), postRequestModel.getQuestionId(), now, postRequestModel.getPostText(), postRequestModel.getUserId());
         questionGateway.updatePosts(postRequestModel.getQuestionId(), post);
         postGateway.savePost(post);
-        MessageResponseModel messageResponseModel = new MessageResponseModel(); // 需要后续补充
-        String message = new String("success");
         if (isQuestionReplyable) {
-            return messageOutputBoundary.prepareSuccess(message);
+            return messageOutputBoundary.prepareSuccess("success");
         }
         else{
             return messageOutputBoundary.prepareFail("You are not allowed to send this reply.");
