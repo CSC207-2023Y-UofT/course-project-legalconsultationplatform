@@ -59,7 +59,7 @@ public class AskQuestionUI extends JPanel implements ActionListener{
         System.out.println("Click" + evt.getActionCommand());
 
         try {
-            control.createQuestion(questionCategory.getText(), LocalDate.now(), Integer.parseInt(clientId.getText()), LocalDate.parse(legalDeadline.getText()));
+            control.createQuestion(questionCategory.getText(), titleForQuestion.getText(), LocalDate.now(), Integer.parseInt(clientId.getText()), LocalDate.parse(legalDeadline.getText()));
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(this, e.getMessage());
