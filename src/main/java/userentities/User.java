@@ -3,6 +3,8 @@ package userentities;
 import java.util.List;
 import questionentities.Question;
 
+import javax.persistence.Entity;
+
 public interface User {
     int getUserId();
     String getPassword();
