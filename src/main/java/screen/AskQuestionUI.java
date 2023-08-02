@@ -15,16 +15,17 @@ import static javax.swing.JOptionPane.showMessageDialog;
 
 /**
  *
- * @author kaxi
+ * @author joseph
  */
 public class AskQuestionUI extends JPanel implements ActionListener{
     QuestionControl control;
     JTextField questionCategory = new JTextField(15);
     // 有问题
+    JTextField titleForQuestion = new JTextField(15);
     JTextField clientId = new JTextField(15);
     JTextField legalDeadline = new JTextField(15);
     /**
-     * Creates new form UserLogin
+     * Creates new form AskQuestion
      */
     public AskQuestionUI(QuestionControl control) {
 
@@ -35,6 +36,7 @@ public class AskQuestionUI extends JPanel implements ActionListener{
 
         LabelTextPanel questionCategoryInfo = new LabelTextPanel(new JLabel("questionCategory"), questionCategory);
         LabelTextPanel clientIdInfo = new LabelTextPanel(new JLabel("clientId"), clientId);
+        LabelTextPanel titleInfo = new LabelTextPanel(new JLabel("title"), titleForQuestion);
         LabelTextPanel legalDeadlineInfo = new LabelTextPanel(new JLabel("legalDeadline"), legalDeadline);
         JButton buttonToSubmit = new JButton("Submit");
 
@@ -47,6 +49,7 @@ public class AskQuestionUI extends JPanel implements ActionListener{
         this.add(title);
         this.add(questionCategoryInfo);
         this.add(clientIdInfo);
+        this.add(titleInfo);
         this.add(legalDeadlineInfo);
         this.add(buttons);
 
