@@ -6,6 +6,7 @@ import javax.persistence.OneToMany;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * This is a class representing a question thread.
