@@ -109,6 +109,20 @@ public class Attorney implements User{
     }
 
     @Override
+    public boolean isQuestionReplyable(Question question) {
+        if (!question.isClose()){
+            if (question.isTaken()) {
+                return question.getTakenByAttorney() == userId;
+            } else {
+                question.setTaken(true);
+                question.setTakenByAttorney(userId);
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public boolean equals(Object obj) {
         if (! (obj instanceof Attorney)) return false;
         Attorney otherAttorney = (Attorney) obj;
