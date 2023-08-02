@@ -13,4 +13,5 @@ public interface User {
     boolean isClient();
     boolean isQuestionCloseable(Question question);
     boolean isQuestionSelectable(Question question);
+    boolean isQuestionReplyable(Question question);
 }

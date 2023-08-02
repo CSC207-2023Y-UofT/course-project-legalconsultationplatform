@@ -144,6 +144,11 @@ public class Client implements User{
     }
 
     @Override
+    public boolean isQuestionReplyable(Question question) {
+        return false;
+    }
+
+    @Override
     public int hashCode() {return Objects.hashCode(userId);}
 
     @Override
