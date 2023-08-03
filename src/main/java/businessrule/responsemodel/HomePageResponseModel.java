@@ -1,8 +1,8 @@
 package businessrule.responsemodel;
 
 public class HomePageResponseModel {
-    private int userId;
-    private String userName;
+    private final int userId;
+    private final String userName;
 
     public HomePageResponseModel(int userId, String userName) {
         this.userId = userId;
@@ -13,15 +13,7 @@ public class HomePageResponseModel {
         return userId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
     public String getUserName() {
         return userName;
-    }
-
-    public void setUserName(String userName) {
-        this.userName = userName;
     }
 }

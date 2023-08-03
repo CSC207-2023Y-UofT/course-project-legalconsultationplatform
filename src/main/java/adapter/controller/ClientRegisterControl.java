@@ -5,7 +5,7 @@ import businessrule.requestmodel.ClientRegisterRequestModel;
 import businessrule.responsemodel.RegisterResponseModel;
 
 public class ClientRegisterControl {
-    final ClientRegisterInputBoundary inputBoundary;
+    private final ClientRegisterInputBoundary inputBoundary;
 
     public ClientRegisterControl(ClientRegisterInputBoundary inputBoundary) {
         this.inputBoundary = inputBoundary;

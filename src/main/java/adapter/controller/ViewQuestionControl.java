@@ -5,7 +5,7 @@ import businessrule.inputboundary.ViewInputBoundary;
 import businessrule.requestmodel.ViewRequestModel;
 
 public class ViewQuestionControl {
-    final ViewInputBoundary viewInputBoundary;
+    private final ViewInputBoundary viewInputBoundary;
 
     public ViewQuestionControl(ViewInputBoundary viewInputBoundary) {
         this.viewInputBoundary = viewInputBoundary;

@@ -1,7 +1,7 @@
 package businessrule.requestmodel;
 
 public class BrowseRequestModel {
-    private int attorneyId;
+    private final int attorneyId;
 
     public BrowseRequestModel(int attorneyId) {
         this.attorneyId = attorneyId;
@@ -9,9 +9,5 @@ public class BrowseRequestModel {
 
     public int getAttorneyId() {
         return attorneyId;
-    }
-
-    public void setAttorneyId(int attorneyId) {
-        this.attorneyId = attorneyId;
     }
 }

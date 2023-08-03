@@ -36,7 +36,7 @@ public class CloseQuestionInteractor implements CloseInputBoundary {
             return homePageOutputBoundary.prepareSuccess(homePageResponseModel);
         }
         else{
-            return homePageOutputBoundary.prepareFail("This question cannot close");
+            return homePageOutputBoundary.prepareFail("You cannot close this question!");
         }
 
     }

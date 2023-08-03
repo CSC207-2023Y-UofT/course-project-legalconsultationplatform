@@ -5,7 +5,7 @@ import businessrule.requestmodel.UserLoginRequestModel;
 import businessrule.responsemodel.HomePageResponseModel;
 
 public class UserLoginControl {
-    final UserLoginInputBoundary inputBoundary;
+    private final UserLoginInputBoundary inputBoundary;
 
     public UserLoginControl(UserLoginInputBoundary inputBoundary) {
         this.inputBoundary = inputBoundary;

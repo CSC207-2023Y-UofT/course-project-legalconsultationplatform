@@ -72,6 +72,7 @@ public class Attorney implements User {
 
     public void setPostalCode(String postalCode) {this.postalCode = postalCode;}
 
+
     @Override
     public void addQuestion(Question question) {
         if (questionsList == null) {

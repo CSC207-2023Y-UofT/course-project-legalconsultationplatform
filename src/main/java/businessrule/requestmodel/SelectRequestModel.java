@@ -1,8 +1,8 @@
 package businessrule.requestmodel;
 
 public class SelectRequestModel {
-    private int questionId;
-    private int userId;
+    private final int questionId;
+    private final int userId;
 
     public SelectRequestModel(int questionId, int userId) {
         this.questionId = questionId;
@@ -15,13 +15,5 @@ public class SelectRequestModel {
 
     public int getUserId() {
         return userId;
-    }
-
-    public void setQuestionId(int questionId) {
-        this.questionId = questionId;
-    }
-
-    public void setUserId(int userId) {
-        this.userId = userId;
     }
 }

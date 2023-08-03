@@ -5,7 +5,7 @@ import businessrule.requestmodel.PostRequestModel;
 import businessrule.responsemodel.HomePageResponseModel;
 
 public class PostControl {
-    final PostInputBoundary postInput;
+    private final PostInputBoundary postInput;
 
     public PostControl(PostInputBoundary postInput){
         this.postInput = postInput;

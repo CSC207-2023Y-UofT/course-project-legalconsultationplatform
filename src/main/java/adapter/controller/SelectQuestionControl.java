@@ -5,7 +5,7 @@ import businessrule.inputboundary.SelectInputBoundary;
 import businessrule.requestmodel.SelectRequestModel;
 
 public class SelectQuestionControl {
-    final SelectInputBoundary selectInputBoundary;
+    private final SelectInputBoundary selectInputBoundary;
 
     public SelectQuestionControl(SelectInputBoundary selectInputBoundary) {
         this.selectInputBoundary = selectInputBoundary;
