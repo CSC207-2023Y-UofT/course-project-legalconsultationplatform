@@ -1,16 +1,22 @@
-import askquestion.AskQuestionInteractor;
-import askquestion.QuestionControl;
-import askquestion.QuestionFactory;
-import askquestion.QuestionInputBoundary;
-import screen.*;
-import userentities.Client;
-import userlogin.*;
-import gateway.*;
-import presenter.*;
+import businessrule.gateway.ClientGateway;
+import businessrule.inputboundary.UserLoginInputBoundary;
+import businessrule.outputboundary.TheQuestionOutputBoundary;
+import businessrule.usecase.AskQuestionInteractor;
+import adapter.controller.QuestionControl;
+import driver.database.ClientRepository;
+import driver.database.QuestionGateway;
+import driver.database.QuestionRepo;
+import driver.screen.AskQuestionUI;
+import driver.screen.LoginUI;
+import entity.QuestionFactory;
+import businessrule.inputboundary.QuestionInputBoundary;
+import adapter.controller.UserLoginControl;
+import businessrule.usecase.UserLoginInteractor;
+import entity.Client;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
+
 public class Main {
     public static void main(String[] args) {
         ClientRepository repo = new ClientRepository();
