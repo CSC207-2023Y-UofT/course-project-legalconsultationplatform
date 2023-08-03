@@ -23,6 +23,9 @@ public class TheQuestionUI extends JPanel implements ActionListener {
     LocalDate deadline;
     Map<Integer, PostDisplayFormatter> postMap;
 
+    String[] rateList = {"Satisfied", "Not satisfied"};
+    JComboBox<String> rate = new JComboBox<>(rateList);
+
     public TheQuestionUI(ControlContainer controlContainer, CardLayout cardLayout,
                          JPanel screens, int userId, String userName,  String title,
                          String type, LocalDate deadline, Map<Integer, PostDisplayFormatter> postMap) {
@@ -88,6 +91,9 @@ public class TheQuestionUI extends JPanel implements ActionListener {
         inputPostArea.setWrapStyleWord(true);
         inputPostArea.setPreferredSize(new Dimension(400, 100));
 
+        //The rate function
+        DropDownPanel ratePanel = new DropDownPanel(new JLabel("Rate this question"), rate);
+
         //The three buttons
         JPanel buttons = new JPanel();
         JButton postReply = new JButton("Post reply");
@@ -107,27 +113,24 @@ public class TheQuestionUI extends JPanel implements ActionListener {
         this.add(deadlineLine);
         this.add(postScrollPane);
         this.add(inputPostArea);
+        this.add(ratePanel);
         this.add(buttons);
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
-        if ("Ask new question".equals(actionCommand)){
-            AskQuestionUI askQuestionUI = new AskQuestionUI();
-            screens.add(askQuestionUI, "askQuestion");
-            cardLayout.show(screens, "askQuestion");
-            System.out.println("Ask question page showed");
-        } else if ("View question history".equals(actionCommand)){
-            QuestionListUI questionHistoryUI = new QuestionListUI();
-            screens.add(questionHistoryUI, "questionHistory");
-            cardLayout.show(screens, "questionHistory");
-            System.out.println("Question history showed");
-        } else if ("Rate past questions".equals(actionCommand)){
-            QuestionListUI rateQuestionUI = new QuestionListUI();
-            screens.add(rateQuestionUI, "rateQuestion");
-            cardLayout.show(screens, "rateQuestion");
-            System.out.print("Rate questions showed");
+        if ("Post Reply".equals(actionCommand)){
+            TheQuestionUI questionUI = new TheQuestionUI();
+            screens.add(questionUI, "question");
+            cardLayout.show(screens, "question");
+            System.out.println("Updated question showed");
+        } else if ("Close question".equals(actionCommand)){
+            cardLayout.show(screens, "clientHomePage");
+            System.out.println("Return to client home page");
+        } else if ("Rate question".equals(actionCommand)){
+            cardLayout.show(screens, "ClientHomePage");
+            System.out.print("Return to client home page after rating");
         }
     }
 }
