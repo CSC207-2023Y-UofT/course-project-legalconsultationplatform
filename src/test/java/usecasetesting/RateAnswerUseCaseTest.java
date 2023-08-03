@@ -6,6 +6,9 @@ import org.junit.jupiter.api.Test;
 
 import gateway.*;
 import presenter.*;
+import userrateanswer.RateInputBoundary;
+import userrateanswer.RateInteractor;
+import userrateanswer.RateRequestModel;
 
 import java.time.LocalDate;
 
@@ -13,35 +16,33 @@ import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.*;
 ;
 
-public class ReplyUseCaseTest {
+public class RateAnswerUseCaseTest {
     @Test
     public void UseCaseTest(){
         MessageOutputBoundary messageOutputBoundary = new MessageOutputBoundary() {
             @Override
             public MessageResponseModel prepareFail(String msg) {
-                assertEquals("fail", msg);
+                assertEquals("This question is not closed.", msg);
                 return null;
             }
 
             @Override
             public MessageResponseModel prepareSuccess(String msg) {
-                assertEquals("succeed", msg);
+                assertEquals("Rating successful!", msg);
                 return null;
             }
         };
 
         QuestionGateway questionGateway = new QuestionRepo();
         Question question = new Question();
-        question.setQuestionId(123456789);
+        question.setQuestionId(12345669);
+        question.setClose(true);
         questionGateway.saveQuestion(question);
 
-        PostGateway postGateway = new PostRepo();
-        PostFactory postFactory = new PostFactory();
-        UserGatewayFactory userGatewayFactory = new UserGatewayFactory();
-        PostInputBoundary postInputBoundary = new ReplyInteractor(questionGateway, postGateway, messageOutputBoundary, postFactory, userGatewayFactory);
+        RateInputBoundary rateInputBoundary = new RateInteractor(questionGateway, messageOutputBoundary);
 
-        PostRequestModel inputData = new PostRequestModel(123456789, 12345678, "Test text");
+        RateRequestModel inputData = new RateRequestModel(10, 12345669);
 
-        postInputBoundary.createPost(inputData);
+        rateInputBoundary.rateAnswer(inputData);
     }
 }

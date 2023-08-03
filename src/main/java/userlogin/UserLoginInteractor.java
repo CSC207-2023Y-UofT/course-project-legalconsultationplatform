@@ -26,7 +26,7 @@ public class UserLoginInteractor implements UserLoginInputBoundary{
         if (!inputPassword.equals(filedPassword)) {
             return outputBoundary.prepareFail("Password is incorrect");
         }
-        LocalDateTime now = LocalDateTime.now();
+        LocalDateTime now   = LocalDateTime.now();
         LoginResponseModel accountResponseModel = new LoginResponseModel(inputUserId, now.toString());
         return outputBoundary.prepareSuccess(accountResponseModel);
     }
