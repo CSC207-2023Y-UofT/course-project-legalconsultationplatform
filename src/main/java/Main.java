@@ -29,7 +29,7 @@ public class Main {
         JPanel screens = new JPanel(cardlayout);
         application.add(screens);
 
-        LoginOutputBoundary boundary = new LoginResponseFormatter(cardlayout, screens);
+        User boundary = new LoginResponseFormatter(cardlayout, screens);
         UserLoginInputBoundary userLoginInteractor = new UserLoginInteractor(repo, boundary);
         UserLoginControl control = new UserLoginControl(userLoginInteractor);
 
