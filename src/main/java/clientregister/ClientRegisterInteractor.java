@@ -1,19 +1,19 @@
 package clientregister;
+import gateway.ClientGateway;
 import presenter.MessageOutputBoundary;
 import presenter.MessageResponseModel;
 import userentities.Client;
-import gateway.UserGateway;
 
 
 class ClientRegisterInteractor implements ClientRegisterInputBoundary{
-    final UserGateway userGateway;
+    final ClientGateway clientGateway;
     final MessageOutputBoundary outputBoundary;
     final ClientFactory clientFactory;
 
-    public ClientRegisterInteractor(UserGateway userGateway,
+    public ClientRegisterInteractor(ClientGateway clientGateway,
                                     MessageOutputBoundary outputBoundary,
                                     ClientFactory clientFactory) {
-        this.userGateway = userGateway;
+        this.clientGateway = clientGateway;
         this.outputBoundary = outputBoundary;
         this.clientFactory = clientFactory;
     }
@@ -33,7 +33,7 @@ class ClientRegisterInteractor implements ClientRegisterInputBoundary{
         float inputAnnualIncome = requestModel.getAnnualIncome();
 
         CredentialChecker checker = new CredentialChecker();
-        if (userGateway.existsByName(inputUserName)){
+        if (clientGateway.existsByName(inputUserName)){
             return outputBoundary.prepareFail("User name already exists");
         } else if (!inputPassword1.equals(inputPassword2)) {
             return outputBoundary.prepareFail("Passwords does not match");
@@ -48,15 +48,15 @@ class ClientRegisterInteractor implements ClientRegisterInputBoundary{
         }
         RandomNumberGenerator generator = new RandomNumberGenerator();
         int randomUserId = generator.generateClientId(8);
-        boolean exists = userGateway.existsById(randomUserId);
+        boolean exists = clientGateway.existsById(randomUserId);
         while (exists){
             randomUserId = generator.generateClientId(8);
-            exists = userGateway.existsById(randomUserId);
+            exists = clientGateway.existsById(randomUserId);
         }
         Client client = clientFactory.create(randomUserId, inputUserName, inputEmail,
                 inputPassword1, inputStateAbb, inputPostalCode, inputEthnicity, inputAge,
                 inputGender, inputMaritalStatus, inputNumberOfHousehold, inputAnnualIncome);
-        userGateway.addUser(client);
+        clientGateway.addUser(client);
         return outputBoundary.prepareSuccess("Client successfully registered");
     }
 }
