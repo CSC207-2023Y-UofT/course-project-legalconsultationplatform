@@ -18,7 +18,7 @@ dependencies {
 }
 
 tasks.withType(JavaExec).configureEach {
-    systemProperty "java.library.path", "/Users/liuyifan/Desktop/CSC207Project/course-project-onlinelegalconsultation"
+    systemProperty "java.library.path", "/Users/liuyifan/opt/anaconda3/lib/python3.9/site-packages/jep"
 }
 
 test {

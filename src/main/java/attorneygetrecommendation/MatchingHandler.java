@@ -2,10 +2,13 @@ package attorneygetrecommendation;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import gateway.*;
+import java.io.File;
 import jep.JepException;
 import questionentities.Question;
 import userentities.Attorney;
 import userentities.Client;
+
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
