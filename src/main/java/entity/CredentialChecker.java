@@ -5,7 +5,7 @@ import java.util.regex.*;
 public class CredentialChecker {
 
     public boolean checkPostalCode(String postalCode){
-        String pattern = "^\\d{5}(?:-\\d{4})?$";
+        String pattern = "^\\d{5}$";
         return postalCode.matches(pattern);
     }
 
