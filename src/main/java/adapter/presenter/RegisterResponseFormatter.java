@@ -21,8 +21,9 @@ public class RegisterResponseFormatter implements RegisterOutputBoundary {
         throw new ApplicationException(msg);
     }
     @Override
-    public RegisterResponseModel prepareSuccess(RegisterResponseModel response) {
+    public RegisterResponseModel prepareSuccess(String msg) {
         cardLayout.show(screens, "Welcome");
-        return response;
+        JOptionPane.showMessageDialog(null, msg);
+        return new RegisterResponseModel();
     }
 }

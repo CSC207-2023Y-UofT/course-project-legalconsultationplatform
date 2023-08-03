@@ -1,6 +1,7 @@
 package driver.screen;
 
 import adapter.controller.ClientRegisterControl;
+import adapter.controller.ControlContainer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -8,12 +9,12 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class RegisterUI extends JPanel implements ActionListener{
-    ClientRegisterControl registerControl;
+    ControlContainer controlContainer;
 
     JTextField userName = new JTextField(15);
     JPasswordField password1 = new JPasswordField(15);
     JPasswordField password2 = new JPasswordField(15);
-    JTextField email = new JTextField(30);
+    JTextField email = new JTextField(15);
     JTextField postalCode = new JTextField(15);
     JTextField stateAbb = new JTextField(15);
 
@@ -30,7 +31,8 @@ public class RegisterUI extends JPanel implements ActionListener{
     JComboBox<String> gender = new JComboBox<>(genderList);
     JComboBox<String> maritalStatus = new JComboBox<>(maritalStatusList);
 
-    public RegisterUI(ClientRegisterControl registerControl) {
+    public RegisterUI(ControlContainer controlContainer) {
+        this.controlContainer = controlContainer;
         JLabel title = new JLabel("Create your profile");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -45,9 +47,9 @@ public class RegisterUI extends JPanel implements ActionListener{
         LabelTextPanel stateAbbPanel = new LabelTextPanel(new JLabel("State Abbreviation"), stateAbb);
 
         //Number items here
-        LabelTextPanel agePanel = new LabelTextPanel(new JLabel("Age"), email);
-        LabelTextPanel numberOfHouseholdPanel = new LabelTextPanel(new JLabel("Number of Household"), postalCode);
-        LabelTextPanel annualIncomePanel = new LabelTextPanel(new JLabel("Annual Income"), stateAbb);
+        LabelTextPanel agePanel = new LabelTextPanel(new JLabel("Age"), age);
+        LabelTextPanel numberOfHouseholdPanel = new LabelTextPanel(new JLabel("Number of Household"), numberOfHousehold);
+        LabelTextPanel annualIncomePanel = new LabelTextPanel(new JLabel("Annual Income"), annualIncome);
 
 
         //Dropbox items here
@@ -84,9 +86,10 @@ public class RegisterUI extends JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("Click" + e.getActionCommand());
+        ClientRegisterControl clientRegisterControl = controlContainer.getClientRegisterControl();
 
         try {
-            registerControl.create(userName.getText(), email.getText(), String.valueOf(password1.getPassword()),
+            clientRegisterControl.create(userName.getText(), email.getText(), String.valueOf(password1.getPassword()),
                     String.valueOf(password2.getPassword()), stateAbb.getText(), postalCode.getText(),
                     (String)ethnicity.getSelectedItem(), Integer.parseInt(age.getText()), (String)gender.getSelectedItem(),
                     (String)maritalStatus.getSelectedItem(), Integer.parseInt(numberOfHousehold.getText()),

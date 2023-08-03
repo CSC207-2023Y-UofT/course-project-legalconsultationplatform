@@ -31,18 +31,23 @@ public class Main {
         QuestionGateway questionGateway = new QuestionRepo();
         PostFactory postFactory = new PostFactory();
         PostGateway postGateway = new PostRepo();
+        System.out.println("finished repo");
 
         //set up jframe
         JFrame application = new JFrame("Legal Consultation Platform");
+        application.setSize(1000, 1000);
+        application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         CardLayout cardlayout = new CardLayout();
         JPanel screens = new JPanel(cardlayout);
         application.add(screens);
+        System.out.println("Finished JFrame");
 
         //define outputBoundary
         HomePageOutputBoundary homePageOutputBoundary = new HomePageResponseFormatter(cardlayout, screens);
         RegisterOutputBoundary registerOutputBoundary = new RegisterResponseFormatter(cardlayout, screens);
         TheQuestionOutputBoundary theQuestionOutputBoundary = new TheQuestionResponseFormatter();
         ViewOutputBoundary viewOutputBoundary = new ViewResponseFormatter();
+        System.out.println("Finished outputBoundary");
 
         //define useCase
         UserLoginInputBoundary userLoginInteractor = new UserLoginInteractor(gatewayFactory, homePageOutputBoundary);
@@ -77,13 +82,24 @@ public class Main {
         RateInputBoundary rateInteractor = new RateInteractor(questionGateway, homePageOutputBoundary,
                 gatewayFactory);
         RateControl rateControl = new RateControl(rateInteractor);
+        System.out.println("Finished use case");
 
+        //control container
+        ControlContainer controlContainer = new ControlContainer(browseQuestionControl,
+                registerControl, closeQuestionControl, postControl, questionControl,
+                rateControl, selectQuestionControl, loginControl, viewQuestionControl);
 
         //Initiate the UI
-        WelcomeUI welcomeUI = new WelcomeUI(cardlayout, screens);
+        WelcomeUI welcomeUI = new WelcomeUI(cardlayout, screens, controlContainer);
         screens.add(welcomeUI, "Welcome");
         cardlayout.show(screens, "Welcome");
-        application.pack();
         application.setVisible(true);
+        System.out.println("Finished set up welcome UI");
+
+        Client client = new Client();
+        client.setUserId(12345);
+        clientGateway.addUser(client);
+        System.out.println("dddd");
     }
+
 }

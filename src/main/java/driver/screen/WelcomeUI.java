@@ -1,19 +1,6 @@
 package driver.screen;
 
-import adapter.controller.UserLoginControl;
-import adapter.controller.ClientRegisterControl;
-import adapter.presenter.HomePageResponseFormatter;
-import adapter.presenter.RegisterResponseFormatter;
-import businessrule.gateway.ClientGateway;
-import businessrule.gateway.UserGatewayFactory;
-import businessrule.inputboundary.ClientRegisterInputBoundary;
-import businessrule.inputboundary.UserLoginInputBoundary;
-import businessrule.outputboundary.HomePageOutputBoundary;
-import businessrule.outputboundary.RegisterOutputBoundary;
-import businessrule.usecase.ClientRegisterInteractor;
-import businessrule.usecase.UserLoginInteractor;
-import driver.database.ClientRepository;
-import entity.ClientFactory;
+import adapter.controller.ControlContainer;
 
 import javax.swing.*;
 import java.awt.*;
@@ -23,9 +10,11 @@ import java.awt.event.ActionEvent;
 public class WelcomeUI extends JPanel implements ActionListener{
     CardLayout cardLayout;
     JPanel screens;
-    public WelcomeUI(CardLayout cardLayout, JPanel screens){
+    ControlContainer controlContainer;
+    public WelcomeUI(CardLayout cardLayout, JPanel screens, ControlContainer controlContainer){
         this.cardLayout = cardLayout;
         this.screens = screens;
+        this.controlContainer = controlContainer;
         JLabel title = new JLabel("Welcome!");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -35,6 +24,8 @@ public class WelcomeUI extends JPanel implements ActionListener{
 
         buttons.add(registerButton);
         buttons.add(loginButton);
+        registerButton.addActionListener(this);
+        loginButton.addActionListener(this);
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
@@ -45,25 +36,15 @@ public class WelcomeUI extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
         if ("Register".equals(actionCommand)){
-            ClientGateway clientGateway = new ClientRepository();
-            ClientFactory clientFactory = new ClientFactory();
-            RegisterOutputBoundary registerOutputBoundary = new RegisterResponseFormatter(cardLayout, screens);
-            ClientRegisterInputBoundary clientRegisterInteractor = new ClientRegisterInteractor(clientGateway, registerOutputBoundary,
-                    clientFactory);
-            ClientRegisterControl registerControl = new ClientRegisterControl(clientRegisterInteractor);
-
-            RegisterUI registerUI = new RegisterUI(registerControl);
+            RegisterUI registerUI = new RegisterUI(controlContainer);
             screens.add(registerUI, "Register");
             cardLayout.show(screens, "Register");
+            System.out.println("Register screen showed");
         } else if ("Login".equals(actionCommand)){
-            UserGatewayFactory gatewayFactory = new UserGatewayFactory();
-            HomePageOutputBoundary homePageOutputBoundary = new HomePageResponseFormatter(cardLayout, screens);
-            UserLoginInputBoundary userLoginInteractor = new UserLoginInteractor(gatewayFactory, homePageOutputBoundary);
-            UserLoginControl loginControl = new UserLoginControl(userLoginInteractor);
-
-            LoginUI loginUI = new LoginUI(loginControl);
+            LoginUI loginUI = new LoginUI(controlContainer);
             screens.add(loginUI, "Login");
             cardLayout.show(screens, "Login");
+            System.out.println("Login screen showed");
         }
     }
 }

@@ -1,5 +1,6 @@
 package driver.screen;
 
+import adapter.controller.ControlContainer;
 import adapter.controller.UserLoginControl;
 
 import javax.swing.*;
@@ -15,15 +16,15 @@ import java.awt.event.ActionListener;
  * @author kaxi
  */
 public class LoginUI extends JPanel implements ActionListener{
-    UserLoginControl control;
+    ControlContainer controlContainer;
     JTextField userId = new JTextField(15);
     JPasswordField password = new JPasswordField(15);
     /**
      * Creates new form UserLogin
      */
-    public LoginUI(UserLoginControl control) {
+    public LoginUI(ControlContainer controlContainer) {
 
-        this.control = control;
+        this.controlContainer = controlContainer;
 
         JLabel title = new JLabel("Login to your account");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -47,9 +48,10 @@ public class LoginUI extends JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent evt){
         System.out.println("Click" + evt.getActionCommand());
+        UserLoginControl loginControl = controlContainer.getUserLoginControl();
 
         try {
-            control.login(Integer.parseInt(userId.getText()), String.valueOf(password.getPassword()));
+            loginControl.login(Integer.parseInt(userId.getText()), String.valueOf(password.getPassword()));
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(this, e.getMessage());

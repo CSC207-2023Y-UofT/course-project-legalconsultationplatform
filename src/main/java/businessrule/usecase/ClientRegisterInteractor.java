@@ -62,6 +62,7 @@ public class ClientRegisterInteractor implements ClientRegisterInputBoundary {
                 inputPassword1, inputStateAbb, inputPostalCode, inputEthnicity, inputAge,
                 inputGender, inputMaritalStatus, inputNumberOfHousehold, inputAnnualIncome);
         clientGateway.addUser(client);
-        return outputBoundary.prepareSuccess("Client successfully registered");
+        String message = "Your userId is " + randomUserId;
+        return outputBoundary.prepareSuccess(message);
     }
 }
