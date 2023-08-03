@@ -1,13 +1,12 @@
 package driver.screen;
 
+import adapter.controller.ControlContainer;
 import adapter.controller.UserLoginControl;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import static javax.swing.JOptionPane.showMessageDialog;
 
 
 
@@ -17,22 +16,22 @@ import static javax.swing.JOptionPane.showMessageDialog;
  * @author kaxi
  */
 public class LoginUI extends JPanel implements ActionListener{
-    UserLoginControl control;
+    ControlContainer controlContainer;
     JTextField userId = new JTextField(15);
     JPasswordField password = new JPasswordField(15);
     /**
      * Creates new form UserLogin
      */
-    public LoginUI(UserLoginControl control) {
+    public LoginUI(ControlContainer controlContainer) {
 
-        this.control = control;
+        this.controlContainer = controlContainer;
 
-        JLabel title = new JLabel("Login Screen");
+        JLabel title = new JLabel("Login to your account");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         LabelTextPanel userIdInfo = new LabelTextPanel(new JLabel("UserId"), userId);
         LabelTextPanel passwordInfo = new LabelTextPanel(new JLabel("Password"), password);
-        JButton buttonToSubmit = new JButton("Submit");
+        JButton buttonToSubmit = new JButton("Login");
 
         JPanel buttons = new JPanel();
         buttons.add(buttonToSubmit);
@@ -49,9 +48,10 @@ public class LoginUI extends JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent evt){
         System.out.println("Click" + evt.getActionCommand());
+        UserLoginControl loginControl = controlContainer.getUserLoginControl();
 
         try {
-            control.login(Integer.parseInt(userId.getText()), String.valueOf(password.getPassword()));
+            loginControl.login(Integer.parseInt(userId.getText()), String.valueOf(password.getPassword()));
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(this, e.getMessage());

@@ -4,6 +4,7 @@ import businessrule.outputboundary.TheQuestionOutputBoundary;
 import businessrule.responsemodel.TheQuestionResponseModel;
 
 public class TheQuestionResponseFormatter implements TheQuestionOutputBoundary {
+
     @Override
     public TheQuestionResponseModel prepareFail(String msg) {
         return null;

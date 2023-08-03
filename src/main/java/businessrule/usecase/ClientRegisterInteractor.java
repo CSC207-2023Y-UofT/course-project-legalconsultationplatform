@@ -11,7 +11,7 @@ import entity.ClientFactory;
 import entity.CredentialChecker;
 import entity.RandomNumberGenerator;
 
-class ClientRegisterInteractor implements ClientRegisterInputBoundary {
+public class ClientRegisterInteractor implements ClientRegisterInputBoundary {
     final ClientGateway clientGateway;
     final RegisterOutputBoundary outputBoundary;
     final ClientFactory clientFactory;
@@ -62,6 +62,7 @@ class ClientRegisterInteractor implements ClientRegisterInputBoundary {
                 inputPassword1, inputStateAbb, inputPostalCode, inputEthnicity, inputAge,
                 inputGender, inputMaritalStatus, inputNumberOfHousehold, inputAnnualIncome);
         clientGateway.addUser(client);
-        return outputBoundary.prepareSuccess("Client successfully registered");
+        String message = "Your userId is " + randomUserId;
+        return outputBoundary.prepareSuccess(message);
     }
 }
