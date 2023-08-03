@@ -2,7 +2,6 @@ package userlogin;
 
 import gateway.UserGatewayFactory;
 import presenter.LoginOutputBoundary;
-import presenter.LoginResponseModel;
 import gateway.UserGateway;
 import userentities.User;
 import screen.ApplicationException;
@@ -35,6 +34,8 @@ public class UserLoginInteractor implements UserLoginInputBoundary{
         if (!inputPassword.equals(filedPassword)) {
             return outputBoundary.prepareFail("Password is incorrect");
         }
-        return outputBoundary.prepareSuccess();
+        LocalDateTime now = LocalDateTime.now();
+        LoginResponseModel accountResponseModel = new LoginResponseModel(inputUserId, now.toString());
+        return outputBoundary.prepareSuccess(accountResponseModel);
     }
 }

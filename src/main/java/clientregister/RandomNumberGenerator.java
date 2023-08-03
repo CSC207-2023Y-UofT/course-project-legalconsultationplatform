@@ -17,18 +17,15 @@ public class RandomNumberGenerator {
         return Integer.parseInt(res);
     }
 
-    public int generateClientId(int digit){
+    public int generateAttorneyId(int digit){
         return addDigitToFront(generate(digit-1), 1);
     }
-
-    public int generateAttorneyId(int digit){
-        return addDigitToFront(generate(digit-1), 0);
+    public int generateClientId(int digit){
+        return addDigitToFront(generate(digit-1), 2);
     }
-
     public int generateQuestionId(int digit){
         return addDigitToFront(generate(digit-1), 2);
     }
-
     public int generatePostId(int digit){
         return addDigitToFront(generate(digit-1), 3);
     }

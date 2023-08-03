@@ -74,7 +74,12 @@ public class Attorney implements User{
 
     @Override
     public void addQuestion(Question question) {
-        questionsList.add(question);
+        if (questionsList == null) {
+            questionsList = new ArrayList<>();
+        }
+        if (! questionsList.contains(question)) {
+            questionsList.add(question);
+        }
     }
 
     @Override
@@ -106,6 +111,20 @@ public class Attorney implements User{
         } else {
             return takenByAttorney == userId;
         }
+    }
+
+    @Override
+    public boolean isQuestionReplyable(Question question) {
+        if (!question.isClose()){
+            if (question.isTaken()) {
+                return question.getTakenByAttorney() == userId;
+            } else {
+                question.setTaken(true);
+                question.setTakenByAttorney(userId);
+                return true;
+            }
+        }
+        return false;
     }
 
     @Override

@@ -124,7 +124,12 @@ public class Client implements User{
 
     @Override
     public void addQuestion(Question question) {
-        questionsList.add(question);
+        if (questionsList == null) {
+            questionsList = new ArrayList<>();
+        }
+        if (! questionsList.contains(question)) {
+            questionsList.add(question);
+        }
     }
 
     @Override
@@ -141,6 +146,15 @@ public class Client implements User{
     @Override
     public boolean isQuestionSelectable(Question question) {
         return true;
+    }
+
+    @Override
+    public boolean isQuestionReplyable(Question question) {
+        if (!question.isClose()){
+            return true;
+        } else {
+            return false;
+        }
     }
 
     @Override

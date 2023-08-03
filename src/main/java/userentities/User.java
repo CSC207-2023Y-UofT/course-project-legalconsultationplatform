@@ -5,7 +5,6 @@ import questionentities.Question;
 
 public interface User {
     int getUserId();
-    String getUserName();
     String getPassword();
     String getEmail();
     List<Question> getQuestionsList();
@@ -13,4 +12,5 @@ public interface User {
     boolean isClient();
     boolean isQuestionCloseable(Question question);
     boolean isQuestionSelectable(Question question);
+    boolean isQuestionReplyable(Question question);
 }

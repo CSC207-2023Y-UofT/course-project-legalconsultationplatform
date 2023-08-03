@@ -6,7 +6,6 @@ import javax.persistence.OneToMany;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Objects;
 
 /**
  * This is a class representing a question thread.
@@ -19,6 +18,7 @@ public class Question {
     @Id
     private int questionId;
     private String type;
+    private String title;
     private LocalDate createAt;
     private int askedByClient;
     private LocalDate legalDeadline;
@@ -36,9 +36,10 @@ public class Question {
     public Question() {
     }
 
-    public Question(int questionId, String type, LocalDate createAt, int askedByClient, LocalDate legalDeadline) {
+    public Question(int questionId, String type, String title, LocalDate createAt, int askedByClient, LocalDate legalDeadline) {
         this.questionId = questionId;
         this.type = type;
+        this.title = title;
         this.createAt = createAt;
         this.askedByClient = askedByClient;
         this.legalDeadline = legalDeadline;
@@ -49,6 +50,10 @@ public class Question {
     public int getQuestionId() {return questionId;}
 
     public String getType() {return type;}
+
+    public String getTitle() {
+        return title;
+    }
 
     public LocalDate getCreateAt() {return createAt;}
 

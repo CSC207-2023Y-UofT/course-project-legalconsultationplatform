@@ -2,68 +2,210 @@ package gateway;
 
 import questionentities.Post;
 import questionentities.Question;
+import userentities.User;
 
+import javax.persistence.EntityManager;
+import javax.persistence.EntityTransaction;
+import java.time.LocalDate;
 import java.util.List;
 
 public class QuestionRepo implements QuestionGateway{
-    DatabaseConnection databaseConnection;
-
-    public QuestionRepo(DatabaseConnection databaseConnection) {
-        this.databaseConnection = databaseConnection;
-    }
 
     @Override
     public void saveQuestion(Question question) {
-
+        EntityManager entityManager = DatabaseConnection.getEntityManager();
+        EntityTransaction transaction = entityManager.getTransaction();
+        try {
+            transaction.begin();
+            entityManager.persist(question);
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override
     public boolean checkExistsByName(int questionId){
-        return false;
+        EntityManager entityManager = DatabaseConnection.getEntityManager();
+        try {
+            Question exists = entityManager.find(Question.class, questionId);
+            return (exists != null);
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override
     public Question getQuestion(int questionId) {
-        return null;
+        EntityManager entityManager = DatabaseConnection.getEntityManager();
+        try {
+            return entityManager.find(Question.class, questionId);
+        } finally {
+            entityManager.close();
+        }
     }
 
     @Override
     public List<Question> getAllQuestion() {
-        return null;
+        EntityManager em = DatabaseConnection.getEntityManager();
+        try {
+            return em.createQuery("SELECT q FROM Question q", Question.class).getResultList();
+        } finally {
+            em.close();
+        }
     }
 
     @Override
     public List<Question> getNotTakenQuestion() {
-        return null;
+        EntityManager em = DatabaseConnection.getEntityManager();
+        try {
+            return em.createQuery("SELECT q FROM Question q WHERE q.isTaken = False", Question.class)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
     }
 
     @Override
     public List<Question> getNotClosedQuestion() {
-        return null;
+        EntityManager em = DatabaseConnection.getEntityManager();
+        try {
+            return em.createQuery("SELECT q FROM Question q WHERE q.isClose = False", Question.class)
+                    .getResultList();
+        } finally {
+            em.close();
+        }
     }
 
     @Override
-    public void updateIsTaken(int questionId, boolean iaTaken) {
-
+    public void updateIsTaken(int questionId, boolean isTaken) {
+        EntityManager em = DatabaseConnection.getEntityManager();
+        Question question = em.find(Question.class, questionId);
+        try {
+            em.getTransaction().begin();
+            question.setTaken(isTaken);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
     }
 
     @Override
-    public void updateTakenByAttorney(int questionId, boolean attorneyId) {
-
+    public void updateTakenByAttorney(int questionId, int attorneyId) {
+        EntityManager em = DatabaseConnection.getEntityManager();
+        Question question = em.find(Question.class, questionId);
+        try {
+            em.getTransaction().begin();
+            question.setTakenByAttorney(attorneyId);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
     }
 
     @Override
     public void updateIsClose(int questionId, boolean isClose) {
-
+        EntityManager em = DatabaseConnection.getEntityManager();
+        Question question = em.find(Question.class, questionId);
+        try {
+            em.getTransaction().begin();
+            question.setClose(isClose);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
     }
 
     @Override
     public void updateRating(int questionId, int rating) {
-
+        EntityManager em = DatabaseConnection.getEntityManager();
+        Question question = em.find(Question.class, questionId);
+        try {
+            em.getTransaction().begin();
+            question.setRating(rating);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
     }
 
     @Override
     public void updatePosts(int questionId, Post post) {
-
+        EntityManager em = DatabaseConnection.getEntityManager();
+        Question question = em.find(Question.class, questionId);
+        try {
+            em.getTransaction().begin();
+            question.addPosts(post);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
     }
+
+    @Override
+    public void updateTakenAt(int questionId, LocalDate time) {
+        EntityManager em = DatabaseConnection.getEntityManager();
+        Question question = em.find(Question.class, questionId);
+        try {
+            em.getTransaction().begin();
+            question.setTakenAt(time);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public void deleteQuestion(int postId) {
+        EntityManager em = DatabaseConnection.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            Question question = em.find(Question.class, postId);
+            em.remove(question);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
 }
