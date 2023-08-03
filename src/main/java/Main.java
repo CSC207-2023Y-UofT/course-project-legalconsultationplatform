@@ -11,19 +11,10 @@ import businessrule.outputboundary.HomePageOutputBoundary;
 import businessrule.outputboundary.RegisterOutputBoundary;
 import businessrule.outputboundary.TheQuestionOutputBoundary;
 import businessrule.outputboundary.ViewOutputBoundary;
-import businessrule.requestmodel.CloseRequestModel;
-import businessrule.responsemodel.HomePageResponseModel;
 import businessrule.usecase.*;
-import driver.database.AttorneyRepository;
-import driver.database.ClientRepository;
-import driver.database.QuestionGateway;
-import driver.database.QuestionRepo;
-import driver.screen.AskQuestionUI;
-import driver.screen.LoginUI;
-import entity.ClientFactory;
-import entity.QuestionFactory;
-import entity.Client;
-import entity.User;
+import driver.database.*;
+import driver.screen.WelcomeUI;
+import entity.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -38,6 +29,8 @@ public class Main {
 
         QuestionFactory questionFactory = new QuestionFactory();
         QuestionGateway questionGateway = new QuestionRepo();
+        PostFactory postFactory = new PostFactory();
+        PostGateway postGateway = new PostRepo();
 
         //set up jframe
         JFrame application = new JFrame("Legal Consultation Platform");
@@ -48,8 +41,8 @@ public class Main {
         //define outputBoundary
         HomePageOutputBoundary homePageOutputBoundary = new HomePageResponseFormatter(cardlayout, screens);
         RegisterOutputBoundary registerOutputBoundary = new RegisterResponseFormatter(cardlayout, screens);
-        TheQuestionOutputBoundary theQuestionOutputBoundary = new TheQuestionResponseFormatter(cardlayout, screens);
-        ViewOutputBoundary viewOutputBoundary = new ViewResponseFormatter(cardlayout, screens);
+        TheQuestionOutputBoundary theQuestionOutputBoundary = new TheQuestionResponseFormatter();
+        ViewOutputBoundary viewOutputBoundary = new ViewResponseFormatter();
 
         //define useCase
         UserLoginInputBoundary userLoginInteractor = new UserLoginInteractor(gatewayFactory, homePageOutputBoundary);
@@ -59,28 +52,37 @@ public class Main {
                 clientFactory);
         ClientRegisterControl registerControl = new ClientRegisterControl(clientRegisterInteractor);
 
-        QuestionInputBoundary questionInputBoundary = new AskQuestionInteractor(questionGateway, theQuestionOutputBoundary,
+        QuestionInputBoundary questionInteractor = new AskQuestionInteractor(questionGateway, theQuestionOutputBoundary,
                 questionFactory, clientGateway);
-        QuestionControl questionControl = new QuestionControl(questionInputBoundary);
+        QuestionControl questionControl = new QuestionControl(questionInteractor);
 
-        CloseInputBoundary closeInputBoundary = new CloseQuestionInteractor(questionGateway, homePageOutputBoundary,
+        CloseInputBoundary closeQuestionInteractor = new CloseQuestionInteractor(questionGateway, homePageOutputBoundary,
                 gatewayFactory);
-        CloseQuestionControl closeQuestionControl = new CloseQuestionControl(closeInputBoundary);
+        CloseQuestionControl closeQuestionControl = new CloseQuestionControl(closeQuestionInteractor);
 
-        BrowseInputBoundary browseinputBoundary = new BrowseQuestionInterator(viewOutputBoundary, questionGateway,
+        BrowseInputBoundary browseQuestionInterator = new BrowseQuestionInterator(viewOutputBoundary, questionGateway,
                 attorneyGateway);
-        BrowseQuestionControl browseQuestionControl = new BrowseQuestionControl(browseinputBoundary);
+        BrowseQuestionControl browseQuestionControl = new BrowseQuestionControl(browseQuestionInterator);
 
-        ViewInputBoundary viewInputBoundary = new ViewQuestionInteractor(questionGateway, viewOutputBoundary, gatewayFactory);
-        ViewQuestionControl viewQuestionControl = new ViewQuestionControl(viewInputBoundary);
+        ViewInputBoundary viewQuestionInteractor = new ViewQuestionInteractor(questionGateway, viewOutputBoundary, gatewayFactory);
+        ViewQuestionControl viewQuestionControl = new ViewQuestionControl(viewQuestionInteractor);
 
+        SelectInputBoundary selectQuestionInteractor = new SelectQuestionInteractor(questionGateway, theQuestionOutputBoundary, gatewayFactory);
+        SelectQuestionControl selectQuestionControl = new SelectQuestionControl(selectQuestionInteractor);
 
+        PostInputBoundary replyInteractor = new ReplyInteractor(questionGateway, postGateway,
+                homePageOutputBoundary, postFactory, gatewayFactory);
+        PostControl postControl = new PostControl(replyInteractor);
+
+        RateInputBoundary rateInteractor = new RateInteractor(questionGateway, homePageOutputBoundary,
+                gatewayFactory);
+        RateControl rateControl = new RateControl(rateInteractor);
 
 
         //Initiate the UI
-        WelcomeUI welcomeUI = new WelcomeUI()
-        screens.add(askQuestionUI, "login");
-        cardlayout.show(screens, "login");
+        WelcomeUI welcomeUI = new WelcomeUI(cardlayout, screens);
+        screens.add(welcomeUI, "Welcome");
+        cardlayout.show(screens, "Welcome");
         application.pack();
         application.setVisible(true);
     }

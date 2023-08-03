@@ -7,8 +7,6 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import static javax.swing.JOptionPane.showMessageDialog;
-
 
 
 
@@ -27,12 +25,12 @@ public class LoginUI extends JPanel implements ActionListener{
 
         this.control = control;
 
-        JLabel title = new JLabel("Login Screen");
+        JLabel title = new JLabel("Login to your account");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
         LabelTextPanel userIdInfo = new LabelTextPanel(new JLabel("UserId"), userId);
         LabelTextPanel passwordInfo = new LabelTextPanel(new JLabel("Password"), password);
-        JButton buttonToSubmit = new JButton("Submit");
+        JButton buttonToSubmit = new JButton("Login");
 
         JPanel buttons = new JPanel();
         buttons.add(buttonToSubmit);

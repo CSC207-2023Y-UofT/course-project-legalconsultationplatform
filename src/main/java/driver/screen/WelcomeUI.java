@@ -1,7 +1,19 @@
-package screen;
+package driver.screen;
 
-import presenter.ClientRegisterControl;
-import presenter.UserLoginControl;
+import adapter.controller.UserLoginControl;
+import adapter.controller.ClientRegisterControl;
+import adapter.presenter.HomePageResponseFormatter;
+import adapter.presenter.RegisterResponseFormatter;
+import businessrule.gateway.ClientGateway;
+import businessrule.gateway.UserGatewayFactory;
+import businessrule.inputboundary.ClientRegisterInputBoundary;
+import businessrule.inputboundary.UserLoginInputBoundary;
+import businessrule.outputboundary.HomePageOutputBoundary;
+import businessrule.outputboundary.RegisterOutputBoundary;
+import businessrule.usecase.ClientRegisterInteractor;
+import businessrule.usecase.UserLoginInteractor;
+import driver.database.ClientRepository;
+import entity.ClientFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -11,14 +23,9 @@ import java.awt.event.ActionEvent;
 public class WelcomeUI extends JPanel implements ActionListener{
     CardLayout cardLayout;
     JPanel screens;
-    UserLoginControl loginControl;
-    ClientRegisterControl registerControl;
-    public WelcomeUI(CardLayout cardLayout, JPanel screens, UserLoginControl loginControl,
-                     ClientRegisterControl registerControl){
+    public WelcomeUI(CardLayout cardLayout, JPanel screens){
         this.cardLayout = cardLayout;
         this.screens = screens;
-        this.loginControl = loginControl;
-        this.registerControl = registerControl;
         JLabel title = new JLabel("Welcome!");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
@@ -38,10 +45,22 @@ public class WelcomeUI extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
         if ("Register".equals(actionCommand)){
+            ClientGateway clientGateway = new ClientRepository();
+            ClientFactory clientFactory = new ClientFactory();
+            RegisterOutputBoundary registerOutputBoundary = new RegisterResponseFormatter(cardLayout, screens);
+            ClientRegisterInputBoundary clientRegisterInteractor = new ClientRegisterInteractor(clientGateway, registerOutputBoundary,
+                    clientFactory);
+            ClientRegisterControl registerControl = new ClientRegisterControl(clientRegisterInteractor);
+
             RegisterUI registerUI = new RegisterUI(registerControl);
             screens.add(registerUI, "Register");
             cardLayout.show(screens, "Register");
         } else if ("Login".equals(actionCommand)){
+            UserGatewayFactory gatewayFactory = new UserGatewayFactory();
+            HomePageOutputBoundary homePageOutputBoundary = new HomePageResponseFormatter(cardLayout, screens);
+            UserLoginInputBoundary userLoginInteractor = new UserLoginInteractor(gatewayFactory, homePageOutputBoundary);
+            UserLoginControl loginControl = new UserLoginControl(userLoginInteractor);
+
             LoginUI loginUI = new LoginUI(loginControl);
             screens.add(loginUI, "Login");
             cardLayout.show(screens, "Login");

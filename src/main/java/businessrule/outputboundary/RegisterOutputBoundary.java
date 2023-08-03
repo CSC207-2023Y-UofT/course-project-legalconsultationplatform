@@ -3,6 +3,6 @@ package businessrule.outputboundary;
 import businessrule.responsemodel.RegisterResponseModel;
 
 public interface RegisterOutputBoundary {
-    RegisterResponseModel prepareSuccess(String msg);
+    RegisterResponseModel prepareSuccess(RegisterResponseModel response);
     RegisterResponseModel prepareFail(String msg);
 }
