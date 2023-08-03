@@ -1,11 +1,11 @@
 package gatewaytesting;
 
-import gateway.AttorneyRepository;
-import gateway.ClientRepository;
-import gateway.DatabaseConnection;
+import driver.database.AttorneyRepository;
+import driver.database.ClientRepository;
+import driver.database.DatabaseConnection;
 import org.junit.jupiter.api.Test;
-import userentities.Attorney;
-import userentities.Client;
+import entity.Attorney;
+import entity.Client;
 
 import javax.persistence.EntityManager;
 
@@ -219,11 +219,11 @@ public class ClientRepositoryTest {
         attorneyRepo.addUser(a);
 
         //test username exists
-        assertTrue(repo.existsByUsername("bob"), "The username does not exist!");
+        assertTrue(repo.existsByName("bob"), "The username does not exist!");
         //test username does not exist
-        assertFalse(repo.existsByUsername("John"), "The username exists!");
+        assertFalse(repo.existsByName("John"), "The username exists!");
         //test username belongs to an attorney entity
-        assertFalse(repo.existsByUsername("obo"), "The username exists!");
+        assertFalse(repo.existsByName("obo"), "The username exists!");
     }
 
 }

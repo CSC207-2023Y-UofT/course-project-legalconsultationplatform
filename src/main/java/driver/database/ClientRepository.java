@@ -1,15 +1,14 @@
-package gateway;
+package driver.database;
 
-import questionentities.Question;
-import userentities.Client;
-import userentities.User;
+import businessrule.gateway.ClientGateway;
+import entity.Question;
+import entity.Client;
+import entity.User;
 
 import javax.persistence.*;
 import java.util.List;
 
-import static javax.jdo.JDOHelper.makeDirty;
-
-public class ClientRepository implements ClientGateway{
+public class ClientRepository implements ClientGateway {
 
     @Override
     public boolean existsById(int clientId) {
@@ -39,7 +38,6 @@ public class ClientRepository implements ClientGateway{
         try {
             em.getTransaction().begin();
             c.addQuestion(question);
-            makeDirty(c, "questionList");
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
@@ -105,7 +103,7 @@ public class ClientRepository implements ClientGateway{
     }
 
     @Override
-    public boolean existsByUsername(String username) {
+    public boolean existsByName(String username) {
         EntityManager em = DatabaseConnection.getEntityManager();
         try {
             List<Client> users = em.createQuery("SELECT c FROM Client c WHERE c.userName =: username", Client.class).

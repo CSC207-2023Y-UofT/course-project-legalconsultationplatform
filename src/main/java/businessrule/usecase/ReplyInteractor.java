@@ -7,7 +7,7 @@ import businessrule.responsemodel.HomePageResponseModel;
 import driver.database.PostGateway;
 import driver.database.QuestionGateway;
 import entity.RandomNumberGenerator;
-import driver.database.UserGateway;
+import businessrule.gateway.UserGateway;
 import businessrule.gateway.UserGatewayFactory;
 import entity.Post;
 import entity.Question;

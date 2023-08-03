@@ -1,4 +1,4 @@
-package driver.database;
+package businessrule.gateway;
 
 import entity.User;
 import entity.Question;
@@ -9,6 +9,6 @@ public interface UserGateway {
     void updateQuestionList(int userId, Question question);
     void addUser(User user);
     void deleteUser(int userId);
-
+    void deleteAllUser();
     boolean existsByName(String inputUserName);
 }

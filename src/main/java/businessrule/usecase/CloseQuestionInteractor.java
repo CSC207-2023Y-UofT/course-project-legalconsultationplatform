@@ -7,7 +7,7 @@ import businessrule.responsemodel.HomePageResponseModel;
 import entity.Question;
 import driver.database.QuestionGateway;
 import entity.User;
-import driver.database.UserGateway;
+import businessrule.gateway.UserGateway;
 import businessrule.gateway.UserGatewayFactory;
 
 public class CloseQuestionInteractor implements CloseInputBoundary {

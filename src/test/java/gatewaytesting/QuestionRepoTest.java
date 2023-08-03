@@ -1,10 +1,10 @@
 package gatewaytesting;
 
-import gateway.AttorneyRepository;
-import gateway.QuestionRepo;
+import driver.database.AttorneyRepository;
+import driver.database.QuestionRepo;
 import org.junit.jupiter.api.Test;
-import questionentities.Question;
-import userentities.Attorney;
+import entity.Question;
+import entity.Attorney;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -18,12 +18,13 @@ public class QuestionRepoTest {
     public void testSaveQuestion() {
         int questionId = 6;
         String type = "Theft";
+        String title = "hi";
         LocalDate createAt = LocalDate.now();
         int askedByClient = 66;
         LocalDate legalDeadLine = LocalDate.now();
 
         //constructors
-        Question q = new Question(questionId, type, createAt, askedByClient, legalDeadLine);
+        Question q = new Question(questionId, type, title, createAt, askedByClient, legalDeadLine);
         QuestionRepo repo = new QuestionRepo();
 
         //set up
@@ -38,12 +39,13 @@ public class QuestionRepoTest {
     public void testCheckExistsByName() {
         int questionId = 6;
         String type = "Theft";
+        String title = "hi";
         LocalDate createAt = LocalDate.now();
         int askedByClient = 66;
         LocalDate legalDeadLine = LocalDate.now();
 
         //constructors
-        Question q = new Question(questionId, type, createAt, askedByClient, legalDeadLine);
+        Question q = new Question(questionId, type, title, createAt, askedByClient, legalDeadLine);
         QuestionRepo repo = new QuestionRepo();
 
         //set up
@@ -60,12 +62,13 @@ public class QuestionRepoTest {
     public void testGetQuestion() {
         int questionId = 6;
         String type = "Theft";
+        String title = "hi";
         LocalDate createAt = LocalDate.now();
         int askedByClient = 66;
         LocalDate legalDeadLine = LocalDate.now();
 
         //constructors
-        Question q = new Question(questionId, type, createAt, askedByClient, legalDeadLine);
+        Question q = new Question(questionId, type, title, createAt, askedByClient, legalDeadLine);
         QuestionRepo repo = new QuestionRepo();
 
         //set up
@@ -80,13 +83,14 @@ public class QuestionRepoTest {
     public void testGetAllQuestion() {
         int questionId = 6;
         String type = "Theft";
+        String title = "hi";
         LocalDate createAt = LocalDate.now();
         int askedByClient = 66;
         LocalDate legalDeadLine = LocalDate.now();
 
         //constructors
-        Question q = new Question(questionId, type, createAt, askedByClient, legalDeadLine);
-        Question q1 = new Question(16, type, createAt, 61, legalDeadLine);
+        Question q = new Question(questionId, type, title, createAt, askedByClient, legalDeadLine);
+        Question q1 = new Question(16, type, title, createAt, 61, legalDeadLine);
         QuestionRepo repo = new QuestionRepo();
 
         //set up
@@ -109,13 +113,14 @@ public class QuestionRepoTest {
     public void testGetNotTakenQuestion() {
         int questionId = 6;
         String type = "Theft";
+        String title = "hi";
         LocalDate createAt = LocalDate.now();
         int askedByClient = 66;
         LocalDate legalDeadLine = LocalDate.now();
 
         //constructors
-        Question q = new Question(questionId, type, createAt, askedByClient, legalDeadLine);
-        Question q1 = new Question(16, type, createAt, 61, legalDeadLine);
+        Question q = new Question(questionId, type, title, createAt, askedByClient, legalDeadLine);
+        Question q1 = new Question(16, type, title, createAt, 61, legalDeadLine);
         QuestionRepo repo = new QuestionRepo();
 
         //set up
@@ -134,13 +139,14 @@ public class QuestionRepoTest {
     public void testGetNotClosedQuestion() {
         int questionId = 6;
         String type = "Theft";
+        String title = "hi";
         LocalDate createAt = LocalDate.now();
         int askedByClient = 66;
         LocalDate legalDeadLine = LocalDate.now();
 
         //constructors
-        Question q = new Question(questionId, type, createAt, askedByClient, legalDeadLine);
-        Question q1 = new Question(16, type, createAt, 61, legalDeadLine);
+        Question q = new Question(questionId, type, title, createAt, askedByClient, legalDeadLine);
+        Question q1 = new Question(16, type, title, createAt, 61, legalDeadLine);
         QuestionRepo repo = new QuestionRepo();
 
         //set up
@@ -159,13 +165,14 @@ public class QuestionRepoTest {
     public void testUpdateIsTaken() {
         int questionId = 6;
         String type = "Theft";
+        String title = "hi";
         LocalDate createAt = LocalDate.now();
         int askedByClient = 66;
         LocalDate legalDeadLine = LocalDate.now();
 
         //constructors
-        Question q = new Question(questionId, type, createAt, askedByClient, legalDeadLine);
-        Question q1 = new Question(16, type, createAt, 61, legalDeadLine);
+        Question q = new Question(questionId, type, title, createAt, askedByClient, legalDeadLine);
+        Question q1 = new Question(16, type, title, createAt, 61, legalDeadLine);
         QuestionRepo repo = new QuestionRepo();
 
         //set up
@@ -188,12 +195,13 @@ public class QuestionRepoTest {
     public void testUpdateTakenByAttorney() {
         int questionId = 6;
         String type = "Theft";
+        String title = "hi";
         LocalDate createAt = LocalDate.now();
         int askedByClient = 66;
         LocalDate legalDeadLine = LocalDate.now();
 
         //constructors
-        Question q = new Question(questionId, type, createAt, askedByClient, legalDeadLine);
+        Question q = new Question(questionId, type, title, createAt, askedByClient, legalDeadLine);
         Attorney a = new Attorney(150, "obo", "obo.obo@hotmail.com", "obo321",
                 "NO", "A6AM1M");
         Attorney a1 = new Attorney(151, "obo", "obo.obo@hotmail.com", "obo321",

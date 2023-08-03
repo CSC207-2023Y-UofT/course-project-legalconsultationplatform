@@ -1,14 +1,15 @@
-package gateway;
+package driver.database;
 
-import questionentities.Post;
-import questionentities.Question;
+import driver.database.QuestionGateway;
+import entity.Post;
+import entity.Question;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.time.LocalDate;
 import java.util.List;
 
-public class QuestionRepo implements QuestionGateway{
+public class QuestionRepo implements QuestionGateway {
 
     @Override
     public void saveQuestion(Question question) {

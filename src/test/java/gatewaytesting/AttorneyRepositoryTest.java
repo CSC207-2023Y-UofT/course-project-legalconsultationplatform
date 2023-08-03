@@ -1,11 +1,11 @@
 package gatewaytesting;
 
-import gateway.AttorneyRepository;
-import gateway.ClientRepository;
-import gateway.DatabaseConnection;
+import driver.database.AttorneyRepository;
+import driver.database.ClientRepository;
+import driver.database.DatabaseConnection;
 import org.junit.jupiter.api.Test;
-import userentities.Attorney;
-import userentities.Client;
+import entity.Attorney;
+import entity.Client;
 
 import javax.persistence.EntityManager;
 
