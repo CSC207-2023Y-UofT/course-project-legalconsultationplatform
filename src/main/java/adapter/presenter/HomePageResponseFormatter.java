@@ -1,4 +1,4 @@
-package apapter.presenter;
+package adapter.presenter;
 import businessrule.outputboundary.HomePageOutputBoundary;
 import businessrule.responsemodel.HomePageResponseModel;
 import driver.screen.ApplicationException;
@@ -25,8 +25,6 @@ public class HomePageResponseFormatter implements HomePageOutputBoundary {
 
     @Override
     public HomePageResponseModel prepareSuccess(HomePageResponseModel response) {
-        LocalDateTime responseTime = LocalDateTime.parse(response.getCreationTime());
-        response.setCreationTime(responseTime.format(DateTimeFormatter.ofPattern("hh:mm:ss")));
         AttorneyHomePageUI AttorneyHomePage = new AttorneyHomePageUI();
         screens.add(AttorneyHomePage, "AttorneyHomePage");
         cardLayout.show(screens, "AttorneyHomePage");

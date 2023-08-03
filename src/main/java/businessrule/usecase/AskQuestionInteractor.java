@@ -8,6 +8,7 @@ import driver.database.QuestionGateway;
 import businessrule.outputboundary.TheQuestionOutputBoundary;
 import businessrule.responsemodel.TheQuestionResponseModel;
 
+import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
@@ -16,7 +17,6 @@ public class AskQuestionInteractor implements QuestionInputBoundary {
     final QuestionGateway questionGateway;
     final TheQuestionOutputBoundary theQuestionOutputBoundary;
     final QuestionFactory questionFactory;
-
     final ClientGateway clientGateway;
 
     public AskQuestionInteractor(QuestionGateway questionGateway, TheQuestionOutputBoundary theQuestionOutputBoundary,
@@ -40,9 +40,10 @@ public class AskQuestionInteractor implements QuestionInputBoundary {
         questionGateway.saveQuestion(question);
 
         clientGateway.updateQuestionList(questionRequestModel.getAskedByClient(), question);
+        PostMapConstructor postMapConstructor = new PostMapConstructor(clientGateway);
+        Map<Integer, PostDisplayFormatter> postMap = postMapConstructor.constructPostMap(question);
 
-
-        TheQuestionResponseModel theQuestionResponseModel = new TheQuestionResponseModel(questionRequestModel.getAskedByClient(), askedBy.getUserName(), );
+        TheQuestionResponseModel theQuestionResponseModel = new TheQuestionResponseModel(questionRequestModel.getAskedByClient(), askedBy.getUserName(), question.getTitle(), question.getType(), question.getLegalDeadline(), postMap);
         return theQuestionOutputBoundary.prepareSuccess(theQuestionResponseModel);
     }
 }

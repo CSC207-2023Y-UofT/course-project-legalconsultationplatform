@@ -1,10 +1,8 @@
 import businessrule.gateway.ClientGateway;
 import businessrule.inputboundary.UserLoginInputBoundary;
-import apapter.presenter.AskQuestionResponseFormatter;
-import apapter.presenter.LoginResponseFormatter;
 import businessrule.outputboundary.TheQuestionOutputBoundary;
 import businessrule.usecase.AskQuestionInteractor;
-import apapter.controller.QuestionControl;
+import adapter.controller.QuestionControl;
 import driver.database.ClientRepository;
 import driver.database.QuestionGateway;
 import driver.database.QuestionRepo;
@@ -12,11 +10,9 @@ import driver.screen.AskQuestionUI;
 import driver.screen.LoginUI;
 import entity.QuestionFactory;
 import businessrule.inputboundary.QuestionInputBoundary;
-import apapter.controller.UserLoginControl;
+import adapter.controller.UserLoginControl;
 import businessrule.usecase.UserLoginInteractor;
-import screen.*;
 import entity.Client;
-import database.*;
 
 import javax.swing.*;
 import java.awt.*;

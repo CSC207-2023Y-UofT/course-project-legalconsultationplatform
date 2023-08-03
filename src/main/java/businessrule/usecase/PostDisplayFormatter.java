@@ -4,7 +4,7 @@ import entity.Post;
 
 import java.time.LocalDate;
 
-class PostDisplayFormatter {
+public class PostDisplayFormatter {
     private final String postText;
     private final boolean isClient;
     private final String name;

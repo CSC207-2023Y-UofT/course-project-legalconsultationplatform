@@ -1,29 +1,29 @@
 package businessrule.usecase;
+
+
+import businessrule.gateway.ClientGateway;
 import businessrule.inputboundary.ClientRegisterInputBoundary;
 import businessrule.outputboundary.RegisterOutputBoundary;
 import businessrule.requestmodel.ClientRegisterRequestModel;
 import businessrule.responsemodel.RegisterResponseModel;
+import entity.Client;
 import entity.ClientFactory;
 import entity.CredentialChecker;
 import entity.RandomNumberGenerator;
-import entity.Client;
-import driver.database.UserGateway;
 
-
-class ClientRegisterInteractor implements ClientRegisterInputBoundary{
+class ClientRegisterInteractor implements ClientRegisterInputBoundary {
     final ClientGateway clientGateway;
-    final MessageOutputBoundary outputBoundary;
+    final RegisterOutputBoundary outputBoundary;
     final ClientFactory clientFactory;
 
-    public ClientRegisterInteractor(ClientGateway clientGateway,
-                                    MessageOutputBoundary outputBoundary,
-                                    ClientFactory clientFactory) {
+    public ClientRegisterInteractor(ClientGateway clientGateway, RegisterOutputBoundary outputBoundary, ClientFactory clientFactory) {
         this.clientGateway = clientGateway;
         this.outputBoundary = outputBoundary;
         this.clientFactory = clientFactory;
     }
+
     @Override
-    public MessageResponseModel create(ClientRegisterRequestModel requestModel){
+    public RegisterResponseModel create(ClientRegisterRequestModel requestModel){
         String inputUserName = requestModel.getUserName();
         String inputEmail = requestModel.getEmail();
         String inputPassword1 = requestModel.getPassword();

@@ -7,9 +7,11 @@ import driver.database.UserGateway;
 import businessrule.gateway.UserGatewayFactory;
 import businessrule.outputboundary.ViewOutputBoundary;
 import businessrule.responsemodel.ViewResponseModel;
+import entity.Attorney;
 import entity.Question;
 import entity.User;
 import java.util.List;
+import java.util.Map;
 
 public class ViewQuestionInteractor implements ViewInputBoundary {
     final QuestionGateway questionGateway;
@@ -26,12 +28,13 @@ public class ViewQuestionInteractor implements ViewInputBoundary {
     @Override
     public ViewResponseModel viewQuestion(ViewRequestModel viewRequestModel) {
         int userId= viewRequestModel.getUserId();
-        int questionId = viewRequestModel.getQuestionId();
         UserGateway userGateway = userGatewayFactory.createUserGateway(userId);
         User user = userGateway.getUser(userId);
-        Question question = questionGateway.getQuestion(questionId);
         List<Question> questionList = user.getQuestionsList();
-        ViewResponseModel viewResponseModel = new ViewResponseModel(); // 在presenter完成后要后加东西
-        return viewOutputBoundary.prepareSuccess();
+        QuestionMapConstructor questionMapConstructor = new QuestionMapConstructor();
+        Map<Integer, QuestionDisplayFormatter> questionMap = questionMapConstructor.constructQuestionMap(questionList);
+        Attorney attorney = (Attorney) userGateway.getUser(viewRequestModel.getUserId());
+        ViewResponseModel viewResponseModel = new ViewResponseModel(attorney.getUserId(), attorney.getUserName(), questionMap);
+        return viewOutputBoundary.prepareSuccess(viewResponseModel);
     }
 }

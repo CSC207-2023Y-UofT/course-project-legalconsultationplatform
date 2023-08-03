@@ -1,28 +1,27 @@
 package businessrule.responsemodel;
 
-import apapter.presenter.HomePageResponseFormatter;
-
 public class HomePageResponseModel {
-    int userId;
-    String creationTime;
+    private int userId;
+    private String userName;
 
-    public HomePageResponseModel(int userId, String creationTime) {
+    public HomePageResponseModel(int userId, String userName) {
         this.userId = userId;
-        this.creationTime = creationTime;
+        this.userName = userName;
     }
 
     public int getUserId() {
         return userId;
-    }
-    public String getCreationTime() {
-        return creationTime;
     }
 
     public void setUserId(int userId) {
         this.userId = userId;
     }
 
-    public void setCreationTime(String creationTime) {
-        this.creationTime = creationTime;
+    public String getUserName() {
+        return userName;
+    }
+
+    public void setUserName(String userName) {
+        this.userName = userName;
     }
 }

@@ -1,6 +1,6 @@
 package driver.screen;
 
-import apapter.controller.UserLoginControl;
+import adapter.controller.UserLoginControl;
 
 import javax.swing.*;
 import java.awt.*;

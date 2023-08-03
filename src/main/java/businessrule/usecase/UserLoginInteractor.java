@@ -1,24 +1,27 @@
 package businessrule.usecase;
 
-import apapter.LoginOutputBoundary;
+import businessrule.gateway.UserGatewayFactory;
 import businessrule.inputboundary.UserLoginInputBoundary;
+import businessrule.outputboundary.HomePageOutputBoundary;
 import businessrule.requestmodel.UserLoginRequestModel;
+import businessrule.responsemodel.HomePageResponseModel;
 import driver.database.UserGateway;
-import apapter.LoginResponseModel;
 import entity.User;
 import driver.screen.ApplicationException;
 
+import java.time.LocalDateTime;
+
 public class UserLoginInteractor implements UserLoginInputBoundary{
     final UserGatewayFactory userGatewayFactory;
-    final LoginOutputBoundary outputBoundary;
+    final HomePageOutputBoundary outputBoundary;
 
-    public UserLoginInteractor(UserGatewayFactory userGatewayFactory,
-                               LoginOutputBoundary outputBoundary) {
+    public UserLoginInteractor(UserGatewayFactory userGatewayFactory, HomePageOutputBoundary outputBoundary) {
         this.userGatewayFactory = userGatewayFactory;
         this.outputBoundary = outputBoundary;
     }
+
     @Override
-    public LoginResponseModel login(UserLoginRequestModel requestModel) {
+    public HomePageResponseModel login(UserLoginRequestModel requestModel) {
         int inputUserId = requestModel.getUserId();
         String inputPassword = requestModel.getPassword();
         UserGateway userGateway;
@@ -37,7 +40,7 @@ public class UserLoginInteractor implements UserLoginInputBoundary{
             return outputBoundary.prepareFail("Password is incorrect");
         }
         LocalDateTime now = LocalDateTime.now();
-        LoginResponseModel accountResponseModel = new LoginResponseModel(inputUserId, now.toString());
+        HomePageResponseModel accountResponseModel = new HomePageResponseModel(inputUserId, userGateway.getUser(inputUserId).getUserName());
         return outputBoundary.prepareSuccess(accountResponseModel);
     }
 }

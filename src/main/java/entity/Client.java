@@ -148,11 +148,7 @@ public class Client implements User {
 
     @Override
     public boolean isQuestionReplyable(Question question) {
-        if (!question.isClose()){
-            return true;
-        } else {
-            return false;
-        }
+        return !question.isClose();
     }
 
     @Override
@@ -168,6 +164,11 @@ public class Client implements User {
     @Override
     public String toString() {
         return String.format("[Client]: %s", userName);
+    }
+
+    @Override
+    public boolean isQuestionRateable(Question question) {
+        return question.isClose();
     }
 }
 

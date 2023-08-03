@@ -1,7 +1,9 @@
 package businessrule.usecase;
 
 import businessrule.inputboundary.CloseInputBoundary;
+import businessrule.outputboundary.HomePageOutputBoundary;
 import businessrule.requestmodel.CloseRequestModel;
+import businessrule.responsemodel.HomePageResponseModel;
 import entity.Question;
 import driver.database.QuestionGateway;
 import entity.User;
@@ -10,17 +12,17 @@ import businessrule.gateway.UserGatewayFactory;
 
 public class CloseQuestionInteractor implements CloseInputBoundary {
     final QuestionGateway questionGateway;
-    final MessageOutputBoundary messageOutputBoundary;
+    final HomePageOutputBoundary homePageOutputBoundary;
     final UserGatewayFactory userGatewayFactory;
 
-    public CloseQuestionInteractor(QuestionGateway questionGateway, MessageOutputBoundary messageOutputBoundary, UserGatewayFactory userGatewayFactory) {
+    public CloseQuestionInteractor(QuestionGateway questionGateway, HomePageOutputBoundary homePageOutputBoundary, UserGatewayFactory userGatewayFactory) {
         this.questionGateway = questionGateway;
-        this.messageOutputBoundary = messageOutputBoundary;
+        this.homePageOutputBoundary = homePageOutputBoundary;
         this.userGatewayFactory = userGatewayFactory;
     }
 
     @Override
-    public MessageResponseModel closeQuestion(CloseRequestModel closeRequestModel) {
+    public HomePageResponseModel closeQuestion(CloseRequestModel closeRequestModel) {
         int userId = closeRequestModel.getUserId();;
         int questionId = closeRequestModel.getQuestionId();
         UserGateway userGateway = userGatewayFactory.createUserGateway(userId);
@@ -29,12 +31,12 @@ public class CloseQuestionInteractor implements CloseInputBoundary {
         boolean isQuestionCloseable = user.isQuestionCloseable(question);
 
         if(isQuestionCloseable){
-            question.setClose(true);
             questionGateway.updateIsClose(questionId, true);
-            return messageOutputBoundary.prepareSuccess("The question has been succeccfully closed");
+            HomePageResponseModel homePageResponseModel = new HomePageResponseModel(userId, user.getUserName());
+            return homePageOutputBoundary.prepareSuccess(homePageResponseModel);
         }
         else{
-            return messageOutputBoundary.prepareFail("This question cannot close");
+            return homePageOutputBoundary.prepareFail("This question cannot close");
         }
 
     }

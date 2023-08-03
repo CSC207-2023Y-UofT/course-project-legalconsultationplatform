@@ -1,4 +1,4 @@
-package apapter.controller;
+package adapter.controller;
 
 import businessrule.responsemodel.ViewResponseModel;
 import businessrule.inputboundary.ViewInputBoundary;
@@ -10,8 +10,8 @@ public class ViewQuestionControl {
     public ViewQuestionControl(ViewInputBoundary viewInputBoundary) {
         this.viewInputBoundary = viewInputBoundary;
     }
-    public ViewResponseModel viewQuestion(int questioId, int userId){
-        ViewRequestModel viewRequestModel = new ViewRequestModel(questioId,userId);
+    public ViewResponseModel viewQuestion(int userId){
+        ViewRequestModel viewRequestModel = new ViewRequestModel(userId);
         return viewInputBoundary.viewQuestion(viewRequestModel);
 
     }

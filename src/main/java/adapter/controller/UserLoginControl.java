@@ -1,4 +1,4 @@
-package apapter.controller;
+package adapter.controller;
 
 import businessrule.inputboundary.UserLoginInputBoundary;
 import businessrule.requestmodel.UserLoginRequestModel;

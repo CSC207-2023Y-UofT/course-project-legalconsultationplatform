@@ -1,7 +1,9 @@
 package businessrule.usecase;
 
 import businessrule.inputboundary.PostInputBoundary;
+import businessrule.outputboundary.HomePageOutputBoundary;
 import businessrule.requestmodel.PostRequestModel;
+import businessrule.responsemodel.HomePageResponseModel;
 import driver.database.PostGateway;
 import driver.database.QuestionGateway;
 import entity.RandomNumberGenerator;
@@ -19,20 +21,20 @@ public class ReplyInteractor implements PostInputBoundary {
 
     final QuestionGateway questionGateway;
     final PostGateway postGateway;
-    final MessageOutputBoundary messageOutputBoundary;
+    final HomePageOutputBoundary homePageOutputBoundary;
     final PostFactory postFactory;
     final UserGatewayFactory userGatewayFactory;
 
-    public ReplyInteractor(QuestionGateway questionGateway, PostGateway postGateway, MessageOutputBoundary messageOutputBoundary, PostFactory postFactory, UserGatewayFactory userGatewayFactory){
+    public ReplyInteractor(QuestionGateway questionGateway, PostGateway postGateway, HomePageOutputBoundary homePageOutputBoundary, PostFactory postFactory, UserGatewayFactory userGatewayFactory) {
         this.questionGateway = questionGateway;
         this.postGateway = postGateway;
-        this.messageOutputBoundary = messageOutputBoundary;
+        this.homePageOutputBoundary = homePageOutputBoundary;
         this.postFactory = postFactory;
         this.userGatewayFactory = userGatewayFactory;
     }
 
     @Override
-    public MessageResponseModel createPost(PostRequestModel postRequestModel) {
+    public HomePageResponseModel createPost(PostRequestModel postRequestModel) {
         RandomNumberGenerator randomNumberGenerator = new RandomNumberGenerator();
         LocalDate now = LocalDate.now();
 
@@ -44,10 +46,14 @@ public class ReplyInteractor implements PostInputBoundary {
         questionGateway.updatePosts(postRequestModel.getQuestionId(), post);
         postGateway.savePost(post);
         if (isQuestionReplyable) {
-            return messageOutputBoundary.prepareSuccess("success");
+            questionGateway.updateIsTaken(question.getQuestionId(), question.isTaken());
+            questionGateway.updateTakenByAttorney(question.getQuestionId(), question.getTakenByAttorney());
+            questionGateway.updateTakenAt(question.getQuestionId(), question.getTakenAt());
+            HomePageResponseModel homePageResponseModel = new HomePageResponseModel(user.getUserId(), user.getUserName());
+            return homePageOutputBoundary.prepareSuccess(homePageResponseModel);
         }
         else{
-            return messageOutputBoundary.prepareFail("You are not allowed to send this reply.");
+            return homePageOutputBoundary.prepareFail("You cannot reply to this question");
         }
     }
 }

@@ -1,4 +1,4 @@
-package apapter.controller;
+package adapter.controller;
 
 import businessrule.responsemodel.TheQuestionResponseModel;
 import businessrule.inputboundary.SelectInputBoundary;

@@ -9,8 +9,7 @@ import businessrule.outputboundary.TheQuestionOutputBoundary;
 import entity.User;
 import driver.database.UserGateway;
 import businessrule.gateway.UserGatewayFactory;
-
-import java.time.LocalDate;
+import java.util.Map;
 
 public class SelectQuestionInteractor implements SelectInputBoundary {
     final QuestionGateway questionGateway;
@@ -35,11 +34,11 @@ public class SelectQuestionInteractor implements SelectInputBoundary {
         Question question = questionGateway.getQuestion(questionId);
 
         boolean isQuestionSelectable = user.isQuestionSelectable(question);
-        TheQuestionResponseModel tempResponseModel = new TheQuestionResponseModel(questionId, LocalDate.now());
-
-        // TODO: complete method call after finishing the presenter class
         if (isQuestionSelectable) {
-            return theQuestionOutputBoundary.prepareSuccess(tempResponseModel);
+            PostMapConstructor postMapConstructor = new PostMapConstructor(userGateway);
+            Map<Integer, PostDisplayFormatter> postMap = postMapConstructor.constructPostMap(question);
+            TheQuestionResponseModel theQuestionResponseModel = new TheQuestionResponseModel(userId, user.getUserName(), question.getTitle(), question.getType(), question.getLegalDeadline(), postMap);
+            return theQuestionOutputBoundary.prepareSuccess(theQuestionResponseModel);
         } else {
             return theQuestionOutputBoundary.prepareFail("This question is not accessible.");
         }

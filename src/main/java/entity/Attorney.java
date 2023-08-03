@@ -41,7 +41,8 @@ public class Attorney implements User {
     @Override
     public String getPassword() {return password;}
 
-    public String getName() {return name;}
+    @Override
+    public String getUserName() {return name;}
 
     @Override
     public String getEmail() {return email;}
@@ -140,5 +141,10 @@ public class Attorney implements User {
     @Override
     public String toString() {
         return String.format("[Attorney]: %s", name);
+    }
+
+    @Override
+    public boolean isQuestionRateable(Question question) {
+        return false;
     }
 }

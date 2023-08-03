@@ -1,17 +1,24 @@
 package businessrule.responsemodel;
 
-import javax.print.DocFlavor;
-import java.util.List;
+import businessrule.usecase.PostDisplayFormatter;
+
+import java.time.LocalDate;
 import java.util.Map;
 
-public class TheQuestionResponseModel {
-    int userId;
-    String userName;
-    Map<Integer, List<Object>> postMap;
+public class TheQuestionResponseModel{
+    private int userId;
+    private String userName;
+    private String title;
+    private String type;
+    private LocalDate deadline;
+    private Map<Integer, PostDisplayFormatter> postMap;
 
-    public TheQuestionResponseModel(int userId, String userName, Map<Integer, List<Object>> postMap) {
+    public TheQuestionResponseModel(int userId, String userName, String title, String type, LocalDate deadline, Map<Integer, PostDisplayFormatter> postMap) {
         this.userId = userId;
         this.userName = userName;
+        this.title = title;
+        this.type = type;
+        this.deadline = deadline;
         this.postMap = postMap;
     }
 
@@ -31,11 +38,19 @@ public class TheQuestionResponseModel {
         this.userName = userName;
     }
 
-    public Map<Integer, List<Object>> getPostMap() {
-        return postMap;
-    }
+    public Map<Integer, PostDisplayFormatter> getPostMap() {return postMap;}
 
-    public void setPostMap(Map<Integer, List<Object>> postMap) {
-        this.postMap = postMap;
-    }
+    public void setPostMap(Map<Integer, PostDisplayFormatter> postMap) {this.postMap = postMap;}
+
+    public String getTitle() {return title;}
+
+    public void setTitle(String title) {this.title = title;}
+
+    public String getType() {return type;}
+
+    public void setType(String type) {this.type = type;}
+
+    public LocalDate getDeadline() {return deadline;}
+
+    public void setDeadline(LocalDate deadline) {this.deadline = deadline;}
 }

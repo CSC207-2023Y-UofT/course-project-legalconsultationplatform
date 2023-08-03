@@ -1,6 +1,6 @@
 package driver.screen;
 
-import apapter.controller.QuestionControl;
+import adapter.controller.QuestionControl;
 
 import javax.swing.*;
 import java.awt.*;

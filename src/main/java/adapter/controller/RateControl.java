@@ -1,7 +1,8 @@
-package apapter.controller;
+package adapter.controller;
 
 import businessrule.inputboundary.RateInputBoundary;
 import businessrule.requestmodel.RateRequestModel;
+import businessrule.responsemodel.HomePageResponseModel;
 
 public class RateControl {
     private final RateInputBoundary rateInput;
@@ -10,8 +11,8 @@ public class RateControl {
         this.rateInput = input;
     }
 
-    MessageResponseModel rateAnswer(int rate, int questionId) {
-        RateRequestModel rating = new RateRequestModel(rate, questionId);
+    HomePageResponseModel rateAnswer(int rate, int questionId, int userId) {
+        RateRequestModel rating = new RateRequestModel(rate, questionId, userId);
         return rateInput.rateAnswer(rating);
     }
 

@@ -1,4 +1,4 @@
-package apapter.presenter;
+package adapter.presenter;
 
 public class ViewResponseFormatter {
 }
