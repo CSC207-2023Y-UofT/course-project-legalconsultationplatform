@@ -1,13 +1,11 @@
 package driver.database;
 
 import businessrule.gateway.AttorneyGateway;
-import entity.Post;
-import entity.Question;
-import entity.Attorney;
-import entity.User;
+import entity.*;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
+import java.util.List;
 
 public class AttorneyRepository implements AttorneyGateway {
 
@@ -105,6 +103,13 @@ public class AttorneyRepository implements AttorneyGateway {
 
     @Override
     public boolean existsByName(String inputUserName) {
-        return false; //TODO
+        EntityManager em = DatabaseConnection.getEntityManager();
+        try {
+            List<Attorney> users = em.createQuery("SELECT a FROM Attorney a WHERE a.name =: name", Attorney.class).
+                    setParameter("name", inputUserName).getResultList();
+            return !users.isEmpty();
+        } finally {
+            em.close();
+        }
     }
 }
