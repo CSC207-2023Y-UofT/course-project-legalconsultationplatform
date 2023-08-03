@@ -1,7 +1,8 @@
 package apapter.controller;
 
-import userlogin.UserLoginInputBoundary;
-import userlogin.UserLoginRequestModel;
+import businessrule.inputboundary.UserLoginInputBoundary;
+import businessrule.requestmodel.UserLoginRequestModel;
+import businessrule.responsemodel.HomePageResponseModel;
 
 public class UserLoginControl {
     final UserLoginInputBoundary inputBoundary;
@@ -10,7 +11,7 @@ public class UserLoginControl {
         this.inputBoundary = inputBoundary;
     }
 
-    public LoginResponseModel login(int userId, String password){
+    public HomePageResponseModel login(int userId, String password){
         UserLoginRequestModel requestModel = new UserLoginRequestModel(userId, password);
         return inputBoundary.login(requestModel);
     }

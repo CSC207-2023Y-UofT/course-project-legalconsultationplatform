@@ -1,8 +1,8 @@
 package apapter.presenter;
-import apapter.presenter.HomePageOutputBoundary;
-import apapter.responsemodel.HomePageResponseModel;
-import screen.ApplicationException;
-import screen.AttorneyHomePageUI;
+import businessrule.outputboundary.HomePageOutputBoundary;
+import businessrule.responsemodel.HomePageResponseModel;
+import driver.screen.ApplicationException;
+import driver.screen.AttorneyHomePageUI;
 
 import javax.swing.*;
 import java.awt.*;
