@@ -1,50 +1,82 @@
 package usecasetesting;
 
-import askquestion.*;
+import businessrule.gateway.AttorneyGateway;
+import businessrule.gateway.ClientGateway;
+import businessrule.inputboundary.QuestionInputBoundary;
+import businessrule.outputboundary.TheQuestionOutputBoundary;
+import businessrule.requestmodel.QuestionRequestModel;
+import businessrule.responsemodel.TheQuestionResponseModel;
+import businessrule.usecase.AskQuestionInteractor;
+
+import driver.database.*;
+import entity.*;
+import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
-import screen.*;
-import userentities.Client;
-import userlogin.*;
-import gateway.*;
-import presenter.*;
 
-import javax.swing.*;
-import java.awt.*;
 import java.time.LocalDate;
-
-import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.*;
 ;
 
 public class AskQuestionUseCaseTest {
-    @Test
-    public void UseCaseTest(){
-        ClientRepository repo = new ClientRepository();
-        TheQuestionOutputBoundary theQuestionOutputBoundary = new TheQuestionOutputBoundary() {
+    final static int CLIENT_ID = 11345678;
+    final static int ATTORNEY_ID = 21345678;
+    final static int SECOND_ATTORNEY_ID = 22222222;
+    private QuestionGateway questionGateway;
+    private QuestionFactory questionFactory;
+    private ClientGateway clientGateway;
+    private AttorneyGateway attorneyGateway;
+    private TheQuestionOutputBoundary theQuestionOutputBoundary;
+    private QuestionInputBoundary questionInputBoundary;
+    @BeforeClass
+    public void setUpAskQuestionUseCase(){
+
+        questionGateway = new QuestionRepo();
+        questionFactory = new QuestionFactory();
+        clientGateway = new ClientRepository();
+        attorneyGateway = new AttorneyRepository();
+        theQuestionOutputBoundary = new TheQuestionOutputBoundary() {
             @Override
             public TheQuestionResponseModel prepareFail(String msg) {
-                fail("Unexpected use case failure.");
+                assertEquals("Please specify your question type.", msg);
                 return null;
             }
 
             @Override
             public TheQuestionResponseModel prepareSuccess(TheQuestionResponseModel response) {
-                assertEquals(12345678, response.getUserId());
-                assertNotNull(response.getCreationTime());
-                // assertEquals(true, repo.existsById(12345678));
                 return null;
             }
         };
 
-        QuestionGateway questionGateway = new QuestionRepo();
-        QuestionFactory questionFactory = new QuestionFactory();
-        ClientGateway clientGateway = new ClientRepository(); // It should be the same as the repo above
-        QuestionInputBoundary questionInputBoundary = new AskQuestionInteractor(questionGateway, theQuestionOutputBoundary, questionFactory, clientGateway);
+        questionInputBoundary = new AskQuestionInteractor(questionGateway, theQuestionOutputBoundary, questionFactory, clientGateway);
 
-        QuestionRequestModel inputData1 = new QuestionRequestModel("fraud", "Test title", LocalDate.now(), 12345678);
-        QuestionRequestModel inputData2 = new QuestionRequestModel("fraud", "Test title", LocalDate.now(), 12345678, LocalDate.now());
+        Client client = new Client();
+        client.setUserId(CLIENT_ID);
+        clientGateway.addUser(client);
 
-        questionInputBoundary.createQuestion(inputData1);
-        questionInputBoundary.createQuestion(inputData2);
+        Attorney attorney = new Attorney();
+        attorney.setUserId(ATTORNEY_ID);
+        attorneyGateway.addUser(attorney);
+
+        Attorney secondAttorney = new Attorney();
+        attorney.setUserId(SECOND_ATTORNEY_ID);
+        attorneyGateway.addUser(secondAttorney);
+    }
+
+    @Test
+    public void TestAskQuestionPassed(){
+        setUpAskQuestionUseCase();
+
+        QuestionRequestModel inputData = new QuestionRequestModel("fraud", "Test title", LocalDate.now(), CLIENT_ID, LocalDate.now());
+
+        questionInputBoundary.createQuestion(inputData);
+    }
+
+    @Test
+    public void TestAskQuestionFailByEmptyCategory(){
+        setUpAskQuestionUseCase();
+
+        QuestionRequestModel inputData = new QuestionRequestModel(null, "Test title", LocalDate.now(), CLIENT_ID, LocalDate.now());
+
+        questionInputBoundary.createQuestion(inputData);
     }
 }
