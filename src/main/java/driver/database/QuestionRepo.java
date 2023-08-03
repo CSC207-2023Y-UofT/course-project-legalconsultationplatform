@@ -1,9 +1,9 @@
 package driver.database;
 
-import driver.database.QuestionGateway;
 import entity.Post;
 import entity.Question;
 
+import javax.jdo.JDOHelper;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.time.LocalDate;
@@ -161,6 +161,7 @@ public class QuestionRepo implements QuestionGateway {
         try {
             em.getTransaction().begin();
             question.addPosts(post);
+            JDOHelper.makeDirty(question, "posts");
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
@@ -191,11 +192,11 @@ public class QuestionRepo implements QuestionGateway {
     }
 
     @Override
-    public void deleteQuestion(int postId) {
+    public void deleteQuestion(int questionId) {
         EntityManager em = DatabaseConnection.getEntityManager();
         try {
             em.getTransaction().begin();
-            Question question = em.find(Question.class, postId);
+            Question question = getQuestion(questionId);
             em.remove(question);
             em.getTransaction().commit();
         } catch (Exception e) {

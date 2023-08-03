@@ -1,9 +1,9 @@
 package driver.database;
 
 import businessrule.gateway.AttorneyGateway;
+import entity.Post;
 import entity.Question;
 import entity.Attorney;
-import entity.Client;
 import entity.User;
 
 import javax.persistence.EntityManager;
@@ -35,7 +35,7 @@ public class AttorneyRepository implements AttorneyGateway {
     @Override
     public void updateQuestionList(int attorneyId, Question question) {
         EntityManager em = DatabaseConnection.getEntityManager();
-        Attorney a = getUser(attorneyId);
+        Attorney a = em.find(Attorney.class, attorneyId);
         try {
             em.getTransaction().begin();
             a.addQuestion(question);
