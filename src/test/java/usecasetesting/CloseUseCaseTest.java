@@ -40,7 +40,7 @@ public class CloseUseCaseTest {
     private CloseInputBoundary closeInputBoundary;
 
     @BeforeClass
-    public void setUpReplyUseCase(){
+    public void setUpCloseUseCase(){
 
         questionGateway = new QuestionRepo();
         postGateway = new PostRepo();
@@ -89,7 +89,7 @@ public class CloseUseCaseTest {
     }
     @Test
     public void TestClientCloseableQuestion(){
-        setUpReplyUseCase();
+        setUpCloseUseCase();
 
 
         CloseRequestModel inputData = new CloseRequestModel(QUESTION_ID, CLIENT_ID);
@@ -100,7 +100,7 @@ public class CloseUseCaseTest {
     }
     @Test
     public void TestAttorneyCloseableQuestion(){
-        setUpReplyUseCase();
+        setUpCloseUseCase();
         CloseRequestModel inputData = new CloseRequestModel(QUESTION_ID, ATTORNEY_ID);
 
         closeInputBoundary.closeQuestion(inputData);
@@ -109,7 +109,7 @@ public class CloseUseCaseTest {
     }
     @Test
     public void TestClientUnclosableQuestion(){
-        setUpReplyUseCase();
+        setUpCloseUseCase();
         CloseRequestModel inputData = new CloseRequestModel(CLOSED_QUESTION_ID, CLIENT_ID);
 
         closeInputBoundary.closeQuestion(inputData);
@@ -117,20 +117,20 @@ public class CloseUseCaseTest {
 
     @Test
     public void TestAttorneyClosedQuestion(){
-        setUpReplyUseCase();
+        setUpCloseUseCase();
         CloseRequestModel inputData = new CloseRequestModel(CLOSED_QUESTION_ID, CLIENT_ID);
 
         closeInputBoundary.closeQuestion(inputData);
     }
 
     @Test
-    public void TestAttorneyUntakenQuestion(){
-        setUpReplyUseCase();
+    public void TestAttorneyNonTakenQuestion(){
+        setUpCloseUseCase();
         CloseRequestModel inputData = new CloseRequestModel(CLOSED_QUESTION_ID, CLIENT_ID);
 
         closeInputBoundary.closeQuestion(inputData);
     }
 
-    @AfterClass
+    //@AfterClass
 
 }

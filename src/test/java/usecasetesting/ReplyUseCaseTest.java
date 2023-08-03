@@ -146,5 +146,5 @@ public class ReplyUseCaseTest {
         assertEquals(attorneyquestion.isTaken(), true);
     }
 
-    @AfterClass
+    //@AfterClass
 }

@@ -39,7 +39,7 @@ public class RateAnswerUseCaseTest {
     private HomePageOutputBoundary homePageOutputBoundary;
     private RateInputBoundary rateInputBoundary;
     @BeforeClass
-    public void setUpReplyUseCase(){
+    public void setUpRateAnswerUseCase(){
 
         questionGateway = new QuestionRepo();
         postGateway = new PostRepo();
@@ -88,20 +88,20 @@ public class RateAnswerUseCaseTest {
     }
     @Test
     public void TestClientRateClosedQuestion(){
-        setUpReplyUseCase();
+        setUpRateAnswerUseCase();
         RateRequestModel inputData = new RateRequestModel(10, CLOSED_QUESTION_ID, CLIENT_ID);
         rateInputBoundary.rateAnswer(inputData);
         assertEquals(questionGateway.getQuestion(QUESTION_ID).getRating(), 10);
     }
     @Test
     public void TestClientRateUnClosedQuestion(){
-        setUpReplyUseCase();
+        setUpRateAnswerUseCase();
         RateRequestModel inputData = new RateRequestModel(10, QUESTION_ID, CLIENT_ID);
         rateInputBoundary.rateAnswer(inputData);
     }
     @Test
     public void TestAttorneyRate(){
-        setUpReplyUseCase();
+        setUpRateAnswerUseCase();
         RateRequestModel inputData = new RateRequestModel(10, QUESTION_ID, CLIENT_ID);
         rateInputBoundary.rateAnswer(inputData);
     }
