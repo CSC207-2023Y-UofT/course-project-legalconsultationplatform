@@ -35,6 +35,8 @@ public class TheQuestionUI extends JPanel implements ActionListener {
         this.type = type;
         this.deadline = deadline;
         this.postMap = postMap;
+
+
         //UserName and UserId
         String helloMessageString = "Hello, " + userName + "(" + userId + ")";
         JLabel helloMessage = new JLabel(helloMessageString);
@@ -46,10 +48,13 @@ public class TheQuestionUI extends JPanel implements ActionListener {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String deadlineString = "Deadline: " + deadline.format(formatter);
         JLabel deadlineLine = new JLabel(deadlineString);
+
+
         //The scrollable posts
         int numberOfPosts = postMap.size();
         JScrollPane postScrollPane = new JScrollPane();
         postScrollPane.setLayout(new GridLayout(numberOfPosts, 1));
+        JPanel postScrollPanel = new JPanel();
         for (PostDisplayFormatter post : postMap.values()){
             //read all variables from displayFormatter
             String name = post.getName();
@@ -64,15 +69,25 @@ public class TheQuestionUI extends JPanel implements ActionListener {
             //lines
             String idLine = name + "(" + userType + ")";
             String dateLine = "Posted on: " + postDate;
-            //Format them all into a button
+            //Format them all into a textArea
             JTextArea postArea = new JTextArea();
             postArea.setEditable(false);
+            postArea.setLineWrap(true);
             String overallText = idLine + "\n" + dateLine + "\n" + postText;
             postArea.setText(overallText)
             postArea.setPreferredSize(new Dimension(300, 30));
             //Add the postArea into the scrollpanel
-            postScrollPane.add(postArea);
+            postScrollPanel.add(postArea);
         }
+        postScrollPane.add(postScrollPanel);
+
+
+        //The new post textBox
+        JTextArea inputPostArea = new JTextArea();
+        inputPostArea.setLineWrap(true);
+        inputPostArea.setWrapStyleWord(true);
+        inputPostArea.setPreferredSize(new Dimension(400, 100));
+
         //The three buttons
         JPanel buttons = new JPanel();
         JButton postReply = new JButton("Post reply");
@@ -91,11 +106,28 @@ public class TheQuestionUI extends JPanel implements ActionListener {
         this.add(titleLine);
         this.add(deadlineLine);
         this.add(postScrollPane);
+        this.add(inputPostArea);
         this.add(buttons);
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
-
+        String actionCommand = e.getActionCommand();
+        if ("Ask new question".equals(actionCommand)){
+            AskQuestionUI askQuestionUI = new AskQuestionUI();
+            screens.add(askQuestionUI, "askQuestion");
+            cardLayout.show(screens, "askQuestion");
+            System.out.println("Ask question page showed");
+        } else if ("View question history".equals(actionCommand)){
+            QuestionListUI questionHistoryUI = new QuestionListUI();
+            screens.add(questionHistoryUI, "questionHistory");
+            cardLayout.show(screens, "questionHistory");
+            System.out.println("Question history showed");
+        } else if ("Rate past questions".equals(actionCommand)){
+            QuestionListUI rateQuestionUI = new QuestionListUI();
+            screens.add(rateQuestionUI, "rateQuestion");
+            cardLayout.show(screens, "rateQuestion");
+            System.out.print("Rate questions showed");
+        }
     }
 }
