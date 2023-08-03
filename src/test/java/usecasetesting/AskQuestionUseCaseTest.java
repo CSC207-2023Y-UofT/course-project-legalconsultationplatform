@@ -1,10 +1,16 @@
 package usecasetesting;
 
-import askquestion.*;
+import businessrule.gateway.ClientGateway;
+import businessrule.inputboundary.QuestionInputBoundary;
+import businessrule.outputboundary.TheQuestionOutputBoundary;
+import businessrule.requestmodel.QuestionRequestModel;
+import businessrule.responsemodel.TheQuestionResponseModel;
+import businessrule.usecase.AskQuestionInteractor;
+import driver.database.ClientRepository;
+import driver.database.QuestionGateway;
+import driver.database.QuestionRepo;
+import entity.QuestionFactory;
 import org.junit.jupiter.api.Test;
-
-import gateway.*;
-import presenter.*;
 
 import java.time.LocalDate;
 
@@ -26,7 +32,6 @@ public class AskQuestionUseCaseTest {
             @Override
             public TheQuestionResponseModel prepareSuccess(TheQuestionResponseModel response) {
                 assertEquals(12345678, response.getUserId());
-                assertNotNull(response.getCreationTime());
                 // assertEquals(true, repo.existsById(12345678));
                 return null;
             }
@@ -37,10 +42,8 @@ public class AskQuestionUseCaseTest {
         ClientGateway clientGateway = new ClientRepository(); // It should be the same as the repo above
         QuestionInputBoundary questionInputBoundary = new AskQuestionInteractor(questionGateway, theQuestionOutputBoundary, questionFactory, clientGateway);
 
-        QuestionRequestModel inputData1 = new QuestionRequestModel("fraud", "Test title", LocalDate.now(), 12345678);
-        QuestionRequestModel inputData2 = new QuestionRequestModel("fraud", "Test title", LocalDate.now(), 12345678, LocalDate.now());
+        QuestionRequestModel inputData = new QuestionRequestModel("fraud", "Test title", LocalDate.now(), 12345678, LocalDate.now());
 
-        questionInputBoundary.createQuestion(inputData1);
-        questionInputBoundary.createQuestion(inputData2);
+        questionInputBoundary.createQuestion(inputData);
     }
 }

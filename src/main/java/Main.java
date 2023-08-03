@@ -1,5 +1,9 @@
+import adapter.presenter.HomePageResponseFormatter;
+import adapter.presenter.TheQuestionResponseFormatter;
 import businessrule.gateway.ClientGateway;
+import businessrule.gateway.UserGatewayFactory;
 import businessrule.inputboundary.UserLoginInputBoundary;
+import businessrule.outputboundary.HomePageOutputBoundary;
 import businessrule.outputboundary.TheQuestionOutputBoundary;
 import businessrule.usecase.AskQuestionInteractor;
 import adapter.controller.QuestionControl;
@@ -19,6 +23,7 @@ import java.awt.*;
 
 public class Main {
     public static void main(String[] args) {
+        UserGatewayFactory userGatewayFactory = new UserGatewayFactory();
         ClientRepository repo = new ClientRepository();
         Client client = new Client();
         client.setUserId(12345678);
@@ -29,12 +34,12 @@ public class Main {
         JPanel screens = new JPanel(cardlayout);
         application.add(screens);
 
-        LoginOutputBoundary boundary = new LoginResponseFormatter(cardlayout, screens);
-        UserLoginInputBoundary userLoginInteractor = new UserLoginInteractor(repo, boundary);
+        HomePageOutputBoundary boundary = new HomePageResponseFormatter(cardlayout, screens);
+        UserLoginInputBoundary userLoginInteractor = new UserLoginInteractor(userGatewayFactory, boundary);
         UserLoginControl control = new UserLoginControl(userLoginInteractor);
 
 
-        TheQuestionOutputBoundary theQuestionOutputBoundary = new AskQuestionResponseFormatter(cardlayout, screens);
+        TheQuestionOutputBoundary theQuestionOutputBoundary = new TheQuestionResponseFormatter();// cardlayout, screens)
         QuestionGateway questionGateway = new QuestionRepo();
         QuestionFactory questionFactory = new QuestionFactory();
         ClientGateway clientGateway = new ClientRepository(); // It should be the same as the repo above

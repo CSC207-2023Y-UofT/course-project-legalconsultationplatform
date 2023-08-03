@@ -1,14 +1,17 @@
 package usecasetesting;
 
-import questionentities.Question;
-import replytoquestion.*;
-import org.junit.jupiter.api.Test;
+import businessrule.gateway.UserGatewayFactory;
+import businessrule.inputboundary.SelectInputBoundary;
+import businessrule.outputboundary.TheQuestionOutputBoundary;
+import businessrule.requestmodel.SelectRequestModel;
+import businessrule.responsemodel.TheQuestionResponseModel;
+import businessrule.usecase.SelectQuestionInteractor;
+import driver.database.QuestionGateway;
+import driver.database.QuestionRepo;
 
-import gateway.*;
-import presenter.*;
-import userselectquestion.SelectInputBoundary;
-import userselectquestion.SelectQuestionInteractor;
-import userselectquestion.SelectRequestModel;
+import entity.Question;
+
+import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
@@ -29,7 +32,6 @@ public class SelectQuestionUseCaseTest {
             @Override
             public TheQuestionResponseModel prepareSuccess(TheQuestionResponseModel response) {
                 assertEquals(123450000, response.getUserId());
-                assertNotNull(response.getCreationTime());
                 // assertEquals(true, repo.existsById(12345678));
                 return null;
             }

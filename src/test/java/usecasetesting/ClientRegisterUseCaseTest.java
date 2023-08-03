@@ -1,18 +1,6 @@
 package usecasetesting;
 
-import questionentities.Question;
-import replytoquestion.*;
 import org.junit.jupiter.api.Test;
-
-import gateway.*;
-import presenter.*;
-import userclosequestion.CloseInputBoundary;
-import userclosequestion.CloseQuestionInteractor;
-import userclosequestion.CloseRequestModel;
-import userrateanswer.RateInputBoundary;
-import userrateanswer.RateInteractor;
-import userrateanswer.RateRequestModel;
-
 import java.time.LocalDate;
 
 import static org.junit.Assert.fail;
