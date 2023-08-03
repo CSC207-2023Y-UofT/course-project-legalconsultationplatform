@@ -5,6 +5,7 @@ import questionentities.Question;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
 import java.util.Objects;
@@ -121,6 +122,7 @@ public class Attorney implements User{
             } else {
                 question.setTaken(true);
                 question.setTakenByAttorney(userId);
+                question.setTakenAt(LocalDate.now());
                 return true;
             }
         }
