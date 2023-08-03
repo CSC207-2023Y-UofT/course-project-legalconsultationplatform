@@ -1,4 +1,5 @@
 package adapter.presenter;
+import adapter.controller.ControlContainer;
 import businessrule.outputboundary.HomePageOutputBoundary;
 import businessrule.responsemodel.HomePageResponseModel;
 import driver.screen.ApplicationException;
@@ -12,6 +13,13 @@ import java.time.format.DateTimeFormatter;
 public class HomePageResponseFormatter implements HomePageOutputBoundary {
     CardLayout cardLayout;
     JPanel screens;
+    ControlContainer controlContainer;
+
+    public HomePageResponseFormatter(CardLayout cardLayout, JPanel screens, ControlContainer controlContainer) {
+        this.cardLayout = cardLayout;
+        this.screens = screens;
+        this.controlContainer = controlContainer;
+    }
 
     public HomePageResponseFormatter(CardLayout cardLayout, JPanel screens) {
         this.cardLayout = cardLayout;
@@ -25,7 +33,9 @@ public class HomePageResponseFormatter implements HomePageOutputBoundary {
 
     @Override
     public HomePageResponseModel prepareSuccess(HomePageResponseModel response) {
-        AttorneyHomePageUI AttorneyHomePage = new AttorneyHomePageUI();
+        int userId = response.getUserId();
+        String userName = response.getUserName();
+        AttorneyHomePageUI AttorneyHomePage = new AttorneyHomePageUI(controlContainer, userId, userName, cardLayout, screens);
         screens.add(AttorneyHomePage, "AttorneyHomePage");
         cardLayout.show(screens, "AttorneyHomePage");
         return response;

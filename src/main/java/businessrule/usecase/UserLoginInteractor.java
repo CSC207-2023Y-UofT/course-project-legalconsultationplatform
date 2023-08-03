@@ -40,7 +40,8 @@ public class UserLoginInteractor implements UserLoginInputBoundary{
             return outputBoundary.prepareFail("Password is incorrect");
         }
         LocalDateTime now = LocalDateTime.now();
-        HomePageResponseModel accountResponseModel = new HomePageResponseModel(inputUserId, userGateway.getUser(inputUserId).getUserName());
+        HomePageResponseModel accountResponseModel = new HomePageResponseModel(inputUserId,
+                userGateway.getUser(inputUserId).getPassword());
         return outputBoundary.prepareSuccess(accountResponseModel);
     }
 }
