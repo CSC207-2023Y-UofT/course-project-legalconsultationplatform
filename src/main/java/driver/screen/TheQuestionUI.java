@@ -27,7 +27,7 @@ public class TheQuestionUI extends JPanel implements ActionListener {
     JComboBox<String> rate = new JComboBox<>(rateList);
 
     public TheQuestionUI(ControlContainer controlContainer, CardLayout cardLayout,
-                         JPanel screens, int userId, String userName,  String title,
+                         JPanel screens, int userId, String userName, String title,
                          String type, LocalDate deadline, Map<Integer, PostDisplayFormatter> postMap) {
         this.controlContainer = controlContainer;
         this.cardLayout = cardLayout;
@@ -58,14 +58,14 @@ public class TheQuestionUI extends JPanel implements ActionListener {
         JScrollPane postScrollPane = new JScrollPane();
         postScrollPane.setLayout(new GridLayout(numberOfPosts, 1));
         JPanel postScrollPanel = new JPanel();
-        for (PostDisplayFormatter post : postMap.values()){
+        for (PostDisplayFormatter post : postMap.values()) {
             //read all variables from displayFormatter
             String name = post.getName();
             String postText = post.getPostText();
             String userType;
-            if (post.isClient()){
+            if (post.isClient()) {
                 userType = "Client";
-            } else{
+            } else {
                 userType = "Attorney";
             }
             String postDate = post.getCreateAt().format(formatter);
@@ -115,7 +115,7 @@ public class TheQuestionUI extends JPanel implements ActionListener {
         this.add(inputPostArea);
         this.add(ratePanel);
         this.add(buttons);
-
+    }
 
     @Override
     public void actionPerformed(ActionEvent e) {
