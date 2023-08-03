@@ -1,7 +1,7 @@
 package entitytesting;
 
 import org.junit.jupiter.api.Test;
-import questionentities.Post;
+import entity.Post;
 
 import java.time.LocalDate;
 

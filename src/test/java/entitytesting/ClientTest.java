@@ -1,8 +1,10 @@
 package entitytesting;
 
+import entity.Client;
+import entity.Question;
 import org.junit.jupiter.api.Test;
-import questionentities.Question;
-import userentities.Client;
+import entity.Question;
+import entity.Client;
 
 import java.time.LocalDate;
 

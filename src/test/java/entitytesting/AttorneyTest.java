@@ -1,7 +1,9 @@
 package entitytesting;
+import entity.Attorney;
+import entity.Question;
 import org.junit.jupiter.api.Test;
-import questionentities.Question;
-import userentities.Attorney;
+import entity.Question;
+import entity.Attorney;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -23,7 +25,7 @@ class AttorneyTest {
 
         // assertions
         assertEquals(expectedUserId, attorney.getUserId(), "UserId is not set correctly in the constructor.");
-        assertEquals(expectedName, attorney.getName(), "Name is not set correctly in the constructor.");
+        assertEquals(expectedName, attorney.getUserName(), "Name is not set correctly in the constructor.");
         assertEquals(expectedEmail, attorney.getEmail(), "Email is not set correctly in the constructor.");
         assertEquals(expectedPassword, attorney.getPassword(), "Password is not set correctly in the constructor.");
         assertEquals(expectedStateAbb, attorney.getStateAbb(), "State abbreviation is not set correctly in the constructor.");
@@ -55,7 +57,7 @@ class AttorneyTest {
 
         // assertions
         assertEquals(expectedUserId, attorney.getUserId(), "UserId is incorrect.");
-        assertEquals(expectedName, attorney.getName(), "Name is incorrect.");
+        assertEquals(expectedName, attorney.getUserName(), "Name is incorrect.");
         assertEquals(expectedEmail, attorney.getEmail(), "Email is wrong.");
         assertEquals(expectedPassword, attorney.getPassword(), "Password is not set correctly.");
         assertEquals(expectedStateAbb, attorney.getStateAbb(), "State abbreviation is not set correctly.");
