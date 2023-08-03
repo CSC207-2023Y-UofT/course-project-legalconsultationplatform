@@ -1,5 +1,6 @@
 package adapter.presenter;
 
+import adapter.controller.ControlContainer;
 import businessrule.outputboundary.RegisterOutputBoundary;
 import businessrule.responsemodel.RegisterResponseModel;
 import driver.screen.ApplicationException;
@@ -10,10 +11,15 @@ import java.awt.*;
 public class RegisterResponseFormatter implements RegisterOutputBoundary {
     CardLayout cardLayout;
     JPanel screens;
+    ControlContainer controlContainer;
 
     public RegisterResponseFormatter(CardLayout cardLayout, JPanel screens) {
         this.cardLayout = cardLayout;
         this.screens = screens;
+    }
+
+    public void setControlContainer(ControlContainer controlContainer) {
+        this.controlContainer = controlContainer;
     }
 
     @Override

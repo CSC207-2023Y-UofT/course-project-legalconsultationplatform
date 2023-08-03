@@ -1,5 +1,6 @@
 package driver.screen;
 
+import adapter.controller.ControlContainer;
 import adapter.controller.QuestionControl;
 
 import javax.swing.*;
@@ -7,8 +8,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
-
-import static javax.swing.JOptionPane.showMessageDialog;
+import javax.swing.JPanel;
 
 
 
@@ -18,24 +18,39 @@ import static javax.swing.JOptionPane.showMessageDialog;
  * @author joseph
  */
 public class AskQuestionUI extends JPanel implements ActionListener{
-    QuestionControl control;
-    JTextField questionCategory = new JTextField(15);
-    // 有问题
+    ControlContainer controlContainer;
+    CardLayout cardLayout;
+    JPanel screens;
+    int userId;
+    String userName;
+    String[] questionTypeList = {"Family and Children", "Individual Rights",
+            "Consumer Financial Questions", "Housing and Homelessness",
+            "Income Maintenance", "Health and Disability",
+            "Work, Employment and Unemployment", "Juvenile", "Education", "Other"};
+    JComboBox<String> questionType = new JComboBox<>(questionTypeList);
     JTextField titleForQuestion = new JTextField(15);
-    JTextField clientId = new JTextField(15);
-    JTextField legalDeadline = new JTextField(15);
+    JDateComponentFactory dateComponentFactory = new JDateComponentFactory();
+    JDatePicker datePicker = dateComponentFactory.createJDatePicker();
     /**
      * Creates new form AskQuestion
      */
-    public AskQuestionUI(QuestionControl control) {
+    public AskQuestionUI(ControlContainer controlContainer, CardLayout cardLayout,
+                         JPanel screens, int userId, String userName) {
 
-        this.control = control;
+        this.controlContainer = controlContainer;
+        this.cardLayout = cardLayout;
+        this.screens = screens;
+        this.userId = userId;
+        this.userName = userName;
 
-        JLabel title = new JLabel("Ask Question Screen");
+        //UserName and userId
+        String helloMessageString = "Hello, " + userName + "(" + userId + ")";
+        JLabel helloMessage = new JLabel(helloMessageString);
+        JLabel title = new JLabel("Ask a new question here");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        LabelTextPanel questionCategoryInfo = new LabelTextPanel(new JLabel("questionCategory"), questionCategory);
-        LabelTextPanel clientIdInfo = new LabelTextPanel(new JLabel("clientId"), clientId);
+        //Question type and title
+        DropDownPanel questionTypeDropDown = new DropDownPanel(new JLabel("Select question"), questionType);
         LabelTextPanel titleInfo = new LabelTextPanel(new JLabel("title"), titleForQuestion);
         LabelTextPanel legalDeadlineInfo = new LabelTextPanel(new JLabel("legalDeadline"), legalDeadline);
         JButton buttonToSubmit = new JButton("Submit");
