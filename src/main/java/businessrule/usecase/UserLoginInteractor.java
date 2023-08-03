@@ -28,11 +28,11 @@ public class UserLoginInteractor implements UserLoginInputBoundary{
         try {
             userGateway = userGatewayFactory.createUserGateway(inputUserId);
         } catch (ApplicationException e) {
-            return outputBoundary.prepareFail("UserId does not exist");
+            return outputBoundary.prepareFail("User ID does not exist");
         }
 
         if (!userGateway.existsById(inputUserId)) {
-            return outputBoundary.prepareFail("UserId does not exist");
+            return outputBoundary.prepareFail("User ID does not exist");
         }
         User filedUser = userGateway.getUser(inputUserId);
         String filedPassword = filedUser.getPassword();

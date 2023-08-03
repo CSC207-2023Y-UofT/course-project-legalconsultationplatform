@@ -5,7 +5,7 @@ import businessrule.requestmodel.CloseRequestModel;
 import businessrule.responsemodel.HomePageResponseModel;
 
 public class CloseQuestionControl {
-    final CloseInputBoundary closeInputBoundary;
+    private final CloseInputBoundary closeInputBoundary;
 
     public CloseQuestionControl(CloseInputBoundary closeInputBoundary) {
         this.closeInputBoundary = closeInputBoundary;

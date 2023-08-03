@@ -7,7 +7,7 @@ import businessrule.requestmodel.QuestionRequestModel;
 import java.time.LocalDate;
 
 public class QuestionControl {
-    final QuestionInputBoundary questionInput;
+    private final QuestionInputBoundary questionInput;
 
     public QuestionControl(QuestionInputBoundary questionInput){
         this.questionInput = questionInput;

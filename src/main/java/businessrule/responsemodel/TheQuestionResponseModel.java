@@ -6,12 +6,12 @@ import java.time.LocalDate;
 import java.util.Map;
 
 public class TheQuestionResponseModel{
-    private int userId;
-    private String userName;
-    private String title;
-    private String type;
-    private LocalDate deadline;
-    private Map<Integer, PostDisplayFormatter> postMap;
+    private final int userId;
+    private final String userName;
+    private final String title;
+    private final String type;
+    private final LocalDate deadline;
+    private final Map<Integer, PostDisplayFormatter> postMap;
 
     public TheQuestionResponseModel(int userId, String userName, String title, String type, LocalDate deadline, Map<Integer, PostDisplayFormatter> postMap) {
         this.userId = userId;
@@ -26,31 +26,23 @@ public class TheQuestionResponseModel{
         return userId;
     }
 
-    public void setUserId(int userId) {
-        this.userId = userId;
-    }
-
     public String getUserName() {
         return userName;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public String getTitle() {
+        return title;
     }
 
-    public Map<Integer, PostDisplayFormatter> getPostMap() {return postMap;}
+    public String getType() {
+        return type;
+    }
 
-    public void setPostMap(Map<Integer, PostDisplayFormatter> postMap) {this.postMap = postMap;}
+    public LocalDate getDeadline() {
+        return deadline;
+    }
 
-    public String getTitle() {return title;}
-
-    public void setTitle(String title) {this.title = title;}
-
-    public String getType() {return type;}
-
-    public void setType(String type) {this.type = type;}
-
-    public LocalDate getDeadline() {return deadline;}
-
-    public void setDeadline(LocalDate deadline) {this.deadline = deadline;}
+    public Map<Integer, PostDisplayFormatter> getPostMap() {
+        return postMap;
+    }
 }

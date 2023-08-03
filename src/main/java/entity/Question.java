@@ -6,6 +6,7 @@ import javax.persistence.OneToMany;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Objects;
 
 /**
  * This is a class representing a question thread.
@@ -76,6 +77,8 @@ public class Question {
     public void setQuestionId(int questionId) {this.questionId = questionId;}
 
     public void setType(String type) {this.type = type;}
+
+    public void setTitle(String title) {this.title = title;}
 
     public void setCreateAt(LocalDate createAt) {this.createAt = createAt;}
 
