@@ -1,4 +1,6 @@
 package adapter.presenter;
 
-public class TheQuestionResponseFormatter{
+import businessrule.outputboundary.TheQuestionOutputBoundary;
+
+public class TheQuestionResponseFormatter implements TheQuestionOutputBoundary {
 }

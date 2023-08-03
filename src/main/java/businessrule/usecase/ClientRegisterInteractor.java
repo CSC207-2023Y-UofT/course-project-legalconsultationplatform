@@ -11,7 +11,7 @@ import entity.ClientFactory;
 import entity.CredentialChecker;
 import entity.RandomNumberGenerator;
 
-class ClientRegisterInteractor implements ClientRegisterInputBoundary {
+public class ClientRegisterInteractor implements ClientRegisterInputBoundary {
     final ClientGateway clientGateway;
     final RegisterOutputBoundary outputBoundary;
     final ClientFactory clientFactory;

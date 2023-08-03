@@ -1,4 +1,6 @@
 package adapter.presenter;
 
-public class RegisterResponseFormatter {
+import businessrule.outputboundary.RegisterOutputBoundary;
+
+public class RegisterResponseFormatter extends RegisterOutputBoundary {
 }

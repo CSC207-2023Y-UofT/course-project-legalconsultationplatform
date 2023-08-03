@@ -1,4 +1,6 @@
 package adapter.presenter;
 
-public class ViewResponseFormatter {
+import businessrule.outputboundary.ViewOutputBoundary;
+
+public class ViewResponseFormatter implements ViewOutputBoundary {
 }
