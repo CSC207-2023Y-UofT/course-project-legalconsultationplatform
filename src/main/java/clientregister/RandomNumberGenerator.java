@@ -24,9 +24,9 @@ public class RandomNumberGenerator {
         return addDigitToFront(generate(digit-1), 2);
     }
     public int generateQuestionId(int digit){
-        return addDigitToFront(generate(digit-1), 2);
+        return addDigitToFront(generate(digit-1), 3);
     }
     public int generatePostId(int digit){
-        return addDigitToFront(generate(digit-1), 3);
+        return addDigitToFront(generate(digit-1), 4);
     }
 }
