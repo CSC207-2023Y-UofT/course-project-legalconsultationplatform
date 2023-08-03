@@ -1,6 +1,5 @@
-package presenter;
+package apapter.controller;
 
-import userlogin.LoginResponseModel;
 import userlogin.UserLoginInputBoundary;
 import userlogin.UserLoginRequestModel;
 

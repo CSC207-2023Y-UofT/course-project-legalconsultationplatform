@@ -1,6 +1,6 @@
 package askquestion;
 
-import presenter.TheQuestionResponseModel;
+import apapter.responsemodel.TheQuestionResponseModel;
 
 import java.time.LocalDate;
 

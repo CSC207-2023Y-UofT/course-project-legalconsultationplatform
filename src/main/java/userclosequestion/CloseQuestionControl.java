@@ -1,8 +1,5 @@
 package userclosequestion;
 
-import presenter.MessageResponseModel;
-import presenter.TheQuestionResponseModel;
-
 public class CloseQuestionControl {
     final CloseInputBoundary closeInputBoundary;
 

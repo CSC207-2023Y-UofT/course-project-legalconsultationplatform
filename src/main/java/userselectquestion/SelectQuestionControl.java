@@ -1,7 +1,6 @@
 package userselectquestion;
 
-import presenter.TheQuestionResponseModel;
-import presenter.TheQuestionResponseModel;
+import apapter.responsemodel.TheQuestionResponseModel;
 
 public class SelectQuestionControl {
     final SelectInputBoundary selectInputBoundary;

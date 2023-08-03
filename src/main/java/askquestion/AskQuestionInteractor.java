@@ -3,12 +3,11 @@ package askquestion;
 import clientregister.RandomNumberGenerator;
 import gateway.ClientGateway;
 import gateway.QuestionGateway;
-import presenter.TheQuestionOutputBoundary;
-import presenter.TheQuestionResponseModel;
+import apapter.presenter.TheQuestionOutputBoundary;
+import apapter.responsemodel.TheQuestionResponseModel;
 import questionentities.Question;
 
 import java.time.LocalDate;
-import java.util.Random;
 
 public class AskQuestionInteractor implements QuestionInputBoundary{
     final QuestionGateway questionGateway;

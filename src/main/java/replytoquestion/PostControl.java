@@ -1,9 +1,5 @@
 package replytoquestion;
 
-import presenter.MessageResponseModel;
-
-import java.time.LocalDate;
-
 public class PostControl {
     final PostInputBoundary postInput;
 

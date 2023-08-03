@@ -1,7 +1,7 @@
 package attorneybrowsequestion;
 
-import presenter.ViewOutputBoundary;
-import presenter.ViewResponseModel;
+import apapter.presenter.ViewOutputBoundary;
+import apapter.responsemodel.ViewResponseModel;
 import gateway.QuestionGateway;
 import questionentities.Question;
 

@@ -1,6 +1,6 @@
 package attorneybrowsequestion;
 
-import presenter.ViewResponseModel;
+import apapter.responsemodel.ViewResponseModel;
 
 public class BrowseQuestionControl {
     final BrowseInputBoundary browseInputBoundary;

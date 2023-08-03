@@ -1,12 +1,12 @@
-package userlogin;
+package apapter.responsemodel;
 
-import java.time.LocalTime;
+import apapter.presenter.HomePageResponseFormatter;
 
-public class LoginResponseModel {
+public class HomePageResponseModel {
     int userId;
     String creationTime;
 
-    public LoginResponseModel(int userId, String creationTime) {
+    public HomePageResponseModel(int userId, String creationTime) {
         this.userId = userId;
         this.creationTime = creationTime;
     }

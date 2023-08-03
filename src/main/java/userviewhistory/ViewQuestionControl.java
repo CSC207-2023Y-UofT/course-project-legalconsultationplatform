@@ -1,6 +1,6 @@
 package userviewhistory;
 
-import presenter.ViewResponseModel;
+import apapter.responsemodel.ViewResponseModel;
 
 public class ViewQuestionControl {
     final ViewInputBoundary viewInputBoundary;

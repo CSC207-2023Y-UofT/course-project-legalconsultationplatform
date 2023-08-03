@@ -1,8 +1,6 @@
 package userrateanswer;
 
-import presenter.MessageResponseModel;
 import gateway.QuestionGateway;
-import presenter.MessageOutputBoundary;
 import questionentities.Question;
 
 public class RateInteractor implements RateInputBoundary{

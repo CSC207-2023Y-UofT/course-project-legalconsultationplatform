@@ -1,7 +1,6 @@
 package userviewhistory;
 
-import presenter.MessageResponseModel;
-import presenter.ViewResponseModel;
+import apapter.responsemodel.ViewResponseModel;
 
 public interface ViewInputBoundary {
     ViewResponseModel viewQuestion(ViewRequestModel viewRequestModel);

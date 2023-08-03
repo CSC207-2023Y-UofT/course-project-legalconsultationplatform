@@ -1,7 +1,6 @@
 package screen;
 
-import presenter.UserLoginControl;
-import userlogin.LoginResponseModel;
+import apapter.controller.UserLoginControl;
 
 import javax.swing.*;
 import java.awt.*;

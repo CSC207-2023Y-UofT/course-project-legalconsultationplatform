@@ -1,8 +1,8 @@
-package presenter;
+package apapter.presenter;
+
+import apapter.responsemodel.TheQuestionResponseModel;
 
 public interface TheQuestionOutputBoundary {
     TheQuestionResponseModel prepareFail(String msg);
-
-    // TODO: complete method signature
     TheQuestionResponseModel prepareSuccess(TheQuestionResponseModel response);
 }

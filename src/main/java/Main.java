@@ -1,16 +1,19 @@
+import apapter.presenter.AskQuestionResponseFormatter;
+import apapter.presenter.LoginResponseFormatter;
+import apapter.presenter.TheQuestionOutputBoundary;
 import askquestion.AskQuestionInteractor;
 import askquestion.QuestionControl;
 import askquestion.QuestionFactory;
 import askquestion.QuestionInputBoundary;
+import apapter.controller.UserLoginControl;
 import screen.*;
 import userentities.Client;
 import userlogin.*;
 import gateway.*;
-import presenter.*;
 
 import javax.swing.*;
 import java.awt.*;
-import java.io.IOException;
+
 public class Main {
     public static void main(String[] args) {
         ClientRepository repo = new ClientRepository();

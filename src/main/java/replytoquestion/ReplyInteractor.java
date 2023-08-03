@@ -5,14 +5,11 @@ import gateway.QuestionGateway;
 import clientregister.RandomNumberGenerator;
 import gateway.UserGateway;
 import gateway.UserGatewayFactory;
-import presenter.MessageOutputBoundary;
-import presenter.MessageResponseModel;
 import questionentities.Post;
 import questionentities.Question;
 import userentities.User;
 
 import java.time.LocalDate;
-import java.util.Random;
 
 
 public class ReplyInteractor implements PostInputBoundary{

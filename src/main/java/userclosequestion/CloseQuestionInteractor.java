@@ -1,9 +1,5 @@
 package userclosequestion;
 
-import presenter.MessageOutputBoundary;
-import presenter.MessageResponseModel;
-import presenter.TheQuestionOutputBoundary;
-import presenter.TheQuestionResponseModel;
 import questionentities.Question;
 import gateway.QuestionGateway;
 import userentities.User;

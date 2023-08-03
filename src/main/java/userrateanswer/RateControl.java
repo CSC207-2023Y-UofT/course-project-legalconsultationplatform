@@ -1,8 +1,5 @@
 package userrateanswer;
 
-import presenter.MessageResponseModel;
-import questionentities.Question;
-
 public class RateControl {
     private final RateInputBoundary rateInput;
 

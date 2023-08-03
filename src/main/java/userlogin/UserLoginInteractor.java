@@ -1,7 +1,8 @@
 package userlogin;
 
-import presenter.LoginOutputBoundary;
+import apapter.LoginOutputBoundary;
 import gateway.UserGateway;
+import apapter.LoginResponseModel;
 import userentities.User;
 import java.time.LocalDateTime;
 

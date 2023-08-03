@@ -1,6 +1,4 @@
 package clientregister;
-import presenter.MessageOutputBoundary;
-import presenter.MessageResponseModel;
 import userentities.Client;
 import gateway.UserGateway;
 

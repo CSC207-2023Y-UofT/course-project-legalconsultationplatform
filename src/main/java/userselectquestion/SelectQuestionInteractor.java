@@ -2,12 +2,11 @@ package userselectquestion;
 
 import questionentities.Question;
 import gateway.QuestionGateway;
-import presenter.TheQuestionResponseModel;
-import presenter.TheQuestionOutputBoundary;
+import apapter.responsemodel.TheQuestionResponseModel;
+import apapter.presenter.TheQuestionOutputBoundary;
 import userentities.User;
 import gateway.UserGateway;
 import gateway.UserGatewayFactory;
-import gateway.DatabaseConnection;
 
 import java.time.LocalDate;
 

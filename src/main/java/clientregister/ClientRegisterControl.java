@@ -1,7 +1,5 @@
 package clientregister;
 
-import presenter.MessageResponseModel;
-
 public class ClientRegisterControl {
     final ClientRegisterInputBoundary inputBoundary;
 
