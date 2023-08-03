@@ -6,21 +6,28 @@ import businessrule.requestmodel.UserLoginRequestModel;
 import driver.database.UserGateway;
 import apapter.LoginResponseModel;
 import entity.User;
-import java.time.LocalDateTime;
+import driver.screen.ApplicationException;
 
-public class UserLoginInteractor implements UserLoginInputBoundary {
-    final UserGateway userGateway;
+public class UserLoginInteractor implements UserLoginInputBoundary{
+    final UserGatewayFactory userGatewayFactory;
     final LoginOutputBoundary outputBoundary;
 
-    public UserLoginInteractor(UserGateway userGateway,
+    public UserLoginInteractor(UserGatewayFactory userGatewayFactory,
                                LoginOutputBoundary outputBoundary) {
-        this.userGateway = userGateway;
+        this.userGatewayFactory = userGatewayFactory;
         this.outputBoundary = outputBoundary;
     }
     @Override
-    public LoginResponseModel login(UserLoginRequestModel requestModel){
+    public LoginResponseModel login(UserLoginRequestModel requestModel) {
         int inputUserId = requestModel.getUserId();
         String inputPassword = requestModel.getPassword();
+        UserGateway userGateway;
+        try {
+            userGateway = userGatewayFactory.createUserGateway(inputUserId);
+        } catch (ApplicationException e) {
+            return outputBoundary.prepareFail("UserId does not exist");
+        }
+
         if (!userGateway.existsById(inputUserId)) {
             return outputBoundary.prepareFail("UserId does not exist");
         }
