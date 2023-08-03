@@ -1,55 +1,63 @@
-//package usecasetesting;
-//
-//import questionentities.Question;
-//import replytoquestion.*;
-//import org.junit.jupiter.api.Test;
-//
-//import gateway.*;
-//import presenter.*;
-//import userentities.Client;
-//import userlogin.LoginResponseModel;
-//import userlogin.UserLoginInputBoundary;
-//import userlogin.UserLoginInteractor;
-//import userlogin.UserLoginRequestModel;
-//import userrateanswer.RateInputBoundary;
-//import userrateanswer.RateInteractor;
-//import userrateanswer.RateRequestModel;
-//
-//import java.time.LocalDate;
-//
-//import static org.junit.Assert.fail;
-//import static org.junit.jupiter.api.Assertions.*;
-//;
-//
-//public class UserLoginUseCaseTest {
-//    @Test
-//    public void UseCaseTest(){
-//
-//        LoginOutputBoundary loginOutputBoundary = new LoginOutputBoundary() {
-//            @Override
-//            public LoginResponseModel prepareFail(String msg) {
-//                assertEquals("This question is not closed.", msg);
-//                fail("Unexpected use case failure.");
-//                return null;
-//            }
-//
-//            @Override
-//            public LoginResponseModel prepareSuccess(LoginResponseModel response) {
-//
-//                return null;
-//            }
-//        };
-//
-//        ClientGateway clientGateway = new ClientRepository();
-//        Client client = new Client();
-//        client.setUserId(123456701);
-//        client.setPassword("abcdefgh");
-//        clientGateway.addUser(client);
-//
-//        UserLoginInputBoundary userLoginInputBoundary = new UserLoginInteractor(clientGateway, loginOutputBoundary);
-//
-//        UserLoginRequestModel inputData = new UserLoginRequestModel(123456701, "abcdefgh");
-//
-//        userLoginInputBoundary.login(inputData);
-//    }
-//}
+package usecasetesting;
+
+import businessrule.gateway.ClientGateway;
+import businessrule.gateway.UserGatewayFactory;
+import businessrule.inputboundary.UserLoginInputBoundary;
+import businessrule.outputboundary.HomePageOutputBoundary;
+import businessrule.requestmodel.UserLoginRequestModel;
+import businessrule.responsemodel.HomePageResponseModel;
+import businessrule.usecase.UserLoginInteractor;
+import driver.database.*;
+import entity.Client;
+import org.junit.BeforeClass;
+import org.junit.jupiter.api.Test;
+
+import static org.junit.jupiter.api.Assertions.*;
+
+
+public class UserLoginUseCaseTest {
+    final static int CLIENT_ID = 11345678;
+    final static String PASSWORD = "abcdefg";
+    private UserGatewayFactory userGatewayFactory;
+    private ClientGateway clientGateway;
+    private HomePageOutputBoundary homePageOutputBoundary;
+    private UserLoginInputBoundary userLoginInputBoundary;
+    @BeforeClass
+    public void setUpReplyUseCase(){
+        userGatewayFactory = new UserGatewayFactory();
+        clientGateway = new ClientRepository();
+        homePageOutputBoundary = new HomePageOutputBoundary() {
+            @Override
+            public HomePageResponseModel prepareFail(String msg) {
+                assertEquals("You cannot rate this question!", msg);
+                return null;
+            }
+
+            @Override
+            public HomePageResponseModel prepareSuccess(HomePageResponseModel homePageResponseModel) {
+                return null;
+            }
+        };
+        userLoginInputBoundary = new UserLoginInteractor(userGatewayFactory, homePageOutputBoundary);
+
+        Client client = new Client();
+        client.setUserId(CLIENT_ID);
+        client.setPassword(PASSWORD);
+        clientGateway.addUser(client);
+    }
+    @Test
+    public void TestLoginPass(){;
+        UserLoginRequestModel inputData = new UserLoginRequestModel(CLIENT_ID, PASSWORD);
+        userLoginInputBoundary.login(inputData);
+    }
+    @Test
+    public void TestLoginFailIdDNE(){;
+        UserLoginRequestModel inputData = new UserLoginRequestModel(1, PASSWORD);
+        userLoginInputBoundary.login(inputData);
+    }
+    @Test
+    public void TestLoginFailWrongPassword(){;
+        UserLoginRequestModel inputData = new UserLoginRequestModel(CLIENT_ID, "a");
+        userLoginInputBoundary.login(inputData);
+    }
+}

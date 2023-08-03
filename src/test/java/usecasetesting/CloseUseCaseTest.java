@@ -16,6 +16,7 @@ import entity.Attorney;
 import entity.Client;
 import entity.PostFactory;
 import entity.Question;
+import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +37,8 @@ public class CloseUseCaseTest {
     private ClientGateway clientGateway;
     private AttorneyGateway attorneyGateway;
     private HomePageOutputBoundary homePageOutputBoundary;
-    private PostInputBoundary postInputBoundary;
+    private CloseInputBoundary closeInputBoundary;
+
     @BeforeClass
     public void setUpReplyUseCase(){
 
@@ -49,7 +51,7 @@ public class CloseUseCaseTest {
         homePageOutputBoundary = new HomePageOutputBoundary() {
             @Override
             public HomePageResponseModel prepareFail(String msg) {
-                assertEquals("You cannot reply to this question", msg);
+                assertEquals("You cannot close this question!", msg);
                 return null;
             }
 
@@ -58,11 +60,11 @@ public class CloseUseCaseTest {
                 return null;
             }
         };
-        postInputBoundary = new ReplyInteractor(questionGateway, postGateway, homePageOutputBoundary, postFactory, userGatewayFactory);
+        closeInputBoundary = new CloseQuestionInteractor(questionGateway, homePageOutputBoundary, userGatewayFactory);
 
         Question question = new Question();
         question.setQuestionId(QUESTION_ID);
-        questionGateway.saveQuestion(question);
+
 
         Question closedQuestion = new Question();
         closedQuestion.setQuestionId(CLOSED_QUESTION_ID);
@@ -80,13 +82,55 @@ public class CloseUseCaseTest {
         Attorney secondAttorney = new Attorney();
         attorney.setUserId(SECOND_ATTORNEY_ID);
         attorneyGateway.addUser(secondAttorney);
+
+        question.setTakenByAttorney(ATTORNEY_ID);
+        question.setTaken(true);
+        questionGateway.saveQuestion(question);
     }
     @Test
-    public void UseCaseTest(){
-        CloseInputBoundary closeInputBoundary = new CloseQuestionInteractor(questionGateway, homePageOutputBoundary, userGatewayFactory);
+    public void TestClientCloseableQuestion(){
+        setUpReplyUseCase();
 
-        CloseRequestModel inputData = new CloseRequestModel(12346669, 12345678);
+
+        CloseRequestModel inputData = new CloseRequestModel(QUESTION_ID, CLIENT_ID);
+
+        closeInputBoundary.closeQuestion(inputData);
+        Question question = questionGateway.getQuestion(QUESTION_ID);
+        assertEquals(question.isClose(), true);
+    }
+    @Test
+    public void TestAttorneyCloseableQuestion(){
+        setUpReplyUseCase();
+        CloseRequestModel inputData = new CloseRequestModel(QUESTION_ID, ATTORNEY_ID);
+
+        closeInputBoundary.closeQuestion(inputData);
+        Question question = questionGateway.getQuestion(QUESTION_ID);
+        assertEquals(question.isClose(), true);
+    }
+    @Test
+    public void TestClientUnclosableQuestion(){
+        setUpReplyUseCase();
+        CloseRequestModel inputData = new CloseRequestModel(CLOSED_QUESTION_ID, CLIENT_ID);
 
         closeInputBoundary.closeQuestion(inputData);
     }
+
+    @Test
+    public void TestAttorneyClosedQuestion(){
+        setUpReplyUseCase();
+        CloseRequestModel inputData = new CloseRequestModel(CLOSED_QUESTION_ID, CLIENT_ID);
+
+        closeInputBoundary.closeQuestion(inputData);
+    }
+
+    @Test
+    public void TestAttorneyUntakenQuestion(){
+        setUpReplyUseCase();
+        CloseRequestModel inputData = new CloseRequestModel(CLOSED_QUESTION_ID, CLIENT_ID);
+
+        closeInputBoundary.closeQuestion(inputData);
+    }
+
+    @AfterClass
+
 }
