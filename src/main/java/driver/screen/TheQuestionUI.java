@@ -127,7 +127,7 @@ public class TheQuestionUI extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
-        if ("Post Reply".equals(actionCommand)){
+        if ("Post reply".equals(actionCommand)){
             System.out.println("The user posts a reply.");
             PostControl postControl = controlContainer.getPostControl();
             postControl.createPost(questionId, userId, inputPostArea.getText());
