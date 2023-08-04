@@ -10,16 +10,10 @@ import businessrule.requestmodel.SelectRequestModel;
 import businessrule.responsemodel.TheQuestionResponseModel;
 import businessrule.usecase.AskQuestionInteractor;
 import businessrule.usecase.SelectQuestionInteractor;
-import driver.database.AttorneyRepository;
-import driver.database.ClientRepository;
-import driver.database.QuestionGateway;
-import driver.database.QuestionRepo;
+import driver.database.*;
 
-import entity.Attorney;
-import entity.Client;
-import entity.Question;
+import entity.*;
 
-import entity.QuestionFactory;
 import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
 
@@ -36,7 +30,9 @@ public class SelectQuestionUseCaseTest {
     final static int QUESTION_ID = 323456789;
     final static int TAKEN_QUESTION_ID = 333333333;
     final static int CLOSED_QUESTION_ID = 322222222;
+    final static int POST_ID = 455555555;
     private QuestionGateway questionGateway;
+    private PostGateway  postGateway;
     private ClientGateway clientGateway;
     private UserGatewayFactory userGatewayFactory;
     private AttorneyGateway attorneyGateway;
@@ -44,11 +40,15 @@ public class SelectQuestionUseCaseTest {
     private SelectInputBoundary selectInputBoundary;
 
     public void setUpSelectUseCase(){
-
         questionGateway = new QuestionRepo();
         userGatewayFactory = new UserGatewayFactory();
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
+        postGateway = new PostRepo();
+        postGateway.deleteAllPost();
+        clientGateway.deleteAllUser();
+        questionGateway.deleteAllQuestion();
+        attorneyGateway.deleteAllUser();
         theQuestionOutputBoundary = new TheQuestionOutputBoundary() {
             @Override
             public TheQuestionResponseModel prepareFail(String msg) {
@@ -58,6 +58,7 @@ public class SelectQuestionUseCaseTest {
 
             @Override
             public TheQuestionResponseModel prepareSuccess(TheQuestionResponseModel response) {
+                assertEquals(1, response.getPostMap().size(), "The post map is not correct.");
                 return null;
             }
         };
@@ -77,6 +78,9 @@ public class SelectQuestionUseCaseTest {
 
         Question question1 = new Question();
         question1.setQuestionId(QUESTION_ID);
+        Post post = new Post();
+        post.setPostId(POST_ID);
+        question1.addPosts(post);
         questionGateway.saveQuestion(question1);
 
         Question question2 = new Question();

@@ -33,6 +33,7 @@ public class ClientRegisterUseCaseTest {
     public void setUpClientRegisterUseCase(){
         clientGateway = new ClientRepository();
         clientFactory = new ClientFactory();
+        clientGateway.deleteAllUser();
         registerOutputBoundary = new RegisterOutputBoundary() {
             @Override
             public RegisterResponseModel prepareSuccess(String msg) {

@@ -14,6 +14,7 @@ import entity.Attorney;
 import entity.Client;
 import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.*;
 
 public class UserViewHistoryUseCaseTest {
     final static int CLIENT_ID = 11345678;
@@ -28,6 +29,10 @@ public class UserViewHistoryUseCaseTest {
     public void setUpViewQuestionUseCase(){
         userGatewayFactory = new UserGatewayFactory();
         questionGateway = new QuestionRepo();
+        clientGateway.deleteAllUser();
+        questionGateway.deleteAllQuestion();
+        attorneyGateway.deleteAllUser();
+
         viewOutputBoundary = new ViewOutputBoundary() {
             @Override
             public ViewResponseModel prepareFail(String msg) {
@@ -36,6 +41,7 @@ public class UserViewHistoryUseCaseTest {
 
             @Override
             public ViewResponseModel prepareSuccess(ViewResponseModel response) {
+                assertEquals(0, response.getQuestionMap().size(), "The Question map is not correct." );
                 return null;
             }
         };

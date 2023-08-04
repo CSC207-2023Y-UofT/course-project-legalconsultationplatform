@@ -26,6 +26,8 @@ public class UserLoginUseCaseTest {
     public void setUpUserLoginUseCase(){
         userGatewayFactory = new UserGatewayFactory();
         clientGateway = new ClientRepository();
+        clientGateway.deleteAllUser();
+
         homePageOutputBoundary = new HomePageOutputBoundary() {
             @Override
             public HomePageResponseModel prepareFail(String msg) {

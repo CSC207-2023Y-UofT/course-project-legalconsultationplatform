@@ -42,6 +42,10 @@ public class ReplyUseCaseTest {
         userGatewayFactory = new UserGatewayFactory();
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
+        clientGateway.deleteAllUser();
+        questionGateway.deleteAllQuestion();
+        postGateway.deleteAllPost();
+        attorneyGateway.deleteAllUser();
         homePageOutputBoundary = new HomePageOutputBoundary() {
             @Override
             public HomePageResponseModel prepareFail(String msg) {
