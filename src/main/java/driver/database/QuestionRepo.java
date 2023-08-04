@@ -3,12 +3,13 @@ package driver.database;
 import entity.Post;
 import entity.Question;
 
+import javax.jdo.JDOHelper;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.time.LocalDate;
 import java.util.List;
 
-public class QuestionRepo implements QuestionGateway{
+public class QuestionRepo implements QuestionGateway {
 
     @Override
     public void saveQuestion(Question question) {
@@ -63,7 +64,7 @@ public class QuestionRepo implements QuestionGateway{
     public List<Question> getNotTakenQuestion() {
         EntityManager em = DatabaseConnection.getEntityManager();
         try {
-            return em.createQuery("SELECT q FROM Question q WHERE q.isTaken = False", Question.class)
+            return em.createQuery("SELECT q FROM Question q WHERE q.isTaken = false", Question.class)
                     .getResultList();
         } finally {
             em.close();
@@ -74,7 +75,7 @@ public class QuestionRepo implements QuestionGateway{
     public List<Question> getNotClosedQuestion() {
         EntityManager em = DatabaseConnection.getEntityManager();
         try {
-            return em.createQuery("SELECT q FROM Question q WHERE q.isClose = False", Question.class)
+            return em.createQuery("SELECT q FROM Question q WHERE q.isClose = false", Question.class)
                     .getResultList();
         } finally {
             em.close();
@@ -160,6 +161,7 @@ public class QuestionRepo implements QuestionGateway{
         try {
             em.getTransaction().begin();
             question.addPosts(post);
+            JDOHelper.makeDirty(question, "posts");
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
@@ -190,12 +192,29 @@ public class QuestionRepo implements QuestionGateway{
     }
 
     @Override
-    public void deleteQuestion(int postId) {
+    public void deleteQuestion(int questionId) {
         EntityManager em = DatabaseConnection.getEntityManager();
         try {
             em.getTransaction().begin();
-            Question question = em.find(Question.class, postId);
+            Question question = getQuestion(questionId);
             em.remove(question);
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public void deleteAllQuestion() {
+        EntityManager em = DatabaseConnection.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.createQuery("DELETE FROM Question q").executeUpdate();
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {

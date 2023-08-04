@@ -19,5 +19,6 @@ public interface QuestionGateway {
     void updateRating(int questionId, int rating);
     void updatePosts(int questionId, Post post);
     void updateTakenAt(int questionId, LocalDate time);
-    public void deleteQuestion(int postId);
+    void deleteQuestion(int postId);
+    void deleteAllQuestion();
 }
