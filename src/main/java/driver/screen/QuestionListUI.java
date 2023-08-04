@@ -1,8 +1,9 @@
 package driver.screen;
 
 import adapter.controller.ControlContainer;
-import businessrule.usecase.PostDisplayFormatter;
+import adapter.controller.SelectQuestionControl;
 import businessrule.usecase.QuestionDisplayFormatter;
+import businessrule.usecase.SelectQuestionInteractor;
 
 import javax.swing.*;
 import java.awt.*;
@@ -12,7 +13,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
-public class QuestionListUI extends JPanel implements ActionListener {
+public class QuestionListUI extends JPanel{
     ControlContainer controlContainer;
     CardLayout cardLayout;
     JPanel screens;
@@ -39,8 +40,9 @@ public class QuestionListUI extends JPanel implements ActionListener {
         JScrollPane questionScrollPane = new JScrollPane();
         questionScrollPane.setLayout(new GridLayout(numberOfQuestions, 1));
         JPanel questionScrollPanel = new JPanel();
-        for (QuestionDisplayFormatter question : questionMap.values()) {
+        for (Integer questionId : questionMap.keySet()) {
             //read all variables from displayFormatter
+            QuestionDisplayFormatter question = questionMap.get(questionId);
             String title = question.getTitle();
             String type = question.getType();
 
@@ -61,9 +63,8 @@ public class QuestionListUI extends JPanel implements ActionListener {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("Question selected");
-                    TheQuestionUI questionUI = new TheQuestionUI();
-                    screens.add(questionUI, "question");
-                    cardLayout.show(screens, "question");
+                    SelectQuestionControl selectQuestionControl = controlContainer.getSelectQuestionControl();
+                    selectQuestionControl.selectQuestion(questionId, userId);
                 }
             });
         }

@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.Objects;
 
 @Entity
-public class Attorney extends User {
+public class Attorney implements User {
     @Id
     private int userId;
     private String name;

@@ -8,10 +8,10 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
 public class WelcomeUI extends JPanel implements ActionListener{
+    ControlContainer controlContainer;
     CardLayout cardLayout;
     JPanel screens;
-    ControlContainer controlContainer;
-    public WelcomeUI(CardLayout cardLayout, JPanel screens, ControlContainer controlContainer){
+    public WelcomeUI(, ControlContainer controlContainer, CardLayout cardLayout, JPanel screens){
         this.cardLayout = cardLayout;
         this.screens = screens;
         this.controlContainer = controlContainer;
@@ -39,12 +39,12 @@ public class WelcomeUI extends JPanel implements ActionListener{
             RegisterUI registerUI = new RegisterUI(controlContainer);
             screens.add(registerUI, "Register");
             cardLayout.show(screens, "Register");
-            System.out.println("Register screen showed");
+            System.out.println("User chooses register\nRegister screen showed");
         } else if ("Login".equals(actionCommand)){
             LoginUI loginUI = new LoginUI(controlContainer);
             screens.add(loginUI, "Login");
             cardLayout.show(screens, "Login");
-            System.out.println("Login screen showed");
+            System.out.println("User chooses login\nLogin screen showed");
         }
     }
 }

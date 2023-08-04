@@ -15,15 +15,14 @@ public class HomePageResponseFormatter implements HomePageOutputBoundary {
     JPanel screens;
     ControlContainer controlContainer;
 
-    public HomePageResponseFormatter(CardLayout cardLayout, JPanel screens, ControlContainer controlContainer) {
-        this.cardLayout = cardLayout;
-        this.screens = screens;
-        this.controlContainer = controlContainer;
-    }
-
     public HomePageResponseFormatter(CardLayout cardLayout, JPanel screens) {
         this.cardLayout = cardLayout;
         this.screens = screens;
+    }
+
+    @Override
+    public void setControlContainer(ControlContainer controlContainer) {
+        this.controlContainer = controlContainer;
     }
 
     @Override
@@ -35,7 +34,8 @@ public class HomePageResponseFormatter implements HomePageOutputBoundary {
     public HomePageResponseModel prepareSuccess(HomePageResponseModel response) {
         int userId = response.getUserId();
         String userName = response.getUserName();
-        AttorneyHomePageUI AttorneyHomePage = new AttorneyHomePageUI(controlContainer, userId, userName, cardLayout, screens);
+        AttorneyHomePageUI AttorneyHomePage = new AttorneyHomePageUI(controlContainer, cardLayout, screens,
+                userId, userName);
         screens.add(AttorneyHomePage, "AttorneyHomePage");
         cardLayout.show(screens, "AttorneyHomePage");
         return response;

@@ -4,6 +4,7 @@ import adapter.controller.ControlContainer;
 import businessrule.outputboundary.RegisterOutputBoundary;
 import businessrule.responsemodel.RegisterResponseModel;
 import driver.screen.ApplicationException;
+import driver.screen.WelcomeUI;
 
 import javax.swing.*;
 import java.awt.*;
@@ -17,7 +18,7 @@ public class RegisterResponseFormatter implements RegisterOutputBoundary {
         this.cardLayout = cardLayout;
         this.screens = screens;
     }
-
+    @Override
     public void setControlContainer(ControlContainer controlContainer) {
         this.controlContainer = controlContainer;
     }
@@ -28,6 +29,8 @@ public class RegisterResponseFormatter implements RegisterOutputBoundary {
     }
     @Override
     public RegisterResponseModel prepareSuccess(String msg) {
+        WelcomeUI welcomeUI = new WelcomeUI(controlContainer, cardLayout, screens);
+        screens.add(welcomeUI, "Welcome");
         cardLayout.show(screens, "Welcome");
         JOptionPane.showMessageDialog(null, msg);
         return new RegisterResponseModel();

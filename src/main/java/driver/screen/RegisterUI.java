@@ -36,7 +36,6 @@ public class RegisterUI extends JPanel implements ActionListener{
         JLabel title = new JLabel("Create your profile");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-
         //Text field items here
 
         LabelTextPanel userNamePanel = new LabelTextPanel(new JLabel("User name"), userName);
@@ -85,7 +84,7 @@ public class RegisterUI extends JPanel implements ActionListener{
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("Click" + e.getActionCommand());
+        System.out.println("User clicks register");
         ClientRegisterControl clientRegisterControl = controlContainer.getClientRegisterControl();
 
         try {

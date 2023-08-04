@@ -1,22 +1,12 @@
 import adapter.controller.*;
-import adapter.presenter.HomePageResponseFormatter;
-import adapter.presenter.RegisterResponseFormatter;
-import adapter.presenter.TheQuestionResponseFormatter;
-import adapter.presenter.ViewResponseFormatter;
-import businessrule.gateway.AttorneyGateway;
-import businessrule.gateway.ClientGateway;
-import businessrule.gateway.UserGatewayFactory;
+import adapter.presenter.*;
+import businessrule.gateway.*;
 import businessrule.inputboundary.*;
-import businessrule.outputboundary.HomePageOutputBoundary;
-import businessrule.outputboundary.RegisterOutputBoundary;
-import businessrule.outputboundary.TheQuestionOutputBoundary;
-import businessrule.outputboundary.ViewOutputBoundary;
+import businessrule.outputboundary.*;
 import businessrule.usecase.*;
 import driver.database.*;
 import driver.screen.WelcomeUI;
 import entity.*;
-
-import javax.naming.ldap.Control;
 import javax.swing.*;
 import java.awt.*;
 
@@ -32,7 +22,7 @@ public class Main {
         QuestionGateway questionGateway = new QuestionRepo();
         PostFactory postFactory = new PostFactory();
         PostGateway postGateway = new PostRepo();
-        System.out.println("finished repo");
+        System.out.println("System - finished set up repo");
 
         //set up jframe
         JFrame application = new JFrame("Legal Consultation Platform");
@@ -41,14 +31,14 @@ public class Main {
         CardLayout cardlayout = new CardLayout();
         JPanel screens = new JPanel(cardlayout);
         application.add(screens);
-        System.out.println("Finished JFrame");
+        System.out.println("System - finished set up frame");
 
         //define outputBoundary
         HomePageOutputBoundary homePageOutputBoundary = new HomePageResponseFormatter(cardlayout, screens);
         RegisterOutputBoundary registerOutputBoundary = new RegisterResponseFormatter(cardlayout, screens);
-        TheQuestionOutputBoundary theQuestionOutputBoundary = new TheQuestionResponseFormatter();
-        ViewOutputBoundary viewOutputBoundary = new ViewResponseFormatter();
-        System.out.println("Finished outputBoundary");
+        TheQuestionOutputBoundary theQuestionOutputBoundary = new TheQuestionResponseFormatter(cardlayout, screens);
+        ViewOutputBoundary viewOutputBoundary = new ViewResponseFormatter(cardlayout, screens);
+        System.out.println("System = finished set up output boundary");
 
         //define useCase
         UserLoginInputBoundary userLoginInteractor = new UserLoginInteractor(gatewayFactory, homePageOutputBoundary);
@@ -83,24 +73,26 @@ public class Main {
         RateInputBoundary rateInteractor = new RateInteractor(questionGateway, homePageOutputBoundary,
                 gatewayFactory);
         RateControl rateControl = new RateControl(rateInteractor);
-        System.out.println("Finished use case");
+        System.out.println("System - finished set up use case");
 
         //control container
         ControlContainer controlContainer = new ControlContainer(browseQuestionControl,
                 registerControl, closeQuestionControl, postControl, questionControl,
                 rateControl, selectQuestionControl, loginControl, viewQuestionControl);
 
+        //feed control container into the response formatter
+        homePageOutputBoundary.setControlContainer(controlContainer);
+        registerOutputBoundary.setControlContainer(controlContainer);
+        theQuestionOutputBoundary.setControlContainer(controlContainer);
+        viewOutputBoundary.setControlContainer(controlContainer);
+        System.out.println("System - finished set up control container");
+
         //Initiate the UI
-        WelcomeUI welcomeUI = new WelcomeUI(cardlayout, screens, controlContainer);
+        WelcomeUI welcomeUI = new WelcomeUI(controlContainer, cardlayout, screens);
         screens.add(welcomeUI, "Welcome");
         cardlayout.show(screens, "Welcome");
         application.setVisible(true);
-        System.out.println("Finished set up welcome UI");
-
-        Client client = new Client();
-        client.setUserId(12345);
-        clientGateway.addUser(client);
-        System.out.println("dddd");
+        System.out.println("System - finished set up welcome UI");
     }
 
 }

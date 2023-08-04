@@ -10,6 +10,7 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import javax.swing.JPanel;
 
+import com.toedter.calendar.JDateChooser;
 
 
 
@@ -29,8 +30,7 @@ public class AskQuestionUI extends JPanel implements ActionListener{
             "Work, Employment and Unemployment", "Juvenile", "Education", "Other"};
     JComboBox<String> questionType = new JComboBox<>(questionTypeList);
     JTextField titleForQuestion = new JTextField(15);
-    JDateComponentFactory dateComponentFactory = new JDateComponentFactory();
-    JDatePicker datePicker = dateComponentFactory.createJDatePicker();
+    JDateChooser deadlineChooser = new JDateChooser();
     /**
      * Creates new form AskQuestion
      */

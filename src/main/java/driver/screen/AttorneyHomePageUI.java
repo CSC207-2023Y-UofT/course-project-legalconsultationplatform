@@ -1,22 +1,24 @@
 package driver.screen;
 
+import adapter.controller.BrowseQuestionControl;
 import adapter.controller.ControlContainer;
+import adapter.controller.ViewQuestionControl;
+import businessrule.usecase.QuestionDisplayFormatter;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import static javax.swing.JOptionPane.showMessageDialog;
+import java.util.Map;
 
 public class AttorneyHomePageUI extends JPanel implements ActionListener {
     ControlContainer controlContainer;
-    int userId;
-    String userName;
     CardLayout cardLayout;
     JPanel screens;
-    public AttorneyHomePageUI(ControlContainer controlContainer, int userId,
-                              String userName, CardLayout cardLayout, JPanel screens) {
+    int userId;
+    String userName;
+    public AttorneyHomePageUI(ControlContainer controlContainer, CardLayout cardLayout, JPanel screens,
+                              int userId, String userName) {
         this.controlContainer = controlContainer;
         this.userId = userId;
         this.userName = userName;
@@ -45,7 +47,7 @@ public class AttorneyHomePageUI extends JPanel implements ActionListener {
 
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         this.add(title);
-        this.add(helloMessage)
+        this.add(helloMessage);
         this.add(buttons);
     }
 
@@ -53,20 +55,15 @@ public class AttorneyHomePageUI extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
         if ("Browse available questions".equals(actionCommand)){
-            QuestionListUI browseQuestionsUI = new QuestionListUI();
-            screens.add(browseQuestionsUI, "browseQuestion");
-            cardLayout.show(screens, "browseQuestion");
-            System.out.println("Available questions showed");
+            System.out.println("Attorney chooses browse available questions.");
+            BrowseQuestionControl browseQuestionControl = controlContainer.getBrowseQuestionControl();
+            browseQuestionControl.browseQuestion(userId);
         } else if ("View question history".equals(actionCommand)){
-            QuestionListUI questionHistoryUI = new QuestionListUI();
-            screens.add(questionHistoryUI, "questionHistory");
-            cardLayout.show(screens, "questionHistory");
-            System.out.println("Question history showed");
+            System.out.println("Attorney chooses view question history.");
+            ViewQuestionControl viewQuestionControl = controlContainer.getViewQuestionControl();
+            viewQuestionControl.viewQuestion(userId);
         } else if ("Recommended questions".equals(actionCommand)){
-            QuestionListUI recommendedQuestionUI = new QuestionListUI();
-            screens.add(recommendedQuestionUI, "recommendedQuestion");
-            cardLayout.show(screens, "recommendedQuestion");
-            System.out.print("Recommended question showed");
+            JOptionPane.showMessageDialog(this, "Recommendation unavailable");
         }
     }
 }

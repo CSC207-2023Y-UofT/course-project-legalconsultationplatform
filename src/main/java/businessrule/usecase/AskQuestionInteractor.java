@@ -32,6 +32,8 @@ public class AskQuestionInteractor implements QuestionInputBoundary {
         RandomNumberGenerator randomNumberGenerator = new RandomNumberGenerator();
         if (questionRequestModel.getQuestionCategory() == null){
             return theQuestionOutputBoundary.prepareFail("Please specify your question type.");
+        } else if (questionRequestModel.getTitle() == null){
+            return theQuestionOutputBoundary.prepareFail("Please specify your question title.");
         }
         LocalDate now = LocalDate.now();
         int askedByClient = questionRequestModel.getAskedByClient();
