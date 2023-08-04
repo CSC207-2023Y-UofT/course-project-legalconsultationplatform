@@ -17,9 +17,9 @@ import static org.junit.jupiter.api.Assertions.*;
 ;
 
 public class BrowseQuestionUseCaseTest {
-    final static int CLIENT_ID = 11345678;
-    final static int ATTORNEY_ID = 21345678;
-    final static int SECOND_ATTORNEY_ID = 22222222;
+    final static int CLIENT_ID = 21345678;
+    final static int ATTORNEY_ID = 11345678;
+    final static int SECOND_ATTORNEY_ID = 12222222;
     final static int QUESTION_ID = 323456789;
     final static int TAKEN_QUESTION_ID = 333333333;
     final static int CLOSED_QUESTION_ID = 322222222;
@@ -65,7 +65,7 @@ public class BrowseQuestionUseCaseTest {
 
         Question question1 = new Question();
         question1.setQuestionId(QUESTION_ID);
-        Post post = new Post();
+        Post post = new Post(); // default constructor does not initialize the post list
         post.setPostId(POST_ID);
         question1.addPosts(post);
         questionGateway.saveQuestion(question1);
@@ -84,7 +84,7 @@ public class BrowseQuestionUseCaseTest {
 
     @Test
     public void TestAttorneyBrowseQuestionUseCase(){
-        setUpBrowseUseCase();
+        setUpBrowseUseCase(); // default constructor does not initialize the post list
         BrowseRequestModel inputData = new BrowseRequestModel(ATTORNEY_ID);
 
         browseInputBoundary.browseQuestion(inputData);

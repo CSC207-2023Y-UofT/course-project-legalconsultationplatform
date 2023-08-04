@@ -21,9 +21,9 @@ import static org.junit.jupiter.api.Assertions.*;
 ;
 
 public class ReplyUseCaseTest {
-    final static int CLIENT_ID = 11345678;
-    final static int ATTORNEY_ID = 21345678;
-    final static int SECOND_ATTORNEY_ID = 22222222;
+    final static int CLIENT_ID = 21345678;
+    final static int ATTORNEY_ID = 11345678;
+    final static int SECOND_ATTORNEY_ID = 12222222;
     final static int QUESTION_ID = 323456789;
     final static int CLOSED_QUESTION_ID = 333333333;
     private QuestionGateway questionGateway;
@@ -86,7 +86,7 @@ public class ReplyUseCaseTest {
     public void testClientReply(){
         setUpReplyUseCase();
         PostRequestModel inputData1 = new PostRequestModel(QUESTION_ID, CLIENT_ID, "Test text");
-        postInputBoundary.createPost(inputData1);
+        postInputBoundary.createPost(inputData1);// add post error
         Question question = questionGateway.getQuestion(QUESTION_ID);
         Post post1 = question.getPosts().get(0);
         assertEquals(post1.getBelongsTo(), CLIENT_ID);

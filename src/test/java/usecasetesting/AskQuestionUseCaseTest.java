@@ -17,9 +17,9 @@ import static org.junit.jupiter.api.Assertions.*;
 ;
 
 public class AskQuestionUseCaseTest {
-    final static int CLIENT_ID = 11345678;
-    final static int ATTORNEY_ID = 21345678;
-    final static int SECOND_ATTORNEY_ID = 22222222;
+    final static int CLIENT_ID = 21345678;
+    final static int ATTORNEY_ID = 11345678;
+    final static int SECOND_ATTORNEY_ID = 12222222;
     private QuestionGateway questionGateway;
     private QuestionFactory questionFactory;
     private ClientGateway clientGateway;
@@ -73,7 +73,7 @@ public class AskQuestionUseCaseTest {
         questionInputBoundary.createQuestion(inputData);
 
         User user = clientGateway.getUser(CLIENT_ID);
-        assertEquals(1, user.getQuestionsList().size(), "The ask question use case failed.");
+        assertEquals(1, user.getQuestionsList().size(), "The ask question use case failed.");// null pointer caused by getUser, it cant get the question list out
 
     }
 
@@ -86,6 +86,6 @@ public class AskQuestionUseCaseTest {
         questionInputBoundary.createQuestion(inputData);
 
         User user = clientGateway.getUser(CLIENT_ID);
-        assertEquals(0, user.getQuestionsList().size(), "The ask question use case failed.");
+        assertEquals(0, user.getQuestionsList().size(), "The ask question use case failed.");// null pointer caused by getUser, it cant get the question list out
     }
 }
