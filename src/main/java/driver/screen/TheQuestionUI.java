@@ -122,8 +122,8 @@ public class TheQuestionUI extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
         if ("Post Reply".equals(actionCommand)){
-            TheQuestionUI questionUI = new TheQuestionUI();
-            screens.add(questionUI, "question");
+            System.out.println();
+            PostControl postControl = controlContainer.getPostControl();
             cardLayout.show(screens, "question");
             System.out.println("Updated question showed");
         } else if ("Close question".equals(actionCommand)){
