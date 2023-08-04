@@ -52,7 +52,7 @@ public class AskQuestionUI extends JPanel implements ActionListener{
         //Question type and title
         DropDownPanel questionTypeDropDown = new DropDownPanel(new JLabel("Select question"), questionType);
         LabelTextPanel titleInfo = new LabelTextPanel(new JLabel("title"), titleForQuestion);
-        LabelTextPanel legalDeadlineInfo = new LabelTextPanel(new JLabel("legalDeadline"), legalDeadline);
+        DateChooserPanel legalDeadlineInfo = new DateChooserPanel(new JLabel("legalDeadline"), deadlineChooser);
         JButton buttonToSubmit = new JButton("Submit");
 
         JPanel buttons = new JPanel();
@@ -62,8 +62,8 @@ public class AskQuestionUI extends JPanel implements ActionListener{
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(title);
-        this.add(questionCategoryInfo);
-        this.add(clientIdInfo);
+        this.add(helloMessage);
+        this.add(questionTypeDropDown);
         this.add(titleInfo);
         this.add(legalDeadlineInfo);
         this.add(buttons);
@@ -72,9 +72,10 @@ public class AskQuestionUI extends JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent evt){
         System.out.println("Click" + evt.getActionCommand());
-
+        QuestionControl questionControl = controlContainer.getQuestionControl();
         try {
-            control.createQuestion(questionCategory.getText(), titleForQuestion.getText(), LocalDate.now(), Integer.parseInt(clientId.getText()), LocalDate.parse(legalDeadline.getText()));
+            questionControl.createQuestion((String)questionType.getSelectedItem(),
+                    titleForQuestion.getText(), LocalDate.now(), userId, deadlineChooser.getDate());
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(this, e.getMessage());

@@ -29,6 +29,7 @@ import java.awt.event.KeyEvent;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -368,12 +369,12 @@ public class JDateChooser extends JPanel implements ActionListener,
 	}
 
 	/**
-	 * Returns the date. If the JDateChooser is started with a null date and no
-	 * date was set by the user, null is returned.
-	 * 
-	 * @return the current date
-	 */
-	public Date getDate() {
+     * Returns the date. If the JDateChooser is started with a null date and no
+     * date was set by the user, null is returned.
+     *
+     * @return the current date
+     */
+	public LocalDate getDate() {
 		return dateEditor.getDate();
 	}
 

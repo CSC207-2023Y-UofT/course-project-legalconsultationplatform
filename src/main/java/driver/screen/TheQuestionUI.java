@@ -1,6 +1,7 @@
 package driver.screen;
 
 import adapter.controller.ControlContainer;
+import adapter.controller.PostControl;
 import businessrule.usecase.PostDisplayFormatter;
 import entity.Post;
 
@@ -107,7 +108,7 @@ public class TheQuestionUI extends JPanel implements ActionListener {
         closeQuestion.addActionListener(this);
         rateQuestion.addActionListener(this);
 
-        //Add everythin into JPanel
+        //Add everything into JPanel
         this.add(helloMessage);
         this.add(titleLine);
         this.add(deadlineLine);

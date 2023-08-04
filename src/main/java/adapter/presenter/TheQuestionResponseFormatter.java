@@ -44,5 +44,6 @@ public class TheQuestionResponseFormatter implements TheQuestionOutputBoundary {
                 title, type, deadline, postMap);
         screens.add(questionUI, "question");
         cardLayout.show(screens, "question");
+        return response;
     }
 }
