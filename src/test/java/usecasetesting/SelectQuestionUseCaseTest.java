@@ -42,7 +42,7 @@ public class SelectQuestionUseCaseTest {
     private AttorneyGateway attorneyGateway;
     private TheQuestionOutputBoundary theQuestionOutputBoundary;
     private SelectInputBoundary selectInputBoundary;
-    @BeforeClass
+
     public void setUpSelectUseCase(){
 
         questionGateway = new QuestionRepo();
@@ -93,6 +93,7 @@ public class SelectQuestionUseCaseTest {
 
     @Test
     public void TestClientSelectQuestionUseCase(){
+        setUpSelectUseCase();
         SelectRequestModel inputData = new SelectRequestModel(QUESTION_ID, CLIENT_ID);
 
         selectInputBoundary.selectQuestion(inputData);
@@ -100,6 +101,7 @@ public class SelectQuestionUseCaseTest {
 
     @Test
     public void TestAttorneySelectNonTakenQuestionUseCase(){
+        setUpSelectUseCase();
         SelectRequestModel inputData = new SelectRequestModel(QUESTION_ID, ATTORNEY_ID);
 
         selectInputBoundary.selectQuestion(inputData);
@@ -107,6 +109,7 @@ public class SelectQuestionUseCaseTest {
 
     @Test
     public void TestAttorneySelectQuestionTakenByHimselfUseCase(){
+        setUpSelectUseCase();
         SelectRequestModel inputData = new SelectRequestModel(TAKEN_QUESTION_ID, ATTORNEY_ID);
 
         selectInputBoundary.selectQuestion(inputData);
@@ -114,6 +117,7 @@ public class SelectQuestionUseCaseTest {
 
     @Test
     public void TestAttorneySelectQuestionFailByClosedQuestion(){
+        setUpSelectUseCase();
         SelectRequestModel inputData = new SelectRequestModel(CLOSED_QUESTION_ID, ATTORNEY_ID);
 
         selectInputBoundary.selectQuestion(inputData);
@@ -121,6 +125,7 @@ public class SelectQuestionUseCaseTest {
 
     @Test
     public void TestAttorneySelectQuestionFailByTakenByOther(){
+        setUpSelectUseCase();
         SelectRequestModel inputData = new SelectRequestModel(TAKEN_QUESTION_ID, SECOND_ATTORNEY_ID);
 
         selectInputBoundary.selectQuestion(inputData);

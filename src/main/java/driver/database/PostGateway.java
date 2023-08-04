@@ -7,4 +7,5 @@ public interface PostGateway {
     Post getPost(int postId);
     boolean checkExistsById(int postId);
     void deletePost(int postId);
+    void deleteAllPost();
 }

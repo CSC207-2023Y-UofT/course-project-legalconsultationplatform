@@ -5,22 +5,17 @@ import businessrule.gateway.AttorneyGateway;
 import businessrule.gateway.ClientGateway;
 import businessrule.gateway.UserGatewayFactory;
 import businessrule.inputboundary.CloseInputBoundary;
-import businessrule.inputboundary.PostInputBoundary;
 import businessrule.outputboundary.HomePageOutputBoundary;
 import businessrule.requestmodel.CloseRequestModel;
 import businessrule.responsemodel.HomePageResponseModel;
 import businessrule.usecase.CloseQuestionInteractor;
-import businessrule.usecase.ReplyInteractor;
 import driver.database.*;
 import entity.Attorney;
 import entity.Client;
 import entity.PostFactory;
 import entity.Question;
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.*;
 ;
 
@@ -39,7 +34,6 @@ public class CloseUseCaseTest {
     private HomePageOutputBoundary homePageOutputBoundary;
     private CloseInputBoundary closeInputBoundary;
 
-    @BeforeClass
     public void setUpCloseUseCase(){
 
         questionGateway = new QuestionRepo();
@@ -90,7 +84,6 @@ public class CloseUseCaseTest {
     @Test
     public void TestClientCloseableQuestion(){
         setUpCloseUseCase();
-
 
         CloseRequestModel inputData = new CloseRequestModel(QUESTION_ID, CLIENT_ID);
 

@@ -6,7 +6,7 @@ import businessrule.outputboundary.HomePageOutputBoundary;
 import businessrule.requestmodel.RateRequestModel;
 import businessrule.responsemodel.HomePageResponseModel;
 import driver.database.QuestionGateway;
-import driver.database.UserGateway;
+import businessrule.gateway.UserGateway;
 import entity.Question;
 import entity.User;
 
