@@ -44,7 +44,7 @@ public class AskQuestionUseCaseTest {
 
             @Override
             public TheQuestionResponseModel prepareSuccess(TheQuestionResponseModel response) {
-                System.out.println(response.getPostMap());
+                assertEquals(0, response.getPostMap().size(), "PostMap is not correct");
                 return null;
             }
         };
@@ -73,7 +73,7 @@ public class AskQuestionUseCaseTest {
         questionInputBoundary.createQuestion(inputData);
 
         User user = clientGateway.getUser(CLIENT_ID);
-        assertEquals(user.getQuestionsList().size(), 1, "The ask question use case failed.");
+        assertEquals(1, user.getQuestionsList().size(), "The ask question use case failed.");
 
     }
 
@@ -84,5 +84,8 @@ public class AskQuestionUseCaseTest {
         QuestionRequestModel inputData = new QuestionRequestModel(null, "Test title", LocalDate.now(), CLIENT_ID, LocalDate.now());
 
         questionInputBoundary.createQuestion(inputData);
+
+        User user = clientGateway.getUser(CLIENT_ID);
+        assertEquals(0, user.getQuestionsList().size(), "The ask question use case failed.");
     }
 }
