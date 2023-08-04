@@ -4,6 +4,7 @@ import adapter.controller.ControlContainer;
 import businessrule.outputboundary.ViewOutputBoundary;
 import businessrule.responsemodel.ViewResponseModel;
 import businessrule.usecase.QuestionDisplayFormatter;
+import driver.screen.ApplicationException;
 import driver.screen.QuestionListUI;
 
 import javax.swing.*;
@@ -26,7 +27,7 @@ public class ViewResponseFormatter implements ViewOutputBoundary {
 
     @Override
     public ViewResponseModel prepareFail(String msg) {
-        return null;
+        throw new ApplicationException(msg);
     }
 
     @Override
