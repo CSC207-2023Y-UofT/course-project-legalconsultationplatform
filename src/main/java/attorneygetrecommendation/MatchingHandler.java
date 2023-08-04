@@ -128,4 +128,8 @@ public class MatchingHandler {
             return null;
         }
     }
+
+    public static void main(String[] args) {
+        Interpreter jep = new SharedInterpreter();
+    }
 }
