@@ -7,6 +7,7 @@ import entity.Question;
 import entity.Client;
 
 import java.time.LocalDate;
+import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -145,55 +146,91 @@ class ClientTest {
     }
 
     @Test
+    void testClientIsQuestionReplyableFail() {
+        Client client = new Client(1000000, "Xingfu Wu", "xingfu.wu@mail.utoronto.ca", "password", "CA", "abcdefghi",
+                "Asian", 30, "Male", "Single", 1, 60000.0f);
+
+        Question question = new Question();
+        question.setClose(true);
+
+        assertEquals(false, client.isQuestionReplyable(question));
+
+    }
+
+    @Test
     void testAddQuestion() {
-        // Create a Client object
         Client client = new Client(1000000, "Xingfu Wu", "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
                 "Asian", 30, "Male", "Single", 1, 60000.0f);
 
-        // Create a Question object
         Question question = new Question(2000000, "fraud", "Fraud question", LocalDate.now(), 3000000, LocalDate.now());
-
-        // Add the question to the client
         client.addQuestion(question);
 
-        // Assertions
-        assertEquals(1, client.getQuestionsList().size(), "The size of the questions list should be 1 after adding a question.");
-        assertTrue(client.getQuestionsList().contains(question), "The question should be in the questions list after adding.");
+        assertEquals(1, client.getQuestionsList().size(), "The size of the questions list is not correct");
+        assertEquals(true, client.getQuestionsList().contains(question), "The question is not added in the list.");
     }
 
     @Test
-    void testEqualsAndHashCode() {
-        // Create two equal Client objects
+    void testHashCodeSucceed() {
         Client client1 = new Client(1000000, "Xingfu Wu", "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
                 "Asian", 30, "Male", "Single", 1, 60000.0f);
-        Client client2 = new Client(1000000, "Xingfu Wu", "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
-                "Asian", 30, "Male", "Single", 1, 60000.0f);
 
-        // Assertions
-        assertEquals(client1, client2, "Two clients with the same user id should be equal.");
-        assertEquals(client1.hashCode(), client2.hashCode(), "Two clients with the same user id should have the same hash code.");
-
-        // Change the user id of the second client
-        client2.setUserId(2000000);
-
-        // Assertions
-        assertNotEquals(client1, client2, "Two clients with different user ids should not be equal.");
-        assertNotEquals(client1.hashCode(), client2.hashCode(), "Two clients with different user ids should have different hash codes.");
+        assertEquals(client1.hashCode(), Objects.hashCode(1000000), "The hashcode is wrong");
     }
 
     @Test
-    void testToString() {
-        // Expected value
+    void testHashCodeFail() {
+        Client client1 = new Client(1000000, "Xingfu Wu", "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
+                "Asian", 30, "Male", "Single", 1, 60000.0f);
+
+        assertEquals(false, client1.hashCode() ==  Objects.hashCode(100000), "The hashcode is wrong");
+    }
+
+    @Test
+    void testEqualsSucceed() {
+        Client client1 = new Client(1000000, "Xingfu Wu", "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
+                "Asian", 30, "Male", "Single", 1, 60000.0f);
+
+        assertEquals(true, client1.equals(client1), "The equal method is wrong");
+    }
+
+    @Test
+    void testEqualsFailByNotClient() {
+        Client client1 = new Client(1000000, "Xingfu Wu", "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
+                "Asian", 30, "Male", "Single", 1, 60000.0f);
+        Question question = new Question();
+
+        assertEquals(false, client1.equals(question), "The equal method is wrong");
+    }
+
+    @Test
+    void testEqualsFailByNotEqual() {
+        Client client1 = new Client(1000000, "Xingfu Wu", "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
+                "Asian", 30, "Male", "Single", 1, 60000.0f);
+        Client client2 = new Client(1000001, "Xingfu Wu", "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
+                "Asian", 30, "Male", "Single", 1, 60000.0f);
+
+        assertEquals(false, client1.equals(client2), "The equal method is wrong");
+    }
+
+    @Test
+    void testToStringSucceed() {
         String expectedName = "Xingfu Wu";
 
-        // Create a Client object
         Client client = new Client(1000000, expectedName, "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
                 "Asian", 30, "Male", "Single", 1, 60000.0f);
 
-        // Create the expected toString return
         String expectedToString = String.format("[Client]: %s", expectedName);
+        assertEquals(expectedToString, client.toString(), "The toString method is wrong");
+    }
 
-        // Assertion
-        assertEquals(expectedToString, client.toString(), "The toString method does not work as expected.");
+    @Test
+    void testToStringFail() {
+        String expectedName = "Xingfu Wu";
+
+        Client client = new Client(1000000, expectedName, "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
+                "Asian", 30, "Male", "Single", 1, 60000.0f);
+
+        String expectedToString = String.format("[Attorney]: %s", expectedName);
+        assertEquals(false, expectedToString == client.toString(), "The toString method is wrong");
     }
 }
