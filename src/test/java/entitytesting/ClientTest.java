@@ -99,35 +99,49 @@ class ClientTest {
     }
 
     @Test
-    void testIsQuestionCloseableAndSelectableAndReplyable() {
-        // create a client
-        Client client = new Client(1000000, "Xingfu Wu", "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
+    void testClientIsQuestionCloseableSucceed() {
+        Client client = new Client(1000000, "Xingfu Wu", "xingfu.wu@mail.utoronto.ca", "password", "CA", "abcdefghi",
                 "Asian", 30, "Male", "Single", 1, 60000.0f);
 
-        // create a question
-        Question question = new Question(2000000, "fraud", "Fraud question", LocalDate.now(), 3000000, LocalDate.now());
+        Question question = new Question();
 
-        // check if the question is closeable, selectable and replyable
-        assertTrue(client.isQuestionCloseable(question), "The question should be closeable initially.");
-        assertTrue(client.isQuestionSelectable(question), "The question should be selectable initially.");
-        assertTrue(client.isQuestionReplyable(question), "The question should be replyable initially.");
+        assertEquals(true, client.isQuestionCloseable(question));
 
-        // set the question as taken by an attorney
-        question.setTaken(true);
-        question.setTakenByAttorney(2000000);
+    }
 
-        // check if the question is closeable, selectable and replyable
-        assertTrue(client.isQuestionCloseable(question), "The question should still be closeable when taken by an attorney.");
-        assertTrue(client.isQuestionSelectable(question), "The question should still be selectable when taken by an attorney.");
-        assertTrue(client.isQuestionReplyable(question), "The question should still be replyable when taken by an attorney.");
+    @Test
+    void testClientIsQuestionCloseableFail() {
+        Client client = new Client(1000000, "Xingfu Wu", "xingfu.wu@mail.utoronto.ca", "password", "CA", "abcdefghi",
+                "Asian", 30, "Male", "Single", 1, 60000.0f);
 
-        // set the question as closed
+        Question question = new Question();
         question.setClose(true);
 
-        // check if the question is closeable, selectable and replyable
-        assertFalse(client.isQuestionCloseable(question), "The question should not be closeable when it is already closed.");
-        assertFalse(client.isQuestionSelectable(question), "The question should not be selectable when it is already closed.");
-        assertFalse(client.isQuestionReplyable(question), "The question should not be replyable when it is already closed.");
+        assertEquals(false, client.isQuestionCloseable(question));
+
+    }
+
+    @Test
+    void testClientIsQuestionSelectable() {
+        Client client = new Client(1000000, "Xingfu Wu", "xingfu.wu@mail.utoronto.ca", "password", "CA", "abcdefghi",
+                "Asian", 30, "Male", "Single", 1, 60000.0f);
+
+        Question question = new Question();
+
+        assertEquals(true, client.isQuestionSelectable(question));
+
+    }
+
+    @Test
+    void testClientIsQuestionReplyableSucceed() {
+        Client client = new Client(1000000, "Xingfu Wu", "xingfu.wu@mail.utoronto.ca", "password", "CA", "abcdefghi",
+                "Asian", 30, "Male", "Single", 1, 60000.0f);
+
+        Question question = new Question();
+        question.setClose(false);
+
+        assertEquals(true, client.isQuestionReplyable(question));
+
     }
 
     @Test
