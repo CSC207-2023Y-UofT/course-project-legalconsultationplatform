@@ -32,7 +32,7 @@ public class CloseQuestionInteractor implements CloseInputBoundary {
 
         if(isQuestionCloseable){
             questionGateway.updateIsClose(questionId, true);
-            HomePageResponseModel homePageResponseModel = new HomePageResponseModel(userId, user.getUserName());
+            HomePageResponseModel homePageResponseModel = new HomePageResponseModel(userId, user.getUserName(), "Client");
             return homePageOutputBoundary.prepareSuccess(homePageResponseModel);
         }
         else{

@@ -39,9 +39,15 @@ public class UserLoginInteractor implements UserLoginInputBoundary{
         if (!inputPassword.equals(filedPassword)) {
             return outputBoundary.prepareFail("Password is incorrect");
         }
-        LocalDateTime now = LocalDateTime.now();
+        String userType;
+        User user = userGateway.getUser(inputUserId);
+        if (user.isClient()){
+            userType = "Client";
+        } else{
+            userType = "Attorney";
+        }
         HomePageResponseModel accountResponseModel = new HomePageResponseModel(inputUserId,
-                userGateway.getUser(inputUserId).getPassword());
+                userGateway.getUser(inputUserId).getPassword(), userType);
         return outputBoundary.prepareSuccess(accountResponseModel);
     }
 }

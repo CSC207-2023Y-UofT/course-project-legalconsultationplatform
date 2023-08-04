@@ -45,11 +45,17 @@ public class ReplyInteractor implements PostInputBoundary {
         Post post = postFactory.create(randomNumberGenerator.generatePostId(9), postRequestModel.getQuestionId(), now, postRequestModel.getPostText(), postRequestModel.getUserId());
         questionGateway.updatePosts(postRequestModel.getQuestionId(), post);
         postGateway.savePost(post);
+        String userType;
         if (isQuestionReplyable) {
             questionGateway.updateIsTaken(question.getQuestionId(), question.isTaken());
             questionGateway.updateTakenByAttorney(question.getQuestionId(), question.getTakenByAttorney());
             questionGateway.updateTakenAt(question.getQuestionId(), question.getTakenAt());
-            HomePageResponseModel homePageResponseModel = new HomePageResponseModel(user.getUserId(), user.getUserName());
+            if (user.isClient()){
+                userType = "Client";
+            } else{
+                userType = "Attorney";
+            }
+            HomePageResponseModel homePageResponseModel = new HomePageResponseModel(user.getUserId(), user.getUserName(), userType);
             return homePageOutputBoundary.prepareSuccess(homePageResponseModel);
         }
         else{
