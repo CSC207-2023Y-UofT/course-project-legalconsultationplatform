@@ -16,6 +16,13 @@ import entity.User;
 
 import java.time.LocalDate;
 
+/**
+ * The "ReplyInteractor" class is an implementation of the "PostInputBoundary" interface, representing the use case for
+ *
+ * creating a new post (reply) in response to a question.
+ * The class handles the business logic for creating a post (reply) to a specific question. It interacts with various
+ * gateways, entities, and output boundaries to perform the necessary operations related to creating and saving the post.
+ */
 
 public class ReplyInteractor implements PostInputBoundary {
 

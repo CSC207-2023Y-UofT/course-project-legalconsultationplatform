@@ -11,6 +11,13 @@ import driver.database.UserGateway;
 import businessrule.gateway.UserGatewayFactory;
 import java.util.Map;
 
+/**
+ * The "SelectQuestionInteractor" class is part of the business rule use case layer and serves as an implementation of the
+ *
+ * "SelectInputBoundary" interface. It is responsible for handling the selection of a specific question by a user in the system.
+ * The class uses various gateways and output boundaries to interact with the database and prepare the response model for the
+ * selected question.
+ */
 public class SelectQuestionInteractor implements SelectInputBoundary {
     final QuestionGateway questionGateway;
     final TheQuestionOutputBoundary theQuestionOutputBoundary;

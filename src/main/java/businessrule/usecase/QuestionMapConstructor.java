@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The "QuestionMapConstructor" class is a utility class responsible for constructing a map of question display formatters.
+ */
 class QuestionMapConstructor {
     protected Map<Integer, QuestionDisplayFormatter> constructQuestionMap(List<Question> questionList) {
         Map<Integer, QuestionDisplayFormatter> questionMap = new HashMap<>();

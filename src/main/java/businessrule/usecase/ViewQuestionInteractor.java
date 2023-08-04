@@ -13,6 +13,11 @@ import entity.User;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class serves as an interactor for viewing questions associated with a user.
+ * It implements the "ViewInputBoundary" interface, which defines the contract for viewing questions.
+ * The class is responsible for handling user requests to view questions and constructing the appropriate response.
+ */
 public class ViewQuestionInteractor implements ViewInputBoundary {
     final QuestionGateway questionGateway;
     final ViewOutputBoundary viewOutputBoundary;

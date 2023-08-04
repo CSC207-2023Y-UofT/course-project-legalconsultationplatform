@@ -8,6 +8,13 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Objects;
 
+/**
+ * This is a class representing attorney user.
+ *
+ * An Attorney is a registered user who is a legal professional, capable of answering legal questions
+ * posted by clients. The Attorney has attributes such as user ID, name, email, password, state abbreviation,
+ * postal code, and a list of questions associated with them.
+ */
 @Entity
 public class Attorney implements User {
     @Id

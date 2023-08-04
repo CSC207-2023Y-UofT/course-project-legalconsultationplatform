@@ -1,5 +1,11 @@
 package businessrule.usecase;
 
+/**
+ * This class represents the interactor for registering a new client user.
+ *
+ * The "ClientRegisterInteractor" class is responsible for handling the business logic related to registering
+ * a new client user
+ */
 
 import businessrule.gateway.ClientGateway;
 import businessrule.inputboundary.ClientRegisterInputBoundary;

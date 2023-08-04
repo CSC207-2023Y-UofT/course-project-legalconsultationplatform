@@ -5,6 +5,15 @@ import javax.persistence.Id;
 import java.time.LocalDate;
 import java.util.Objects;
 
+/**
+ * This is a class representing a post in a question thread.
+ *
+ * A "Post" is a message or response posted in the context of a specific question thread.
+ * Each post contains information such as the ID of the associated question, the post ID,
+ * the creation date, the text of the post, and an identifier indicating which user the post
+ * belongs to.
+ */
+
 @Entity
 public class Post {
     private int questionId;

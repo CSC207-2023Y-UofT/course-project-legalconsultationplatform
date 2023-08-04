@@ -11,6 +11,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The "PostMapConstructor" class is responsible for constructing a map of post information for a given question.
+ */
 class PostMapConstructor {
     private final UserGateway userGateway;
 

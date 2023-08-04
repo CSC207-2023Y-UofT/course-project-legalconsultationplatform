@@ -10,6 +10,9 @@ import driver.database.UserGateway;
 import entity.Question;
 import entity.User;
 
+/**
+ * The "RateInteractor" class represents the interactor for rating an answer to a question.
+ */
 public class RateInteractor implements RateInputBoundary {
 
     private final QuestionGateway questionGateway;

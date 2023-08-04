@@ -1,5 +1,11 @@
 package businessrule.usecase;
 
+/**
+ * The "CloseQuestionInteractor" class represents a use case interactor for closing a question.
+ *
+ * This class is responsible for handling the business logic related to closing a question in the system. It
+ */
+
 import businessrule.inputboundary.CloseInputBoundary;
 import businessrule.outputboundary.HomePageOutputBoundary;
 import businessrule.requestmodel.CloseRequestModel;

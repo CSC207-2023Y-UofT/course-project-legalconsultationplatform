@@ -1,5 +1,12 @@
 package businessrule.usecase;
 
+/**
+ * This class is responsible for handling the use case of asking a new question in the application.
+ *
+ * It facilitates the creation and saving of a new question with relevant information, including the
+ * question category, title, creation date, the client who asked the question, and the legal deadline.
+ */
+
 import entity.*;
 import businessrule.inputboundary.QuestionInputBoundary;
 import businessrule.requestmodel.QuestionRequestModel;

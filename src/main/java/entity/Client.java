@@ -7,6 +7,16 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * This is a class representing client user.
+ *
+ * A Client is a registered user who seeks legal advice and assistance by posting questions
+ * to be answered by attorneys. The Client class includes attributes such as user ID, username,
+ * email, password, state abbreviation, postal code, ethnicity, age, gender, marital status,
+ * number of household members, and annual income. Additionally, it maintains a list of questions
+ * associated with the client.
+ */
+
 @Entity
 public class Client implements User {
     @Id

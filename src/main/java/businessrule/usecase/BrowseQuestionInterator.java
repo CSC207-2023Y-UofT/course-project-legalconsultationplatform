@@ -12,6 +12,11 @@ import entity.Question;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class is responsible for responsible for handling the browse question use case.
+ *
+ * This class facilitates browsing and retrieving a list of not-taken questions from the data source through
+ */
 public class BrowseQuestionInterator implements BrowseInputBoundary {
 
     final ViewOutputBoundary viewOutputBoundary;

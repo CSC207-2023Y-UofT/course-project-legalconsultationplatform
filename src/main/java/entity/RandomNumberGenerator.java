@@ -1,6 +1,9 @@
 package entity;
 import java.util.Random;
 
+/**
+ * This class provides utility methods to generate random numbers and create unique IDs for different entities.
+ */
 public class RandomNumberGenerator {
     public static int generate(int digit){
         Random random = new Random();

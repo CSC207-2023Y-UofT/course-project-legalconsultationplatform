@@ -11,6 +11,13 @@ import driver.screen.ApplicationException;
 
 import java.time.LocalDateTime;
 
+/**
+ * This class is responsible for handling the user login use case in the application.
+ * It interacts with the "UserGatewayFactory" to access user information from the data source and
+ * validates user credentials to authenticate the user.
+ * The class uses the "HomePageOutputBoundary" to prepare and return the appropriate response model
+ * based on the result of the login attempt.
+ */
 public class UserLoginInteractor implements UserLoginInputBoundary{
     final UserGatewayFactory userGatewayFactory;
     final HomePageOutputBoundary outputBoundary;
