@@ -31,15 +31,12 @@ public class LoginUI extends JPanel implements ActionListener{
 
         LabelTextPanel userIdInfo = new LabelTextPanel(new JLabel("UserId"), userId);
         LabelTextPanel passwordInfo = new LabelTextPanel(new JLabel("Password"), password);
-        JButton clientLogin = new JButton("Client Login");
-        JButton attorneyLogin = new JButton("Attorney login");
+        JButton login = new JButton("Login");
 
         JPanel buttons = new JPanel();
-        buttons.add(clientLogin);
-        buttons.add(attorneyLogin);
+        buttons.add(login);
 
-        clientLogin.addActionListener(this);
-        attorneyLogin.addActionListener(this);
+        login.addActionListener(this);
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(title);
