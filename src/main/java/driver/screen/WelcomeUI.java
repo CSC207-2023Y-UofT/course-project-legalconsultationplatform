@@ -11,7 +11,7 @@ public class WelcomeUI extends JPanel implements ActionListener{
     ControlContainer controlContainer;
     CardLayout cardLayout;
     JPanel screens;
-    public WelcomeUI(, ControlContainer controlContainer, CardLayout cardLayout, JPanel screens){
+    public WelcomeUI(ControlContainer controlContainer, CardLayout cardLayout, JPanel screens){
         this.cardLayout = cardLayout;
         this.screens = screens;
         this.controlContainer = controlContainer;

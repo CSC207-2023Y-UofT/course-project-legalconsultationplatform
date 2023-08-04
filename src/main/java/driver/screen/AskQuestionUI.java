@@ -7,7 +7,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Date;
 import javax.swing.JPanel;
 
 import com.toedter.calendar.JDateChooser;
@@ -73,9 +77,13 @@ public class AskQuestionUI extends JPanel implements ActionListener{
     public void actionPerformed(ActionEvent evt){
         System.out.println("Click" + evt.getActionCommand());
         QuestionControl questionControl = controlContainer.getQuestionControl();
+        Date deadlineDate = deadlineChooser.getDate();
+        Instant instant = deadlineDate.toInstant();
+        ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+        LocalDate deadlinelocalDate = zonedDateTime.toLocalDate();
         try {
             questionControl.createQuestion((String)questionType.getSelectedItem(),
-                    titleForQuestion.getText(), LocalDate.now(), userId, deadlineChooser.getDate());
+                    titleForQuestion.getText(), LocalDate.now(), userId, deadlinelocalDate);
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(this, e.getMessage());
