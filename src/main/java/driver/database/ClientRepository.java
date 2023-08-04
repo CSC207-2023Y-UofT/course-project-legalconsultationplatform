@@ -33,25 +33,6 @@ public class ClientRepository implements ClientGateway {
     }
 
     @Override
-    public void updateQuestionList(int clientId, Question question) {
-        EntityManager em = DatabaseConnection.getEntityManager();
-        Client c = em.find(Client.class, clientId);
-        try {
-            em.getTransaction().begin();
-            c.addQuestion(question);
-            JDOHelper.makeDirty(c, "questionsList");
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            em.close();
-        }
-    }
-
-    @Override
     public void addUser(User client) {
         EntityManager entityManager = DatabaseConnection.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
@@ -111,6 +92,37 @@ public class ClientRepository implements ClientGateway {
             List<Client> users = em.createQuery("SELECT c FROM Client c WHERE c.userName =: username", Client.class).
                     setParameter("username", username).getResultList();
             return !users.isEmpty();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public List<Question> getAllQuestionById(int clientId) {
+        EntityManager em = DatabaseConnection.getEntityManager();
+        try {
+            return em.createQuery("SELECT q FROM Question q WHERE q.askedByClient =: clientId", Question.class).
+                    setParameter("clientId", clientId).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public void updateQuestionList(int clientId, Question question) {
+        EntityManager em = DatabaseConnection.getEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        Client c = em.find(Client.class, clientId);
+        try {
+            transaction.begin();
+            c.addQuestion(question);
+            JDOHelper.makeDirty(c, "questionsList");
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
         } finally {
             em.close();
         }

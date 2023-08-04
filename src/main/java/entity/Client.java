@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.util.ArrayList;
@@ -22,10 +23,11 @@ public class Client implements User {
     private String maritalStatus;
     private int numberOfHousehold;
     private float annualIncome;
-    @OneToMany
+    @OneToMany(targetEntity = Question.class, fetch = FetchType.EAGER)
     private List<Question> questionsList;
 
     public Client() {
+        questionsList = new ArrayList<Question>();
     }
 
     public Client(int userId, String userName, String email, String password, String stateAbb, String postalCode,
@@ -122,9 +124,6 @@ public class Client implements User {
 
     @Override
     public void addQuestion(Question question) {
-        if (questionsList == null) {
-            questionsList = new ArrayList<>();
-        }
         if (! questionsList.contains(question)) {
             questionsList.add(question);
         }

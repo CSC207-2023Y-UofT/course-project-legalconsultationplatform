@@ -1,11 +1,12 @@
 package driver.database;
 
+import businessrule.gateway.PostGateway;
 import entity.Post;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-public class PostRepo implements PostGateway{
+public class PostRepo implements PostGateway {
 
     @Override
     public void savePost(Post post) {

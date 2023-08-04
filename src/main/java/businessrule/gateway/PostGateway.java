@@ -1,4 +1,4 @@
-package driver.database;
+package businessrule.gateway;
 
 import entity.Post;
 

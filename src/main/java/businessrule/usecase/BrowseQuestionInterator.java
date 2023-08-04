@@ -5,7 +5,7 @@ import businessrule.inputboundary.BrowseInputBoundary;
 import businessrule.outputboundary.ViewOutputBoundary;
 import businessrule.requestmodel.BrowseRequestModel;
 import businessrule.responsemodel.ViewResponseModel;
-import driver.database.QuestionGateway;
+import businessrule.gateway.QuestionGateway;
 import entity.Attorney;
 import entity.Question;
 

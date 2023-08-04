@@ -2,6 +2,8 @@ package gatewaytesting;
 
 import driver.database.DatabaseConnection;
 import driver.database.PostRepo;
+import org.junit.jupiter.api.AfterAll;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 import entity.Post;
 
@@ -11,6 +13,42 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class PostRepoTest {
+
+    //Post
+    final static int POST_ID = 10;
+
+    //Question
+    final static int QUESTION_ID = 10;
+
+    @BeforeAll
+    public static void setUp() {
+        LocalDate createdAt = LocalDate.now();
+        String postText = "hello!";
+        int belongsTo = 100;
+
+        //constructors
+        Post p = new Post(QUESTION_ID, POST_ID, createdAt, postText, belongsTo);
+        PostRepo repo = new PostRepo();
+
+        //set up
+        repo.deleteAllPost();
+        repo.savePost(p);
+    }
+
+    @Test
+    public void testCheckExistsById() {
+        PostRepo repo = new PostRepo();
+        //test the id exists
+        assertTrue(repo.checkExistsById(POST_ID), "The id does not exist!");
+        //test the id does not exist
+        assertFalse(repo.checkExistsById(15), "The id exists!");
+    }
+
+    @AfterAll
+    public static void tearDown() {
+        PostRepo repo = new PostRepo();
+        repo.deleteAllPost();
+    }
 
     @Test
     public void testSavePost() {
@@ -50,28 +88,6 @@ public class PostRepoTest {
 
         //test getting the correct post
         assertEquals(p, repo.getPost(postId), "That is not the correct post!");
-    }
-
-    @Test
-    public void testCheckExistsById() {
-        int questionId = 15;
-        int postId = 10;
-        LocalDate createdAt = LocalDate.now();
-        String postText = "hello!";
-        int belongsTo = 100;
-
-        //constructors
-        Post p = new Post(questionId, postId, createdAt, postText, belongsTo);
-        PostRepo repo = new PostRepo();
-
-        //set up
-        repo.deleteAllPost();
-        repo.savePost(p);
-
-        //test the id exists
-        assertTrue(repo.checkExistsById(postId), "The id does not exist!");
-        //test the id does not exist
-        assertFalse(repo.checkExistsById(15), "The id exists!");
     }
 
     @Test

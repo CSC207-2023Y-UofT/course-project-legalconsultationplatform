@@ -3,6 +3,7 @@ package driver.database;
 import businessrule.gateway.AttorneyGateway;
 import entity.*;
 
+import javax.jdo.JDOHelper;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.util.List;
@@ -27,24 +28,6 @@ public class AttorneyRepository implements AttorneyGateway {
             return entityManager.find(Attorney.class, attorneyId);
         } finally {
             entityManager.close();
-        }
-    }
-
-    @Override
-    public void updateQuestionList(int attorneyId, Question question) {
-        EntityManager em = DatabaseConnection.getEntityManager();
-        Attorney a = em.find(Attorney.class, attorneyId);
-        try {
-            em.getTransaction().begin();
-            a.addQuestion(question);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            em.close();
         }
     }
 
@@ -112,4 +95,36 @@ public class AttorneyRepository implements AttorneyGateway {
             em.close();
         }
     }
+
+    @Override
+    public List<Question> getAllQuestionById(int attorneyId) {
+        EntityManager em = DatabaseConnection.getEntityManager();
+        try {
+            return em.createQuery("SELECT q FROM Question q WHERE q.takenByAttorney =: attorneyId", Question.class)
+                    .setParameter("attorneyId", attorneyId).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public void updateQuestionList(int attorneyId, Question question) {
+        EntityManager em = DatabaseConnection.getEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        Attorney a = em.find(Attorney.class, attorneyId);
+        try {
+            transaction.begin();
+            a.addQuestion(question);
+            JDOHelper.makeDirty(a, "questionsList");
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
 }

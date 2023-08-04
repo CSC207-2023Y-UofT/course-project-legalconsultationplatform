@@ -2,7 +2,7 @@ package businessrule.usecase;
 
 import businessrule.inputboundary.ViewInputBoundary;
 import businessrule.requestmodel.ViewRequestModel;
-import driver.database.QuestionGateway;
+import businessrule.gateway.QuestionGateway;
 import businessrule.gateway.UserGateway;
 import businessrule.gateway.UserGatewayFactory;
 import businessrule.outputboundary.ViewOutputBoundary;
