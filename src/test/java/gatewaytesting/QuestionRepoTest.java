@@ -1,9 +1,6 @@
 package gatewaytesting;
 
-import driver.database.AttorneyRepository;
-import driver.database.DatabaseConnection;
-import driver.database.PostRepo;
-import driver.database.QuestionRepo;
+import driver.database.*;
 import entity.Post;
 import org.junit.jupiter.api.Test;
 import entity.Question;
@@ -404,6 +401,34 @@ public class QuestionRepoTest {
         repo.deleteAllQuestion();
         Long count1 = em.createQuery("SELECT COUNT(q) FROM Question q", Long.class).getSingleResult();
         assertEquals(0, count1, "The database still have saved post objects!");
+    }
+
+    @Test
+    public void testUpdatePosts() {
+        int questionId = 6;
+        String type = "Theft";
+        String title = "hi";
+        LocalDate createAt = LocalDate.now();
+        int askedByClient = 66;
+        LocalDate legalDeadLine = LocalDate.now();
+
+        //constructors
+        Question q = new Question(questionId, type, title, createAt, askedByClient, legalDeadLine);
+        Post p = new Post(questionId, 10, LocalDate.now(), "hello!", 100);
+        QuestionRepo repo = new QuestionRepo();
+        PostRepo pRepo = new PostRepo();
+
+        //set up
+        repo.deleteAllQuestion();
+        pRepo.deleteAllPost();
+        repo.saveQuestion(q);
+        pRepo.savePost(p);
+
+        //test updating list
+        repo.updatePosts(questionId, p);
+        ArrayList<Post> expectedList = new ArrayList<>();
+        expectedList.add(p);
+        assert expectedList.equals(repo.getQuestion(questionId).getPosts());
     }
 
 }

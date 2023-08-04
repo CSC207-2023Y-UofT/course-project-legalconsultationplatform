@@ -308,4 +308,30 @@ public class AttorneyRepositoryTest {
         assert expectedList.equals(repo.getAllQuestionById(attorneyId));
     }
 
+    @Test
+    public void testUpdateQuestionList() {
+        int attorneyId = 50;
+        String attorneyUsername = "yao";
+        String attorneyEmail = "yao.yao@gmail.com";
+        String attorneyPassword = "yao123";
+        String attorneyState = "ON";
+        String attorneyPostalCode = "M8MO1P";
+
+        //constructors
+        Attorney a = new Attorney(attorneyId, attorneyUsername, attorneyEmail, attorneyPassword,
+                attorneyState, attorneyPostalCode);
+        Question q = new Question(6, "theft", "hi", LocalDate.now(), clientId, LocalDate.now());
+        AttorneyRepository repo = new AttorneyRepository();
+
+        //set up
+        repo.deleteAllUser();
+        repo.addUser(a);
+
+        //test updating list
+        repo.updateQuestionList(attorneyId, q);
+        ArrayList<Question> expectedList = new ArrayList<>();
+        expectedList.add(q);
+        assert expectedList.equals(repo.getUser(attorneyId).getQuestionsList());
+    }
+
 }

@@ -3,6 +3,7 @@ package driver.database;
 import businessrule.gateway.AttorneyGateway;
 import entity.*;
 
+import javax.jdo.JDOHelper;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.util.List;
@@ -106,8 +107,24 @@ public class AttorneyRepository implements AttorneyGateway {
         }
     }
 
-    public void updateQuestionList(int id, Question question) {
-
+    @Override
+    public void updateQuestionList(int attorneyId, Question question) {
+        EntityManager em = DatabaseConnection.getEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        Attorney a = em.find(Attorney.class, attorneyId);
+        try {
+            transaction.begin();
+            a.addQuestion(question);
+            JDOHelper.makeDirty(a, "questionsList");
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
     }
 
 }

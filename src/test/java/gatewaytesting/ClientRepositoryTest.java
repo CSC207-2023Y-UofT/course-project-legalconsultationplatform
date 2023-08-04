@@ -269,4 +269,35 @@ public class ClientRepositoryTest {
         assert expectedList.equals(repo.getAllQuestionById(clientId));
     }
 
+    @Test
+    public void testUpdateQuestionList() {
+        int clientId = 100;
+        String clientUsername = "bob";
+        String clientEmail = "bob.bob@gmail.com";
+        String clientPassword = "bob123";
+        String clientState = "ON";
+        String clientPostalCode = "M1MA6A";
+        String clientEthnicity = "asian";
+        int clientAge = 20;
+        String clientGender = "Male";
+        String clientMaritalStatus = "Single";
+        int clientNumHouseHold = 1;
+        float clientAnnualIncome = 100;
+
+        //constructors
+        Client c = new Client(clientId, clientUsername, clientEmail, clientPassword, clientState, clientPostalCode,
+                clientEthnicity, clientAge, clientGender, clientMaritalStatus, clientNumHouseHold, clientAnnualIncome);
+        Question q = new Question(6, "theft", "hi", LocalDate.now(), clientId, LocalDate.now());
+        ClientRepository repo = new ClientRepository();
+        //set up
+        repo.deleteAllUser();
+        repo.addUser(c);
+
+        //test updating list
+        repo.updateQuestionList(clientId, q);
+        ArrayList<Question> expectedList = new ArrayList<>();
+        expectedList.add(q);
+        assert expectedList.equals(repo.getUser(clientId).getQuestionsList());
+    }
+
 }

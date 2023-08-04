@@ -3,6 +3,7 @@ package driver.database;
 import entity.Post;
 import entity.Question;
 
+import javax.jdo.JDOHelper;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.time.LocalDate;
@@ -217,8 +218,24 @@ public class QuestionRepo implements QuestionGateway {
         }
     }
 
-    public void updatePosts(int id, Post post) {
-
+    @Override
+    public void updatePosts(int questionId, Post post) {
+        EntityManager em = DatabaseConnection.getEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        Question q = em.find(Question.class, questionId);
+        try {
+            transaction.begin();
+            q.addPosts(post);
+            JDOHelper.makeDirty(q, "posts");
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
     }
 
 }

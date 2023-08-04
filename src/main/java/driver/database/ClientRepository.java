@@ -5,6 +5,7 @@ import entity.Question;
 import entity.Client;
 import entity.User;
 
+import javax.jdo.JDOHelper;
 import javax.persistence.*;
 import java.util.List;
 
@@ -107,8 +108,24 @@ public class ClientRepository implements ClientGateway {
         }
     }
 
-    public void updateQuestionList(int id, Question question) {
-
+    @Override
+    public void updateQuestionList(int clientId, Question question) {
+        EntityManager em = DatabaseConnection.getEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        Client c = em.find(Client.class, clientId);
+        try {
+            transaction.begin();
+            c.addQuestion(question);
+            JDOHelper.makeDirty(c, "questionsList");
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
     }
 
 }

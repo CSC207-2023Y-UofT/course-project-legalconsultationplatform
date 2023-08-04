@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.time.LocalDate;
@@ -17,7 +18,7 @@ public class Attorney implements User {
     private String password;
     private String stateAbb;
     private String postalCode;
-    @OneToMany
+    @OneToMany(targetEntity = Question.class, fetch = FetchType.EAGER)
     private List<Question> questionsList;
 
     public Attorney() {

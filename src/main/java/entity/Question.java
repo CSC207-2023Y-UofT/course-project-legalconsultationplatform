@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.time.LocalDate;
@@ -28,7 +29,7 @@ public class Question {
     private LocalDate takenAt;
     private boolean isClose;
     private int rating;
-    @OneToMany
+    @OneToMany(targetEntity = Post.class, fetch = FetchType.EAGER)
     private List<Post> posts;
 
     public static final int MISSING_RATING = -1;
