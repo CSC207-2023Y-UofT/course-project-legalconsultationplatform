@@ -38,8 +38,8 @@ public class QuestionListUI extends JPanel{
         //The scrollable question buttons
         int numberOfQuestions = questionMap.size();
         JScrollPane questionScrollPane = new JScrollPane();
-        questionScrollPane.setLayout(new GridLayout(numberOfQuestions, 1));
         JPanel questionScrollPanel = new JPanel();
+        questionScrollPanel.setLayout(new GridLayout(numberOfQuestions, 1));
         for (Integer questionId : questionMap.keySet()) {
             //read all variables from displayFormatter
             QuestionDisplayFormatter question = questionMap.get(questionId);
