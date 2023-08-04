@@ -1,6 +1,7 @@
 package driver.database;
 
 import businessrule.gateway.ClientGateway;
+import entity.Post;
 import entity.Question;
 import entity.Client;
 import entity.User;
@@ -29,25 +30,6 @@ public class ClientRepository implements ClientGateway {
             return entityManager.find(Client.class, clientId);
         } finally {
             entityManager.close();
-        }
-    }
-
-    @Override
-    public void updateQuestionList(int clientId, Question question) {
-        EntityManager em = DatabaseConnection.getEntityManager();
-        Client c = em.find(Client.class, clientId);
-        try {
-            em.getTransaction().begin();
-            c.addQuestion(question);
-            JDOHelper.makeDirty(c, "questionsList");
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            em.close();
         }
     }
 
@@ -114,6 +96,21 @@ public class ClientRepository implements ClientGateway {
         } finally {
             em.close();
         }
+    }
+
+    @Override
+    public List<Question> getAllQuestionByClient(int clientId) {
+        EntityManager em = DatabaseConnection.getEntityManager();
+        try {
+            return em.createQuery("SELECT q FROM Question q WHERE q.askedByClient =: clientId", Question.class).
+                    setParameter("clientId", clientId).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public void updateQuestionList(int id, Question question) {
+
     }
 
 }

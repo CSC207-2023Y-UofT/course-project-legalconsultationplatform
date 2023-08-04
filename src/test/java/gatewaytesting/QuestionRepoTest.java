@@ -1,12 +1,15 @@
 package gatewaytesting;
 
 import driver.database.AttorneyRepository;
+import driver.database.DatabaseConnection;
+import driver.database.PostRepo;
 import driver.database.QuestionRepo;
 import entity.Post;
 import org.junit.jupiter.api.Test;
 import entity.Question;
 import entity.Attorney;
 
+import javax.persistence.EntityManager;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -162,6 +165,38 @@ public class QuestionRepoTest {
     }
 
     @Test
+    public void testGetAllPostByQuestion() {
+        int questionId = 6;
+        String type = "Theft";
+        String title = "hi";
+        LocalDate createAt = LocalDate.now();
+        int askedByClient = 66;
+        LocalDate legalDeadLine = LocalDate.now();
+
+        //constructors
+        Question q = new Question(questionId, type, title, createAt, askedByClient, legalDeadLine);
+        Post p = new Post(questionId, 10, LocalDate.now(), "hello!", 100);
+        Post p1 = new Post(questionId, 20, LocalDate.now(), "hi!", 100);
+        Post p3 = new Post(7, 30, LocalDate.now(), "bye!", 100);
+        QuestionRepo repo = new QuestionRepo();
+        PostRepo pRepo = new PostRepo();
+
+        //set up
+        repo.deleteAllQuestion();
+        pRepo.deleteAllPost();
+        repo.saveQuestion(q);
+        pRepo.savePost(p);
+        pRepo.savePost(p1);
+        pRepo.savePost(p3);
+        List<Post> expectedList = new ArrayList<>();
+        expectedList.add(p);
+        expectedList.add(p1);
+
+        //test get all Post by Question
+        assert expectedList.equals(repo.getAllPostOfQuestion(questionId));
+    }
+
+    @Test
     public void testUpdateIsTaken() {
         int questionId = 6;
         String type = "Theft";
@@ -286,7 +321,38 @@ public class QuestionRepoTest {
     }
 
     @Test
-    public void testUpdatePosts() {
+    public void testUpdateTakenAt() {
+        int questionId = 6;
+        String type = "Theft";
+        String title = "hi";
+        LocalDate createAt = LocalDate.now();
+        int askedByClient = 66;
+        LocalDate legalDeadLine = LocalDate.now();
+        LocalDate changeDate = LocalDate.now().minusDays(1);
+
+        //constructors
+        Question q = new Question(questionId, type, title, createAt, askedByClient, legalDeadLine);
+        Question q1 = new Question(16, type, title, createAt, 61, legalDeadLine);
+        QuestionRepo repo = new QuestionRepo();
+
+        //set up
+        repo.deleteAllQuestion();
+        repo.saveQuestion(q);
+        repo.saveQuestion(q1);
+
+        //test successful update takenAt
+        repo.updateTakenAt(6, changeDate);
+        assertEquals(changeDate, repo.getQuestion(6).getTakenAt(), "Question has not been updated!");
+        // test updating takenAt back to createAt
+        repo.updateTakenAt(6, createAt);
+        assertEquals(createAt, repo.getQuestion(6).getTakenAt(), "Question has not been updated!");
+        //test update another question
+        repo.updateTakenAt(16, changeDate);
+        assertEquals(createAt, repo.getQuestion(6).getTakenAt(), "This question was updated!");
+    }
+
+    @Test
+    public void testDeleteQuestion() {
         int questionId = 6;
         String type = "Theft";
         String title = "hi";
@@ -296,21 +362,48 @@ public class QuestionRepoTest {
 
         //constructors
         Question q = new Question(questionId, type, title, createAt, askedByClient, legalDeadLine);
-        Post p = new Post(questionId, 510, createAt, "hello!", 66);
+        Question q1 = new Question(16, type, title, createAt, 61, legalDeadLine);
         QuestionRepo repo = new QuestionRepo();
 
         //set up
         repo.deleteAllQuestion();
         repo.saveQuestion(q);
+        repo.saveQuestion(q1);
 
-        //test updating posts
-        repo.updatePosts(questionId, p);
-        ArrayList<Post> expectedList = new ArrayList<>();
-        expectedList.add(p);
-        System.out.println(expectedList);
-        System.out.println(q.getPosts());
-        System.out.println(repo.getQuestion(questionId).getPosts());
-        assert expectedList.equals(repo.getQuestion(questionId).getPosts());
+        //test deleting an existing question from the database
+        assertTrue(repo.checkExistsByName(questionId), "The post was not added!");
+        repo.deleteQuestion(questionId);
+        assertFalse(repo.checkExistsByName(questionId), "the post was not deleted!");
+    }
+
+    @Test
+    public void testDeleteAllQuestion() {
+        int questionId = 6;
+        String type = "Theft";
+        String title = "hi";
+        LocalDate createAt = LocalDate.now();
+        int askedByClient = 66;
+        LocalDate legalDeadLine = LocalDate.now();
+
+        //constructors
+        Question q = new Question(questionId, type, title, createAt, askedByClient, legalDeadLine);
+        Question q1 = new Question(16, type, title, createAt, 61, legalDeadLine);
+        QuestionRepo repo = new QuestionRepo();
+
+        //set up
+        repo.deleteAllQuestion();
+        repo.saveQuestion(q);
+        repo.saveQuestion(q1);
+        EntityManager em = DatabaseConnection.getEntityManager();
+
+        //test remove all posts
+        repo.deleteAllQuestion();
+        Long count = em.createQuery("SELECT COUNT(q) FROM Question q", Long.class).getSingleResult();
+        assertEquals(0, count, "The database still have saved post objects!");
+        //test remove no posts
+        repo.deleteAllQuestion();
+        Long count1 = em.createQuery("SELECT COUNT(q) FROM Question q", Long.class).getSingleResult();
+        assertEquals(0, count1, "The database still have saved post objects!");
     }
 
 }

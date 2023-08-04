@@ -1,13 +1,17 @@
 package gatewaytesting;
 
-import driver.database.AttorneyRepository;
-import driver.database.ClientRepository;
-import driver.database.DatabaseConnection;
+import driver.database.*;
+import entity.Post;
+import entity.Question;
 import org.junit.jupiter.api.Test;
 import entity.Attorney;
 import entity.Client;
 
 import javax.persistence.EntityManager;
+
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -65,11 +69,6 @@ public class AttorneyRepositoryTest {
 
         //test get the correct attorney
         assertEquals(a, repo.getUser(50), "That is not the correct client!");
-    }
-
-    @Test
-    public void testUpdateQuestionList() {
-
     }
 
     @Test
@@ -163,6 +162,68 @@ public class AttorneyRepositoryTest {
         //test attorney a still in database
         assertTrue(clientRepo.existsById(100), "Attorney a is no longer in the database");
 
+    }
+
+    @Test
+    public void testExistsByName() {
+        int attorneyId = 50;
+        String attorneyUsername = "yao";
+        String attorneyEmail = "yao.yao@gmail.com";
+        String attorneyPassword = "yao123";
+        String attorneyState = "ON";
+        String attorneyPostalCode = "M8MO1P";
+
+        //constructors
+        Attorney a = new Attorney(attorneyId, attorneyUsername, attorneyEmail, attorneyPassword,
+                attorneyState, attorneyPostalCode);
+        AttorneyRepository repo = new AttorneyRepository();
+
+        //set up
+        repo.deleteAllUser();
+        repo.addUser(a);
+
+        //test username exists
+        assertTrue(repo.existsByName("yao"), "The username does not exist!");
+        //test username does not exist
+        assertFalse(repo.existsByName("John"), "The username exists!");
+    }
+
+    @Test
+    public void testGetAllQuestionByAttorney() {
+        int attorneyId = 50;
+        String attorneyUsername = "yao";
+        String attorneyEmail = "yao.yao@gmail.com";
+        String attorneyPassword = "yao123";
+        String attorneyState = "ON";
+        String attorneyPostalCode = "M8MO1P";
+
+        //constructors
+        Attorney a = new Attorney(attorneyId, attorneyUsername, attorneyEmail, attorneyPassword,
+                attorneyState, attorneyPostalCode);
+        Question q = new Question(15, "theft", "hi", LocalDate.now(), 10,
+                LocalDate.now());
+        Question q1 = new Question(25, "theft", "hi", LocalDate.now(), 20,
+                LocalDate.now());
+        Question q2 = new Question(35, "theft", "hi", LocalDate.now(), 30,
+                LocalDate.now());
+        AttorneyRepository repo = new AttorneyRepository();
+        QuestionRepo qRepo = new QuestionRepo();
+
+        //set up
+        repo.deleteAllUser();
+        qRepo.deleteAllQuestion();
+        repo.addUser(a);
+        q.setTakenByAttorney(attorneyId);
+        q2.setTakenByAttorney(attorneyId);
+        qRepo.saveQuestion(q);
+        qRepo.saveQuestion(q1);
+        qRepo.saveQuestion(q2);
+        List<Question> expectedList = new ArrayList<>();
+        expectedList.add(q);
+        expectedList.add(q2);
+
+        //test get all Post by Question
+        assert expectedList.equals(repo.getAllQuestionByAttorney(attorneyId));
     }
 
 }

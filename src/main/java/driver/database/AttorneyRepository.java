@@ -31,24 +31,6 @@ public class AttorneyRepository implements AttorneyGateway {
     }
 
     @Override
-    public void updateQuestionList(int attorneyId, Question question) {
-        EntityManager em = DatabaseConnection.getEntityManager();
-        Attorney a = em.find(Attorney.class, attorneyId);
-        try {
-            em.getTransaction().begin();
-            a.addQuestion(question);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            em.close();
-        }
-    }
-
-    @Override
     public void addUser(User attorney) {
         EntityManager entityManager = DatabaseConnection.getEntityManager();
         EntityTransaction transaction = entityManager.getTransaction();
@@ -112,4 +94,20 @@ public class AttorneyRepository implements AttorneyGateway {
             em.close();
         }
     }
+
+    @Override
+    public List<Question> getAllQuestionByAttorney(int attorneyId) {
+        EntityManager em = DatabaseConnection.getEntityManager();
+        try {
+            return em.createQuery("SELECT q FROM Question q WHERE q.takenByAttorney =: attorneyId", Question.class)
+                    .setParameter("attorneyId", attorneyId).getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    public void updateQuestionList(int id, Question question) {
+
+    }
+
 }

@@ -3,6 +3,7 @@ package gatewaytesting;
 import driver.database.AttorneyRepository;
 import driver.database.ClientRepository;
 import driver.database.DatabaseConnection;
+import driver.database.QuestionRepo;
 import entity.Post;
 import entity.Question;
 import org.junit.jupiter.api.Test;
@@ -13,6 +14,7 @@ import javax.persistence.EntityManager;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -80,40 +82,6 @@ public class ClientRepositoryTest {
 
         //test getting the correct client
         assertEquals(c, repo.getUser(100), "That is not the correct client!");
-    }
-
-    @Test
-    public void testUpdateQuestionList() {
-        int clientId = 100;
-        String clientUsername = "bob";
-        String clientEmail = "bob.bob@gmail.com";
-        String clientPassword = "bob123";
-        String clientState = "ON";
-        String clientPostalCode = "M1MA6A";
-        String clientEthnicity = "asian";
-        int clientAge = 20;
-        String clientGender = "Male";
-        String clientMaritalStatus = "Single";
-        int clientNumHouseHold = 1;
-        float clientAnnualIncome = 100;
-
-        //constructors
-        Client c = new Client(clientId, clientUsername, clientEmail, clientPassword, clientState, clientPostalCode,
-                clientEthnicity, clientAge, clientGender, clientMaritalStatus, clientNumHouseHold, clientAnnualIncome);
-        Question q = new Question(6, "theft", "hi", LocalDate.now(), clientId, LocalDate.now());
-        ClientRepository repo = new ClientRepository();
-        //set up
-        repo.deleteAllUser();
-        repo.addUser(c);
-
-        //test updating list
-        repo.updateQuestionList(clientId, q);
-        ArrayList<Question> expectedList = new ArrayList<>();
-        expectedList.add(q);
-        System.out.println(expectedList);
-        System.out.println(c.getQuestionsList());
-        System.out.println(repo.getUser(clientId).getQuestionsList());
-        assert expectedList.equals(repo.getUser(clientId).getQuestionsList());
     }
 
     @Test
@@ -224,7 +192,7 @@ public class ClientRepositoryTest {
     }
 
     @Test
-    public void testExistsByUserName() {
+    public void testExistsByName() {
         int clientId = 100;
         String clientUsername = "bob";
         String clientEmail = "bob.bob@gmail.com";
@@ -258,6 +226,48 @@ public class ClientRepositoryTest {
         assertFalse(repo.existsByName("John"), "The username exists!");
         //test username belongs to an attorney entity
         assertFalse(repo.existsByName("obo"), "The username exists!");
+    }
+
+    @Test
+    public void testGetAllQuestionByClient() {
+        int clientId = 100;
+        String clientUsername = "bob";
+        String clientEmail = "bob.bob@gmail.com";
+        String clientPassword = "bob123";
+        String clientState = "ON";
+        String clientPostalCode = "M1MA6A";
+        String clientEthnicity = "asian";
+        int clientAge = 20;
+        String clientGender = "Male";
+        String clientMaritalStatus = "Single";
+        int clientNumHouseHold = 1;
+        float clientAnnualIncome = 100;
+
+        //constructors
+        Client c = new Client(clientId, clientUsername, clientEmail, clientPassword, clientState, clientPostalCode,
+                clientEthnicity, clientAge, clientGender, clientMaritalStatus, clientNumHouseHold, clientAnnualIncome);
+        Question q = new Question(15, "theft", "hi", LocalDate.now(), 10,
+                LocalDate.now());
+        Question q1 = new Question(25, "theft", "hi", LocalDate.now(), clientId,
+                LocalDate.now());
+        Question q2 = new Question(35, "theft", "hi", LocalDate.now(), clientId,
+                LocalDate.now());
+        ClientRepository repo = new ClientRepository();
+        QuestionRepo qRepo = new QuestionRepo();
+
+        //set up
+        repo.deleteAllUser();
+        qRepo.deleteAllQuestion();
+        repo.addUser(c);
+        qRepo.saveQuestion(q);
+        qRepo.saveQuestion(q1);
+        qRepo.saveQuestion(q2);
+        List<Question> expectedList = new ArrayList<>();
+        expectedList.add(q1);
+        expectedList.add(q2);
+
+        //test get all Post by Question
+        assert expectedList.equals(repo.getAllQuestionByClient(clientId));
     }
 
 }
