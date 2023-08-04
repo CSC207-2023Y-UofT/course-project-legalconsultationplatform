@@ -64,8 +64,8 @@ public class TheQuestionUI extends JPanel implements ActionListener {
         //The scrollable posts
         int numberOfPosts = postMap.size();
         JScrollPane postScrollPane = new JScrollPane();
-        postScrollPane.setLayout(new GridLayout(numberOfPosts, 1));
         JPanel postScrollPanel = new JPanel();
+        postScrollPanel.setLayout(new GridLayout(numberOfPosts, 1));
         for (PostDisplayFormatter post : postMap.values()) {
             //read all variables from displayFormatter
             String name = post.getName();
