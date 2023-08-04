@@ -1,5 +1,6 @@
 package entitytesting;
 
+import entity.Question;
 import org.junit.jupiter.api.Test;
 import entity.Post;
 
@@ -57,22 +58,42 @@ class PostTest {
     }
 
     @Test
-    void testEquals() {
+    void testEqualsSucceed() {
         Post post1 = new Post(1000000, 2000000, LocalDate.now(), "This is a post.", 3000000);
-        Post post2 = new Post(1000000, 2000000, LocalDate.now(), "This is another post.", 3000000);
-
-        // Two posts are equal if they have the same postId
-        assertEquals(post1, post2, "Two posts with the same postId should be equal.");
-
-        post2.setPostId(3000000);
-        assertNotEquals(post1, post2, "Two posts with different postId should not be equal.");
+        assertEquals(true, post1.equals(post1), "The equal method is wrong");
     }
 
     @Test
-    void testToString() {
-        Post post = new Post(1000000, 2000000, LocalDate.now(), "This is a post.", 3000000);
-        String expectedString = "This is a post in 1000000 belongs to 3000000";
-        assertEquals(expectedString, post.toString(), "toString is wrong.");
+    void testEqualsFailByDifferentClass() {
+        Post post1 = new Post(1000000, 2000000, LocalDate.now(), "This is a post.", 3000000);
+        Question question = new Question();
+        assertEquals(false, post1.equals(question), "The equal method is wrong");
     }
+
+    @Test
+    void testEqualsFailByDifferentPostId() {
+        Post post1 = new Post(1000000, 2000000, LocalDate.now(), "This is a post.", 3000000);
+        Post post2 = new Post(1000000, 3000000, LocalDate.now(), "This is another post.", 3000000);
+        assertEquals(false, post1.equals(post2), "The equal method is wrong");
+    }
+
+    @Test
+    void testToStringSucceed() {
+        int expectedQuestionId = 1000000;
+        int expectedBelongsTo = 3000000;
+        Post post = new Post(expectedQuestionId, 2000000, LocalDate.now(), "This is a post.", expectedBelongsTo);
+        String expectedToString = String.format("This is a post in %d belongs to %d", expectedQuestionId, expectedBelongsTo);
+        assertEquals(expectedToString, post.toString(), "The toString method is wrong");
+    }
+
+    @Test
+    void testToStringFail() {
+        int expectedQuestionId = 1000000;
+        int expectedBelongsTo = 3000000;
+        Post post = new Post(expectedQuestionId, 2000000, LocalDate.now(), "This is a post.", expectedBelongsTo);
+        String unexpectedToString = String.format("This is a post in %d belongs to %d", expectedQuestionId, expectedBelongsTo+1);
+        assertNotEquals(unexpectedToString, post.toString(), "The toString method is wrong");
+    }
+
 }
 

@@ -129,6 +129,7 @@ public class Attorney implements User {
         return false;
     }
 
+
     @Override
     public boolean equals(Object obj) {
         if (! (obj instanceof Attorney)) return false;
