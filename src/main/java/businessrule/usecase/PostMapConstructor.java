@@ -1,10 +1,9 @@
 package businessrule.usecase;
 
-import driver.database.UserGateway;
+import businessrule.gateway.UserGateway;
 import entity.Post;
 import entity.Question;
 import entity.User;
-import org.apache.commons.collections.map.HashedMap;
 
 import java.time.LocalDate;
 import java.util.HashMap;

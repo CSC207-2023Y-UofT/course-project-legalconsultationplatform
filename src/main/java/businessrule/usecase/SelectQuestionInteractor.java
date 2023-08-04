@@ -3,11 +3,11 @@ package businessrule.usecase;
 import businessrule.inputboundary.SelectInputBoundary;
 import businessrule.requestmodel.SelectRequestModel;
 import entity.Question;
-import driver.database.QuestionGateway;
+import businessrule.gateway.QuestionGateway;
 import businessrule.responsemodel.TheQuestionResponseModel;
 import businessrule.outputboundary.TheQuestionOutputBoundary;
 import entity.User;
-import driver.database.UserGateway;
+import businessrule.gateway.UserGateway;
 import businessrule.gateway.UserGatewayFactory;
 import java.util.Map;
 

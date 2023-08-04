@@ -2,8 +2,8 @@ package businessrule.usecase;
 
 import businessrule.inputboundary.ViewInputBoundary;
 import businessrule.requestmodel.ViewRequestModel;
-import driver.database.QuestionGateway;
-import driver.database.UserGateway;
+import businessrule.gateway.QuestionGateway;
+import businessrule.gateway.UserGateway;
 import businessrule.gateway.UserGatewayFactory;
 import businessrule.outputboundary.ViewOutputBoundary;
 import businessrule.responsemodel.ViewResponseModel;
