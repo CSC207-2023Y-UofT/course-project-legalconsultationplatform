@@ -86,7 +86,7 @@ public class ReplyUseCaseTest {
     public void testClientReply(){
         setUpReplyUseCase();
         PostRequestModel inputData1 = new PostRequestModel(QUESTION_ID, CLIENT_ID, "Test text");
-        postInputBoundary.createPost(inputData1);// add post error
+        postInputBoundary.createPost(inputData1);// null pointer error caused by posts not initialized by Question
         Question question = questionGateway.getQuestion(QUESTION_ID);
         Post post1 = question.getPosts().get(0);
         assertEquals(post1.getBelongsTo(), CLIENT_ID);

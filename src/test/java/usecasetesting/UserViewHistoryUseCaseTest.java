@@ -8,6 +8,8 @@ import businessrule.outputboundary.ViewOutputBoundary;
 import businessrule.requestmodel.ViewRequestModel;
 import businessrule.responsemodel.ViewResponseModel;
 import businessrule.usecase.ViewQuestionInteractor;
+import driver.database.AttorneyRepository;
+import driver.database.ClientRepository;
 import driver.database.QuestionGateway;
 import driver.database.QuestionRepo;
 import entity.Attorney;
@@ -29,6 +31,8 @@ public class UserViewHistoryUseCaseTest {
     public void setUpViewQuestionUseCase(){
         userGatewayFactory = new UserGatewayFactory();
         questionGateway = new QuestionRepo();
+        clientGateway = new ClientRepository();
+        attorneyGateway = new AttorneyRepository();
         clientGateway.deleteAllUser();
         questionGateway.deleteAllQuestion();
         attorneyGateway.deleteAllUser();
@@ -62,7 +66,7 @@ public class UserViewHistoryUseCaseTest {
         setUpViewQuestionUseCase();
         ViewRequestModel inputData = new ViewRequestModel(CLIENT_ID);
 
-        viewInputBoundary.viewQuestion(inputData);
+        viewInputBoundary.viewQuestion(inputData);// null pointer caused by getUser, it cant get the question list out
     }
 
     @Test

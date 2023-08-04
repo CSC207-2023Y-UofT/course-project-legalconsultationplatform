@@ -75,6 +75,7 @@ public class RateAnswerUseCaseTest {
         Client client = new Client();
         client.setUserId(CLIENT_ID);
         client.addQuestion(question);
+        client.addQuestion(closedQuestion);
         clientGateway.addUser(client);
 
         Attorney attorney = new Attorney();
@@ -94,7 +95,7 @@ public class RateAnswerUseCaseTest {
         setUpRateAnswerUseCase();
         RateRequestModel inputData = new RateRequestModel(10, CLOSED_QUESTION_ID, CLIENT_ID);
         rateInputBoundary.rateAnswer(inputData);
-        assertEquals(10, questionGateway.getQuestion(CLOSED_QUESTION_ID).getRating());// by updating
+        assertEquals(10, questionGateway.getQuestion(CLOSED_QUESTION_ID).getRating());// rating not update
     }
     @Test
     public void TestClientRateUnClosedQuestion(){
@@ -105,7 +106,7 @@ public class RateAnswerUseCaseTest {
     @Test
     public void TestAttorneyRate(){
         setUpRateAnswerUseCase();
-        RateRequestModel inputData = new RateRequestModel(10, QUESTION_ID, CLIENT_ID);
+        RateRequestModel inputData = new RateRequestModel(10, QUESTION_ID, ATTORNEY_ID);
         rateInputBoundary.rateAnswer(inputData);
     }
 }
