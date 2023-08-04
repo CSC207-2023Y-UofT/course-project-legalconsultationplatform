@@ -1,5 +1,6 @@
 package driver.database;
 
+import businessrule.gateway.QuestionGateway;
 import entity.Post;
 import entity.Question;
 

@@ -36,6 +36,7 @@ public class Question {
 
 
     public Question() {
+        posts = new ArrayList<Post>();
     }
 
     public Question(int questionId, String type, String title, LocalDate createAt, int askedByClient, LocalDate legalDeadline) {
@@ -97,7 +98,11 @@ public class Question {
 
     public void setRating(int rating) {this.rating = rating;}
 
-    public void addPosts(Post post) {this.posts.add(post);}
+    public void addPosts(Post post) {
+        if (! posts.contains(post)) {
+            posts.add(post);
+        }
+    }
 
     @Override
     public int hashCode() {return Objects.hashCode(questionId);}

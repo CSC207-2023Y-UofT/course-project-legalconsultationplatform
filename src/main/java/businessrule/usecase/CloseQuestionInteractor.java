@@ -5,7 +5,7 @@ import businessrule.outputboundary.HomePageOutputBoundary;
 import businessrule.requestmodel.CloseRequestModel;
 import businessrule.responsemodel.HomePageResponseModel;
 import entity.Question;
-import driver.database.QuestionGateway;
+import businessrule.gateway.QuestionGateway;
 import entity.User;
 import businessrule.gateway.UserGateway;
 import businessrule.gateway.UserGatewayFactory;

@@ -27,6 +27,7 @@ public class Client implements User {
     private List<Question> questionsList;
 
     public Client() {
+        questionsList = new ArrayList<Question>();
     }
 
     public Client(int userId, String userName, String email, String password, String stateAbb, String postalCode,
@@ -123,9 +124,6 @@ public class Client implements User {
 
     @Override
     public void addQuestion(Question question) {
-        if (questionsList == null) {
-            questionsList = new ArrayList<>();
-        }
         if (! questionsList.contains(question)) {
             questionsList.add(question);
         }
