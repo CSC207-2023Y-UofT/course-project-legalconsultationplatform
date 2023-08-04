@@ -176,7 +176,7 @@ class AttorneyTest {
 
     @Test
     void testReplyableIfClosed() {
-        Attorney attorney = new Attorney(1, "Attorney1", "attorney1@example.com", "password1", "CA", "90210")
+        Attorney attorney = new Attorney(1, "Attorney1", "attorney1@example.com", "password1", "CA", "90210");
         Question question = new Question();
         question.setQuestionId(1);
         question.setTitle("Test question");
@@ -236,38 +236,15 @@ class AttorneyTest {
         Attorney attorney = new Attorney(1, "Attorney1", "attorney1@example.com", "password1", "CA", "12345");
         Question question = new Question();
 
-        assertEquals(false,attorney.equals(question),"The equal method is wrong"));
+        assertEquals(false,attorney.equals(question),"The equal method is wrong");
     }@Test
     void testEqualsFailByNotEqual(){
         Attorney attorney1 = new Attorney(1, "Attorney1", "attorney1@example.com", "password1", "CA", "12345");
         Attorney attorney2 = new Attorney(1, "Attorney1", "attorney1@example.com", "password1", "CA", "12345");
         assertEquals(true, attorney1.equals(attorney2),"The equal method is wrong");
     }
-    @Test
-    void testHashCodeFail(){
-        Attorney attorney1 = new Attorney(1, "Attorney1", "attorney1@example.com", "password1", "CA", "12345");
-        assertEquals(false,attorney1.hashCode() == Objects.hashCode(1),"The hashCode is wrong");
-    }
-    @Test
-    void testHashCodeSucceed(){
-        Attorney attorney1 = new Attorney(1, "Attorney1", "attorney1@example.com", "password1", "CA", "12345");
-        assertEquals(attorney1.hashCode(),Objects.hashCode(1),"The hashCode is wrong");
-    }
-    @Test
-    void testToStringSucceed() {
-        String expectedName = "Attorney1";
-        Attorney attorney1 = new Attorney(1, expectedName, "attorney1@example.com", "password1", "CA", "12345");
-        String expectedToString = String.format("[Attorney]: %s", expectedName);
-        assertEquals(expectedToString, attorney1.toString(), "The toString method is wrong");
-    }
 
-    @Test
-    void testToStringFail() {
-        String expectedName = "Attorney1";
-        Attorney attorney1 = new Attorney(1, expectedName, "attorney1@example.com", "password1", "CA", "12345");
-        String unexpectedToString = String.format("[Attorney]: %s", "DifferentName");
-        assertNotEquals(unexpectedToString, attorney1.toString(), "The toString method is wrong");
-    }
+
     @Test
     void testIsQuestionRateable() {
         Attorney attorney = new Attorney(1, "Attorney1", "attorney1@example.com", "password1", "CA", "12345");

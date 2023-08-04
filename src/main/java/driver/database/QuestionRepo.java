@@ -3,7 +3,6 @@ package driver.database;
 import entity.Post;
 import entity.Question;
 
-import javax.jdo.JDOHelper;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.time.LocalDate;
@@ -161,7 +160,7 @@ public class QuestionRepo implements QuestionGateway {
         try {
             em.getTransaction().begin();
             question.addPosts(post);
-            JDOHelper.makeDirty(question, "posts");
+            //JDOHelper.makeDirty(question, "posts");
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {

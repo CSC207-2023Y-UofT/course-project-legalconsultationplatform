@@ -5,7 +5,7 @@ import entity.Question;
 import entity.Client;
 import entity.User;
 
-import javax.jdo.JDOHelper;
+//import javax.jdo.JDOHelper;
 import javax.persistence.*;
 import java.util.List;
 
@@ -39,7 +39,7 @@ public class ClientRepository implements ClientGateway {
         try {
             em.getTransaction().begin();
             c.addQuestion(question);
-            JDOHelper.makeDirty(c, "questionsList");
+            //JDOHelper.makeDirty(c, "questionsList");
             em.getTransaction().commit();
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {

@@ -20,7 +20,7 @@ class QuestionFactoryTest {
     private LocalDate legalDeadline;
 
     @BeforeEach
-    void setUp() {
+    void setUpQuestionFactory() {
         questionFactory = new QuestionFactory();
         questionId = 1;
         type = "test type";

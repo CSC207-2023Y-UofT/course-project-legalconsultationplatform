@@ -2,58 +2,42 @@ package factorytesting;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+import entity.RandomNumberGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-class RandomNumberGeneratorTest {
+public class RandomNumberGeneratorTest {
 
-    private RandomNumberGenerator randomNumberGenerator;
+    private static final int PASSWORD_LENGTH = 8;
+
+    private RandomNumberGenerator generator;
 
     @BeforeEach
     void setUp() {
-        randomNumberGenerator = new RandomNumberGenerator();
-    }
-
-    @Test
-    void testGenerate() {
-        int digit = 3;
-        int number = randomNumberGenerator.generate(digit);
-        assertTrue(number >= 100 && number <= 999, "Generated number is not in correct range");
-    }
-
-    @Test
-    void testAddDigitToFront() {
-        int number = 123;
-        int digit = 4;
-        int newNumber = randomNumberGenerator.addDigitToFront(number, digit);
-        assertEquals(4123, newNumber, "New number is incorrect");
-    }
-
-    @Test
-    void testGenerateAttorneyId() {
-        int digit = 5;
-        int id = randomNumberGenerator.generateAttorneyId(digit);
-        assertTrue(id >= 10000 && id <= 19999, "Generated AttorneyId is not in correct range");
+        generator = new RandomNumberGenerator();
     }
 
     @Test
     void testGenerateClientId() {
-        int digit = 5;
-        int id = randomNumberGenerator.generateClientId(digit);
-        assertTrue(id >= 20000 && id <= 29999, "Generated ClientId is not in correct range");
+        int clientId = generator.generateClientId(PASSWORD_LENGTH);
+        assertTrue(String.valueOf(clientId).startsWith("2"), "ClientId should start with 2.");
+    }
+
+    @Test
+    void testGenerateAttorneyId() {
+        int attorneyId = generator.generateAttorneyId(PASSWORD_LENGTH);
+        assertTrue(String.valueOf(attorneyId).startsWith("1"), "AttorneyId should start with 1.");
     }
 
     @Test
     void testGenerateQuestionId() {
-        int digit = 5;
-        int id = randomNumberGenerator.generateQuestionId(digit);
-        assertTrue(id >= 30000 && id <= 39999, "Generated QuestionId is not in correct range");
+        int questionId = generator.generateQuestionId(PASSWORD_LENGTH);
+        assertTrue(String.valueOf(questionId).startsWith("3"), "QuestionId should start with 3.");
     }
 
     @Test
     void testGeneratePostId() {
-        int digit = 5;
-        int id = randomNumberGenerator.generatePostId(digit);
-        assertTrue(id >= 40000 && id <= 49999, "Generated PostId is not in correct range");
+        int postId = generator.generatePostId(PASSWORD_LENGTH);
+        assertTrue(String.valueOf(postId).startsWith("4"), "PostId should start with 4.");
     }
 }

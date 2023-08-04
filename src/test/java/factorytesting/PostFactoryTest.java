@@ -19,7 +19,7 @@ class PostFactoryTest {
     private int belongsTo;
 
     @BeforeEach
-    void setUp() {
+    void setUpPostFactory() {
         postFactory = new PostFactory();
         postId = 1;
         questionId = 2;
