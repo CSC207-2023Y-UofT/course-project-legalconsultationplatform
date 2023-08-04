@@ -1,7 +1,9 @@
 package driver.screen;
 
+import adapter.controller.CloseQuestionControl;
 import adapter.controller.ControlContainer;
 import adapter.controller.PostControl;
+import adapter.controller.RateControl;
 import businessrule.usecase.PostDisplayFormatter;
 import entity.Post;
 
@@ -12,6 +14,7 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
+import java.util.Objects;
 
 public class TheQuestionUI extends JPanel implements ActionListener {
     ControlContainer controlContainer;
@@ -19,22 +22,26 @@ public class TheQuestionUI extends JPanel implements ActionListener {
     JPanel screens;
     int userId;
     String userName;
+    int questionId;
     String title;
     String type;
     LocalDate deadline;
     Map<Integer, PostDisplayFormatter> postMap;
 
+
+    JTextArea inputPostArea = new JTextArea();
     String[] rateList = {"Satisfied", "Not satisfied"};
     JComboBox<String> rate = new JComboBox<>(rateList);
 
     public TheQuestionUI(ControlContainer controlContainer, CardLayout cardLayout,
-                         JPanel screens, int userId, String userName, String title,
+                         JPanel screens, int userId, String userName, int questionId, String title,
                          String type, LocalDate deadline, Map<Integer, PostDisplayFormatter> postMap) {
         this.controlContainer = controlContainer;
         this.cardLayout = cardLayout;
         this.screens = screens;
         this.userId = userId;
         this.userName = userName;
+        this.questionId = questionId;
         this.title = title;
         this.type = type;
         this.deadline = deadline;
@@ -87,7 +94,6 @@ public class TheQuestionUI extends JPanel implements ActionListener {
 
 
         //The new post textBox
-        JTextArea inputPostArea = new JTextArea();
         inputPostArea.setLineWrap(true);
         inputPostArea.setWrapStyleWord(true);
         inputPostArea.setPreferredSize(new Dimension(400, 100));
@@ -122,16 +128,23 @@ public class TheQuestionUI extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
         if ("Post Reply".equals(actionCommand)){
-            System.out.println();
+            System.out.println("The user posts a reply.");
             PostControl postControl = controlContainer.getPostControl();
-            cardLayout.show(screens, "question");
-            System.out.println("Updated question showed");
+            postControl.createPost(questionId, userId, inputPostArea.getText());
         } else if ("Close question".equals(actionCommand)){
-            cardLayout.show(screens, "clientHomePage");
-            System.out.println("Return to client home page");
+            System.out.println("Client closes the question, return to client home page");
+            CloseQuestionControl closeQuestionControl = controlContainer.getCloseQuestionControl();
+            closeQuestionControl.closeQuestion(questionId, userId);
         } else if ("Rate question".equals(actionCommand)){
-            cardLayout.show(screens, "ClientHomePage");
-            System.out.print("Return to client home page after rating");
+            System.out.println("Client rates the question, return to client home page");
+            RateControl rateControl = controlContainer.getRateControl();
+            int updateRate;
+            if (Objects.equals(rate.getSelectedItem(), "Satisfied")){
+                updateRate = 1;
+            } else{
+                updateRate = 0;
+            }
+            rateControl.rateAnswer(updateRate, questionId, userId);
         }
     }
 }

@@ -35,13 +35,14 @@ public class TheQuestionResponseFormatter implements TheQuestionOutputBoundary {
     public TheQuestionResponseModel prepareSuccess(TheQuestionResponseModel response) {
         int userId = response.getUserId();
         String userName = response.getUserName();
+        int questionId = response.getQuestionId();
         String title = response.getTitle();
         String type = response.getType();
         LocalDate deadline = response.getDeadline();
         Map<Integer, PostDisplayFormatter> postMap = response.getPostMap();
 
         TheQuestionUI questionUI = new TheQuestionUI(controlContainer, cardLayout, screens, userId, userName,
-                title, type, deadline, postMap);
+                questionId,  title, type, deadline, postMap);
         screens.add(questionUI, "question");
         cardLayout.show(screens, "question");
         return response;
