@@ -45,7 +45,7 @@ public class AskQuestionInteractor implements QuestionInputBoundary {
         PostMapConstructor postMapConstructor = new PostMapConstructor(clientGateway);
         Map<Integer, PostDisplayFormatter> postMap = postMapConstructor.constructPostMap(question);
 
-        TheQuestionResponseModel theQuestionResponseModel = new TheQuestionResponseModel(questionRequestModel.getAskedByClient(), askedBy.getUserName(), question.getTitle(), question.getType(), question.getLegalDeadline(), postMap);
+        TheQuestionResponseModel theQuestionResponseModel = new TheQuestionResponseModel(questionRequestModel.getAskedByClient(), question.getQuestionId(), askedBy.getUserName(), question.getTitle(), question.getType(), question.getLegalDeadline(), postMap);
         return theQuestionOutputBoundary.prepareSuccess(theQuestionResponseModel);
     }
 }
