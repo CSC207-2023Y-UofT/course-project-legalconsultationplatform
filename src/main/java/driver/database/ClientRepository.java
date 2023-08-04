@@ -1,12 +1,10 @@
 package driver.database;
 
 import businessrule.gateway.ClientGateway;
-import entity.Post;
 import entity.Question;
 import entity.Client;
 import entity.User;
 
-import javax.jdo.JDOHelper;
 import javax.persistence.*;
 import java.util.List;
 
@@ -99,7 +97,7 @@ public class ClientRepository implements ClientGateway {
     }
 
     @Override
-    public List<Question> getAllQuestionByClient(int clientId) {
+    public List<Question> getAllQuestionById(int clientId) {
         EntityManager em = DatabaseConnection.getEntityManager();
         try {
             return em.createQuery("SELECT q FROM Question q WHERE q.askedByClient =: clientId", Question.class).

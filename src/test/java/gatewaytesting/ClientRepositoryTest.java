@@ -4,7 +4,6 @@ import driver.database.AttorneyRepository;
 import driver.database.ClientRepository;
 import driver.database.DatabaseConnection;
 import driver.database.QuestionRepo;
-import entity.Post;
 import entity.Question;
 import org.junit.jupiter.api.Test;
 import entity.Attorney;
@@ -229,7 +228,7 @@ public class ClientRepositoryTest {
     }
 
     @Test
-    public void testGetAllQuestionByClient() {
+    public void getAllQuestionById() {
         int clientId = 100;
         String clientUsername = "bob";
         String clientEmail = "bob.bob@gmail.com";
@@ -267,7 +266,7 @@ public class ClientRepositoryTest {
         expectedList.add(q2);
 
         //test get all Post by Question
-        assert expectedList.equals(repo.getAllQuestionByClient(clientId));
+        assert expectedList.equals(repo.getAllQuestionById(clientId));
     }
 
 }

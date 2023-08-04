@@ -12,5 +12,6 @@ public interface UserGateway {
     void deleteUser(int userId);
     void deleteAllUser();
     boolean existsByName(String inputUserName);
+    List<Question> getAllQuestionById(int userId);
     void updateQuestionList(int id, Question question);
 }

@@ -96,7 +96,7 @@ public class AttorneyRepository implements AttorneyGateway {
     }
 
     @Override
-    public List<Question> getAllQuestionByAttorney(int attorneyId) {
+    public List<Question> getAllQuestionById(int attorneyId) {
         EntityManager em = DatabaseConnection.getEntityManager();
         try {
             return em.createQuery("SELECT q FROM Question q WHERE q.takenByAttorney =: attorneyId", Question.class)

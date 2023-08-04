@@ -1,8 +1,8 @@
 package gatewaytesting;
 
 import driver.database.*;
-import entity.Post;
 import entity.Question;
+import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
 import entity.Attorney;
 import entity.Client;
@@ -17,30 +17,112 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AttorneyRepositoryTest {
 
-    @Test
-    public void testExistsById(){
+    //Attorney
+    int attorneyId;
+    int attorneyId2;
+    String attorneyUsername;
+    String attorneyEmail;
+    String attorneyPassword;
+    String attorneyState;
+    String attorneyPostalCode;
+
+    //Client
+    int clientId;
+    String clientUsername;
+    String clientEmail;
+    String clientPassword;
+    String clientState;
+    String clientPostalCode;
+    String clientEthnicity;
+    int clientAge;
+    String clientGender;
+    String clientMaritalStatus;
+    int clientNumHouseHold;
+    float clientAnnualIncome;
+
+    //Question
+    int questionId;
+    int questionId1;
+    int questionId2;
+    String type;
+    String title;
+    int askedByClient;
+    LocalDate createAt;
+    int askedByClient1;
+    int askedByClient2;
+    LocalDate legalDeadLine;
+
+    @BeforeClass
+    public static void setUp() {
+        //Attorney
         int attorneyId = 50;
+        int attorneyId2 = 55;
         String attorneyUsername = "yao";
         String attorneyEmail = "yao.yao@gmail.com";
         String attorneyPassword = "yao123";
         String attorneyState = "ON";
         String attorneyPostalCode = "M8MO1P";
 
-        //constructors
         Attorney a = new Attorney(attorneyId, attorneyUsername, attorneyEmail, attorneyPassword,
                 attorneyState, attorneyPostalCode);
-        Client c = new Client(100, "bob", "bob.bob@gmail.com", "bob123", "ON",
-                "M1MA6A", "asian", 20, "Male", "Single", 1,
-                100);
+        Attorney a1 = new Attorney(attorneyId2, attorneyUsername, attorneyEmail, attorneyPassword,
+                attorneyState, attorneyPostalCode);
+
         AttorneyRepository repo = new AttorneyRepository();
-        ClientRepository clientRepo = new ClientRepository();
 
-        //set up
         repo.deleteAllUser();
-        clientRepo.deleteAllUser();
         repo.addUser(a);
-        clientRepo.addUser(c);
+        repo.addUser(a1);
 
+        //Client
+        int clientId = 100;
+        String clientUsername = "bob";
+        String clientEmail = "bob.bob@gmail.com";
+        String clientPassword = "bob123";
+        String clientState = "ON";
+        String clientPostalCode = "M1MA6A";
+        String clientEthnicity = "asian";
+        int clientAge = 20;
+        String clientGender = "Male";
+        String clientMaritalStatus = "Single";
+        int clientNumHouseHold = 1;
+        float clientAnnualIncome = 100;
+
+        Client c = new Client(clientId, clientUsername, clientEmail, clientPassword, clientState, clientPostalCode,
+                clientEthnicity, clientAge, clientGender, clientMaritalStatus, clientNumHouseHold, clientAnnualIncome);
+
+        ClientRepository cRepo = new ClientRepository();
+
+        cRepo.deleteAllUser();
+        cRepo.addUser(c);
+
+        //Question
+        int questionId = 15;
+        int questionId1 = 25;
+        int questionId2 = 35;
+        String type = "Theft";
+        String title = "hi";
+        LocalDate createAt = LocalDate.now();
+        int askedByClient = 10;
+        int askedByClient1 = 20;
+        int askedByClient2 = 30;
+        LocalDate legalDeadLine = LocalDate.now();
+
+        Question q = new Question(questionId, type, title, createAt, askedByClient, legalDeadLine);
+        Question q1 = new Question(questionId1, type, title, createAt, askedByClient1, legalDeadLine);
+        Question q2 = new Question(questionId2, type, title, createAt, askedByClient2, legalDeadLine);
+
+        QuestionRepo qRepo = new QuestionRepo();
+
+        qRepo.deleteAllQuestion();
+        qRepo.saveQuestion(q);
+        qRepo.saveQuestion(q1);
+        qRepo.saveQuestion(q2);
+    }
+
+    @Test
+    public void testExistsById(){
+        AttorneyRepository repo = new AttorneyRepository();
         //test id exists
         assertTrue(repo.existsById(attorneyId), "The id does not exist!");
         //test id does not exist
@@ -68,7 +150,7 @@ public class AttorneyRepositoryTest {
         repo.addUser(a);
 
         //test get the correct attorney
-        assertEquals(a, repo.getUser(50), "That is not the correct client!");
+        assertEquals(a, repo.getUser(attorneyId), "That is not the correct client!");
     }
 
     @Test
@@ -189,7 +271,7 @@ public class AttorneyRepositoryTest {
     }
 
     @Test
-    public void testGetAllQuestionByAttorney() {
+    public void getAllQuestionById() {
         int attorneyId = 50;
         String attorneyUsername = "yao";
         String attorneyEmail = "yao.yao@gmail.com";
@@ -223,7 +305,7 @@ public class AttorneyRepositoryTest {
         expectedList.add(q2);
 
         //test get all Post by Question
-        assert expectedList.equals(repo.getAllQuestionByAttorney(attorneyId));
+        assert expectedList.equals(repo.getAllQuestionById(attorneyId));
     }
 
 }

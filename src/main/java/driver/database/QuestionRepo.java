@@ -3,7 +3,6 @@ package driver.database;
 import entity.Post;
 import entity.Question;
 
-import javax.jdo.JDOHelper;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.time.LocalDate;
