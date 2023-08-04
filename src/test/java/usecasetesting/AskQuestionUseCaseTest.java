@@ -10,7 +10,6 @@ import businessrule.usecase.AskQuestionInteractor;
 
 import driver.database.*;
 import entity.*;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -27,9 +26,8 @@ public class AskQuestionUseCaseTest {
     private AttorneyGateway attorneyGateway;
     private TheQuestionOutputBoundary theQuestionOutputBoundary;
     private QuestionInputBoundary questionInputBoundary;
-    @BeforeClass
-    public void setUpAskQuestionUseCase(){
 
+    public void setUpAskQuestionUseCase(){
         questionGateway = new QuestionRepo();
         questionFactory = new QuestionFactory();
         clientGateway = new ClientRepository();

@@ -30,8 +30,7 @@ public class ClientRegisterUseCaseTest {
     private ClientGateway clientGateway;
     private RegisterOutputBoundary registerOutputBoundary;
     private ClientRegisterInputBoundary clientRegisterInputBoundary;
-    @BeforeClass
-    public void setUpReplyUseCase(){
+    public void setUpClientRegisterUseCase(){
         clientGateway = new ClientRepository();
         clientFactory = new ClientFactory();
         registerOutputBoundary = new RegisterOutputBoundary() {
@@ -54,6 +53,7 @@ public class ClientRegisterUseCaseTest {
     }
     @Test
     public void TestSuccessfulRegistration(){
+        setUpClientRegisterUseCase();
 
         ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "test@gmail.com", PASSWORD, PASSWORD, "test state", "M5A 1R1", "test ethinicity", 18, "male", "single", 1, 1000.0F);
 
@@ -63,6 +63,7 @@ public class ClientRegisterUseCaseTest {
 
     @Test
     public void TestRegistrationFailByAlreadyExists(){
+        setUpClientRegisterUseCase();
 
         ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "test@gmail.com", PASSWORD, PASSWORD, "test state", "M5A 1R1", "test ethinicity", 18, "male", "single", 1, 1000.0F);
 
@@ -72,6 +73,7 @@ public class ClientRegisterUseCaseTest {
 
     @Test
     public void TestRegistrationFailByPasswordDoesNotMatch(){
+        setUpClientRegisterUseCase();
 
         ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "test@gmail.com", PASSWORD, "a", "test state", "M5A 1R1", "test ethinicity", 18, "male", "single", 1, 1000.0F);
 
@@ -80,6 +82,7 @@ public class ClientRegisterUseCaseTest {
     }
     @Test
     public void TestRegistrationFailByPasswordLengthTooSmall(){
+        setUpClientRegisterUseCase();
 
         ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "test@gmail.com", "a", "a", "test state", "M5A 1R1", "test ethinicity", 18, "male", "single", 1, 1000.0F);
 
@@ -89,6 +92,7 @@ public class ClientRegisterUseCaseTest {
 
     @Test
     public void TestRegistrationFailByInvalidEmail(){
+        setUpClientRegisterUseCase();
 
         ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "invalid email", PASSWORD, PASSWORD, "test state", "M5A 1R1", "test ethinicity", 18, "male", "single", 1, 1000.0F);
 
@@ -98,6 +102,7 @@ public class ClientRegisterUseCaseTest {
 
     @Test
     public void TestRegistrationFailByInvalidAge(){
+        setUpClientRegisterUseCase();
 
         ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "test@gmail.com", PASSWORD, PASSWORD, "test state", "M5A 1R1", "test ethinicity", 222, "male", "single", 1, 1000.0F);
 
@@ -107,6 +112,7 @@ public class ClientRegisterUseCaseTest {
 
     @Test
     public void TestRegistrationFailByInvalidPostalCode(){
+        setUpClientRegisterUseCase();
 
         ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "test@gmail.com", PASSWORD, PASSWORD, "test state", "abcdefg", "test ethinicity", 18, "male", "single", 1, 1000.0F);
 

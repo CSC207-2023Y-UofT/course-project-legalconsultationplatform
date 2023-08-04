@@ -16,7 +16,6 @@ import entity.Attorney;
 import entity.Client;
 import entity.PostFactory;
 import entity.Question;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
 
 
@@ -38,7 +37,7 @@ public class RateAnswerUseCaseTest {
     private AttorneyGateway attorneyGateway;
     private HomePageOutputBoundary homePageOutputBoundary;
     private RateInputBoundary rateInputBoundary;
-    @BeforeClass
+
     public void setUpRateAnswerUseCase(){
 
         questionGateway = new QuestionRepo();

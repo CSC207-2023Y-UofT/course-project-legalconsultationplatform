@@ -34,7 +34,6 @@ public class ReplyUseCaseTest {
     private AttorneyGateway attorneyGateway;
     private HomePageOutputBoundary homePageOutputBoundary;
     private PostInputBoundary postInputBoundary;
-    @BeforeClass
     public void setUpReplyUseCase(){
 
         questionGateway = new QuestionRepo();

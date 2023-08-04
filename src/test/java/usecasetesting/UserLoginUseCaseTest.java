@@ -22,7 +22,7 @@ public class UserLoginUseCaseTest {
     private ClientGateway clientGateway;
     private HomePageOutputBoundary homePageOutputBoundary;
     private UserLoginInputBoundary userLoginInputBoundary;
-    @BeforeClass
+
     public void setUpUserLoginUseCase(){
         userGatewayFactory = new UserGatewayFactory();
         clientGateway = new ClientRepository();
@@ -47,16 +47,19 @@ public class UserLoginUseCaseTest {
     }
     @Test
     public void TestLoginPass(){
+        setUpUserLoginUseCase();
         UserLoginRequestModel inputData = new UserLoginRequestModel(CLIENT_ID, PASSWORD);
         userLoginInputBoundary.login(inputData);
     }
     @Test
     public void TestLoginFailIdDNE(){
+        setUpUserLoginUseCase();
         UserLoginRequestModel inputData = new UserLoginRequestModel(1, PASSWORD);
         userLoginInputBoundary.login(inputData);
     }
     @Test
     public void TestLoginFailWrongPassword(){
+        setUpUserLoginUseCase();
         UserLoginRequestModel inputData = new UserLoginRequestModel(CLIENT_ID, "a");
         userLoginInputBoundary.login(inputData);
     }

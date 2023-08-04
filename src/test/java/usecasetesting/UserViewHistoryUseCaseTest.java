@@ -24,7 +24,7 @@ public class UserViewHistoryUseCaseTest {
     private UserGatewayFactory userGatewayFactory;
     private ViewOutputBoundary viewOutputBoundary;
     private ViewInputBoundary viewInputBoundary;
-    @BeforeClass
+
     public void setUpViewQuestionUseCase(){
         userGatewayFactory = new UserGatewayFactory();
         questionGateway = new QuestionRepo();
@@ -53,6 +53,7 @@ public class UserViewHistoryUseCaseTest {
 
     @Test
     public void TestClientViewUseCase(){
+        setUpViewQuestionUseCase();
         ViewRequestModel inputData = new ViewRequestModel(CLIENT_ID);
 
         viewInputBoundary.viewQuestion(inputData);
@@ -60,6 +61,7 @@ public class UserViewHistoryUseCaseTest {
 
     @Test
     public void TestAttorneyViewUseCase(){
+        setUpViewQuestionUseCase();
         ViewRequestModel inputData = new ViewRequestModel(ATTORNEY_ID);
 
         viewInputBoundary.viewQuestion(inputData);
