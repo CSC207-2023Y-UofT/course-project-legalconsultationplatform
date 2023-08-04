@@ -1,11 +1,12 @@
 package driver.database;
 
+import businessrule.gateway.PostGateway;
 import entity.Post;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-public class PostRepo implements PostGateway{
+public class PostRepo implements PostGateway {
 
     @Override
     public void savePost(Post post) {
@@ -64,4 +65,20 @@ public class PostRepo implements PostGateway{
         }
     }
 
+    @Override
+    public void deleteAllPost() {
+        EntityManager em = DatabaseConnection.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.createQuery("DELETE FROM Post p").executeUpdate();
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
 }

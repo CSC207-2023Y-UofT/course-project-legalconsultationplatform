@@ -4,13 +4,11 @@ import entity.*;
 import businessrule.inputboundary.QuestionInputBoundary;
 import businessrule.requestmodel.QuestionRequestModel;
 import businessrule.gateway.ClientGateway;
-import driver.database.QuestionGateway;
+import businessrule.gateway.QuestionGateway;
 import businessrule.outputboundary.TheQuestionOutputBoundary;
 import businessrule.responsemodel.TheQuestionResponseModel;
 
-import javax.persistence.criteria.CriteriaBuilder;
 import java.time.LocalDate;
-import java.util.List;
 import java.util.Map;
 
 public class AskQuestionInteractor implements QuestionInputBoundary {

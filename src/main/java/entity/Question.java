@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.time.LocalDate;
@@ -28,13 +29,14 @@ public class Question {
     private LocalDate takenAt;
     private boolean isClose;
     private int rating;
-    @OneToMany
+    @OneToMany(targetEntity = Post.class, fetch = FetchType.EAGER)
     private List<Post> posts;
 
     public static final int MISSING_RATING = -1;
 
 
     public Question() {
+        posts = new ArrayList<Post>();
     }
 
     public Question(int questionId, String type, String title, LocalDate createAt, int askedByClient, LocalDate legalDeadline) {
@@ -96,7 +98,11 @@ public class Question {
 
     public void setRating(int rating) {this.rating = rating;}
 
-    public void addPosts(Post post) {this.posts.add(post);}
+    public void addPosts(Post post) {
+        if (! posts.contains(post)) {
+            posts.add(post);
+        }
+    }
 
     @Override
     public int hashCode() {return Objects.hashCode(questionId);}

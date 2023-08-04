@@ -5,7 +5,7 @@ import businessrule.inputboundary.UserLoginInputBoundary;
 import businessrule.outputboundary.HomePageOutputBoundary;
 import businessrule.requestmodel.UserLoginRequestModel;
 import businessrule.responsemodel.HomePageResponseModel;
-import driver.database.UserGateway;
+import businessrule.gateway.UserGateway;
 import entity.User;
 import driver.screen.ApplicationException;
 
