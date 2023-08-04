@@ -32,6 +32,9 @@ public class AskQuestionUseCaseTest {
         questionFactory = new QuestionFactory();
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
+        clientGateway.deleteAllUser();
+        questionGateway.deleteAllQuestion();
+        attorneyGateway.deleteAllUser();
         theQuestionOutputBoundary = new TheQuestionOutputBoundary() {
             @Override
             public TheQuestionResponseModel prepareFail(String msg) {
@@ -41,6 +44,7 @@ public class AskQuestionUseCaseTest {
 
             @Override
             public TheQuestionResponseModel prepareSuccess(TheQuestionResponseModel response) {
+                System.out.println(response.getPostMap());
                 return null;
             }
         };
@@ -67,6 +71,10 @@ public class AskQuestionUseCaseTest {
         QuestionRequestModel inputData = new QuestionRequestModel("fraud", "Test title", LocalDate.now(), CLIENT_ID, LocalDate.now());
 
         questionInputBoundary.createQuestion(inputData);
+
+        User user = clientGateway.getUser(CLIENT_ID);
+        assertEquals(user.getQuestionsList().size(), 1, "The ask question use case failed.");
+
     }
 
     @Test
