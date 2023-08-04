@@ -3,8 +3,6 @@ package entitytesting;
 import entity.Client;
 import entity.Question;
 import org.junit.jupiter.api.Test;
-import entity.Question;
-import entity.Client;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -232,5 +230,29 @@ class ClientTest {
 
         String expectedToString = String.format("[Attorney]: %s", expectedName);
         assertEquals(false, expectedToString == client.toString(), "The toString method is wrong");
+    }
+
+    @Test
+    void testIsQuestionRateableSucceed() {
+        String expectedName = "Xingfu Wu";
+
+        Client client = new Client(1000000, expectedName, "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
+                "Asian", 30, "Male", "Single", 1, 60000.0f);
+
+        Question question = new Question();
+        question.setClose(true);
+        assertEquals(true, client.isQuestionRateable(question), "IsQuestionRateable is wrong.");
+    }
+
+    @Test
+    void testIsQuestionRateableFail() {
+        String expectedName = "Xingfu Wu";
+
+        Client client = new Client(1000000, expectedName, "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
+                "Asian", 30, "Male", "Single", 1, 60000.0f);
+
+        Question question = new Question();
+        question.setClose(false);
+        assertEquals(false, client.isQuestionRateable(question), "IsQuestionRateable is wrong.");
     }
 }
