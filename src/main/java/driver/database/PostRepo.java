@@ -37,7 +37,7 @@ public class PostRepo implements PostGateway {
     }
 
     @Override
-    public boolean checkExistsById(int postId) {
+    public boolean existsById(int postId) {
         EntityManager entityManager = DatabaseConnection.getEntityManager();
         try {
             Post exists = entityManager.find(Post.class, postId);

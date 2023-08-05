@@ -122,6 +122,7 @@ public class Attorney implements User {
                 question.setTaken(true);
                 question.setTakenByAttorney(userId);
                 question.setTakenAt(LocalDate.now());
+                addQuestion(question);
                 return true;
             }
         }
