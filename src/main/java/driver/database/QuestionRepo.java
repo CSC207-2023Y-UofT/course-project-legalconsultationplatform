@@ -30,8 +30,9 @@ public class QuestionRepo implements QuestionGateway {
         }
     }
 
+
     @Override
-    public boolean checkExistsByName(int questionId){
+    public boolean existsById(int questionId){
         EntityManager entityManager = DatabaseConnection.getEntityManager();
         try {
             Question exists = entityManager.find(Question.class, questionId);
