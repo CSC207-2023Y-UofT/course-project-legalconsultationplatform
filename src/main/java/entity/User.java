@@ -2,6 +2,8 @@ package entity;
 
 import java.util.List;
 
+import javax.persistence.Entity;
+
 public interface User {
     int getUserId();
     String getUserName();
