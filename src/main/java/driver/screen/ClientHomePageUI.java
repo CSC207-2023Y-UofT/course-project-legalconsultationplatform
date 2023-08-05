@@ -40,6 +40,7 @@ public class ClientHomePageUI extends JPanel implements ActionListener {
 
         String helloMessageString = "Hello, " + userName + "(" + userId + ")";
         JLabel helloMessage = new JLabel(helloMessageString);
+        helloMessage.setBorder(new EmptyBorder(0,0,50,0));
 
         JPanel buttons = new JPanel();
         buttons.setBackground(UIDesign.backgroundColor);
@@ -53,7 +54,6 @@ public class ClientHomePageUI extends JPanel implements ActionListener {
         askNewQuestion.addActionListener(this);
         viewQuestionHistory.addActionListener(this);
 
-        this.add(title);
         this.add(helloMessage);
         this.add(buttons);
     }

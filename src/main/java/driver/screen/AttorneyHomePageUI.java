@@ -42,12 +42,15 @@ public class AttorneyHomePageUI extends JPanel implements ActionListener {
         //The userName and userId
         String helloMessageString = "Hello, " + userName + "(" + userId + ")";
         JLabel helloMessage = new JLabel(helloMessageString);
+        helloMessage.setBorder(new EmptyBorder(0,0,30,0));
 
         //The three buttons
         JPanel buttons = new JPanel();
         buttons.setBackground(UIDesign.backgroundColor);
         JButton browseQuestions = new JButton("Browse available questions");
+        browseQuestions.setBorder(new EmptyBorder(0,0,20,0));
         JButton viewQuestionHistory = new JButton("View question history");
+        viewQuestionHistory.setBorder(new EmptyBorder(0,0,20,0));
         JButton recommendation = new JButton("Recommended questions");
 
         UIDesign.setHomePageButton(browseQuestions);

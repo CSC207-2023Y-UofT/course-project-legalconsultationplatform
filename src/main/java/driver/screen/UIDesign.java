@@ -26,7 +26,8 @@ public class UIDesign {
         button.setPreferredSize(buttonSize);
         button.setFont(boldFont);
         button.setForeground(titleColor);
-        button.setBackground(Color.RED);
+
+        button.setBackground(titleColor);
     }
 
     public static void setTitle(JLabel title){
