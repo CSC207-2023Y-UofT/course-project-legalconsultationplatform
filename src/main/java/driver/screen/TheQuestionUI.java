@@ -55,6 +55,7 @@ public class TheQuestionUI extends JPanel implements ActionListener {
         //UserName and UserId
         String helloMessageString = "Hello, " + userName + "(" + userId + ")";
         JLabel helloMessage = new JLabel(helloMessageString);
+
         //Question title and type
         String titleLineString = "(" + type + ")" + title;
         JLabel titleLine = new JLabel(titleLineString);
