@@ -5,7 +5,7 @@ import businessrule.outputboundary.HomePageOutputBoundary;
 import businessrule.requestmodel.CloseRequestModel;
 import businessrule.responsemodel.HomePageResponseModel;
 import entity.Question;
-import driver.database.QuestionGateway;
+import businessrule.gateway.QuestionGateway;
 import entity.User;
 import businessrule.gateway.UserGateway;
 import businessrule.gateway.UserGatewayFactory;
@@ -23,16 +23,18 @@ public class CloseQuestionInteractor implements CloseInputBoundary {
 
     @Override
     public HomePageResponseModel closeQuestion(CloseRequestModel closeRequestModel) {
+        // get input data
         int userId = closeRequestModel.getUserId();;
         int questionId = closeRequestModel.getQuestionId();
         UserGateway userGateway = userGatewayFactory.createUserGateway(userId);
         User user = userGateway.getUser(userId);
         Question question = questionGateway.getQuestion(questionId);
-        boolean isQuestionCloseable = user.isQuestionCloseable(question);
 
+        // handle close logic and prepare response model
+        boolean isQuestionCloseable = user.isQuestionCloseable(question);
         if(isQuestionCloseable){
             questionGateway.updateIsClose(questionId, true);
-            HomePageResponseModel homePageResponseModel = new HomePageResponseModel(userId, user.getUserName());
+            HomePageResponseModel homePageResponseModel = new HomePageResponseModel(userId, user.getUserName(), "Client");
             return homePageOutputBoundary.prepareSuccess(homePageResponseModel);
         }
         else{

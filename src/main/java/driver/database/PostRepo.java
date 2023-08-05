@@ -1,11 +1,12 @@
 package driver.database;
 
+import businessrule.gateway.PostGateway;
 import entity.Post;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-public class PostRepo implements PostGateway{
+public class PostRepo implements PostGateway {
 
     @Override
     public void savePost(Post post) {
@@ -36,7 +37,7 @@ public class PostRepo implements PostGateway{
     }
 
     @Override
-    public boolean checkExistsById(int postId) {
+    public boolean existsById(int postId) {
         EntityManager entityManager = DatabaseConnection.getEntityManager();
         try {
             Post exists = entityManager.find(Post.class, postId);

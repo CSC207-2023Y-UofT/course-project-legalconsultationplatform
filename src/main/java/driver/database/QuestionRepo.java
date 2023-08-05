@@ -1,8 +1,10 @@
 package driver.database;
 
+import businessrule.gateway.QuestionGateway;
 import entity.Post;
 import entity.Question;
 
+import javax.jdo.JDOHelper;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.time.LocalDate;
@@ -28,8 +30,9 @@ public class QuestionRepo implements QuestionGateway {
         }
     }
 
+
     @Override
-    public boolean checkExistsByName(int questionId){
+    public boolean existsById(int questionId){
         EntityManager entityManager = DatabaseConnection.getEntityManager();
         try {
             Question exists = entityManager.find(Question.class, questionId);
@@ -76,6 +79,17 @@ public class QuestionRepo implements QuestionGateway {
         try {
             return em.createQuery("SELECT q FROM Question q WHERE q.isClose = false", Question.class)
                     .getResultList();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public List<Post> getAllPostOfQuestion(int questionId) {
+        EntityManager em = DatabaseConnection.getEntityManager();
+        try {
+            return em.createQuery("SELECT p FROM Post p WHERE p.questionId =: questionId", Post.class)
+                    .setParameter("questionId", questionId).getResultList();
         } finally {
             em.close();
         }
@@ -154,25 +168,6 @@ public class QuestionRepo implements QuestionGateway {
     }
 
     @Override
-    public void updatePosts(int questionId, Post post) {
-        EntityManager em = DatabaseConnection.getEntityManager();
-        Question question = em.find(Question.class, questionId);
-        try {
-            em.getTransaction().begin();
-            question.addPosts(post);
-            //JDOHelper.makeDirty(question, "posts");
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            em.close();
-        }
-    }
-
-    @Override
     public void updateTakenAt(int questionId, LocalDate time) {
         EntityManager em = DatabaseConnection.getEntityManager();
         Question question = em.find(Question.class, questionId);
@@ -195,7 +190,7 @@ public class QuestionRepo implements QuestionGateway {
         EntityManager em = DatabaseConnection.getEntityManager();
         try {
             em.getTransaction().begin();
-            Question question = getQuestion(questionId);
+            Question question = em.find(Question.class, questionId);
             em.remove(question);
             em.getTransaction().commit();
         } catch (Exception e) {
@@ -218,6 +213,26 @@ public class QuestionRepo implements QuestionGateway {
         } catch (Exception e) {
             if (em.getTransaction().isActive()) {
                 em.getTransaction().rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public void updatePosts(int questionId, Post post) {
+        EntityManager em = DatabaseConnection.getEntityManager();
+        EntityTransaction transaction = em.getTransaction();
+        Question q = em.find(Question.class, questionId);
+        try {
+            transaction.begin();
+            q.addPosts(post);
+            JDOHelper.makeDirty(q, "posts");
+            transaction.commit();
+        } catch (Exception e) {
+            if (transaction.isActive()) {
+                transaction.rollback();
             }
             e.printStackTrace();
         } finally {

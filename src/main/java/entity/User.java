@@ -16,4 +16,5 @@ public interface User {
     boolean isQuestionSelectable(Question question);
     boolean isQuestionReplyable(Question question);
     boolean isQuestionRateable(Question question);
+
 }
