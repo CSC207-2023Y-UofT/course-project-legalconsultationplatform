@@ -26,11 +26,12 @@ public class LoginUI extends JPanel implements ActionListener{
     public LoginUI(ControlContainer controlContainer) {
 
         this.controlContainer = controlContainer;
+        setBackground(UIDesign.backgroundColor);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         // Create the title label
-        JLabel title = new JLabel("Login to your account");
+        JLabel title = new JLabel("Log In");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         int topMargin = 30;
         int leftMargin = 0;

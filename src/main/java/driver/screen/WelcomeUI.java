@@ -7,6 +7,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.rmi.server.UID;
 
 import static driver.screen.UIDesign.buttonSize;
 
@@ -25,9 +26,10 @@ public class WelcomeUI extends JPanel implements ActionListener {
 
         JLabel title = new JLabel("Welcome");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setForeground(UIDesign.titleColor);
         title.setFont(UIDesign.titleFont);
 
-        int topMargin = 30;
+        int topMargin = 50;
         int leftMargin = 0;
         int bottomMargin = 100;
         int rightMargin = 0;
@@ -42,8 +44,14 @@ public class WelcomeUI extends JPanel implements ActionListener {
         JButton registerButton = new JButton("Register");
         JButton loginButton = new JButton("Login");
 
-        registerButton.setPreferredSize(UIDesign.buttonSize);
-        loginButton.setPreferredSize(UIDesign.buttonSize);
+
+        registerButton.setPreferredSize(buttonSize);
+        loginButton.setPreferredSize(buttonSize);
+        loginButton.setMaximumSize(buttonSize);
+        loginButton.setMinimumSize(buttonSize);
+        registerButton.setMaximumSize(buttonSize);
+        registerButton.setMinimumSize(buttonSize);
+
 
         buttonsPanel.add(Box.createHorizontalGlue()); // Add glue to push buttons to the left
         buttonsPanel.add(registerButton);
