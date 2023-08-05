@@ -54,8 +54,6 @@ public class RegisterUI extends JPanel implements ActionListener{
         // Add all the panels here...
         gbc.gridx = 0; // Set the gridx to 0 to place components under the title
 
-        setFontForAllComponents(this, new Font("Source Sans Pro", Font.PLAIN, 12));
-
         LabelTextPanel userNamePanel = new LabelTextPanel(new JLabel("User name"), userName);
         add(userNamePanel, gbc);
 

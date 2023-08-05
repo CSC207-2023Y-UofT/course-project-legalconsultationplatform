@@ -8,8 +8,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-
+import java.rmi.server.UID;
 
 
 /**
@@ -28,7 +27,8 @@ public class LoginUI extends JPanel implements ActionListener{
         this.controlContainer = controlContainer;
         setBackground(UIDesign.backgroundColor);
 
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
 
         // Create the title label
         JLabel title = new JLabel("Log In");
@@ -41,25 +41,21 @@ public class LoginUI extends JPanel implements ActionListener{
         add(title);
 
         // Add some vertical glue between the title, userId, and password
-        add(Box.createVerticalGlue());
 
-        // Add userId panel
-        LabelTextPanel userIdInfo = new LabelTextPanel(new JLabel("UserId"), userId);
-        add(userIdInfo);
+        gbc.gridx = 0; // Set the gridx to 0 to place components under the title
 
-        // Add some vertical glue between userId and password
-        add(Box.createVerticalGlue());
+        LabelTextPanel userIdPanel = new LabelTextPanel(new JLabel("User name"), userId);
+        add(userIdPanel, gbc);
 
-        // Add password panel
-        LabelTextPanel passwordInfo = new LabelTextPanel(new JLabel("Password"), password);
-        add(passwordInfo);
-
-        // Add some vertical glue between password and the login button
-        add(Box.createVerticalGlue());
+        LabelTextPanel passwordPanel = new LabelTextPanel(new JLabel("Password"), password);
+        add(passwordPanel, gbc);
 
         // Add the login button
         JButton login = new JButton("Login");
         JPanel buttons = new JPanel();
+        buttons.setBackground(UIDesign.backgroundColor);
+        login.setMinimumSize(UIDesign.buttonSize);
+        login.setMaximumSize(UIDesign.buttonSize);
         buttons.add(login);
         login.addActionListener(this);
         add(buttons);
