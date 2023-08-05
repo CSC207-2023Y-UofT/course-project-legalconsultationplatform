@@ -1,9 +1,7 @@
 package usecasetesting;
 
 
-import businessrule.gateway.AttorneyGateway;
-import businessrule.gateway.ClientGateway;
-import businessrule.gateway.UserGatewayFactory;
+import businessrule.gateway.*;
 
 import businessrule.inputboundary.RateInputBoundary;
 import businessrule.outputboundary.HomePageOutputBoundary;
@@ -70,6 +68,7 @@ public class RateAnswerUseCaseTest {
 
         Question closedQuestion = new Question();
         closedQuestion.setQuestionId(CLOSED_QUESTION_ID);
+        closedQuestion.setClose(true);
         questionGateway.saveQuestion(closedQuestion);
 
         Client client = new Client();

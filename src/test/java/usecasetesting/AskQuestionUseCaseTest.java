@@ -2,17 +2,23 @@ package usecasetesting;
 
 import businessrule.gateway.AttorneyGateway;
 import businessrule.gateway.ClientGateway;
+import businessrule.gateway.QuestionGateway;
 import businessrule.inputboundary.QuestionInputBoundary;
 import businessrule.outputboundary.TheQuestionOutputBoundary;
 import businessrule.requestmodel.QuestionRequestModel;
 import businessrule.responsemodel.TheQuestionResponseModel;
 import businessrule.usecase.AskQuestionInteractor;
 
+import businessrule.usecase.PostDisplayFormatter;
+import businessrule.usecase.QuestionDisplayFormatter;
 import driver.database.*;
 import entity.*;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 ;
 
@@ -73,7 +79,7 @@ public class AskQuestionUseCaseTest {
         questionInputBoundary.createQuestion(inputData);
 
         User user = clientGateway.getUser(CLIENT_ID);
-        assertEquals(1, user.getQuestionsList().size(), "The ask question use case failed.");// null pointer caused by getUser, it cant get the question list out
+        assertEquals(1, user.getQuestionsList().size(), "The ask question use case failed.");
 
     }
 

@@ -1,14 +1,13 @@
 package usecasetesting;
 
-import businessrule.gateway.AttorneyGateway;
-import businessrule.gateway.ClientGateway;
-import businessrule.gateway.UserGatewayFactory;
+import businessrule.gateway.*;
 import businessrule.inputboundary.QuestionInputBoundary;
 import businessrule.inputboundary.SelectInputBoundary;
 import businessrule.outputboundary.TheQuestionOutputBoundary;
 import businessrule.requestmodel.SelectRequestModel;
 import businessrule.responsemodel.TheQuestionResponseModel;
 import businessrule.usecase.AskQuestionInteractor;
+import businessrule.usecase.PostDisplayFormatter;
 import businessrule.usecase.SelectQuestionInteractor;
 import driver.database.*;
 
@@ -18,6 +17,8 @@ import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.*;
@@ -30,9 +31,10 @@ public class SelectQuestionUseCaseTest {
     final static int QUESTION_ID = 323456789;
     final static int TAKEN_QUESTION_ID = 333333333;
     final static int CLOSED_QUESTION_ID = 322222222;
-    final static int POST_ID = 455555555;
+    final static int CLIENT_POST_ID = 455555555;
+    final static int ATTORNEY_POST_ID = 433333333;
     private QuestionGateway questionGateway;
-    private PostGateway  postGateway;
+    private PostGateway postGateway;
     private ClientGateway clientGateway;
     private UserGatewayFactory userGatewayFactory;
     private AttorneyGateway attorneyGateway;
@@ -59,6 +61,9 @@ public class SelectQuestionUseCaseTest {
             @Override
             public TheQuestionResponseModel prepareSuccess(TheQuestionResponseModel response) {
                 assertEquals(1, response.getPostMap().size(), "The post map is not correct.");
+                List<PostDisplayFormatter> arrayList;
+                arrayList = new ArrayList<>(response.getPostMap().values());
+                assertEquals("test text", arrayList.get(0).getPostText());
                 return null;
             }
         };
@@ -76,11 +81,22 @@ public class SelectQuestionUseCaseTest {
         attorney.setUserId(SECOND_ATTORNEY_ID);
         attorneyGateway.addUser(secondAttorney);
 
+        Post postBelongsToClient = new Post();
+        postBelongsToClient.setPostText("test text");
+        postBelongsToClient.setPostId(CLIENT_POST_ID);// default constructor does not initialize the post list
+        postBelongsToClient.setBelongsTo(CLIENT_ID);
+        postGateway.savePost(postBelongsToClient);
+
+        Post postBelongsToAttorney = new Post();
+        postBelongsToAttorney.setPostText("test text");
+        postBelongsToAttorney.setPostId(ATTORNEY_POST_ID);// default constructor does not initialize the post list
+        postBelongsToAttorney.setBelongsTo(ATTORNEY_ID);
+        postGateway.savePost(postBelongsToAttorney);
+
         Question question1 = new Question();
         question1.setQuestionId(QUESTION_ID);
-        Post post = new Post();
-        post.setPostId(POST_ID);// default constructor does not initialize the post list
-        question1.addPosts(post);
+        question1.addPosts(postBelongsToClient);
+        question1.addPosts(postBelongsToAttorney);
         questionGateway.saveQuestion(question1);
 
         Question question2 = new Question();
@@ -98,6 +114,7 @@ public class SelectQuestionUseCaseTest {
     @Test
     public void TestClientSelectQuestionUseCase(){
         setUpSelectUseCase();// default constructor does not initialize the post list
+
         SelectRequestModel inputData = new SelectRequestModel(QUESTION_ID, CLIENT_ID);
 
         selectInputBoundary.selectQuestion(inputData);

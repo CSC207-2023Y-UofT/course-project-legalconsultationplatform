@@ -2,25 +2,32 @@ package usecasetesting;
 
 import businessrule.gateway.AttorneyGateway;
 import businessrule.gateway.ClientGateway;
+import businessrule.gateway.QuestionGateway;
 import businessrule.gateway.UserGatewayFactory;
 import businessrule.inputboundary.ViewInputBoundary;
 import businessrule.outputboundary.ViewOutputBoundary;
 import businessrule.requestmodel.ViewRequestModel;
 import businessrule.responsemodel.ViewResponseModel;
+import businessrule.usecase.QuestionDisplayFormatter;
 import businessrule.usecase.ViewQuestionInteractor;
 import driver.database.AttorneyRepository;
 import driver.database.ClientRepository;
-import driver.database.QuestionGateway;
 import driver.database.QuestionRepo;
 import entity.Attorney;
 import entity.Client;
+import entity.Question;
 import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 public class UserViewHistoryUseCaseTest {
     final static int CLIENT_ID = 21345678;
     final static int ATTORNEY_ID = 11345678;
+    final static int QUESTION_ID = 323456789;
     private QuestionGateway questionGateway;
     private ClientGateway clientGateway;
     private AttorneyGateway attorneyGateway;
@@ -45,19 +52,29 @@ public class UserViewHistoryUseCaseTest {
 
             @Override
             public ViewResponseModel prepareSuccess(ViewResponseModel response) {
-                assertEquals(0, response.getQuestionMap().size(), "The Question map is not correct." );
+                assertEquals(1, response.getQuestionMap().size(), "The Question Map is not correct.");
+                List<QuestionDisplayFormatter> arrayList;
+                arrayList = new ArrayList<>(response.getQuestionMap().values());
+                assertEquals("test title", arrayList.get(0).getTitle());
                 return null;
             }
         };
 
         viewInputBoundary = new ViewQuestionInteractor(questionGateway, viewOutputBoundary, userGatewayFactory);
 
+        Question question = new Question();
+        question.setQuestionId(QUESTION_ID);
+        question.setTitle("test title");
+        questionGateway.saveQuestion(question);
+
         Client client = new Client();
         client.setUserId(CLIENT_ID);
+        client.addQuestion(question);
         clientGateway.addUser(client);
 
         Attorney attorney = new Attorney();
         attorney.setUserId(ATTORNEY_ID);
+        attorney.addQuestion(question);
         attorneyGateway.addUser(attorney);
     }
 

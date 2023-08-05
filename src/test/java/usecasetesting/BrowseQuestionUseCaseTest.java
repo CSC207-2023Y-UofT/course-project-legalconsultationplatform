@@ -2,16 +2,21 @@ package usecasetesting;
 
 import businessrule.gateway.AttorneyGateway;
 import businessrule.gateway.ClientGateway;
+import businessrule.gateway.QuestionGateway;
 import businessrule.inputboundary.BrowseInputBoundary;
 import businessrule.outputboundary.ViewOutputBoundary;
 import businessrule.requestmodel.BrowseRequestModel;
 import businessrule.responsemodel.ViewResponseModel;
 import businessrule.usecase.BrowseQuestionInterator;
+import businessrule.usecase.QuestionDisplayFormatter;
 import driver.database.*;
 
 import entity.*;
 
 import org.junit.jupiter.api.Test;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 ;
@@ -27,7 +32,21 @@ public class BrowseQuestionUseCaseTest {
     private QuestionGateway questionGateway;
     private ClientGateway clientGateway;
     private AttorneyGateway attorneyGateway;
-    private ViewOutputBoundary viewOutputBoundary;
+    private ViewOutputBoundary viewOutputBoundary = new ViewOutputBoundary() {
+        @Override
+        public ViewResponseModel prepareFail(String msg) {
+            return null;
+        }
+
+        @Override
+        public ViewResponseModel prepareSuccess(ViewResponseModel response) {
+            assertEquals(2, response.getQuestionMap().size(), "The Question Map is not correct.");
+            List<QuestionDisplayFormatter> arrayList;
+            arrayList = new ArrayList<>(response.getQuestionMap().values());
+            assertEquals("test title", arrayList.get(0).getTitle());
+            return null;
+        }
+    };
     private BrowseInputBoundary browseInputBoundary;
 
     public void setUpBrowseUseCase(){
@@ -37,18 +56,6 @@ public class BrowseQuestionUseCaseTest {
         clientGateway.deleteAllUser();
         questionGateway.deleteAllQuestion();
         attorneyGateway.deleteAllUser();
-        viewOutputBoundary = new ViewOutputBoundary() {
-            @Override
-            public ViewResponseModel prepareFail(String msg) {
-                return null;
-            }
-
-            @Override
-            public ViewResponseModel prepareSuccess(ViewResponseModel response) {
-                assertEquals(0, response.getQuestionMap().size(), "The Question Map is not correct.");
-                return null;
-            }
-        };
         browseInputBoundary = new BrowseQuestionInterator(viewOutputBoundary, questionGateway, attorneyGateway);
 
         Client client = new Client();
@@ -65,7 +72,8 @@ public class BrowseQuestionUseCaseTest {
 
         Question question1 = new Question();
         question1.setQuestionId(QUESTION_ID);
-        Post post = new Post(); // default constructor does not initialize the post list
+        question1.setTitle("test title");
+        Post post = new Post();
         post.setPostId(POST_ID);
         question1.addPosts(post);
         questionGateway.saveQuestion(question1);
@@ -84,7 +92,7 @@ public class BrowseQuestionUseCaseTest {
 
     @Test
     public void TestAttorneyBrowseQuestionUseCase(){
-        setUpBrowseUseCase(); // default constructor does not initialize the post list
+        setUpBrowseUseCase();
         BrowseRequestModel inputData = new BrowseRequestModel(ATTORNEY_ID);
 
         browseInputBoundary.browseQuestion(inputData);

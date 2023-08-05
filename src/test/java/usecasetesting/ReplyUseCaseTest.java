@@ -1,9 +1,7 @@
 package usecasetesting;
 
 import adapter.presenter.HomePageResponseFormatter;
-import businessrule.gateway.AttorneyGateway;
-import businessrule.gateway.ClientGateway;
-import businessrule.gateway.UserGatewayFactory;
+import businessrule.gateway.*;
 import businessrule.inputboundary.PostInputBoundary;
 import businessrule.outputboundary.HomePageOutputBoundary;
 import businessrule.requestmodel.PostRequestModel;
@@ -104,7 +102,7 @@ public class ReplyUseCaseTest {
         assertEquals(post2.getBelongsTo(), ATTORNEY_ID);
         assertEquals(post2.getPostText(), "Test text");
         User user = attorneyGateway.getUser(ATTORNEY_ID);
-        Question attorneyQuestion = user.getQuestionsList().get(0);
+        Question attorneyQuestion = user.getQuestionsList().get(0);// AttorneyQuestionList is not updated
         assertEquals(attorneyQuestion.getQuestionId(), QUESTION_ID);
         assertEquals(attorneyQuestion.getTakenByAttorney(), ATTORNEY_ID);
         assertEquals(attorneyQuestion.isTaken(), true);
@@ -113,7 +111,7 @@ public class ReplyUseCaseTest {
     public void testAttorneyFollowUp(){
         setUpReplyUseCase();
         User user = attorneyGateway.getUser(ATTORNEY_ID);
-        Question attorneyquestion = user.getQuestionsList().get(0);
+        Question attorneyquestion = user.getQuestionsList().get(0);// AttorneyQuestionList is not updated
         assertEquals(attorneyquestion.getQuestionId(), QUESTION_ID);
         assertEquals(attorneyquestion.getTakenByAttorney(), ATTORNEY_ID);
         assertEquals(attorneyquestion.isTaken(), true);
@@ -140,7 +138,7 @@ public class ReplyUseCaseTest {
     public void testAttorneyFailToReplyQuestionTakenByOther(){
         setUpReplyUseCase();
         PostRequestModel inputData = new PostRequestModel(QUESTION_ID, SECOND_ATTORNEY_ID, "Test text");
-        postInputBoundary.createPost(inputData);
+        postInputBoundary.createPost(inputData);// AttorneyQuestionList is not updated
 
         User user = attorneyGateway.getUser(ATTORNEY_ID);
         Question attorneyquestion = user.getQuestionsList().get(0);
