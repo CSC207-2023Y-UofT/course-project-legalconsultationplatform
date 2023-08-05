@@ -11,7 +11,7 @@ public class RateControl {
         this.rateInput = input;
     }
 
-    HomePageResponseModel rateAnswer(int rate, int questionId, int userId) {
+    public HomePageResponseModel rateAnswer(int rate, int questionId, int userId) {
         RateRequestModel rating = new RateRequestModel(rate, questionId, userId);
         return rateInput.rateAnswer(rating);
     }

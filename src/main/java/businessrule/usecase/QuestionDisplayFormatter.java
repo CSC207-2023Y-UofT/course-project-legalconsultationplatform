@@ -13,6 +13,7 @@ public class QuestionDisplayFormatter {
         this.legalDeadline = legalDeadline;
     }
 
+
     public String getTitle() {
         return title;
     }

@@ -1,15 +1,20 @@
 package driver.screen;
 
+import adapter.controller.ControlContainer;
 import adapter.controller.QuestionControl;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.time.Instant;
 import java.time.LocalDate;
+import java.time.ZoneId;
+import java.time.ZonedDateTime;
+import java.util.Date;
+import javax.swing.JPanel;
 
-import static javax.swing.JOptionPane.showMessageDialog;
-
+import com.toedter.calendar.JDateChooser;
 
 
 
@@ -18,26 +23,40 @@ import static javax.swing.JOptionPane.showMessageDialog;
  * @author joseph
  */
 public class AskQuestionUI extends JPanel implements ActionListener{
-    QuestionControl control;
-    JTextField questionCategory = new JTextField(15);
-    // 有问题
+    ControlContainer controlContainer;
+    CardLayout cardLayout;
+    JPanel screens;
+    int userId;
+    String userName;
+    String[] questionTypeList = {"Family and Children", "Individual Rights",
+            "Consumer Financial Questions", "Housing and Homelessness",
+            "Income Maintenance", "Health and Disability",
+            "Work, Employment and Unemployment", "Juvenile", "Education", "Other"};
+    JComboBox<String> questionType = new JComboBox<>(questionTypeList);
     JTextField titleForQuestion = new JTextField(15);
-    JTextField clientId = new JTextField(15);
-    JTextField legalDeadline = new JTextField(15);
+    JDateChooser deadlineChooser = new JDateChooser();
     /**
      * Creates new form AskQuestion
      */
-    public AskQuestionUI(QuestionControl control) {
+    public AskQuestionUI(ControlContainer controlContainer, CardLayout cardLayout,
+                         JPanel screens, int userId, String userName) {
 
-        this.control = control;
+        this.controlContainer = controlContainer;
+        this.cardLayout = cardLayout;
+        this.screens = screens;
+        this.userId = userId;
+        this.userName = userName;
 
-        JLabel title = new JLabel("Ask Question Screen");
+        //UserName and userId
+        String helloMessageString = "Hello, " + userName + "(" + userId + ")";
+        JLabel helloMessage = new JLabel(helloMessageString);
+        JLabel title = new JLabel("Ask a new question here");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
 
-        LabelTextPanel questionCategoryInfo = new LabelTextPanel(new JLabel("questionCategory"), questionCategory);
-        LabelTextPanel clientIdInfo = new LabelTextPanel(new JLabel("clientId"), clientId);
+        //Question type and title
+        DropDownPanel questionTypeDropDown = new DropDownPanel(new JLabel("Select question"), questionType);
         LabelTextPanel titleInfo = new LabelTextPanel(new JLabel("title"), titleForQuestion);
-        LabelTextPanel legalDeadlineInfo = new LabelTextPanel(new JLabel("legalDeadline"), legalDeadline);
+        DateChooserPanel legalDeadlineInfo = new DateChooserPanel(new JLabel("legalDeadline"), deadlineChooser);
         JButton buttonToSubmit = new JButton("Submit");
 
         JPanel buttons = new JPanel();
@@ -47,8 +66,8 @@ public class AskQuestionUI extends JPanel implements ActionListener{
         this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         this.add(title);
-        this.add(questionCategoryInfo);
-        this.add(clientIdInfo);
+        this.add(helloMessage);
+        this.add(questionTypeDropDown);
         this.add(titleInfo);
         this.add(legalDeadlineInfo);
         this.add(buttons);
@@ -57,9 +76,14 @@ public class AskQuestionUI extends JPanel implements ActionListener{
     @Override
     public void actionPerformed(ActionEvent evt){
         System.out.println("Click" + evt.getActionCommand());
-
+        QuestionControl questionControl = controlContainer.getQuestionControl();
+        Date deadlineDate = deadlineChooser.getDate();
+        Instant instant = deadlineDate.toInstant();
+        ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+        LocalDate deadlinelocalDate = zonedDateTime.toLocalDate();
         try {
-            control.createQuestion(questionCategory.getText(), titleForQuestion.getText(), LocalDate.now(), Integer.parseInt(clientId.getText()), LocalDate.parse(legalDeadline.getText()));
+            questionControl.createQuestion((String)questionType.getSelectedItem(),
+                    titleForQuestion.getText(), LocalDate.now(), userId, deadlinelocalDate);
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(this, e.getMessage());

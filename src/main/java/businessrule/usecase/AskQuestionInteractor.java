@@ -19,7 +19,7 @@ public class AskQuestionInteractor implements QuestionInputBoundary {
     final QuestionFactory questionFactory;
     final ClientGateway clientGateway;
 
-    public AskQuestionInteractor(QuestionGateway questionGateway, TheQuestionOutputBoundary theQuestionOutputBoundary, QuestionFactory questionFactory, ClientGateway clientGateway, UserGatewayFactory userGatewayFactory) {
+    public AskQuestionInteractor(QuestionGateway questionGateway, TheQuestionOutputBoundary theQuestionOutputBoundary, QuestionFactory questionFactory, ClientGateway clientGateway) {
         this.questionGateway = questionGateway;
         this.theQuestionOutputBoundary = theQuestionOutputBoundary;
         this.questionFactory = questionFactory;
@@ -31,6 +31,8 @@ public class AskQuestionInteractor implements QuestionInputBoundary {
         // validate input
         if (questionRequestModel.getQuestionCategory() == null){
             return theQuestionOutputBoundary.prepareFail("Please specify your question type.");
+        } else if (questionRequestModel.getTitle() == null){
+            return theQuestionOutputBoundary.prepareFail("Please specify your question title.");
         }
 
         // generate question id

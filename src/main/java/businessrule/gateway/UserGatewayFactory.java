@@ -2,7 +2,6 @@ package businessrule.gateway;
 
 import driver.database.AttorneyRepository;
 import driver.database.ClientRepository;
-
 import driver.screen.ApplicationException;
 
 public class UserGatewayFactory {
