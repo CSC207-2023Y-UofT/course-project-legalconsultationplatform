@@ -1,5 +1,6 @@
 package usecasetesting;
 
+import adapter.controller.ControlContainer;
 import businessrule.gateway.AttorneyGateway;
 import businessrule.gateway.ClientGateway;
 import businessrule.gateway.QuestionGateway;
@@ -45,6 +46,11 @@ public class UserViewHistoryUseCaseTest {
         attorneyGateway.deleteAllUser();
 
         viewOutputBoundary = new ViewOutputBoundary() {
+            @Override
+            public void setControlContainer(ControlContainer controlContainer) {
+
+            }
+
             @Override
             public ViewResponseModel prepareFail(String msg) {
                 return null;

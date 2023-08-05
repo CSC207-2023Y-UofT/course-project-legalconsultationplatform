@@ -1,5 +1,6 @@
 package usecasetesting;
 
+import adapter.controller.ControlContainer;
 import adapter.presenter.HomePageResponseFormatter;
 import businessrule.gateway.*;
 import businessrule.inputboundary.PostInputBoundary;
@@ -46,6 +47,11 @@ public class ReplyUseCaseTest {
         attorneyGateway.deleteAllUser();
         homePageOutputBoundary = new HomePageOutputBoundary() {
             @Override
+            public void setControlContainer(ControlContainer controlContainer) {
+
+            }
+
+            @Override
             public HomePageResponseModel prepareFail(String msg) {
                 assertEquals("You cannot reply to this question", msg);
                 return null;
@@ -76,7 +82,7 @@ public class ReplyUseCaseTest {
         attorneyGateway.addUser(attorney);
 
         Attorney secondAttorney = new Attorney();
-        attorney.setUserId(SECOND_ATTORNEY_ID);
+        secondAttorney.setUserId(SECOND_ATTORNEY_ID);
         attorneyGateway.addUser(secondAttorney);
     }
 
@@ -110,18 +116,21 @@ public class ReplyUseCaseTest {
     @Test
     public void testAttorneyFollowUp(){
         setUpReplyUseCase();
+        PostRequestModel inputData = new PostRequestModel(QUESTION_ID, ATTORNEY_ID, "Test text");
+        postInputBoundary.createPost(inputData);
+
         User user = attorneyGateway.getUser(ATTORNEY_ID);
         Question attorneyquestion = user.getQuestionsList().get(0);// AttorneyQuestionList is not updated
         assertEquals(attorneyquestion.getQuestionId(), QUESTION_ID);
         assertEquals(attorneyquestion.getTakenByAttorney(), ATTORNEY_ID);
         assertEquals(attorneyquestion.isTaken(), true);
 
-        PostRequestModel inputData2 = new PostRequestModel(QUESTION_ID, ATTORNEY_ID, "Test text");// Attorney
+        PostRequestModel inputData2 = new PostRequestModel(QUESTION_ID, ATTORNEY_ID, "Test text2");// Attorney
         postInputBoundary.createPost(inputData2);
         Question question = questionGateway.getQuestion(QUESTION_ID);
         Post post2 = question.getPosts().get(1);
         assertEquals(post2.getBelongsTo(), ATTORNEY_ID);
-        assertEquals(post2.getPostText(), "Test text");
+        assertEquals(post2.getPostText(), "Test text2");
         assertEquals(attorneyquestion.getQuestionId(), QUESTION_ID);
         assertEquals(attorneyquestion.getTakenByAttorney(), ATTORNEY_ID);
         assertEquals(attorneyquestion.isTaken(), true);
@@ -137,8 +146,11 @@ public class ReplyUseCaseTest {
     @Test
     public void testAttorneyFailToReplyQuestionTakenByOther(){
         setUpReplyUseCase();
-        PostRequestModel inputData = new PostRequestModel(QUESTION_ID, SECOND_ATTORNEY_ID, "Test text");
-        postInputBoundary.createPost(inputData);// AttorneyQuestionList is not updated
+        PostRequestModel inputData = new PostRequestModel(QUESTION_ID, ATTORNEY_ID, "Test text");
+        postInputBoundary.createPost(inputData);
+
+        PostRequestModel inputData2 = new PostRequestModel(QUESTION_ID, SECOND_ATTORNEY_ID, "Test text");
+        postInputBoundary.createPost(inputData2);// AttorneyQuestionList is not updated
 
         User user = attorneyGateway.getUser(ATTORNEY_ID);
         Question attorneyquestion = user.getQuestionsList().get(0);

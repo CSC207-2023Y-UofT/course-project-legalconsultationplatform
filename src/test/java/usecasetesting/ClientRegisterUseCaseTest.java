@@ -1,5 +1,6 @@
 package usecasetesting;
 
+import adapter.controller.ControlContainer;
 import businessrule.gateway.ClientGateway;
 import businessrule.gateway.UserGatewayFactory;
 import businessrule.inputboundary.ClientRegisterInputBoundary;
@@ -35,6 +36,11 @@ public class ClientRegisterUseCaseTest {
         clientFactory = new ClientFactory();
         clientGateway.deleteAllUser();
         registerOutputBoundary = new RegisterOutputBoundary() {
+            @Override
+            public void setControlContainer(ControlContainer controlContainer) {
+
+            }
+
             @Override
             public RegisterResponseModel prepareSuccess(String msg) {
                 System.out.println(msg);

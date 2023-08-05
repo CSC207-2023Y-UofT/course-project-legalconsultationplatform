@@ -1,5 +1,6 @@
 package usecasetesting;
 
+import adapter.controller.ControlContainer;
 import businessrule.gateway.AttorneyGateway;
 import businessrule.gateway.ClientGateway;
 import businessrule.gateway.QuestionGateway;
@@ -33,6 +34,11 @@ public class BrowseQuestionUseCaseTest {
     private ClientGateway clientGateway;
     private AttorneyGateway attorneyGateway;
     private ViewOutputBoundary viewOutputBoundary = new ViewOutputBoundary() {
+        @Override
+        public void setControlContainer(ControlContainer controlContainer) {
+
+        }
+
         @Override
         public ViewResponseModel prepareFail(String msg) {
             return null;

@@ -1,6 +1,7 @@
 package usecasetesting;
 
 
+import adapter.controller.ControlContainer;
 import businessrule.gateway.*;
 
 import businessrule.inputboundary.RateInputBoundary;
@@ -49,6 +50,11 @@ public class RateAnswerUseCaseTest {
         postGateway.deleteAllPost();
         attorneyGateway.deleteAllUser();
         homePageOutputBoundary = new HomePageOutputBoundary() {
+            @Override
+            public void setControlContainer(ControlContainer controlContainer) {
+
+            }
+
             @Override
             public HomePageResponseModel prepareFail(String msg) {
                 assertEquals("You cannot rate this question!", msg);

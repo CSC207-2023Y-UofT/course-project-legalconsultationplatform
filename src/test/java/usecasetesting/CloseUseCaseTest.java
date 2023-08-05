@@ -1,6 +1,7 @@
 package usecasetesting;
 
 
+import adapter.controller.ControlContainer;
 import businessrule.gateway.*;
 import businessrule.inputboundary.CloseInputBoundary;
 import businessrule.outputboundary.HomePageOutputBoundary;
@@ -45,6 +46,11 @@ public class CloseUseCaseTest {
         postGateway.deleteAllPost();
         attorneyGateway.deleteAllUser();
         homePageOutputBoundary = new HomePageOutputBoundary() {
+            @Override
+            public void setControlContainer(ControlContainer controlContainer) {
+
+            }
+
             @Override
             public HomePageResponseModel prepareFail(String msg) {
                 assertEquals("You cannot close this question!", msg);

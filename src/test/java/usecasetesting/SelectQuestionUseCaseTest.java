@@ -1,5 +1,6 @@
 package usecasetesting;
 
+import adapter.controller.ControlContainer;
 import businessrule.gateway.*;
 import businessrule.inputboundary.QuestionInputBoundary;
 import businessrule.inputboundary.SelectInputBoundary;
@@ -53,6 +54,10 @@ public class SelectQuestionUseCaseTest {
         attorneyGateway.deleteAllUser();
         theQuestionOutputBoundary = new TheQuestionOutputBoundary() {
             @Override
+            public void setControlContainer(ControlContainer controlContainer) {
+            }
+
+            @Override
             public TheQuestionResponseModel prepareFail(String msg) {
                 assertEquals("This question is not accessible.", msg);
                 return null;
@@ -78,7 +83,7 @@ public class SelectQuestionUseCaseTest {
         attorneyGateway.addUser(attorney);
 
         Attorney secondAttorney = new Attorney();
-        attorney.setUserId(SECOND_ATTORNEY_ID);
+        secondAttorney.setUserId(SECOND_ATTORNEY_ID);
         attorneyGateway.addUser(secondAttorney);
 
         Post postBelongsToClient = new Post();
@@ -103,6 +108,8 @@ public class SelectQuestionUseCaseTest {
         question2.setQuestionId(TAKEN_QUESTION_ID);
         question2.setTaken(true);
         question2.setTakenByAttorney(ATTORNEY_ID);
+        question2.addPosts(postBelongsToClient);
+        question2.addPosts(postBelongsToAttorney);
         questionGateway.saveQuestion(question2);
 
         Question question3 = new Question();

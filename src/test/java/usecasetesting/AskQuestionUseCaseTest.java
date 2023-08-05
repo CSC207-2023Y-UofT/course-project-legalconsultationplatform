@@ -1,5 +1,6 @@
 package usecasetesting;
 
+import adapter.controller.ControlContainer;
 import businessrule.gateway.AttorneyGateway;
 import businessrule.gateway.ClientGateway;
 import businessrule.gateway.QuestionGateway;
@@ -42,6 +43,11 @@ public class AskQuestionUseCaseTest {
         questionGateway.deleteAllQuestion();
         attorneyGateway.deleteAllUser();
         theQuestionOutputBoundary = new TheQuestionOutputBoundary() {
+            @Override
+            public void setControlContainer(ControlContainer controlContainer) {
+
+            }
+
             @Override
             public TheQuestionResponseModel prepareFail(String msg) {
                 assertEquals("Please specify your question type.", msg);

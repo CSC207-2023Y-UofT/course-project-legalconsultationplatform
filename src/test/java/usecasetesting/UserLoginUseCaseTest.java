@@ -1,5 +1,6 @@
 package usecasetesting;
 
+import adapter.controller.ControlContainer;
 import businessrule.gateway.ClientGateway;
 import businessrule.gateway.UserGatewayFactory;
 import businessrule.inputboundary.UserLoginInputBoundary;
@@ -29,6 +30,11 @@ public class UserLoginUseCaseTest {
         clientGateway.deleteAllUser();
 
         homePageOutputBoundary = new HomePageOutputBoundary() {
+            @Override
+            public void setControlContainer(ControlContainer controlContainer) {
+
+            }
+
             @Override
             public HomePageResponseModel prepareFail(String msg) {
                 System.out.println(msg);
