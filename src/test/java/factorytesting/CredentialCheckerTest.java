@@ -20,16 +20,19 @@ class CredentialCheckerTest {
         assertEquals(true, checker.checkPostalCode("12345"), "Postal code validation failed.");
         assertEquals(false, checker.checkPostalCode("1234a"), "Invalid postal code passed validation.");
         assertEquals(false, checker.checkPostalCode("123456"), "Invalid postal code passed validation.");
-        //check postcode 空的，不是数字的，
+        assertEquals(false, checker.checkPostalCode(""), "Empty postal code passed validation.");
     }
+
 
     @Test
     void testCheckEmail() {
-        assertEquals(true, checker.checkEmail("test@example.com"), "Email validation failed.");
-        assertEquals(false, checker.checkEmail("test@example"), "Invalid email passed validation.");
-        assertEquals(false, checker.checkEmail("test.com"), "Invalid email passed validation.");
-        //空的email string
+        assertTrue(checker.checkEmail("test@example.com"), "Expected valid email to pass validation.");
+        assertFalse(checker.checkEmail("test@example"), "Expected email without domain to fail validation.");
+        assertFalse(checker.checkEmail("test.com"), "Expected email without '@' to fail validation.");
+        assertFalse(checker.checkEmail(""), "Expected empty email to fail validation.");
+        assertFalse(checker.checkEmail("   "), "Expected email with only spaces to fail validation.");
     }
+
 
     @Test
     void testCheckAge() {
