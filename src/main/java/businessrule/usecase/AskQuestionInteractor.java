@@ -19,7 +19,7 @@ public class AskQuestionInteractor implements QuestionInputBoundary {
     final QuestionFactory questionFactory;
     final ClientGateway clientGateway;
 
-    public AskQuestionInteractor(QuestionGateway questionGateway, TheQuestionOutputBoundary theQuestionOutputBoundary, QuestionFactory questionFactory, ClientGateway clientGateway, UserGatewayFactory userGatewayFactory) {
+    public AskQuestionInteractor(QuestionGateway questionGateway, TheQuestionOutputBoundary theQuestionOutputBoundary, QuestionFactory questionFactory, ClientGateway clientGateway) {
         this.questionGateway = questionGateway;
         this.theQuestionOutputBoundary = theQuestionOutputBoundary;
         this.questionFactory = questionFactory;
