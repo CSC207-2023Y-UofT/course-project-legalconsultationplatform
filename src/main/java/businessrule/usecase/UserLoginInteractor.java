@@ -45,7 +45,15 @@ public class UserLoginInteractor implements UserLoginInputBoundary{
         }
 
         // construct response model
-        HomePageResponseModel accountResponseModel = new HomePageResponseModel(inputUserId, userGateway.getUser(inputUserId).getUserName());
+        String userType;
+        User user = userGateway.getUser(inputUserId);
+        if (user.isClient()){
+            userType = "Client";
+        } else{
+            userType = "Attorney";
+        }
+        HomePageResponseModel accountResponseModel = new HomePageResponseModel(inputUserId,
+                userGateway.getUser(inputUserId).getUserName(), userType);
         return outputBoundary.prepareSuccess(accountResponseModel);
     }
 }
