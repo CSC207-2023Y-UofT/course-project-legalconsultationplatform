@@ -1,7 +1,5 @@
 package driver.database;
-/**
- * This class represents a Client Repository, responsible for managing and accessing client-related data.
- */
+
 
 import businessrule.gateway.ClientGateway;
 import entity.Client;
@@ -9,6 +7,9 @@ import entity.Client;
 import javax.persistence.*;
 import java.util.List;
 
+/**
+ * This class represents a Client Repository, responsible for managing and accessing client-related data.
+ */
 public class ClientRepository extends UserRepository implements ClientGateway {
 
     public boolean existsByUsername(String username) {
