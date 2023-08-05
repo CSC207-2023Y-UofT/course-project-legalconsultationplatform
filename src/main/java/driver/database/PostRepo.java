@@ -5,6 +5,9 @@ import entity.Post;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
+/**
+ * This class represents the persistence operations for Post entities in the data store.
+ */
 public class PostRepo implements PostGateway{
 
     @Override

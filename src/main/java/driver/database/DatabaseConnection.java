@@ -3,6 +3,9 @@ import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityManager;
 import javax.persistence.Persistence;
 
+/**
+ * This class represents for managing the Database Connection and Entity Manager.
+ */
 public class DatabaseConnection {
 
     private static final String URL = "objectdb://localhost:6136/myapp.odb;admin";

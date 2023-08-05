@@ -4,7 +4,9 @@ import businessrule.usecase.QuestionDisplayFormatter;
 
 import java.util.List;
 import java.util.Map;
-
+/**
+ * This class represents providing a simple and convenient way to transfer view data as a response to the client.
+ */
 public class ViewResponseModel {
     private final int userId;
     private final String userName;

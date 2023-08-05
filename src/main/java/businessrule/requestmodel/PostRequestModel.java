@@ -2,6 +2,9 @@ package businessrule.requestmodel;
 
 import java.time.LocalDate;
 
+/**
+ * This class represents a post request model for creating a new post.
+ */
 public class PostRequestModel {
     private final int questionId;
     private final int userId;

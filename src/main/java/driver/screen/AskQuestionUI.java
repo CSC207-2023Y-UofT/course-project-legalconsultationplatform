@@ -10,12 +10,8 @@ import java.time.LocalDate;
 
 import static javax.swing.JOptionPane.showMessageDialog;
 
-
-
-
 /**
- *
- * @author joseph
+ * This class represents the user interface for clients to ask legal questions.
  */
 public class AskQuestionUI extends JPanel implements ActionListener{
     QuestionControl control;

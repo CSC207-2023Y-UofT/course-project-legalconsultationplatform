@@ -13,8 +13,7 @@ import static javax.swing.JOptionPane.showMessageDialog;
 
 
 /**
- *
- * @author kaxi
+ * This class represents a user interface for logging in as both a client and an attorney.
  */
 public class LoginUI extends JPanel implements ActionListener{
     UserLoginControl control;

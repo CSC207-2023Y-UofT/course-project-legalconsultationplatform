@@ -4,7 +4,9 @@ import businessrule.usecase.PostDisplayFormatter;
 
 import java.time.LocalDate;
 import java.util.Map;
-
+/**
+ * This class represents providing a simple and convenient way to transfer questions data as a response to the client.
+ */
 public class TheQuestionResponseModel{
     private final int userId;
     private final String userName;

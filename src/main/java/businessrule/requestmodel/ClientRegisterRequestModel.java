@@ -1,5 +1,7 @@
 package businessrule.requestmodel;
-
+/**
+ * This class represents a request model for client registration.
+ */
 public class ClientRegisterRequestModel {
     private final String userName;
     private final String email;

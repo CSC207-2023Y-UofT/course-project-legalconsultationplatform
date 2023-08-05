@@ -1,5 +1,8 @@
 package businessrule.requestmodel;
 
+/**
+ * This class represents request model for a user login .
+ */
 public class UserLoginRequestModel {
     private final int userId;
     private final String password;

@@ -1,4 +1,7 @@
 package driver.database;
+/**
+ * This class represents a Client Repository, responsible for managing and accessing client-related data.
+ */
 
 import businessrule.gateway.ClientGateway;
 import entity.Client;

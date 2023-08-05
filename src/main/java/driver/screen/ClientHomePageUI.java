@@ -3,6 +3,9 @@ package driver.screen;
 import javax.swing.*;
 import java.awt.*;
 
+/**
+ * This class represents the user interface for the client's home page after logging in.
+ */
 public class ClientHomePageUI extends JPanel{
 
     public ClientHomePageUI() {

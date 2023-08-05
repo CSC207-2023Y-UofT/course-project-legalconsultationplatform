@@ -1,5 +1,8 @@
 package businessrule.requestmodel;
 
+/**
+ * This class represents a request model for rating an answer.
+ */
 public class RateRequestModel {
 
     private final int rating;

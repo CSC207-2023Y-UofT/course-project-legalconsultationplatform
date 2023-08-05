@@ -4,6 +4,10 @@ import businessrule.gateway.AttorneyGateway;
 import entity.Question;
 import entity.User;
 
+/**
+ * This class represents an Attorney Repository, responsible for managing Attorney users' data and
+ * accessing attorney-related data.
+ */
 // TODO: implement this class
 public class AttorneyRepository implements AttorneyGateway {
 

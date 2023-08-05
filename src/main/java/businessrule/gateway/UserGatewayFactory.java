@@ -1,4 +1,7 @@
 package businessrule.gateway;
+/**
+ * This class represents a factory for creating instances of the "UserGateway" interface based on the given user ID.
+ */
 
 import driver.database.AttorneyRepository;
 import driver.database.ClientRepository;
