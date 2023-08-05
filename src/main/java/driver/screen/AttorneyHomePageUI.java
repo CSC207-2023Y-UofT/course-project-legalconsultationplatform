@@ -26,6 +26,8 @@ public class AttorneyHomePageUI extends JPanel implements ActionListener {
         this.userName = userName;
         this.cardLayout = cardLayout;
         this.screens = screens;
+
+        setBackground(UIDesign.backgroundColor);
         //The title
         JLabel title = new JLabel("Home Page");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
@@ -43,6 +45,7 @@ public class AttorneyHomePageUI extends JPanel implements ActionListener {
 
         //The three buttons
         JPanel buttons = new JPanel();
+        buttons.setBackground(UIDesign.backgroundColor);
         JButton browseQuestions = new JButton("Browse available questions");
         JButton viewQuestionHistory = new JButton("View question history");
         JButton recommendation = new JButton("Recommended questions");

@@ -25,6 +25,7 @@ public class ClientHomePageUI extends JPanel implements ActionListener {
         this.cardLayout = cardLayout;
         this.screens = screens;
 
+        setBackground(UIDesign.backgroundColor);
         JLabel title = new JLabel("Home");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         UIDesign.setTitle(title);
@@ -41,6 +42,7 @@ public class ClientHomePageUI extends JPanel implements ActionListener {
         JLabel helloMessage = new JLabel(helloMessageString);
 
         JPanel buttons = new JPanel();
+        buttons.setBackground(UIDesign.backgroundColor);
         JButton askNewQuestion = new JButton("Ask new question");
         JButton viewQuestionHistory = new JButton("View question history");
 
