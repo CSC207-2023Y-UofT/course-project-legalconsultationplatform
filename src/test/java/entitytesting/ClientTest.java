@@ -3,8 +3,6 @@ package entitytesting;
 import entity.Client;
 import entity.Question;
 import org.junit.jupiter.api.Test;
-import entity.Question;
-import entity.Client;
 
 import java.time.LocalDate;
 import java.util.Objects;
@@ -169,6 +167,21 @@ class ClientTest {
         assertEquals(true, client.getQuestionsList().contains(question), "The question is not added in the list.");
     }
 
+    @Test
+    void testHashCodeSucceed() {
+        Client client1 = new Client(1000000, "Xingfu Wu", "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
+                "Asian", 30, "Male", "Single", 1, 60000.0f);
+
+        assertEquals(client1.hashCode(), Objects.hashCode(1000000), "The hashcode is wrong");
+    }
+
+    @Test
+    void testHashCodeFail() {
+        Client client1 = new Client(1000000, "Xingfu Wu", "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
+                "Asian", 30, "Male", "Single", 1, 60000.0f);
+
+        assertEquals(false, client1.hashCode() ==  Objects.hashCode(100000), "The hashcode is wrong");
+    }
 
     @Test
     void testEqualsSucceed() {
@@ -197,5 +210,49 @@ class ClientTest {
         assertEquals(false, client1.equals(client2), "The equal method is wrong");
     }
 
+    @Test
+    void testToStringSucceed() {
+        String expectedName = "Xingfu Wu";
 
+        Client client = new Client(1000000, expectedName, "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
+                "Asian", 30, "Male", "Single", 1, 60000.0f);
+
+        String expectedToString = String.format("[Client]: %s", expectedName);
+        assertEquals(expectedToString, client.toString(), "The toString method is wrong");
+    }
+
+    @Test
+    void testToStringFail() {
+        String expectedName = "Xingfu Wu";
+
+        Client client = new Client(1000000, expectedName, "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
+                "Asian", 30, "Male", "Single", 1, 60000.0f);
+
+        String expectedToString = String.format("[Attorney]: %s", expectedName);
+        assertEquals(false, expectedToString == client.toString(), "The toString method is wrong");
+    }
+
+    @Test
+    void testIsQuestionRateableSucceed() {
+        String expectedName = "Xingfu Wu";
+
+        Client client = new Client(1000000, expectedName, "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
+                "Asian", 30, "Male", "Single", 1, 60000.0f);
+
+        Question question = new Question();
+        question.setClose(true);
+        assertEquals(true, client.isQuestionRateable(question), "IsQuestionRateable is wrong.");
+    }
+
+    @Test
+    void testIsQuestionRateableFail() {
+        String expectedName = "Xingfu Wu";
+
+        Client client = new Client(1000000, expectedName, "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
+                "Asian", 30, "Male", "Single", 1, 60000.0f);
+
+        Question question = new Question();
+        question.setClose(false);
+        assertEquals(false, client.isQuestionRateable(question), "IsQuestionRateable is wrong.");
+    }
 }
