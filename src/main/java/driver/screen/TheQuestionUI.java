@@ -16,6 +16,8 @@ import java.time.format.DateTimeFormatter;
 import java.util.Map;
 import java.util.Objects;
 
+import static driver.screen.UIDesign.buttonSize;
+
 public class TheQuestionUI extends JPanel implements ActionListener {
     ControlContainer controlContainer;
     CardLayout cardLayout;
@@ -47,6 +49,8 @@ public class TheQuestionUI extends JPanel implements ActionListener {
         this.deadline = deadline;
         this.postMap = postMap;
 
+        setSize(400, 400);
+        setBackground(UIDesign.backgroundColor);
 
         //UserName and UserId
         String helloMessageString = "Hello, " + userName + "(" + userId + ")";
@@ -55,6 +59,8 @@ public class TheQuestionUI extends JPanel implements ActionListener {
         String titleLineString = "(" + type + ")" + title;
         JLabel titleLine = new JLabel(titleLineString);
         titleLine.setAlignmentX(Component.CENTER_ALIGNMENT);
+        titleLine.setForeground(UIDesign.titleColor);
+        titleLine.setFont(UIDesign.subTitleFont);
         //Question deadline
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String deadlineString = "Deadline: " + deadline.format(formatter);
@@ -103,9 +109,14 @@ public class TheQuestionUI extends JPanel implements ActionListener {
 
         //The three buttons
         JPanel buttons = new JPanel();
+        buttons.setBackground(UIDesign.backgroundColor);
+        buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS)); // Use X_AXIS for horizontal alignment
         JButton postReply = new JButton("Post reply");
         JButton closeQuestion = new JButton("Close question");
         JButton rateQuestion = new JButton("Rate question");
+        postReply.setPreferredSize(buttonSize);
+        closeQuestion.setPreferredSize(buttonSize);
+        rateQuestion.setPreferredSize(buttonSize);
 
         buttons.add(postReply);
         buttons.add(closeQuestion);

@@ -9,6 +9,8 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import static driver.screen.UIDesign.buttonSize;
+
 public class RegisterUI extends JPanel implements ActionListener{
     ControlContainer controlContainer;
 
@@ -34,6 +36,8 @@ public class RegisterUI extends JPanel implements ActionListener{
 
     public RegisterUI(ControlContainer controlContainer) {
         this.controlContainer = controlContainer;
+        setSize(400, 400);
+        setBackground(UIDesign.backgroundColor);
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -44,6 +48,8 @@ public class RegisterUI extends JPanel implements ActionListener{
         // Create the title label with 30 pixels space on top
         JLabel title = new JLabel("Create your profile");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setForeground(UIDesign.titleColor);
+        title.setFont(UIDesign.subTitleFont);
         int topMargin = 30;
         int leftMargin = 0;
         int bottomMargin = 0;
@@ -92,7 +98,12 @@ public class RegisterUI extends JPanel implements ActionListener{
 
         //Register button here
         JButton buttonToSubmit = new JButton("Register");
+        buttonToSubmit.setPreferredSize(buttonSize);
+        buttonToSubmit.setMaximumSize(buttonSize);
+        buttonToSubmit.setMinimumSize(buttonSize);
         JPanel buttons = new JPanel();
+        buttons.setBackground(UIDesign.backgroundColor);
+        buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS)); // Use X_AXIS for horizontal alignment
         buttons.add(buttonToSubmit);
         buttonToSubmit.addActionListener(this);
         add(buttons, gbc);

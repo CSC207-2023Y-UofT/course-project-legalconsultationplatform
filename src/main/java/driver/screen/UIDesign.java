@@ -10,6 +10,7 @@ public class UIDesign {
     public static Font regularFont = new Font("Novo Sans", Font.PLAIN, 12);
     public static Font boldFont = new Font("Novo Sans", Font.BOLD, 14);
     public static Font titleFont = new Font("Novo Sans", Font.BOLD | Font.ITALIC, 30);
+    public static Font subTitleFont = new Font("Novo Sans", Font.BOLD | Font.ITALIC, 20);
     public static Font italicFont = new Font("Novo Sans", Font.ITALIC, 12);
 
     public static Dimension buttonSize = new Dimension(100, 50);
