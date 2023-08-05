@@ -8,6 +8,7 @@ public class LabelTextPanel extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         label.setAlignmentX(Component.LEFT_ALIGNMENT);
         textField.setAlignmentX(Component.LEFT_ALIGNMENT);
+        textField.setColumns(25);
         label.setForeground(UIDesign.inputPromptColor);
         add(label);
         add(textField);

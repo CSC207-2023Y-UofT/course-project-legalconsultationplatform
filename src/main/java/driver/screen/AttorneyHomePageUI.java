@@ -6,9 +6,11 @@ import adapter.controller.ViewQuestionControl;
 import businessrule.usecase.QuestionDisplayFormatter;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.server.UID;
 import java.util.Map;
 
 public class AttorneyHomePageUI extends JPanel implements ActionListener {
@@ -27,6 +29,13 @@ public class AttorneyHomePageUI extends JPanel implements ActionListener {
         //The title
         JLabel title = new JLabel("Home Page");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        UIDesign.setTitle(title);
+
+        int topMargin = 50;
+        int leftMargin = 0;
+        int bottomMargin = 0;
+        int rightMargin = 0;
+        title.setBorder(new EmptyBorder(topMargin, leftMargin, bottomMargin, rightMargin));
 
         //The userName and userId
         String helloMessageString = "Hello, " + userName + "(" + userId + ")";
@@ -37,6 +46,10 @@ public class AttorneyHomePageUI extends JPanel implements ActionListener {
         JButton browseQuestions = new JButton("Browse available questions");
         JButton viewQuestionHistory = new JButton("View question history");
         JButton recommendation = new JButton("Recommended questions");
+
+        UIDesign.setHomePageButton(browseQuestions);
+        UIDesign.setHomePageButton(viewQuestionHistory);
+        UIDesign.setHomePageButton(recommendation);
 
         buttons.add(browseQuestions);
         buttons.add(viewQuestionHistory);

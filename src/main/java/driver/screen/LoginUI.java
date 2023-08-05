@@ -25,40 +25,44 @@ public class LoginUI extends JPanel implements ActionListener{
     public LoginUI(ControlContainer controlContainer) {
 
         this.controlContainer = controlContainer;
+        setSize(400, 400);
         setBackground(UIDesign.backgroundColor);
-
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = GridBagConstraints.RELATIVE;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(5, 5, 5, 5); // Padding around each component
 
         // Create the title label
         JLabel title = new JLabel("Log In");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        UIDesign.setTitle(title);
         int topMargin = 30;
         int leftMargin = 0;
         int bottomMargin = 0;
         int rightMargin = 0;
         title.setBorder(new EmptyBorder(topMargin, leftMargin, bottomMargin, rightMargin));
-        add(title);
+        add(title, gbc);
 
         // Add some vertical glue between the title, userId, and password
 
         gbc.gridx = 0; // Set the gridx to 0 to place components under the title
 
-        LabelTextPanel userIdPanel = new LabelTextPanel(new JLabel("User name"), userId);
+        LabelTextPanel userIdPanel = new LabelTextPanel(new JLabel("User Id"), userId);
         add(userIdPanel, gbc);
 
         LabelTextPanel passwordPanel = new LabelTextPanel(new JLabel("Password"), password);
         add(passwordPanel, gbc);
 
-        // Add the login button
-        JButton login = new JButton("Login");
+        JButton buttonToSubmit = new JButton("Login");
+        UIDesign.setButton(buttonToSubmit);
         JPanel buttons = new JPanel();
         buttons.setBackground(UIDesign.backgroundColor);
-        login.setMinimumSize(UIDesign.buttonSize);
-        login.setMaximumSize(UIDesign.buttonSize);
-        buttons.add(login);
-        login.addActionListener(this);
-        add(buttons);
+        buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS)); // Use X_AXIS for horizontal alignment
+        buttons.add(buttonToSubmit);
+        buttonToSubmit.addActionListener(this);
+        add(buttons, gbc);
 
     }
     @Override
