@@ -90,9 +90,10 @@ public class TheQuestionUI extends JPanel implements ActionListener {
             JTextArea postArea = new JTextArea();
             postArea.setEditable(false);
             postArea.setLineWrap(true);
-            String overallText = idLine + "\n" + dateLine + "\n" + postText;
+            String overallText = idLine + "\n" + dateLine + "\n" + postText + "\n";
+            System.out.println("Overall text: " + overallText);
             postArea.setText(overallText);
-            postArea.setPreferredSize(new Dimension(300, 30));
+            postArea.setPreferredSize(new Dimension(300, 50));
             //Add the postArea into the scrollpanel
             postScrollPanel.add(postArea);
         }

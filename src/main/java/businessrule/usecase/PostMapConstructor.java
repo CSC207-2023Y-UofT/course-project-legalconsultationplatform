@@ -35,7 +35,6 @@ class PostMapConstructor {
             String postText = post.getPostText();
             LocalDate createAt = post.getCreateAt();
             PostDisplayFormatter postDisplayFormatter = new PostDisplayFormatter(postText, isClient, name, createAt);
-
             // put every data needed to the post map
             postMap.put(postId, postDisplayFormatter);
         }
