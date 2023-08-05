@@ -60,7 +60,7 @@ public class SelectQuestionUseCaseTest {
 
             @Override
             public TheQuestionResponseModel prepareSuccess(TheQuestionResponseModel response) {
-                assertEquals(1, response.getPostMap().size(), "The post map is not correct.");
+                assertEquals(2, response.getPostMap().size(), "The post map is not correct.");
                 List<PostDisplayFormatter> arrayList;
                 arrayList = new ArrayList<>(response.getPostMap().values());
                 assertEquals("test text", arrayList.get(0).getPostText());

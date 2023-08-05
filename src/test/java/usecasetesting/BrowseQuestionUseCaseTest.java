@@ -7,7 +7,7 @@ import businessrule.inputboundary.BrowseInputBoundary;
 import businessrule.outputboundary.ViewOutputBoundary;
 import businessrule.requestmodel.BrowseRequestModel;
 import businessrule.responsemodel.ViewResponseModel;
-import businessrule.usecase.BrowseQuestionInterator;
+import businessrule.usecase.BrowseQuestionInteractor;
 import businessrule.usecase.QuestionDisplayFormatter;
 import driver.database.*;
 
@@ -56,7 +56,7 @@ public class BrowseQuestionUseCaseTest {
         clientGateway.deleteAllUser();
         questionGateway.deleteAllQuestion();
         attorneyGateway.deleteAllUser();
-        browseInputBoundary = new BrowseQuestionInterator(viewOutputBoundary, questionGateway, attorneyGateway);
+        browseInputBoundary = new BrowseQuestionInteractor(viewOutputBoundary, questionGateway, attorneyGateway);
 
         Client client = new Client();
         client.setUserId(CLIENT_ID);
