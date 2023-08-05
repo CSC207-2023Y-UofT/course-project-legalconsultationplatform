@@ -27,14 +27,18 @@ public class ViewQuestionInteractor implements ViewInputBoundary {
 
     @Override
     public ViewResponseModel viewQuestion(ViewRequestModel viewRequestModel) {
-        int userId= viewRequestModel.getUserId();
+        // get user who performed the operation
+        int userId = viewRequestModel.getUserId();
         UserGateway userGateway = userGatewayFactory.createUserGateway(userId);
         User user = userGateway.getUser(userId);
+
+        // get question list to view by the user
         List<Question> questionList = user.getQuestionsList();
+
+        // construct response model
         QuestionMapConstructor questionMapConstructor = new QuestionMapConstructor();
         Map<Integer, QuestionDisplayFormatter> questionMap = questionMapConstructor.constructQuestionMap(questionList);
-        Attorney attorney = (Attorney) userGateway.getUser(viewRequestModel.getUserId());
-        ViewResponseModel viewResponseModel = new ViewResponseModel(attorney.getUserId(), attorney.getUserName(), questionMap);
+        ViewResponseModel viewResponseModel = new ViewResponseModel(user.getUserId(), user.getUserName(), questionMap);
         return viewOutputBoundary.prepareSuccess(viewResponseModel);
     }
 }

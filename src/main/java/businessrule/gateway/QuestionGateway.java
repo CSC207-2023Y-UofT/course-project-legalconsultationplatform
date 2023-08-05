@@ -8,7 +8,7 @@ import java.util.List;
 
 public interface QuestionGateway {
     void saveQuestion(Question question);
-    boolean checkExistsByName(int questionId);
+    boolean existsById(int questionId);
     Question getQuestion(int questionId);
     List<Question> getAllQuestion();
     List<Question> getNotTakenQuestion();
