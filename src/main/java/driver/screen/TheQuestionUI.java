@@ -96,7 +96,7 @@ public class TheQuestionUI extends JPanel implements ActionListener {
             //Add the postArea into the scrollpanel
             postScrollPanel.add(postArea);
         }
-        postScrollPane.add(postScrollPanel);
+        postScrollPane.setViewportView(postScrollPanel);
 
 
         //The new post textBox

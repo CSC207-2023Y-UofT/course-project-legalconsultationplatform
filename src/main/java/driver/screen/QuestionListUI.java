@@ -68,7 +68,7 @@ public class QuestionListUI extends JPanel{
                 }
             });
         }
-        questionScrollPane.add(questionScrollPanel);
+        questionScrollPane.setViewportView(questionScrollPanel);
 
         //Add everything in the panel
         this.add(helloMessage);
