@@ -82,12 +82,12 @@ public class QuestionRepoTest {
     }
 
     @Test
-    public void testCheckExistsByName() {
+    public void testExistsById() {
         QuestionRepo repo = new QuestionRepo();
         //test checking existing question
-        assertTrue(repo.checkExistsByName(QUESTION_ID), "The question does not exist!");
+        assertTrue(repo.existsById(QUESTION_ID), "The question does not exist!");
         //test checking question that does not exist
-        assertFalse(repo.checkExistsByName(7), "The question exists!");
+        assertFalse(repo.existsById(7), "The question exists!");
     }
 
     @Test
@@ -258,7 +258,7 @@ public class QuestionRepoTest {
         //test saving a question into the database
         q.setTaken(true);
         repo.saveQuestion(q);
-        assertTrue(repo.checkExistsByName(questionId), "Question is not saved into the database!");
+        assertTrue(repo.existsById(questionId), "Question is not saved into the database!");
     }
 
     @Test
@@ -302,9 +302,9 @@ public class QuestionRepoTest {
         repo.saveQuestion(q);
 
         //test deleting an existing question from the database
-        assertTrue(repo.checkExistsByName(questionId), "The post was not added!");
+        assertTrue(repo.existsById(questionId), "The post was not added!");
         repo.deleteQuestion(questionId);
-        assertFalse(repo.checkExistsByName(questionId), "the post was not deleted!");
+        assertFalse(repo.existsById(questionId), "the post was not deleted!");
 
         //recover
         repo.deleteAllQuestion();

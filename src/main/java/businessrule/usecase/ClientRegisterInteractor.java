@@ -25,7 +25,8 @@ public class ClientRegisterInteractor implements ClientRegisterInputBoundary {
     }
 
     @Override
-    public RegisterResponseModel create(ClientRegisterRequestModel requestModel) {
+    public RegisterResponseModel create(ClientRegisterRequestModel requestModel){
+        // prepare input data
         String inputUserName = requestModel.getUserName();
         String inputEmail = requestModel.getEmail();
         String inputPassword1 = requestModel.getPassword();
@@ -39,6 +40,7 @@ public class ClientRegisterInteractor implements ClientRegisterInputBoundary {
         int inputNumberOfHousehold = requestModel.getNumberOfHousehold();
         float inputAnnualIncome = requestModel.getAnnualIncome();
 
+        // validate input data
         CredentialChecker checker = new CredentialChecker();
         if (clientGateway.existsByName(inputUserName)) {
             return outputBoundary.prepareFail("User name already exists");
@@ -53,6 +55,8 @@ public class ClientRegisterInteractor implements ClientRegisterInputBoundary {
         } else if (!checker.checkPostalCode(inputPostalCode)) {
             return outputBoundary.prepareFail("Postal Code is invalid");
         }
+
+        // create user id
         RandomNumberGenerator generator = new RandomNumberGenerator();
         int randomUserId = generator.generateClientId(8);
         boolean exists = clientGateway.existsById(randomUserId);
@@ -60,6 +64,8 @@ public class ClientRegisterInteractor implements ClientRegisterInputBoundary {
             randomUserId = generator.generateClientId(8);
             exists = clientGateway.existsById(randomUserId);
         }
+
+        // add user
         Client client = clientFactory.create(randomUserId, inputUserName, inputEmail,
                 inputPassword1, inputStateAbb, inputPostalCode, inputEthnicity, inputAge,
                 inputGender, inputMaritalStatus, inputNumberOfHousehold, inputAnnualIncome);

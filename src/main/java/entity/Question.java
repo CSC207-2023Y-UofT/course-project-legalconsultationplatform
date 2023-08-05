@@ -36,6 +36,7 @@ public class Question {
 
 
     public Question() {
+        rating = MISSING_RATING;
         posts = new ArrayList<Post>();
     }
 

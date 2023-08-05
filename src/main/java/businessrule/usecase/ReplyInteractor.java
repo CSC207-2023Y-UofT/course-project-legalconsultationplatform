@@ -35,21 +35,36 @@ public class ReplyInteractor implements PostInputBoundary {
 
     @Override
     public HomePageResponseModel createPost(PostRequestModel postRequestModel) {
-        RandomNumberGenerator randomNumberGenerator = new RandomNumberGenerator();
-        LocalDate now = LocalDate.now();
-
-        UserGateway userGateway = userGatewayFactory.createUserGateway(postRequestModel.getUserId());
-        User user = userGateway.getUser(postRequestModel.getUserId());
+        // get input data
+        int userId = postRequestModel.getUserId();
+        UserGateway userGateway = userGatewayFactory.createUserGateway(userId);
+        User user = userGateway.getUser(userId);
         Question question = questionGateway.getQuestion(postRequestModel.getQuestionId());
+
+        // generate post id
+        RandomNumberGenerator generator = new RandomNumberGenerator();
+        int randomPostId = generator.generatePostId(9);
+        boolean exist = postGateway.existsById(randomPostId);
+        while (exist) {
+            randomPostId = generator.generatePostId(9);
+            exist = postGateway.existsById(randomPostId);
+        }
+
+        // prepare the post entity
+        LocalDate now = LocalDate.now();
         boolean isQuestionReplyable = user.isQuestionReplyable(question);
-        Post post = postFactory.create(randomNumberGenerator.generatePostId(9), postRequestModel.getQuestionId(), now, postRequestModel.getPostText(), postRequestModel.getUserId());
-        questionGateway.updatePosts(postRequestModel.getQuestionId(), post);
-        postGateway.savePost(post);
+
+        // handle reply logic and prepare response model
         String userType;
         if (isQuestionReplyable) {
+            // if replyable, prepare post entity and update related field
+            Post post = postFactory.create(randomPostId, postRequestModel.getQuestionId(), now, postRequestModel.getPostText(), postRequestModel.getUserId());
+            questionGateway.updatePosts(postRequestModel.getQuestionId(), post);
+            postGateway.savePost(post);
             questionGateway.updateIsTaken(question.getQuestionId(), question.isTaken());
             questionGateway.updateTakenByAttorney(question.getQuestionId(), question.getTakenByAttorney());
             questionGateway.updateTakenAt(question.getQuestionId(), question.getTakenAt());
+            userGateway.updateQuestionList(userId, question);
             if (user.isClient()){
                 userType = "Client";
             } else{

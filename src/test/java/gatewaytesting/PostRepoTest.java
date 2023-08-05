@@ -39,9 +39,9 @@ public class PostRepoTest {
     public void testCheckExistsById() {
         PostRepo repo = new PostRepo();
         //test the id exists
-        assertTrue(repo.checkExistsById(POST_ID), "The id does not exist!");
+        assertTrue(repo.existsById(POST_ID), "The id does not exist!");
         //test the id does not exist
-        assertFalse(repo.checkExistsById(15), "The id exists!");
+        assertFalse(repo.existsById(15), "The id exists!");
     }
 
     @AfterAll
@@ -67,7 +67,7 @@ public class PostRepoTest {
 
         //test saving a post into the database
         repo.savePost(p);
-        assertTrue(repo.checkExistsById(postId), "Post is not saved into the database!");
+        assertTrue(repo.existsById(postId), "Post is not saved into the database!");
     }
 
     @Test
@@ -107,9 +107,9 @@ public class PostRepoTest {
         repo.savePost(p);
 
         //test deleting an existing client from the database
-        assertTrue(repo.checkExistsById(postId), "The post was not added!");
+        assertTrue(repo.existsById(postId), "The post was not added!");
         repo.deletePost(postId);
-        assertFalse(repo.checkExistsById(postId), "the post was not deleted!");
+        assertFalse(repo.existsById(postId), "the post was not deleted!");
     }
 
     @Test
