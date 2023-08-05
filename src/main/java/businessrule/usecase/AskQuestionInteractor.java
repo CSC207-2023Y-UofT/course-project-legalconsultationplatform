@@ -31,6 +31,8 @@ public class AskQuestionInteractor implements QuestionInputBoundary {
         // validate input
         if (questionRequestModel.getQuestionCategory() == null){
             return theQuestionOutputBoundary.prepareFail("Please specify your question type.");
+        } else if (questionRequestModel.getTitle() == null){
+            return theQuestionOutputBoundary.prepareFail("Please specify your question title.");
         }
 
         // generate question id

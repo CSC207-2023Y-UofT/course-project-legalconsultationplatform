@@ -55,6 +55,7 @@ public class ReplyInteractor implements PostInputBoundary {
         boolean isQuestionReplyable = user.isQuestionReplyable(question);
 
         // handle reply logic and prepare response model
+        String userType;
         if (isQuestionReplyable) {
             // if replyable, prepare post entity and update related field
             Post post = postFactory.create(randomPostId, postRequestModel.getQuestionId(), now, postRequestModel.getPostText(), postRequestModel.getUserId());
@@ -65,6 +66,12 @@ public class ReplyInteractor implements PostInputBoundary {
             questionGateway.updateTakenAt(question.getQuestionId(), question.getTakenAt());
             userGateway.updateQuestionList(userId, question);
             HomePageResponseModel homePageResponseModel = new HomePageResponseModel(user.getUserId(), user.getUserName());
+            if (user.isClient()){
+                userType = "Client";
+            } else{
+                userType = "Attorney";
+            }
+            HomePageResponseModel homePageResponseModel = new HomePageResponseModel(user.getUserId(), user.getUserName(), userType);
             return homePageOutputBoundary.prepareSuccess(homePageResponseModel);
         }
         else{

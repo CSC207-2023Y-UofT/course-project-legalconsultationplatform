@@ -1,17 +1,19 @@
 package businessrule.usecase;
 
 
+import adapter.presenter.RegisterResponseFormatter;
 import businessrule.gateway.ClientGateway;
 import businessrule.inputboundary.ClientRegisterInputBoundary;
 import businessrule.outputboundary.RegisterOutputBoundary;
 import businessrule.requestmodel.ClientRegisterRequestModel;
 import businessrule.responsemodel.RegisterResponseModel;
+import driver.database.ClientRepository;
 import entity.Client;
 import entity.ClientFactory;
 import entity.CredentialChecker;
 import entity.RandomNumberGenerator;
 
-class ClientRegisterInteractor implements ClientRegisterInputBoundary {
+public class ClientRegisterInteractor implements ClientRegisterInputBoundary {
     final ClientGateway clientGateway;
     final RegisterOutputBoundary outputBoundary;
     final ClientFactory clientFactory;
@@ -40,17 +42,17 @@ class ClientRegisterInteractor implements ClientRegisterInputBoundary {
 
         // validate input data
         CredentialChecker checker = new CredentialChecker();
-        if (clientGateway.existsByName(inputUserName)){
+        if (clientGateway.existsByName(inputUserName)) {
             return outputBoundary.prepareFail("User name already exists");
         } else if (!inputPassword1.equals(inputPassword2)) {
             return outputBoundary.prepareFail("Passwords does not match");
-        } else if (inputPassword1.length() < 8){
+        } else if (inputPassword1.length() < 8) {
             return outputBoundary.prepareFail("Password is less than 8 characters");
-        } else if (!checker.checkEmail(inputEmail)){
+        } else if (!checker.checkEmail(inputEmail)) {
             return outputBoundary.prepareFail("Email is invalid");
-        } else if (!checker.checkAge(inputAge)){
+        } else if (!checker.checkAge(inputAge)) {
             return outputBoundary.prepareFail("Age is invalid");
-        } else if (!checker.checkPostalCode(inputPostalCode)){
+        } else if (!checker.checkPostalCode(inputPostalCode)) {
             return outputBoundary.prepareFail("Postal Code is invalid");
         }
 
@@ -58,7 +60,7 @@ class ClientRegisterInteractor implements ClientRegisterInputBoundary {
         RandomNumberGenerator generator = new RandomNumberGenerator();
         int randomUserId = generator.generateClientId(8);
         boolean exists = clientGateway.existsById(randomUserId);
-        while (exists){
+        while (exists) {
             randomUserId = generator.generateClientId(8);
             exists = clientGateway.existsById(randomUserId);
         }
@@ -68,6 +70,7 @@ class ClientRegisterInteractor implements ClientRegisterInputBoundary {
                 inputPassword1, inputStateAbb, inputPostalCode, inputEthnicity, inputAge,
                 inputGender, inputMaritalStatus, inputNumberOfHousehold, inputAnnualIncome);
         clientGateway.addUser(client);
-        return outputBoundary.prepareSuccess("Client successfully registered");
+        String message = "Your userId is " + randomUserId;
+        return outputBoundary.prepareSuccess(message);
     }
 }
