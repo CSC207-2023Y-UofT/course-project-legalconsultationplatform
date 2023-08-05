@@ -4,21 +4,17 @@ plugins {
 
 repositories {
     mavenCentral()
-    jcenter()
 }
 
 dependencies {
     implementation 'junit:junit:4.13.1'
     implementation 'javax.persistence:javax.persistence-api:2.2'
-    implementation files('objectdb-2.8.8.jar')
+    implementation files('lib/objectdb.jar')
     implementation 'javax.transaction:jta:1.1'
-    implementation 'com.fasterxml.jackson.core:jackson-databind:2.13.5'
-    implementation 'black.ninia:jep:4.1.1'
+    implementation 'javax.jdo:jdo-api:3.1'
     testImplementation('org.junit.jupiter:junit-jupiter:5.6.0')
-}
-
-tasks.withType(JavaExec).configureEach {
-    systemProperty "java.library.path", "/Users/liuyifan/opt/anaconda3/lib/python3.9/site-packages/jep"
+    implementation group: 'commons-validator', name: 'commons-validator', version: '1.7'
+    implementation 'com.toedter:jcalendar:1.4'
 }
 
 test {

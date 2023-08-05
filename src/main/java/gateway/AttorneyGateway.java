@@ -1,6 +1,6 @@
-package gateway;
+package businessrule.gateway;
 
-import userentities.Attorney;
+import entity.Attorney;
 import java.util.List;
 
 public interface AttorneyGateway extends UserGateway{
