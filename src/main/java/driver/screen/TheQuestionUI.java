@@ -98,12 +98,16 @@ public class TheQuestionUI extends JPanel implements ActionListener {
             postScrollPanel.add(postArea);
         }
         postScrollPane.setViewportView(postScrollPanel);
+        Dimension scrollPaneDimension = new Dimension(300, 200);
+        postScrollPane.setMinimumSize(scrollPaneDimension);
+        postScrollPane.setMinimumSize(scrollPaneDimension);
+        postScrollPane.setPreferredSize(scrollPaneDimension);
 
 
         //The new post textBox
         inputPostArea.setLineWrap(true);
         inputPostArea.setWrapStyleWord(true);
-        inputPostArea.setPreferredSize(new Dimension(400, 100));
+        inputPostArea.setPreferredSize(new Dimension(100, 50));
 
         //The rate function
         DropDownPanel ratePanel = new DropDownPanel(new JLabel("Rate this question"), rate);
