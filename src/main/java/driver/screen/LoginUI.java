@@ -4,6 +4,7 @@ import adapter.controller.ControlContainer;
 import adapter.controller.UserLoginControl;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -26,23 +27,41 @@ public class LoginUI extends JPanel implements ActionListener{
 
         this.controlContainer = controlContainer;
 
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        // Create the title label
         JLabel title = new JLabel("Login to your account");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        int topMargin = 30;
+        int leftMargin = 0;
+        int bottomMargin = 0;
+        int rightMargin = 0;
+        title.setBorder(new EmptyBorder(topMargin, leftMargin, bottomMargin, rightMargin));
+        add(title);
 
+        // Add some vertical glue between the title, userId, and password
+        add(Box.createVerticalGlue());
+
+        // Add userId panel
         LabelTextPanel userIdInfo = new LabelTextPanel(new JLabel("UserId"), userId);
-        LabelTextPanel passwordInfo = new LabelTextPanel(new JLabel("Password"), password);
-        JButton login = new JButton("Login");
+        add(userIdInfo);
 
+        // Add some vertical glue between userId and password
+        add(Box.createVerticalGlue());
+
+        // Add password panel
+        LabelTextPanel passwordInfo = new LabelTextPanel(new JLabel("Password"), password);
+        add(passwordInfo);
+
+        // Add some vertical glue between password and the login button
+        add(Box.createVerticalGlue());
+
+        // Add the login button
+        JButton login = new JButton("Login");
         JPanel buttons = new JPanel();
         buttons.add(login);
-
         login.addActionListener(this);
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        this.add(title);
-        this.add(userIdInfo);
-        this.add(passwordInfo);
-        this.add(buttons);
+        add(buttons);
 
     }
     @Override

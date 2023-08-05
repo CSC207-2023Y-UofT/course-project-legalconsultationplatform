@@ -26,7 +26,7 @@ public class Main {
 
         //set up jframe
         JFrame application = new JFrame("Legal Consultation Platform");
-        application.setSize(1000, 1000);
+        application.setSize(400, 400);
         application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         CardLayout cardlayout = new CardLayout();
         JPanel screens = new JPanel(cardlayout);
