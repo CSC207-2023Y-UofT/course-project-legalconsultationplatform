@@ -16,6 +16,7 @@ import javax.swing.JPanel;
 
 import com.toedter.calendar.JDateChooser;
 
+import static driver.screen.UIDesign.buttonSize;
 
 
 /**
@@ -47,19 +48,32 @@ public class AskQuestionUI extends JPanel implements ActionListener{
         this.userId = userId;
         this.userName = userName;
 
+        setSize(400, 400);
+        setBackground(UIDesign.backgroundColor);
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
         //UserName and userId
         String helloMessageString = "Hello, " + userName + "(" + userId + ")";
         JLabel helloMessage = new JLabel(helloMessageString);
         JLabel title = new JLabel("Ask a new question here");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        title.setForeground(UIDesign.titleColor);
+        title.setFont(UIDesign.subTitleFont);
 
         //Question type and title
-        DropDownPanel questionTypeDropDown = new DropDownPanel(new JLabel("Select question"), questionType);
+        DropDownPanel questionTypeDropDown = new DropDownPanel(new JLabel("Select question type"), questionType);
         LabelTextPanel titleInfo = new LabelTextPanel(new JLabel("title"), titleForQuestion);
+        titleForQuestion.setMaximumSize(new Dimension(300, 25000));
+        titleInfo.setAlignmentX(Component.CENTER_ALIGNMENT);
         DateChooserPanel legalDeadlineInfo = new DateChooserPanel(new JLabel("legalDeadline"), deadlineChooser);
         JButton buttonToSubmit = new JButton("Submit");
+        buttonToSubmit.setMinimumSize(buttonSize);
+        buttonToSubmit.setPreferredSize(buttonSize);
+        buttonToSubmit.setMaximumSize(buttonSize);
 
         JPanel buttons = new JPanel();
+        buttons.setBackground(UIDesign.backgroundColor);
+        buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS)); // Use X_AXIS for horizontal alignment
         buttons.add(buttonToSubmit);
 
         buttonToSubmit.addActionListener(this);
