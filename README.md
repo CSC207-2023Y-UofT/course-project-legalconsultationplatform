@@ -1,39 +1,105 @@
-# Project Template
+# Legal Consultation Platform+
+*Bridging the Gap in Legal Consultation Services*
 
-This is a template repository for CSC 207 projects. 
-This repository contains starter code for a gradle project.
-It also contains workflow documents that give instructions on how to manage your Github repository and how to use Github Projects for efficient collaboration.
+## Overview
 
-## Checklist For Your Project
-- [ ] Verify the correct settings for your project repository
-- [ ] Set up Github Projects
-- [ ] Create the implementation plan using issues and Github Projects
-- [ ] Create deveopment branches for your features
-- [ ] Use pull requests to merge finished features into main branch
-- [ ] Conduct code reviews
+The COVID-19 pandemic has brought numerous challenges to the forefront, one of which is an increased need for free legal consultation services across the United States. The uncertainty and economic instability resulting from the pandemic have led to a surge in legal inquiries, which existing resources have been unable to meet effectively. This discrepancy signals a systemic issue that needs immediate attention.
 
-**If your team has trouble with any of these steps, please ask on Piazza. For example, with how GitHub Classroom works, your team *may* not have permissions to do some of the first few steps, in which case we'll post alternative instructions as needed.**
+Despite the American Bar Association's (ABA) best efforts, their data reveals a worrying trend. Across the U.S., over 30% of legal questions posed on their platform remain unanswered by attorneys. In certain states like Louisiana, the neglect is even more pronounced with over 70% of inquiries going unanswered. Additionally, among the questions that do receive attention, approximately 35% are inadequately addressed.
 
-## Workflow Documents
+Addressing this gap, we introduce the Legal Consultation Platform+ , a solution tailored to serve both individuals seeking legal advice and registered, licensed attorneys willing to provide it. Our platform is designed to create an environment where individuals can post their legal inquiries free of charge, and attorneys can browse and respond to these questions at their convenience.
 
-* Github Workflow: Please refer to the workflow that was introduced in the first lab. You should follow this when working on your code. The following document provides additional details too.
+One of the standout features of Legal Consultation Platform+ is its intelligent attorney-question matching system. This system recommends up to five questions from the feed to each attorney, based on their expertise and interests. This not only streamlines the process for attorneys, saving them valuable time, but also enhances the quality of responses. To ensure attorneys do not miss out on relevant inquiries, the platform also sends them email notifications.
 
-* [Project Planning and Development Guide](project_plan_dev.md): This document helps you to understand how to create and maintain a project plan for your class project. **This document helps you to complete the Implementation Plan Milestone.**
+Our mission with Legal Consultation Platform+ is to democratize access to legal consultation and ensure no question goes unanswered or improperly addressed. Together, we can navigate these challenging times by making legal assistance more accessible and efficient for all.
 
-## Gradle Project
-Import this project into your Intellij editor. It should automatically recognise this as a gradle repository.
-The starter code was built using SDK version 11.0.1. Ensure that you are using this version for this project. (You can, of course, change the SDK version as per your requirement if your team has all agreed to use a different version)
+---
 
-You have been provided with two starter files for demonstration: HelloWorld and HelloWorldTest.
+## Client User Guide
 
-You will find HelloWorld in `src/main/java/tutorial` directory. Right click on the HelloWorld file and click on `Run HelloWorld.main()`.
-This should run the program and print on your console.
+### Registration and Account Set-Up
 
-You will find HelloWorldTest in `src/test/java/tutorial` directory. Right click on the HelloWorldTest file and click on `Run HelloWorldTest`.
-All tests should pass. Your team can remove this sample of how testing works once you start adding your project code to the repo.
+Upon registration, individuals seeking free legal consultation are prompted to set up their accounts and provide demographic information. After registration, clients can log in using their provided user ID and password.
 
-Moving forward, we expect you to maintain this project structure. You *should* use Gradle as the build environment, but it is fine if your team prefers to use something else -- just remove the gradle files and push your preferred project setup. Assuming you stick with Gradle, your source code should go into `src/main/java` (you can keep creating more subdirectories as per your project requirement). Every source class can auto-generate a test file for you. For example, open HelloWorld.java file and click on the `HelloWorld` variable as shown in the image below. You should see an option `Generate` and on clicking this your should see an option `Test`. Clicking on this will generate a JUnit test file for `HelloWorld` class. This was used to generate the `HelloWorldTest`.
+### Interface and Features
 
-![image](https://user-images.githubusercontent.com/5333020/196066655-d3c97bf4-fdbd-46b0-b6ae-aeb8dbcf351d.png)
+The client's homepage presents two main options: initiating a new question or viewing historical queries.
 
-You can create another simple class and try generating a test for this class.
+#### Posting a New Question
+
+To post a new question, clients must provide basic information, such as the question title, type, and legal deadline. They can then elaborate on their query in the detailed description section on the specific question page. After submission, clients can track the status of their questions.
+
+#### Tracking Questions
+
+Clients can monitor whether their questions have been answered on the "View Historical Questions" page, which lists all previously asked questions. To enhance visibility, we send an email notification to the client's registered email address once their question has been answered, and we mark the question in the question history page.
+
+#### Closing Questions
+
+Once a client is satisfied with the answer to a question, they can opt to close the question. Closing a question makes it invisible and unresponsive to all attorneys.
+
+#### Rating Experience
+
+Finally, clients can provide binary ratings on their overall experience.
+
+---
+
+## Attorney User Guide
+
+### Registration and Verification
+
+Attorneys interested in participating on our platform should first contact us via email for verification of confidentiality and personal information. After registration, they can login using their user ID and password.
+
+### Interface and Features
+
+The attorney's homepage allows them to browse all available questions or track previously answered questions to handle any follow-up queries from clients.
+
+#### Browsing and Answering Questions
+
+On the "Browse Questions" page, attorneys can view all questions that have not yet been claimed. After selecting a question of interest, they can view its details and provide an answer. Once an attorney has answered a question, they are expected to fully dedicate themselves to that question, taking care of any follow-up queries. We provide email notifications for any follow-up questions.
+
+#### Question Recommendation and Notification
+
+Attorneys also receive a weekly email containing a feed of recommended questions, based on our intelligent matching algorithm. They can view their question feed by clicking the "Question Recommendations" button on their homepage.
+
+---
+
+## Team Members and Roles
+
+### Yifan Liu - Project Manager & Machine Learning Specialist
+Yifan directs project coordination, ensuring alignment among different developers, and meticulously tracks progress to ensure project milestones are met on time. As a Machine Learning Specialist, he has spearheaded the development of our proprietary question-attorney matching system, leveraging advanced Machine Learning and Natural Language Processing techniques.
+
+### Zihan Yuan - User Interface Designer & Front-End Developer
+Zihan is tasked with the design and development of the user-centric front-end interface of our platform. Her contribution to the team extends to the management of the user registration and login system, ensuring a seamless user experience.
+
+### Cheng Peng - Software Verification Specialist & Back-End Developer
+As a Software Verification Specialist, Cheng plays a pivotal role in ensuring the functionality and reliability of all platform features through rigorous testing and coordination. Additionally, he oversees the implementation of the question-asking and reply features as a Back-End Developer.
+
+### Zhouyi Yu - Data Engineer
+Zhouyi is the backbone of our data infrastructure. As our Data Engineer, he is responsible for the design, development, and maintenance of the robust database system that powers our platform.
+
+### Xingfu Wu - Software Verification Specialist & IT Support Specialist
+Xingfu oversees the testing of higher-level entities in the platform, ensuring our product meets stringent quality standards. He also doubles as our IT Support Specialist, proficiently handling server setup and maintenance.
+
+### River Qi - Back-End Developer
+River Qi, as a Back-End Developer, spearheads the 'View Question' feature of our platform. His efforts have been instrumental in ensuring that our users can easily access and navigate their queries.
+
+---
+## Installation Guide
+[*In Development*]
+
+---
+## Matching System Specification
+[*In Development*]
+
+---
+## Future Enhancements
+
+### Web-based Database Management System
+In future iterations of our platform, we plan to transition to a web-based database management system. This change will allow for more efficient data management and improved accessibility, making it easier to handle and process data on the platform.
+
+### Intelligent Sample Responses
+Another enhancement in our roadmap involves providing intelligent sample responses to clients. This feature will utilize advanced algorithms to identify when a user's query is similar to existing ones. In such instances, the system will automatically suggest sample answers from those previous, similar questions. This will not only speed up the response time for users but also enrich the overall user experience by instantly providing them with helpful information.
+
+### Domain-Specific AI for Timely Responses
+We are also in the process of developing a domain-specific Artificial Intelligencesystem. This AI system will be designed to provide timely responses to user queries while we continue to retain the element of real-person answers. This innovative feature will enhance the speed and efficiency of our platform, ensuring that users get the information they need as quickly as possible.
+
