@@ -8,8 +8,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.util.List;
 
-public class AttorneyRepository implements AttorneyGateway {
+public class AttorneyRepository extends GenericUserRepository<Attorney> implements AttorneyGateway {
 
+    public AttorneyRepository() {
+        super(Attorney.class);
+    }
     @Override
     public boolean existsById(int attorneyId) {
         EntityManager entityManager = DatabaseConnection.getEntityManager();
@@ -26,24 +29,6 @@ public class AttorneyRepository implements AttorneyGateway {
         EntityManager entityManager = DatabaseConnection.getEntityManager();
         try {
             return entityManager.find(Attorney.class, attorneyId);
-        } finally {
-            entityManager.close();
-        }
-    }
-
-    @Override
-    public void addUser(User attorney) {
-        EntityManager entityManager = DatabaseConnection.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        try {
-            transaction.begin();
-            entityManager.persist(attorney);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction.isActive()) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
         } finally {
             entityManager.close();
         }
