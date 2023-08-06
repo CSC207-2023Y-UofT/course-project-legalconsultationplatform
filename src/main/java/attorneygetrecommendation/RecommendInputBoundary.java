@@ -1,6 +1,6 @@
 package attorneygetrecommendation;
 
-import presenter.ViewResponseModel;
+import businessrule.responsemodel.ViewResponseModel;
 
 public interface RecommendInputBoundary {
     public ViewResponseModel getMatching(RecommendRequestModel recommendRequestModel);
