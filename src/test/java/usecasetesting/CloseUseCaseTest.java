@@ -1,9 +1,8 @@
 package usecasetesting;
 
 
-import businessrule.gateway.AttorneyGateway;
-import businessrule.gateway.ClientGateway;
-import businessrule.gateway.UserGatewayFactory;
+import adapter.controller.ControlContainer;
+import businessrule.gateway.*;
 import businessrule.inputboundary.CloseInputBoundary;
 import businessrule.outputboundary.HomePageOutputBoundary;
 import businessrule.requestmodel.CloseRequestModel;
@@ -20,9 +19,9 @@ import static org.junit.jupiter.api.Assertions.*;
 ;
 
 public class CloseUseCaseTest {
-    final static int CLIENT_ID = 11345678;
-    final static int ATTORNEY_ID = 21345678;
-    final static int SECOND_ATTORNEY_ID = 22222222;
+    final static int CLIENT_ID = 21345678;
+    final static int ATTORNEY_ID = 11345678;
+    final static int SECOND_ATTORNEY_ID = 12222222;
     final static int QUESTION_ID = 323456789;
     final static int CLOSED_QUESTION_ID = 333333333;
     private QuestionGateway questionGateway;
@@ -43,6 +42,11 @@ public class CloseUseCaseTest {
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
         homePageOutputBoundary = new HomePageOutputBoundary() {
+            @Override
+            public void setControlContainer(ControlContainer controlContainer) {
+
+            }
+
             @Override
             public HomePageResponseModel prepareFail(String msg) {
                 assertEquals("You cannot close this question!", msg);
@@ -90,6 +94,7 @@ public class CloseUseCaseTest {
         closeInputBoundary.closeQuestion(inputData);
         Question question = questionGateway.getQuestion(QUESTION_ID);
         assertEquals(question.isClose(), true);
+        ClearAllRepository();
     }
     @Test
     public void TestAttorneyCloseableQuestion(){
@@ -99,6 +104,7 @@ public class CloseUseCaseTest {
         closeInputBoundary.closeQuestion(inputData);
         Question question = questionGateway.getQuestion(QUESTION_ID);
         assertEquals(question.isClose(), true);
+        ClearAllRepository();
     }
     @Test
     public void TestClientUnclosableQuestion(){
@@ -106,6 +112,7 @@ public class CloseUseCaseTest {
         CloseRequestModel inputData = new CloseRequestModel(CLOSED_QUESTION_ID, CLIENT_ID);
 
         closeInputBoundary.closeQuestion(inputData);
+        ClearAllRepository();
     }
 
     @Test
@@ -114,6 +121,7 @@ public class CloseUseCaseTest {
         CloseRequestModel inputData = new CloseRequestModel(CLOSED_QUESTION_ID, CLIENT_ID);
 
         closeInputBoundary.closeQuestion(inputData);
+        ClearAllRepository();
     }
 
     @Test
@@ -122,8 +130,17 @@ public class CloseUseCaseTest {
         CloseRequestModel inputData = new CloseRequestModel(CLOSED_QUESTION_ID, CLIENT_ID);
 
         closeInputBoundary.closeQuestion(inputData);
+        ClearAllRepository();
     }
 
-    //@AfterClass
-
+    public void ClearAllRepository(){
+        questionGateway = new QuestionRepo();
+        clientGateway = new ClientRepository();
+        attorneyGateway = new AttorneyRepository();
+        postGateway = new PostRepo();
+        clientGateway.deleteAllUser();
+        questionGateway.deleteAllQuestion();
+        attorneyGateway.deleteAllUser();
+        postGateway.deleteAllPost();
+    }
 }
