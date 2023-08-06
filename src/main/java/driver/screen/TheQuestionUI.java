@@ -59,6 +59,7 @@ public class TheQuestionUI extends JPanel implements ActionListener {
         //UserName and UserId
         String helloMessageString = "Hello, " + userName + "(" + userId + ")";
         JLabel helloMessage = new JLabel(helloMessageString);
+
         //Question title and type
         JPanel titlePanel = UIDesign.questionTitleDrawer(type, title);
         //Question deadline
