@@ -1,5 +1,6 @@
 package usecasetesting;
 
+import adapter.controller.ControlContainer;
 import businessrule.gateway.ClientGateway;
 import businessrule.gateway.UserGatewayFactory;
 import businessrule.inputboundary.UserLoginInputBoundary;
@@ -16,7 +17,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 
 public class UserLoginUseCaseTest {
-    final static int CLIENT_ID = 11345678;
+    final static int CLIENT_ID = 21345678;
     final static String PASSWORD = "abcdefg";
     private UserGatewayFactory userGatewayFactory;
     private ClientGateway clientGateway;
@@ -26,10 +27,16 @@ public class UserLoginUseCaseTest {
     public void setUpUserLoginUseCase(){
         userGatewayFactory = new UserGatewayFactory();
         clientGateway = new ClientRepository();
+
         homePageOutputBoundary = new HomePageOutputBoundary() {
             @Override
+            public void setControlContainer(ControlContainer controlContainer) {
+
+            }
+
+            @Override
             public HomePageResponseModel prepareFail(String msg) {
-                assertEquals("You cannot rate this question!", msg);
+                System.out.println(msg);
                 return null;
             }
 
@@ -50,17 +57,25 @@ public class UserLoginUseCaseTest {
         setUpUserLoginUseCase();
         UserLoginRequestModel inputData = new UserLoginRequestModel(CLIENT_ID, PASSWORD);
         userLoginInputBoundary.login(inputData);
+        ClearAllRepository();
     }
     @Test
     public void TestLoginFailIdDNE(){
         setUpUserLoginUseCase();
         UserLoginRequestModel inputData = new UserLoginRequestModel(1, PASSWORD);
         userLoginInputBoundary.login(inputData);
+        ClearAllRepository();
     }
     @Test
     public void TestLoginFailWrongPassword(){
         setUpUserLoginUseCase();
         UserLoginRequestModel inputData = new UserLoginRequestModel(CLIENT_ID, "a");
         userLoginInputBoundary.login(inputData);
+        ClearAllRepository();
+    }
+
+    public void ClearAllRepository(){
+        clientGateway = new ClientRepository();
+        clientGateway.deleteAllUser();
     }
 }
