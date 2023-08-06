@@ -27,11 +27,11 @@ public class AttorneyHomePageUI extends JPanel implements ActionListener {
         this.cardLayout = cardLayout;
         this.screens = screens;
 
-        setBackground(UIDesign.backgroundColor);
+        UIDesign.setBackgroundFrame(this);
         //The title
         JLabel title = new JLabel("Home Page");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        UIDesign.setTitle(title);
+        UIDesign.setTitleFont(title);
 
         int topMargin = 50;
         int leftMargin = 0;
@@ -46,7 +46,7 @@ public class AttorneyHomePageUI extends JPanel implements ActionListener {
 
         //The three buttons
         JPanel buttons = new JPanel();
-        buttons.setBackground(UIDesign.backgroundColor);
+        buttons.setBackground(UIDesign.lightGreenColor);
         JButton browseQuestions = new JButton("Browse available questions");
         browseQuestions.setBorder(new EmptyBorder(0,0,20,0));
         JButton viewQuestionHistory = new JButton("View question history");

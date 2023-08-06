@@ -50,17 +50,17 @@ public class AskQuestionUI extends JPanel implements ActionListener{
         this.userName = userName;
 
         setSize(400, 400);
-        setBackground(UIDesign.backgroundColor);
+        setBackground(UIDesign.lightGreenColor);
 
         //UserName and userId
         String helloMessageString = "Hello, " + userName + "(" + userId + ")";
         JLabel helloMessage = new JLabel(helloMessageString);
         JLabel title = new JLabel("New Question");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        UIDesign.setTitle(title);
+        UIDesign.setTitleFont(title);
 
         JPanel titlePanel = new JPanel();
-        titlePanel.setBackground(UIDesign.backgroundColor);
+        titlePanel.setBackground(UIDesign.lightGreenColor);
         titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.Y_AXIS));
         titlePanel.add(title);
         titlePanel.add(helloMessage);
@@ -71,7 +71,7 @@ public class AskQuestionUI extends JPanel implements ActionListener{
         DateChooserPanel legalDeadlineInfo = new DateChooserPanel(new JLabel("Select your question's legal deadline"), deadlineChooser);
 
         JPanel buttons = new JPanel();
-        buttons.setBackground(UIDesign.backgroundColor);
+        buttons.setBackground(UIDesign.lightGreenColor);
         JButton buttonToSubmit = new JButton("Submit");
         UIDesign.setButton(buttonToSubmit);
         buttons.add(buttonToSubmit);
@@ -79,7 +79,7 @@ public class AskQuestionUI extends JPanel implements ActionListener{
         buttonToSubmit.addActionListener(this);
 
         JPanel restPanel = new JPanel();
-        restPanel.setBackground(UIDesign.backgroundColor);
+        restPanel.setBackground(UIDesign.lightGreenColor);
         restPanel.setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;

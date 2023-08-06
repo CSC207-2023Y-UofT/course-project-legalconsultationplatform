@@ -25,10 +25,10 @@ public class ClientHomePageUI extends JPanel implements ActionListener {
         this.cardLayout = cardLayout;
         this.screens = screens;
 
-        setBackground(UIDesign.backgroundColor);
+        setBackground(UIDesign.lightGreenColor);
         JLabel title = new JLabel("Home");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        UIDesign.setTitle(title);
+        UIDesign.setTitleFont(title);
         this.setLayout(new BoxLayout(this, Y_AXIS));
         this.add(title);
 
@@ -43,7 +43,7 @@ public class ClientHomePageUI extends JPanel implements ActionListener {
         helloMessage.setBorder(new EmptyBorder(0,0,50,0));
 
         JPanel buttons = new JPanel();
-        buttons.setBackground(UIDesign.backgroundColor);
+        buttons.setBackground(UIDesign.lightGreenColor);
         JButton askNewQuestion = new JButton("Ask new question");
         JButton viewQuestionHistory = new JButton("View question history");
 

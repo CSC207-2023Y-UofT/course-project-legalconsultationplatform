@@ -25,8 +25,7 @@ public class LoginUI extends JPanel implements ActionListener{
     public LoginUI(ControlContainer controlContainer) {
 
         this.controlContainer = controlContainer;
-        setSize(400, 400);
-        setBackground(UIDesign.backgroundColor);
+        UIDesign.setBackgroundFrame(this);
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -37,7 +36,7 @@ public class LoginUI extends JPanel implements ActionListener{
         // Create the title label
         JLabel title = new JLabel("Log In");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        UIDesign.setTitle(title);
+        UIDesign.setTitleFont(title);
         int topMargin = 30;
         int leftMargin = 0;
         int bottomMargin = 0;
@@ -58,7 +57,7 @@ public class LoginUI extends JPanel implements ActionListener{
         JButton buttonToSubmit = new JButton("Login");
         UIDesign.setButton(buttonToSubmit);
         JPanel buttons = new JPanel();
-        buttons.setBackground(UIDesign.backgroundColor);
+        buttons.setBackground(UIDesign.lightGreenColor);
         buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS)); // Use X_AXIS for horizontal alignment
         buttons.add(buttonToSubmit);
         buttonToSubmit.addActionListener(this);

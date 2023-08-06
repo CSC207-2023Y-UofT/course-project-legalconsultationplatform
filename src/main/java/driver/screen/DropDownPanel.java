@@ -10,9 +10,9 @@ public class DropDownPanel extends JPanel {
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         label.setAlignmentX(Component.LEFT_ALIGNMENT);
         dropDownBox.setAlignmentX(Component.LEFT_ALIGNMENT);
-        label.setForeground(UIDesign.inputPromptColor);
+        label.setForeground(UIDesign.greyColor);
         add(label);
         add(dropDownBox);
-        setBackground(UIDesign.backgroundColor);
+        setBackground(UIDesign.lightGreenColor);
     }
 }

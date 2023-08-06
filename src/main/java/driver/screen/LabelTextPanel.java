@@ -9,10 +9,10 @@ public class LabelTextPanel extends JPanel {
         label.setAlignmentX(Component.LEFT_ALIGNMENT);
         textField.setAlignmentX(Component.LEFT_ALIGNMENT);
         textField.setColumns(25);
-        label.setForeground(UIDesign.inputPromptColor);
+        label.setForeground(UIDesign.greyColor);
         add(label);
         add(textField);
-        setBackground(UIDesign.backgroundColor);
+        setBackground(UIDesign.lightGreenColor);
     }
 }
 

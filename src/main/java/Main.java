@@ -5,6 +5,7 @@ import businessrule.inputboundary.*;
 import businessrule.outputboundary.*;
 import businessrule.usecase.*;
 import driver.database.*;
+import driver.screen.UIDesign;
 import driver.screen.WelcomeUI;
 import entity.*;
 import javax.swing.*;
@@ -26,7 +27,7 @@ public class Main {
 
         //set up jframe
         JFrame application = new JFrame("Legal Consultation Platform");
-        application.setSize(400, 400);
+        application.setSize(UIDesign.frameSize);
         application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         CardLayout cardlayout = new CardLayout();
         JPanel screens = new JPanel(cardlayout);

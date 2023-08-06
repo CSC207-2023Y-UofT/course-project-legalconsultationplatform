@@ -16,19 +16,17 @@ public class WelcomeUI extends JPanel implements ActionListener {
     CardLayout cardLayout;
     JPanel screens;
 
-    public WelcomeUI(ControlContainer controlContainer, CardLayout cardLayout, JPanel screens) {
+    public WelcomeUI (ControlContainer controlContainer, CardLayout cardLayout, JPanel screens){
         this.cardLayout = cardLayout;
         this.screens = screens;
         this.controlContainer = controlContainer;
-        setSize(400, 400);
-        setBackground(UIDesign.backgroundColor);
+        UIDesign.setBackgroundFrame(this);
 
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         JLabel title = new JLabel("Welcome");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        title.setForeground(UIDesign.titleColor);
-        title.setFont(UIDesign.titleFont);
+        UIDesign.setTitleFont(title);
 
         int topMargin = 50;
         int leftMargin = 0;
@@ -39,7 +37,7 @@ public class WelcomeUI extends JPanel implements ActionListener {
         add(title);
 
         JPanel buttonsPanel = new JPanel();
-        buttonsPanel.setBackground(backgroundColor);
+        buttonsPanel.setBackground(lightGreenColor);
         buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.X_AXIS)); // Use X_AXIS for horizontal alignment
 
         JButton registerButton = new JButton("Register");
