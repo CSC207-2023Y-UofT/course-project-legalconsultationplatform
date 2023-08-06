@@ -16,6 +16,8 @@ import javax.swing.JPanel;
 
 import com.toedter.calendar.JDateChooser;
 
+import static driver.screen.UIDesign.buttonSize;
+import static javax.swing.BoxLayout.Y_AXIS;
 
 
 /**
@@ -47,30 +49,51 @@ public class AskQuestionUI extends JPanel implements ActionListener{
         this.userId = userId;
         this.userName = userName;
 
+        setSize(400, 400);
+        setBackground(UIDesign.lightGreenColor);
+
         //UserName and userId
         String helloMessageString = "Hello, " + userName + "(" + userId + ")";
         JLabel helloMessage = new JLabel(helloMessageString);
-        JLabel title = new JLabel("Ask a new question here");
+        JLabel title = new JLabel("New Question");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        UIDesign.setTitleFont(title);
+
+        JPanel titlePanel = new JPanel();
+        titlePanel.setBackground(UIDesign.lightGreenColor);
+        titlePanel.setLayout(new BoxLayout(titlePanel, BoxLayout.Y_AXIS));
+        titlePanel.add(title);
+        titlePanel.add(helloMessage);
 
         //Question type and title
-        DropDownPanel questionTypeDropDown = new DropDownPanel(new JLabel("Select question"), questionType);
-        LabelTextPanel titleInfo = new LabelTextPanel(new JLabel("title"), titleForQuestion);
-        DateChooserPanel legalDeadlineInfo = new DateChooserPanel(new JLabel("legalDeadline"), deadlineChooser);
-        JButton buttonToSubmit = new JButton("Submit");
+        DropDownPanel questionTypeDropDown = new DropDownPanel(new JLabel("Select question type"), questionType);
+        LabelTextPanel titleInfo = new LabelTextPanel(new JLabel("What is your question title?"), titleForQuestion);
+        DateChooserPanel legalDeadlineInfo = new DateChooserPanel(new JLabel("Select your question's legal deadline"), deadlineChooser);
 
         JPanel buttons = new JPanel();
+        buttons.setBackground(UIDesign.lightGreenColor);
+        JButton buttonToSubmit = new JButton("Submit");
+        UIDesign.setButton(buttonToSubmit);
         buttons.add(buttonToSubmit);
 
         buttonToSubmit.addActionListener(this);
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
-        this.add(title);
-        this.add(helloMessage);
-        this.add(questionTypeDropDown);
-        this.add(titleInfo);
-        this.add(legalDeadlineInfo);
-        this.add(buttons);
+        JPanel restPanel = new JPanel();
+        restPanel.setBackground(UIDesign.lightGreenColor);
+        restPanel.setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = GridBagConstraints.RELATIVE;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(5, 5, 5, 5); // Padding around each component
+
+        restPanel.add(questionTypeDropDown, gbc);
+        restPanel.add(titleInfo, gbc);
+        restPanel.add(legalDeadlineInfo, gbc);
+        restPanel.add(buttons, gbc);
+
+        this.add(titlePanel);
+        this.add(restPanel);
 
     }
     @Override

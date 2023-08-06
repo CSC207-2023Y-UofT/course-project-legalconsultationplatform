@@ -8,6 +8,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.server.UID;
 
 import static driver.screen.UIDesign.buttonSize;
 
@@ -36,8 +37,7 @@ public class RegisterUI extends JPanel implements ActionListener{
 
     public RegisterUI(ControlContainer controlContainer) {
         this.controlContainer = controlContainer;
-        setSize(400, 400);
-        setBackground(UIDesign.backgroundColor);
+        UIDesign.setBackgroundFrame(this);
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.gridx = 0;
@@ -48,8 +48,7 @@ public class RegisterUI extends JPanel implements ActionListener{
         // Create the title label with 30 pixels space on top
         JLabel title = new JLabel("Create your profile");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        title.setForeground(UIDesign.titleColor);
-        title.setFont(UIDesign.subTitleFont);
+        UIDesign.setTitleFont(title);
         int topMargin = 30;
         int leftMargin = 0;
         int bottomMargin = 0;
@@ -60,15 +59,13 @@ public class RegisterUI extends JPanel implements ActionListener{
         // Add all the panels here...
         gbc.gridx = 0; // Set the gridx to 0 to place components under the title
 
-        setFontForAllComponents(this, new Font("Source Sans Pro", Font.PLAIN, 12));
-
-        LabelTextPanel userNamePanel = new LabelTextPanel(new JLabel("User name"), userName);
+        LabelTextPanel userNamePanel = new LabelTextPanel(new JLabel("User Name"), userName);
         add(userNamePanel, gbc);
 
         LabelTextPanel passwordPanel = new LabelTextPanel(new JLabel("Password"), password1);
         add(passwordPanel, gbc);
 
-        LabelTextPanel repeatPasswordPanel = new LabelTextPanel(new JLabel("Repeat Password"), password2);
+        LabelTextPanel repeatPasswordPanel = new LabelTextPanel(new JLabel("Confirm Password"), password2);
         add(repeatPasswordPanel, gbc);
 
         LabelTextPanel emailPanel = new LabelTextPanel(new JLabel("Email"), email);
@@ -100,11 +97,9 @@ public class RegisterUI extends JPanel implements ActionListener{
 
         //Register button here
         JButton buttonToSubmit = new JButton("Register");
-        buttonToSubmit.setPreferredSize(buttonSize);
-        buttonToSubmit.setMaximumSize(buttonSize);
-        buttonToSubmit.setMinimumSize(buttonSize);
+        UIDesign.setButton(buttonToSubmit);
         JPanel buttons = new JPanel();
-        buttons.setBackground(UIDesign.backgroundColor);
+        buttons.setBackground(UIDesign.lightGreenColor);
         buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS)); // Use X_AXIS for horizontal alignment
         buttons.add(buttonToSubmit);
         buttonToSubmit.addActionListener(this);
