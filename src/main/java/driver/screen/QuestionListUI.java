@@ -51,9 +51,10 @@ public class QuestionListUI extends JPanel{
             String deadline = deadlineDate.format(formatter);
 
             //lines
-            String titleLine = "(" + type + ")" + title;
+            // String titleLine = "(" + type + ")" + title;
             String deadlineLine = "Legal deadline: " + deadline;
-            String overallText = titleLine + "\n" + deadlineLine;
+            // String overallText = titleLine + "\n" + deadlineLine;
+            String overallText = "<html><b>" + title+ "</b><br>" + deadlineLine + "</html>";
 
             //Format them all into a textArea
             JButton questionButton = new JButton(overallText);
@@ -68,7 +69,7 @@ public class QuestionListUI extends JPanel{
                 }
             });
         }
-        questionScrollPane.add(questionScrollPanel);
+        questionScrollPane.setViewportView(questionScrollPanel);
 
         //Add everything in the panel
         this.add(helloMessage);
