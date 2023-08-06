@@ -12,7 +12,10 @@ import businessrule.responsemodel.HomePageResponseModel;
 import businessrule.responsemodel.RegisterResponseModel;
 import businessrule.usecase.ClientRegisterInteractor;
 import businessrule.usecase.UserLoginInteractor;
+import driver.database.AttorneyRepository;
 import driver.database.ClientRepository;
+import driver.database.PostRepo;
+import driver.database.QuestionRepo;
 import entity.Client;
 import entity.ClientFactory;
 import org.junit.BeforeClass;
@@ -34,7 +37,6 @@ public class ClientRegisterUseCaseTest {
     public void setUpClientRegisterUseCase(){
         clientGateway = new ClientRepository();
         clientFactory = new ClientFactory();
-        clientGateway.deleteAllUser();
         registerOutputBoundary = new RegisterOutputBoundary() {
             @Override
             public void setControlContainer(ControlContainer controlContainer) {
@@ -65,7 +67,6 @@ public class ClientRegisterUseCaseTest {
         ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "test@gmail.com", PASSWORD, PASSWORD, "test state", "21000", "test ethinicity", 18, "male", "single", 1, 1000.0F);
 
         clientRegisterInputBoundary.create(inputData);
-
     }
 
     @Test
@@ -104,7 +105,7 @@ public class ClientRegisterUseCaseTest {
         ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "invalid email", PASSWORD, PASSWORD, "test state", "21000", "test ethinicity", 18, "male", "single", 1, 1000.0F);
 
         clientRegisterInputBoundary.create(inputData);
-
+        ClearAllRepository();
     }
 
     @Test
@@ -114,7 +115,7 @@ public class ClientRegisterUseCaseTest {
         ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "test@gmail.com", PASSWORD, PASSWORD, "test state", "21000", "test ethinicity", 222, "male", "single", 1, 1000.0F);
 
         clientRegisterInputBoundary.create(inputData);
-
+        ClearAllRepository();
     }
 
     @Test
@@ -124,6 +125,11 @@ public class ClientRegisterUseCaseTest {
         ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "test@gmail.com", PASSWORD, PASSWORD, "test state", "abcdefg", "test ethinicity", 18, "male", "single", 1, 1000.0F);
 
         clientRegisterInputBoundary.create(inputData);
+        ClearAllRepository();
+    }
 
+    public void ClearAllRepository(){
+        clientGateway = new ClientRepository();
+        clientGateway.deleteAllUser();;
     }
 }

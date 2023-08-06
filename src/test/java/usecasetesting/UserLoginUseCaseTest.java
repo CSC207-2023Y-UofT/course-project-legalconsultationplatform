@@ -27,7 +27,6 @@ public class UserLoginUseCaseTest {
     public void setUpUserLoginUseCase(){
         userGatewayFactory = new UserGatewayFactory();
         clientGateway = new ClientRepository();
-        clientGateway.deleteAllUser();
 
         homePageOutputBoundary = new HomePageOutputBoundary() {
             @Override
@@ -58,17 +57,25 @@ public class UserLoginUseCaseTest {
         setUpUserLoginUseCase();
         UserLoginRequestModel inputData = new UserLoginRequestModel(CLIENT_ID, PASSWORD);
         userLoginInputBoundary.login(inputData);
+        ClearAllRepository();
     }
     @Test
     public void TestLoginFailIdDNE(){
         setUpUserLoginUseCase();
         UserLoginRequestModel inputData = new UserLoginRequestModel(1, PASSWORD);
         userLoginInputBoundary.login(inputData);
+        ClearAllRepository();
     }
     @Test
     public void TestLoginFailWrongPassword(){
         setUpUserLoginUseCase();
         UserLoginRequestModel inputData = new UserLoginRequestModel(CLIENT_ID, "a");
         userLoginInputBoundary.login(inputData);
+        ClearAllRepository();
+    }
+
+    public void ClearAllRepository(){
+        clientGateway = new ClientRepository();
+        clientGateway.deleteAllUser();
     }
 }

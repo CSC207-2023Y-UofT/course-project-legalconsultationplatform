@@ -40,11 +40,7 @@ public class ReplyUseCaseTest {
         postFactory = new PostFactory();
         userGatewayFactory = new UserGatewayFactory();
         clientGateway = new ClientRepository();
-        attorneyGateway = new AttorneyRepository();
-        clientGateway.deleteAllUser();
-        questionGateway.deleteAllQuestion();
-        postGateway.deleteAllPost();
-        attorneyGateway.deleteAllUser();
+        attorneyGateway = new AttorneyRepository();;
         homePageOutputBoundary = new HomePageOutputBoundary() {
             @Override
             public void setControlContainer(ControlContainer controlContainer) {
@@ -74,11 +70,13 @@ public class ReplyUseCaseTest {
 
         Client client = new Client();
         client.setUserId(CLIENT_ID);
+        client.setEmail("josephpc0612@gmail.com");
         client.addQuestion(question);
         clientGateway.addUser(client);
 
         Attorney attorney = new Attorney();
         attorney.setUserId(ATTORNEY_ID);
+        attorney.setEmail("josephpc0612@gmail.com");
         attorneyGateway.addUser(attorney);
 
         Attorney secondAttorney = new Attorney();
@@ -90,11 +88,12 @@ public class ReplyUseCaseTest {
     public void testClientReply(){
         setUpReplyUseCase();
         PostRequestModel inputData1 = new PostRequestModel(QUESTION_ID, CLIENT_ID, "Test text");
-        postInputBoundary.createPost(inputData1);// null pointer error caused by posts not initialized by Question
+        postInputBoundary.createPost(inputData1);
         Question question = questionGateway.getQuestion(QUESTION_ID);
         Post post1 = question.getPosts().get(0);
         assertEquals(post1.getBelongsTo(), CLIENT_ID);
         assertEquals(post1.getPostText(), "Test text");
+        ClearAllRepository();
     }
 
     @Test
@@ -108,10 +107,11 @@ public class ReplyUseCaseTest {
         assertEquals(post2.getBelongsTo(), ATTORNEY_ID);
         assertEquals(post2.getPostText(), "Test text");
         User user = attorneyGateway.getUser(ATTORNEY_ID);
-        Question attorneyQuestion = user.getQuestionsList().get(0);// AttorneyQuestionList is not updated
+        Question attorneyQuestion = user.getQuestionsList().get(0);
         assertEquals(attorneyQuestion.getQuestionId(), QUESTION_ID);
         assertEquals(attorneyQuestion.getTakenByAttorney(), ATTORNEY_ID);
         assertEquals(attorneyQuestion.isTaken(), true);
+        ClearAllRepository();
     }
     @Test
     public void testAttorneyFollowUp(){
@@ -120,12 +120,12 @@ public class ReplyUseCaseTest {
         postInputBoundary.createPost(inputData);
 
         User user = attorneyGateway.getUser(ATTORNEY_ID);
-        Question attorneyquestion = user.getQuestionsList().get(0);// AttorneyQuestionList is not updated
+        Question attorneyquestion = user.getQuestionsList().get(0);
         assertEquals(attorneyquestion.getQuestionId(), QUESTION_ID);
         assertEquals(attorneyquestion.getTakenByAttorney(), ATTORNEY_ID);
         assertEquals(attorneyquestion.isTaken(), true);
 
-        PostRequestModel inputData2 = new PostRequestModel(QUESTION_ID, ATTORNEY_ID, "Test text2");// Attorney
+        PostRequestModel inputData2 = new PostRequestModel(QUESTION_ID, ATTORNEY_ID, "Test text2");
         postInputBoundary.createPost(inputData2);
         Question question = questionGateway.getQuestion(QUESTION_ID);
         Post post2 = question.getPosts().get(1);
@@ -134,6 +134,7 @@ public class ReplyUseCaseTest {
         assertEquals(attorneyquestion.getQuestionId(), QUESTION_ID);
         assertEquals(attorneyquestion.getTakenByAttorney(), ATTORNEY_ID);
         assertEquals(attorneyquestion.isTaken(), true);
+        ClearAllRepository();
 
     }
     @Test
@@ -141,6 +142,7 @@ public class ReplyUseCaseTest {
         setUpReplyUseCase();
         PostRequestModel inputData = new PostRequestModel(CLOSED_QUESTION_ID, ATTORNEY_ID, "Test text");
         postInputBoundary.createPost(inputData);
+        ClearAllRepository();
     }
 
     @Test
@@ -150,13 +152,24 @@ public class ReplyUseCaseTest {
         postInputBoundary.createPost(inputData);
 
         PostRequestModel inputData2 = new PostRequestModel(QUESTION_ID, SECOND_ATTORNEY_ID, "Test text");
-        postInputBoundary.createPost(inputData2);// AttorneyQuestionList is not updated
+        postInputBoundary.createPost(inputData2);
 
         User user = attorneyGateway.getUser(ATTORNEY_ID);
         Question attorneyquestion = user.getQuestionsList().get(0);
         assertEquals(attorneyquestion.getQuestionId(), QUESTION_ID);
         assertEquals(attorneyquestion.getTakenByAttorney(), ATTORNEY_ID);
         assertEquals(attorneyquestion.isTaken(), true);
+        ClearAllRepository();
     }
 
+    public void ClearAllRepository(){
+        questionGateway = new QuestionRepo();
+        clientGateway = new ClientRepository();
+        attorneyGateway = new AttorneyRepository();
+        postGateway = new PostRepo();
+        clientGateway.deleteAllUser();
+        questionGateway.deleteAllQuestion();
+        attorneyGateway.deleteAllUser();
+        postGateway.deleteAllPost();
+    }
 }

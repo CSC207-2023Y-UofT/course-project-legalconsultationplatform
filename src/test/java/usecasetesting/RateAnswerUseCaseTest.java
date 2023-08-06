@@ -45,10 +45,6 @@ public class RateAnswerUseCaseTest {
         userGatewayFactory = new UserGatewayFactory();
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
-        clientGateway.deleteAllUser();
-        questionGateway.deleteAllQuestion();
-        postGateway.deleteAllPost();
-        attorneyGateway.deleteAllUser();
         homePageOutputBoundary = new HomePageOutputBoundary() {
             @Override
             public void setControlContainer(ControlContainer controlContainer) {
@@ -100,18 +96,32 @@ public class RateAnswerUseCaseTest {
         setUpRateAnswerUseCase();
         RateRequestModel inputData = new RateRequestModel(10, CLOSED_QUESTION_ID, CLIENT_ID);
         rateInputBoundary.rateAnswer(inputData);
-        assertEquals(10, questionGateway.getQuestion(CLOSED_QUESTION_ID).getRating());// rating not update
+        assertEquals(10, questionGateway.getQuestion(CLOSED_QUESTION_ID).getRating());
+        ClearAllRepository();
     }
     @Test
     public void TestClientRateUnClosedQuestion(){
         setUpRateAnswerUseCase();
         RateRequestModel inputData = new RateRequestModel(10, QUESTION_ID, CLIENT_ID);
         rateInputBoundary.rateAnswer(inputData);
+        ClearAllRepository();
     }
     @Test
     public void TestAttorneyRate(){
         setUpRateAnswerUseCase();
         RateRequestModel inputData = new RateRequestModel(10, QUESTION_ID, ATTORNEY_ID);
         rateInputBoundary.rateAnswer(inputData);
+        ClearAllRepository();
+    }
+
+    public void ClearAllRepository(){
+        questionGateway = new QuestionRepo();
+        clientGateway = new ClientRepository();
+        attorneyGateway = new AttorneyRepository();
+        postGateway = new PostRepo();
+        clientGateway.deleteAllUser();
+        questionGateway.deleteAllQuestion();
+        attorneyGateway.deleteAllUser();
+        postGateway.deleteAllPost();
     }
 }

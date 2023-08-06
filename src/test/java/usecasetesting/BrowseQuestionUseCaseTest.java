@@ -59,9 +59,6 @@ public class BrowseQuestionUseCaseTest {
         questionGateway = new QuestionRepo();
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
-        clientGateway.deleteAllUser();
-        questionGateway.deleteAllQuestion();
-        attorneyGateway.deleteAllUser();
         browseInputBoundary = new BrowseQuestionInteractor(viewOutputBoundary, questionGateway, attorneyGateway);
 
         Client client = new Client();
@@ -102,6 +99,15 @@ public class BrowseQuestionUseCaseTest {
         BrowseRequestModel inputData = new BrowseRequestModel(ATTORNEY_ID);
 
         browseInputBoundary.browseQuestion(inputData);
+        ClearAllRepository();
     }
 
+    public void ClearAllRepository(){
+        questionGateway = new QuestionRepo();
+        clientGateway = new ClientRepository();
+        attorneyGateway = new AttorneyRepository();
+        clientGateway.deleteAllUser();
+        questionGateway.deleteAllQuestion();
+        attorneyGateway.deleteAllUser();
+    }
 }

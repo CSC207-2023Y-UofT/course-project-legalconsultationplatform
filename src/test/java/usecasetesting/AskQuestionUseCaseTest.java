@@ -14,6 +14,7 @@ import businessrule.usecase.PostDisplayFormatter;
 import businessrule.usecase.QuestionDisplayFormatter;
 import driver.database.*;
 import entity.*;
+import org.junit.AfterClass;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -39,9 +40,6 @@ public class AskQuestionUseCaseTest {
         questionFactory = new QuestionFactory();
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
-        clientGateway.deleteAllUser();
-        questionGateway.deleteAllQuestion();
-        attorneyGateway.deleteAllUser();
         theQuestionOutputBoundary = new TheQuestionOutputBoundary() {
             @Override
             public void setControlContainer(ControlContainer controlContainer) {
@@ -86,7 +84,7 @@ public class AskQuestionUseCaseTest {
 
         User user = clientGateway.getUser(CLIENT_ID);
         assertEquals(1, user.getQuestionsList().size(), "The ask question use case failed.");
-
+        ClearAllRepository();
     }
 
     @Test
@@ -98,6 +96,16 @@ public class AskQuestionUseCaseTest {
         questionInputBoundary.createQuestion(inputData);
 
         User user = clientGateway.getUser(CLIENT_ID);
-        assertEquals(0, user.getQuestionsList().size(), "The ask question use case failed.");// null pointer caused by getUser, it cant get the question list out
+        assertEquals(0, user.getQuestionsList().size(), "The ask question use case failed.");
+        ClearAllRepository();
+    }
+
+    public void ClearAllRepository(){
+        questionGateway = new QuestionRepo();
+        clientGateway = new ClientRepository();
+        attorneyGateway = new AttorneyRepository();
+        clientGateway.deleteAllUser();
+        questionGateway.deleteAllQuestion();
+        attorneyGateway.deleteAllUser();
     }
 }

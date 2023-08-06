@@ -48,10 +48,6 @@ public class SelectQuestionUseCaseTest {
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
         postGateway = new PostRepo();
-        postGateway.deleteAllPost();
-        clientGateway.deleteAllUser();
-        questionGateway.deleteAllQuestion();
-        attorneyGateway.deleteAllUser();
         theQuestionOutputBoundary = new TheQuestionOutputBoundary() {
             @Override
             public void setControlContainer(ControlContainer controlContainer) {
@@ -88,13 +84,13 @@ public class SelectQuestionUseCaseTest {
 
         Post postBelongsToClient = new Post();
         postBelongsToClient.setPostText("test text");
-        postBelongsToClient.setPostId(CLIENT_POST_ID);// default constructor does not initialize the post list
+        postBelongsToClient.setPostId(CLIENT_POST_ID);
         postBelongsToClient.setBelongsTo(CLIENT_ID);
         postGateway.savePost(postBelongsToClient);
 
         Post postBelongsToAttorney = new Post();
         postBelongsToAttorney.setPostText("test text");
-        postBelongsToAttorney.setPostId(ATTORNEY_POST_ID);// default constructor does not initialize the post list
+        postBelongsToAttorney.setPostId(ATTORNEY_POST_ID);
         postBelongsToAttorney.setBelongsTo(ATTORNEY_ID);
         postGateway.savePost(postBelongsToAttorney);
 
@@ -120,11 +116,12 @@ public class SelectQuestionUseCaseTest {
 
     @Test
     public void TestClientSelectQuestionUseCase(){
-        setUpSelectUseCase();// default constructor does not initialize the post list
+        setUpSelectUseCase();
 
         SelectRequestModel inputData = new SelectRequestModel(QUESTION_ID, CLIENT_ID);
 
         selectInputBoundary.selectQuestion(inputData);
+        ClearAllRepository();
     }
 
     @Test
@@ -133,6 +130,7 @@ public class SelectQuestionUseCaseTest {
         SelectRequestModel inputData = new SelectRequestModel(QUESTION_ID, ATTORNEY_ID);
 
         selectInputBoundary.selectQuestion(inputData);
+        ClearAllRepository();
     }
 
     @Test
@@ -141,6 +139,7 @@ public class SelectQuestionUseCaseTest {
         SelectRequestModel inputData = new SelectRequestModel(TAKEN_QUESTION_ID, ATTORNEY_ID);
 
         selectInputBoundary.selectQuestion(inputData);
+        ClearAllRepository();
     }
 
     @Test
@@ -149,6 +148,7 @@ public class SelectQuestionUseCaseTest {
         SelectRequestModel inputData = new SelectRequestModel(CLOSED_QUESTION_ID, ATTORNEY_ID);
 
         selectInputBoundary.selectQuestion(inputData);
+        ClearAllRepository();
     }
 
     @Test
@@ -157,7 +157,17 @@ public class SelectQuestionUseCaseTest {
         SelectRequestModel inputData = new SelectRequestModel(TAKEN_QUESTION_ID, SECOND_ATTORNEY_ID);
 
         selectInputBoundary.selectQuestion(inputData);
+        ClearAllRepository();
     }
 
-
+    public void ClearAllRepository(){
+        questionGateway = new QuestionRepo();
+        clientGateway = new ClientRepository();
+        attorneyGateway = new AttorneyRepository();
+        postGateway = new PostRepo();
+        clientGateway.deleteAllUser();
+        questionGateway.deleteAllQuestion();
+        attorneyGateway.deleteAllUser();
+        postGateway.deleteAllPost();
+    }
 }
