@@ -25,7 +25,8 @@ public class Attorney implements User {
     @OneToMany(targetEntity = Question.class, fetch = FetchType.EAGER)
     @JsonProperty(required = true)
     private List<Question> questionsList;
-    @OneToMany
+    @OneToMany(targetEntity = Question.class, fetch = FetchType.EAGER)
+    @JsonProperty(required = true)
     private List<Question> recommendations;
 
     public Attorney() {
@@ -71,6 +72,8 @@ public class Attorney implements User {
         return questionsList;
     }
 
+    public List<Question> getRecommendations() {return recommendations;}
+
     public void setUserId(int userId) {this.userId = userId;}
 
     public void setName(String name) {this.name = name;}
@@ -83,19 +86,16 @@ public class Attorney implements User {
 
     public void setPostalCode(String postalCode) {this.postalCode = postalCode;}
 
-
-    public List<Question> getRecommendations() {return recommendations;}
-
-    public void addRecommendation(Question question) {
-        if (! recommendations.contains(question)) {
-            recommendations.add(question);
-        }
-    }
-
     @Override
     public void addQuestion(Question question) {
         if (! questionsList.contains(question)) {
             questionsList.add(question);
+        }
+    }
+
+    public void addRecommendation(Question question){
+        if (! recommendations.contains(question)) {
+            recommendations.add(question);
         }
     }
 

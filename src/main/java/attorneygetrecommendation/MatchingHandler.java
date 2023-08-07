@@ -3,10 +3,12 @@ package attorneygetrecommendation;
 import businessrule.gateway.AttorneyGateway;
 import businessrule.gateway.ClientGateway;
 import businessrule.gateway.QuestionGateway;
-import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonProcessingException;
-import businessrule.gateway.*;
 import java.io.*;
+import com.fasterxml.jackson.core.type.TypeReference;
+import driver.database.AttorneyRepository;
+import driver.database.ClientRepository;
+import driver.database.QuestionRepo;
 import entity.Post;
 import entity.Question;
 import entity.Attorney;
@@ -18,79 +20,91 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.apache.commons.io.IOUtils;
 import java.nio.charset.StandardCharsets;
 
-
 public class MatchingHandler {
-//    final AttorneyGateway attorneyGateway;
-//    final ClientGateway clientGateway;
-//    final QuestionGateway questionGateway;
+    final AttorneyGateway attorneyGateway;
+    final ClientGateway clientGateway;
+    final QuestionGateway questionGateway;
     final ObjectMapper objectMapper = new ObjectMapper();
+    final PythonReader pythonReader = new PythonReader();
 
-//
-//    public void updateMatching(MatchingResult matchingResult) {
-//        attorneyGateway.clearAllRecommendations();
-//
-//        for (Matching matching: matchingResult.getMatchingResult()){
-//            Attorney attorney = (Attorney) attorneyGateway.getUser(matching.getAttorneyId());
-//            Question question = questionGateway.getQuestion(matching.getQuestionId());
-//            attorney.addRecommendation(question);
-//            attorneyGateway.updateRecommendations(matching.getAttorneyId());
-//        }
-//    }
-//
-//    // TODO: figure out how to decouple matchMap
-//    public MatchingResult getMatching() {
-//        List<Question> questionList = questionGateway.getNotTakenQuestion();
-//        List<Attorney> attorneyList = attorneyGateway.getAllAttorney();
-//        Map<Map<Integer, Integer>, Double> weights = constructWeight(questionList, attorneyList);
-//
-//        List<Map<Integer, Integer>> matchingResult = pythonMatching(getQuestionIdList(questionList), getAttorneyIdList(attorneyList), weights);
-//        List<Matching> matchingList = new ArrayList<Matching>();
-//        for (Map<Integer, Integer> matchMap: matchingResult) {
-//            matchingList.add(new Matching());
-//        }
-//        return new MatchingResult(matchingList);
-//    }
-//
-//    // TODO: figure out how to return the correct value
-//    private List<Map<Integer, Integer>> pythonMatching(List<Integer> questions, List<Integer> attorneys, Map<Map<Integer, Integer>, Double> weights) {
-//        try (Interpreter jep = new SharedInterpreter()) {
-//
-//            jep.runScript("");
-//
-//            String serializedQuestions= serializeEntity(questions);
-//            String serializedAttorneys = serializeEntity(attorneys);
-//            String serializedWeights = serializeEntity(weights);
-//
-//            // Call function to predict the probability of client satisfaction
-//            jep.eval("result = matching_algo('" + serializedQuestions + "', '" + serializedAttorneys+ "', '" + serializedWeights + "')");
-//            return jep.getValue("matching", List.class);
-//        }
-//    }
-//
-//
-//
-//    private Map<Map<Integer, Integer>, Double> constructWeight(List<Question> questionList, List<Attorney> attorneyList) {
-//        // initialize the map to store weights
-//        Map<Map<Integer, Integer>, Double> weights = new HashMap<>();
-//
-//        // Loop over question and attorney list
-//        for (Question question: questionList) {
-//            Client client = (Client) clientGateway.getUser(question.getAskedByClient());
-//            for (Attorney attorney: attorneyList){
-//                // initialize the map to store question, attorney id pair
-//                Map<Integer, Integer> pair = new HashMap<>();
-//                pair.put(question.getQuestionId(), attorney.getUserId());
-//                // update weights
-//                weights.put(pair, getProb(client, question, attorney));
-//            }
-//        }
-//        return weights;
-//    }
+    public MatchingHandler(AttorneyGateway attorneyGateway, ClientGateway clientGateway, QuestionGateway questionGateway) {
+        this.attorneyGateway = attorneyGateway;
+        this.clientGateway = clientGateway;
+        this.questionGateway = questionGateway;
+    }
 
-    private double getProb(Client client, Question question, Attorney attorney) throws JsonProcessingException, IOException {
+    public void match() {
+        try {
+            MatchingResult matchingResult = getMatching();
+            updateMatching(matchingResult);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateMatching(MatchingResult matchingResult) {
+        // clear all matching
+        attorneyGateway.clearAllRecommendations();
+
+        // update
+        for (Matching matching: matchingResult.getMatchingResult()){
+            Attorney attorney = (Attorney) attorneyGateway.getUser(matching.getAttorneyId());
+            Question question = questionGateway.getQuestion(matching.getQuestionId());
+            attorneyGateway.addRecommendation(matching.getAttorneyId(), question);
+        }
+    }
+
+    public MatchingResult getMatching() throws IOException {
+        List<Question> questionList = questionGateway.getNotTakenQuestion();
+        List<Attorney> attorneyList = attorneyGateway.getAllAttorney();
+        Map<Integer[], Double> weights = constructWeight(questionList, attorneyList);
+
+        List<Integer[]> matchingResult = pythonMatching(getQuestionIdList(questionList), getAttorneyIdList(attorneyList), weights);
+        List<Matching> matchingList = new ArrayList<Matching>();
+        for (Integer[] match: matchingResult) {
+            matchingList.add(new Matching(match[0], match[1]));
+        }
+        return new MatchingResult(matchingList);
+    }
+
+    private List<Integer[]> pythonMatching(List<Integer> questions, List<Integer> attorneys, Map<Integer[], Double> weights) throws IOException{
+        Map<String, Object> javaPara = new HashMap<>();
+        javaPara.put("questions", questions);
+        javaPara.put("attorneys", attorneys);
+        javaPara.put("weights", weights);
+        String input = serialize(javaPara);
+
+        // Java code to write to a temp file
+        Path tempFile = Files.createTempFile("input", ".json");
+        assert input != null;
+        Files.write(tempFile, input.getBytes(StandardCharsets.UTF_8));
+
+        // Using command line to get output from python
+        String command = "python lib/matching.py --input=" + tempFile;
+        String result = pythonReader.readPythonExec(command);
+        return objectMapper.readValue(result, new TypeReference<>() {});
+    }
+
+    private Map<Integer[], Double> constructWeight(List<Question> questionList, List<Attorney> attorneyList) throws IOException{
+        // initialize the map to store weights
+        Map<Integer[], Double> weights = new HashMap<>();
+
+        // Loop over question and attorney list
+        for (Question question: questionList) {
+            Client client = (Client) clientGateway.getUser(question.getAskedByClient());
+            for (Attorney attorney: attorneyList){
+                // initialize the array to store question, attorney id pair
+                Integer[] pair = new Integer[]{question.getQuestionId(), attorney.getUserId()};
+                // update weights
+                weights.put(pair, getProb(client, question, attorney));
+            }
+        }
+        return weights;
+    }
+
+    private double getProb(Client client, Question question, Attorney attorney) throws IOException {
         // Serialize all entity
         Map<String, Object> javaPara = new HashMap<>();
         javaPara.put("client", client);
@@ -104,28 +118,9 @@ public class MatchingHandler {
         Files.write(tempFile, input.getBytes(StandardCharsets.UTF_8));
 
         // Using command line to get output from python
-        String command = "python lib/prediction.py --input=" + tempFile.toString();
-        String result = readPythonExec(command);
+        String command = "python lib/prediction.py --input=" + tempFile;
+        String result = pythonReader.readPythonExec(command);
         return objectMapper.readValue(result, double.class);
-    }
-
-    private String readPythonExec(String command) {
-        Process proc;
-        try {
-            proc = Runtime.getRuntime().exec(command);
-            int i = proc.waitFor();
-            System.out.println(i);
-            InputStream inputStream = proc.getInputStream();
-            InputStream errorStream = proc.getErrorStream();
-            String errorOutput = IOUtils.toString(errorStream, StandardCharsets.UTF_8);
-            if (!errorOutput.isEmpty()) {
-                System.err.println("Error from Python: " + errorOutput);
-            }
-            return IOUtils.toString(inputStream, StandardCharsets.UTF_8);
-        } catch (IOException | InterruptedException e) {
-            System.out.println("exception");
-            e.printStackTrace();
-        } return null;
     }
 
     private List<Integer> getQuestionIdList(List<Question> questionList) {
@@ -158,7 +153,11 @@ public class MatchingHandler {
         int ATTORNEY_ID = 1000;
         int CLIENT_ID = 2000;
 
-        MatchingHandler m = new MatchingHandler();
+        ClientGateway clientGateway1 = new ClientRepository();
+        AttorneyGateway attorneyGateway1 = new AttorneyRepository();
+        QuestionGateway questionGateway1 = new QuestionRepo();
+
+        MatchingHandler m = new MatchingHandler(attorneyGateway1, clientGateway1, questionGateway1);
         Client c = new Client();
         c.setUserId(CLIENT_ID);
         Question q = new Question();
@@ -197,7 +196,5 @@ public class MatchingHandler {
         catch (IOException e) {
             e.printStackTrace();
         }
-
-
     }
 }

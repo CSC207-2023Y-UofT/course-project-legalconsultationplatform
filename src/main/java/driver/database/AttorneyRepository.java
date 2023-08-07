@@ -138,7 +138,7 @@ public class AttorneyRepository implements AttorneyGateway {
     }
 
     @Override
-    public void updateRecommendations(int Userid) {
+    public void addRecommendation(int Userid, Question question) {
 
     }
 }
