@@ -85,6 +85,9 @@ public class Attorney implements User {
     public void setStateAbb(String stateAbb) {this.stateAbb = stateAbb;}
 
     public void setPostalCode(String postalCode) {this.postalCode = postalCode;}
+    public void setRecommendations(ArrayList<Question> recommendations) {
+        this.recommendations = recommendations;
+    }
 
     @Override
     public void addQuestion(Question question) {
