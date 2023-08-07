@@ -26,7 +26,7 @@ public class ViewRateableQuestionInteractor extends ViewQuestionInteractorBase{
         List<Question> questionList = client.getQuestionsList();
         List<Question> rateableList = new ArrayList<>();
         for (Question question : questionList) {
-            if (question.isClose()) {
+            if (question.isClose() || question.isTaken()) {
                 rateableList.add(question);
             }
         } return rateableList;
