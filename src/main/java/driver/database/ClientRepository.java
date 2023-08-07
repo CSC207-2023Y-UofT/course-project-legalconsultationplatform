@@ -3,13 +3,16 @@ package driver.database;
 import businessrule.gateway.ClientGateway;
 import entity.Question;
 import entity.Client;
-import entity.User;
 
 import javax.jdo.JDOHelper;
 import javax.persistence.*;
 import java.util.List;
 
-public class ClientRepository implements ClientGateway {
+public class ClientRepository extends GenericUserRepository<Client> implements ClientGateway {
+
+    public ClientRepository() {
+        super(Client.class);
+    }
 
     @Override
     public boolean existsById(int clientId) {
@@ -32,23 +35,6 @@ public class ClientRepository implements ClientGateway {
         }
     }
 
-    @Override
-    public void addUser(User client) {
-        EntityManager entityManager = DatabaseConnection.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        try {
-            transaction.begin();
-            entityManager.persist(client);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction.isActive()) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            entityManager.close();
-        }
-    }
 
     @Override
     public void deleteUser(int clientId) {
@@ -67,24 +53,6 @@ public class ClientRepository implements ClientGateway {
             em.close();
         }
     }
-
-    @Override
-    public void deleteAllUser() {
-        EntityManager em = DatabaseConnection.getEntityManager();
-        try {
-            em.getTransaction().begin();
-            em.createQuery("DELETE FROM Client c").executeUpdate();
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            em.close();
-        }
-    }
-
     @Override
     public boolean existsByName(String username) {
         EntityManager em = DatabaseConnection.getEntityManager();
@@ -121,6 +89,23 @@ public class ClientRepository implements ClientGateway {
         } catch (Exception e) {
             if (transaction.isActive()) {
                 transaction.rollback();
+            }
+            e.printStackTrace();
+        } finally {
+            em.close();
+        }
+    }
+
+    @Override
+    public void deleteAllUser() {
+        EntityManager em = DatabaseConnection.getEntityManager();
+        try {
+            em.getTransaction().begin();
+            em.createQuery("DELETE FROM Client c").executeUpdate();// Attorney a
+            em.getTransaction().commit();
+        } catch (Exception e) {
+            if (em.getTransaction().isActive()) {
+                em.getTransaction().rollback();
             }
             e.printStackTrace();
         } finally {

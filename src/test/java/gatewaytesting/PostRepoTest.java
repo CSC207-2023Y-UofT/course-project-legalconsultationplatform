@@ -2,9 +2,7 @@ package gatewaytesting;
 
 import driver.database.DatabaseConnection;
 import driver.database.PostRepo;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import entity.Post;
 
 import javax.persistence.EntityManager;
@@ -20,8 +18,8 @@ public class PostRepoTest {
     //Question
     final static int QUESTION_ID = 10;
 
-    @BeforeAll
-    public static void setUp() {
+    @BeforeEach
+    public void setUp() {
         LocalDate createdAt = LocalDate.now();
         String postText = "hello!";
         int belongsTo = 100;
@@ -44,11 +42,6 @@ public class PostRepoTest {
         assertFalse(repo.existsById(15), "The id exists!");
     }
 
-    @AfterAll
-    public static void tearDown() {
-        PostRepo repo = new PostRepo();
-        repo.deleteAllPost();
-    }
 
     @Test
     public void testSavePost() {
@@ -135,4 +128,9 @@ public class PostRepoTest {
         assertEquals(0, count, "The database still have saved post objects!");
     }
 
+    @AfterEach
+    public void tearDown() {
+        PostRepo repo = new PostRepo();
+        repo.deleteAllPost();
+    }
 }
