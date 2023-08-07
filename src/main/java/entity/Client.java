@@ -1,5 +1,7 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -11,19 +13,28 @@ import java.util.Objects;
 @Entity
 public class Client implements User {
     @Id
+    @JsonProperty(required = true)
     private int userId;
     private String userName;
     private String email;
     private String password;
     private String stateAbb;
+    @JsonProperty(required = true)
     private String postalCode;
+    @JsonProperty(required = true)
     private String ethnicity;
+    @JsonProperty(required = true)
     private int age;
+    @JsonProperty(required = true)
     private String gender;
+    @JsonProperty(required = true)
     private String maritalStatus;
+    @JsonProperty(required = true)
     private int numberOfHousehold;
+    @JsonProperty(required = true)
     private float annualIncome;
     @OneToMany(targetEntity = Question.class, fetch = FetchType.EAGER)
+    @JsonProperty(required = true)
     private List<Question> questionsList;
 
     public Client() {

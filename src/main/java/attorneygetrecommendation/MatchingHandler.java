@@ -6,13 +6,13 @@ import businessrule.gateway.QuestionGateway;
 import com.fasterxml.jackson.core.JacksonException;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import businessrule.gateway.*;
-
 import java.io.*;
-
+import entity.Post;
 import entity.Question;
 import entity.Attorney;
 import entity.Client;
-
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -20,8 +20,6 @@ import java.util.Map;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.apache.commons.io.IOUtils;
 import java.nio.charset.StandardCharsets;
-
-import javax.persistence.criteria.CriteriaBuilder;
 
 
 public class MatchingHandler {
@@ -92,16 +90,21 @@ public class MatchingHandler {
 //        return weights;
 //    }
 
-    private double getProb(Client client, Question question, Attorney attorney) throws JsonProcessingException {
+    private double getProb(Client client, Question question, Attorney attorney) throws JsonProcessingException, IOException {
         // Serialize all entity
         Map<String, Object> javaPara = new HashMap<>();
-        javaPara.put("client", serialize(client));
-        javaPara.put("question", serialize(question));
-        javaPara.put("attorney", serialize(attorney));
+        javaPara.put("client", client);
+        javaPara.put("question", question);
+        javaPara.put("attorney", attorney);
         String input = serialize(javaPara);
 
+        // Java code to write to a temp file
+        Path tempFile = Files.createTempFile("input", ".json");
+        assert input != null;
+        Files.write(tempFile, input.getBytes(StandardCharsets.UTF_8));
+
         // Using command line to get output from python
-        String command = "python lib/prediction.py --input=" + input;
+        String command = "python lib/prediction.py --input=" + tempFile.toString();
         String result = readPythonExec(command);
         return objectMapper.readValue(result, double.class);
     }
@@ -151,17 +154,50 @@ public class MatchingHandler {
     }
 
     public static void main(String[] args) {
+        int QUESTION_ID = 3000;
+        int ATTORNEY_ID = 1000;
+        int CLIENT_ID = 2000;
+
         MatchingHandler m = new MatchingHandler();
         Client c = new Client();
+        c.setUserId(CLIENT_ID);
         Question q = new Question();
+        q.setQuestionId(QUESTION_ID);
         Attorney a = new Attorney();
+        a.setUserId(ATTORNEY_ID);
+
+        Post attorneyPost = new Post();
+        Post clientPost = new Post();
+        clientPost.setPostId(1);
+        clientPost.setPostText("I have a really trick issue. I really worry about that for more than one year and cannot figure that out. Could someone help me?");
+        clientPost.setBelongsTo(CLIENT_ID);
+        clientPost.setQuestionId(QUESTION_ID);
+        attorneyPost.setPostId(2);
+        attorneyPost.setPostText("ok, I understand. Unfortunately, I cannot answer this question. I suggest you ask for a new attorney or search on other website to better understand this problem");
+        attorneyPost.setBelongsTo(ATTORNEY_ID);
+        attorneyPost.setQuestionId(QUESTION_ID);
+
+        q.setAskedByClient(CLIENT_ID);
+        q.setTaken(true);
+        q.setTakenByAttorney(ATTORNEY_ID);
+        q.addPosts(clientPost);
+        q.addPosts(attorneyPost);
+        q.setRating(0);
+
+        c.addQuestion(q);
         c.setPostalCode("0");
-        a.setPostalCode("0");
+        a.setPostalCode("10000000");
+        c.setAnnualIncome(10000);
+        c.setGender("Female");
+
+        a.addQuestion(q);
+
         try {
             System.out.println(m.getProb(c, q, a));}
-        catch (JacksonException e) {
+        catch (IOException e) {
             e.printStackTrace();
         }
+
 
     }
 }

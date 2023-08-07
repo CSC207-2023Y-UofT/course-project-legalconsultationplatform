@@ -1,5 +1,7 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -12,13 +14,16 @@ import java.util.Objects;
 @Entity
 public class Attorney implements User {
     @Id
+    @JsonProperty(required = true)
     private int userId;
     private String name;
     private String email;
     private String password;
     private String stateAbb;
+    @JsonProperty(required = true)
     private String postalCode;
     @OneToMany(targetEntity = Question.class, fetch = FetchType.EAGER)
+    @JsonProperty(required = true)
     private List<Question> questionsList;
     @OneToMany
     private List<Question> recommendations;

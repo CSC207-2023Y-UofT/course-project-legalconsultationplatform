@@ -5,7 +5,7 @@ import data_preprocessing
 import deserialization
 
 
-def calculate_probability(client, question, attorney):
+def calculate_probability(client: dict, question: dict, attorney: dict):
     """
     :param client: a serialized JSON representation of the client entity
     :param question: a serialized JSON representation of the question entity
@@ -13,25 +13,19 @@ def calculate_probability(client, question, attorney):
     :return: the predicted probability of client satisfaction using the provided
     machine learning model and client, question, and attorney info
     """
-    client_dict = deserialization.deserialize_entity(client)
-    question_dict = deserialization.deserialize_entity(question)
-    attorney_dict = deserialization.deserialize_entity(attorney)
-    return predict(client_dict, question_dict, attorney_dict)
-
-
-def predict(client: dict, question: dict, attorney: dict):
     model = deserialization.deserialize_model("lib/random_forest.pkl")
-    input_data = data_preprocessing.data_preprocessing(client,
-                                                       question,
-                                                       attorney)
-    return float(model.predict_proba(input_data)[:, 1])
+    data = data_preprocessing.data_preprocessing(client,
+                                                 question,
+                                                 attorney)
+    return float(model.predict_proba(data)[:, 1])
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
     parser.add_argument('--input', type=str, default=None)
     args = parser.parse_args()
-    input_data = json.loads(args.input)
+    with open(args.input, 'r') as f:
+        input_data = json.load(f)
     client = input_data['client']
     question = input_data['question']
     attorney = input_data['attorney']

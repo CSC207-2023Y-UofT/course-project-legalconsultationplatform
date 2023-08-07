@@ -1,5 +1,7 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import java.time.LocalDate;
@@ -7,11 +9,16 @@ import java.util.Objects;
 
 @Entity
 public class Post {
+    @JsonProperty(required = true)
     private int questionId;
     @Id
+    @JsonProperty(required = true)
     private int postId;
+    @JsonProperty(required = true)
     private LocalDate createAt;
+    @JsonProperty(required = true)
     private String postText;
+    @JsonProperty(required = true)
     private int belongsTo;
 
     public Post() {

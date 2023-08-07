@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import text_preprocessing
 import datetime as dt
-from sklearn.preprocessing import StandardScaler
+import joblib
 
 
 def data_preprocessing(client_dict, question_dict, attorney_dict):
@@ -42,6 +42,8 @@ def data_preprocessing(client_dict, question_dict, attorney_dict):
                       attorney_len, attorney_num_question,
                       attorney_answer_within, area_match, ddl_match, distance,
                       client_is_divorced, client_is_married, client_is_single])
+    mask = np.isnan(data)
+    data[mask] = 0
     data = data.reshape(1, -1)
     return standardize_data(data)
 
@@ -51,8 +53,7 @@ def standardize_data(input_data):
     :param input_data: input data follows the sklearn API
     :return: the standardized data
     """
-    scaler = StandardScaler()
-    scaler.fit(input_data)  # Fit the scaler to the data
+    scaler = joblib.load("lib/scaler.joblib")
     standardized_data = scaler.transform(input_data)
     return standardized_data
 
