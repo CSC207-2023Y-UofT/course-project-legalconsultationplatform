@@ -10,8 +10,6 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.server.UID;
 
-import static driver.screen.UIDesign.buttonSize;
-
 public class RegisterUI extends JPanel implements ActionListener{
     ControlContainer controlContainer;
 

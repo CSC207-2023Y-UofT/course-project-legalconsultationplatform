@@ -20,24 +20,24 @@ public class UIDesign {
     public static Font regularFont = new Font("Novo Sans", Font.PLAIN, 12);
     public static Font boldFont = new Font("Novo Sans", Font.BOLD, 14);
     public static Font titleFont = new Font("Novo Sans", Font.BOLD | Font.ITALIC, 30);
-    public static Font subTitleFont = new Font("Novo Sans", Font.BOLD | Font.ITALIC, 20);
+    public static Font subTitleFont = new Font("Novo Sans", Font.BOLD, 20);
     public static Font italicFont = new Font("Novo Sans", Font.ITALIC, 12);
 
     //All shape and sizes used in the UI
-    public static Dimension buttonSize = new Dimension(100, 50);
     public static Dimension frameSize = new Dimension(360, 640);
+    public static int frameWidth = 360;
+    public int frameHeight = 640;
 
     private UIDesign() {
     }
 
     //button settings
     public static void setButton(JButton button){
-        button.setMaximumSize(buttonSize);
-        button.setMinimumSize(buttonSize);
-        button.setPreferredSize(buttonSize);
         button.setFont(boldFont);
-        button.setForeground(darkGreenColor);
+        button.setForeground(whiteColor);
+        button.setOpaque(true);
         button.setBackground(darkGreenColor);
+        button.setBorderPainted(false);
     }
 
     public static void setHomePageButton(JButton button){
@@ -45,9 +45,21 @@ public class UIDesign {
         button.setMaximumSize(dimension);
         button.setMinimumSize(dimension);
         button.setPreferredSize(dimension);
-        button.setFont(boldFont);
-        button.setForeground(darkGreenColor);
-        button.setBackground(Color.RED);
+        setButton(button);
+    }
+
+    public static void setGeneralButton(JButton button){
+        Dimension dimension = new Dimension(150, 50);
+        button.setMaximumSize(dimension);
+        button.setMinimumSize(dimension);
+        button.setPreferredSize(dimension);
+        setButton(button);
+    }
+
+    public static void setSizeInLayout(JComponent component, Dimension dimension){
+        component.setPreferredSize(dimension);
+        component.setMinimumSize(dimension);
+        component.setMaximumSize(dimension);
     }
 
     //panel settings
@@ -77,6 +89,14 @@ public class UIDesign {
         component.setForeground(blackColor);
     }
 
+    public static JPanel addSpacer(int height){
+        JPanel topSpacer = new JPanel();
+        Dimension topSpacerDimension = new Dimension(frameWidth, height);
+        setSizeInLayout(topSpacer, topSpacerDimension);
+        topSpacer.setOpaque(false);
+        return topSpacer;
+    }
+
     //Set up subPanels
     public static JPanel singlePostDrawer(String userName, String postDate,
                                         String postText, String userType){
@@ -89,24 +109,27 @@ public class UIDesign {
         setPromptFont(date);
         nameAndDate.add(name);
         nameAndDate.add(date);
-        JLabel text = new JLabel(postText);
-        setTextFont(text);
+
+        JTextArea text = new JTextArea();
+        text.setLineWrap(true);
+        text.setWrapStyleWord(true);
+        text.setEditable(false);
+        text.setText(postText);
+        JScrollPane textScrollPane = new JScrollPane(text);
+        textScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        textScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        setSizeInLayout(textScrollPane, new Dimension(250, 50));
+        text.setOpaque(false);
+        textScrollPane.setOpaque(false);
 
         JPanel nakedSinglePost = new JPanel();
         nakedSinglePost.setLayout(new BoxLayout(nakedSinglePost, BoxLayout.Y_AXIS));
         nakedSinglePost.add(nameAndDate);
-        nakedSinglePost.add(text);
-        nakedSinglePost.setBackground(lightGreyColor);
+        nakedSinglePost.add(textScrollPane);
+        nakedSinglePost.setOpaque(false);
+        nakedSinglePost.setAlignmentX(Component.LEFT_ALIGNMENT);
 
-        nameAndDate.setAlignmentX(Component.LEFT_ALIGNMENT);
-        text.setAlignmentX(Component.LEFT_ALIGNMENT);
-
-        Color squareColor;
-        if (userType.equals("Client")){
-            squareColor = mediumGreenColor;
-        } else{
-            squareColor = darkGreenColor;
-        }
+        Color squareColor = userType.equals("Client") ? mediumGreenColor : darkGreenColor;
 
         JPanel greenSquare = new JPanel();
         greenSquare.setPreferredSize(new Dimension(20, 20));
@@ -186,4 +209,6 @@ public class UIDesign {
         titlePanel.add(titleText);
         return titlePanel;
     }
+
+
 }

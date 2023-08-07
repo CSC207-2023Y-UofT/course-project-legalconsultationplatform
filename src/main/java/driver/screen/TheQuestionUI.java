@@ -5,16 +5,11 @@ import adapter.controller.ControlContainer;
 import adapter.controller.PostControl;
 import adapter.controller.RateControl;
 import businessrule.usecase.PostDisplayFormatter;
-import entity.Post;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
@@ -35,7 +30,7 @@ public class TheQuestionUI extends JPanel implements ActionListener {
     Map<Integer, PostDisplayFormatter> postMap;
 
 
-    JTextArea inputPostArea = new JTextArea();
+    JTextArea inputPostArea = new JTextArea(3, 30);
     String[] rateList = {"Satisfied", "Not satisfied"};
     JComboBox<String> rate = new JComboBox<>(rateList);
 
@@ -69,17 +64,8 @@ public class TheQuestionUI extends JPanel implements ActionListener {
         UIDesign.setPromptFont(deadlineLine);
 
 
-        //The scrollable posts
-        JPanel postPanel = new JPanel();
-        postPanel.setLayout(new BoxLayout(postPanel, BoxLayout.Y_AXIS));
-        JLabel previousPost = new JLabel("Followup Discussions");
-        UIDesign.setNameFont(previousPost);
-
-        int numberOfPosts = postMap.size();
-        JScrollPane postScrollPane = new JScrollPane();
-
         JPanel postScrollPanel = new JPanel();
-        postScrollPanel.setLayout(new GridLayout(numberOfPosts, 1));
+        postScrollPanel.setLayout(new BoxLayout(postScrollPanel, BoxLayout.Y_AXIS));
         for (PostDisplayFormatter post : postMap.values()) {
             //read all variables from displayFormatter
             String name = post.getName();
@@ -99,57 +85,73 @@ public class TheQuestionUI extends JPanel implements ActionListener {
             //Add the postArea into the scrollpanel
             postScrollPanel.add(thisPost);
         }
-        postScrollPane.setViewportView(postScrollPanel);
-        Dimension scrollPaneDimension = new Dimension(330, 200);
-        postScrollPane.setMinimumSize(scrollPaneDimension);
-        postScrollPane.setMinimumSize(scrollPaneDimension);
-        postScrollPane.setPreferredSize(scrollPaneDimension);
+        JScrollPane postScrollPane = new JScrollPane(postScrollPanel);
+        postScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        postScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        setSizeInLayout(postScrollPane, new Dimension(350, 200));
+        postScrollPane.setOpaque(false);
 
-        postPanel.add(previousPost);
-        postPanel.add(postScrollPane);
-        previousPost.setAlignmentX(LEFT_ALIGNMENT);
-        postScrollPane.setAlignmentX(LEFT_ALIGNMENT);
+        JPanel overallPosts = new JPanel();
+        JLabel label = new JLabel("Previous discussions");
+        JPanel labelPanel = new JPanel();
+        labelPanel.add(label);
+        overallPosts.setLayout(new BoxLayout(overallPosts, BoxLayout.Y_AXIS));
+        overallPosts.setAlignmentX(LEFT_ALIGNMENT);
+        overallPosts.add(labelPanel);
+        overallPosts.add(postScrollPane);
 
 
         //The new post textBox
         inputPostArea.setLineWrap(true);
         inputPostArea.setWrapStyleWord(true);
-        JPanel inputPostWrapper = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        inputPostWrapper.setBackground(whiteColor);
-        inputPostWrapper.add(inputPostArea);
-        JScrollPane inputScrollPane = new JScrollPane(inputPostWrapper);
-        inputScrollPane.setPreferredSize(new Dimension(250, 30));
+        JScrollPane inputScrollPane = new JScrollPane(inputPostArea);
+        inputScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        inputScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        setSizeInLayout(inputScrollPane, new Dimension(250, 50));
+
+        JLabel input = new JLabel("Type your content here");
+        JPanel inputPanel = new JPanel();
+        inputPanel.add(input);
+        JPanel overallInput = new JPanel();
+        overallInput.setOpaque(false);
+        overallInput.setLayout(new BoxLayout(overallInput, BoxLayout.Y_AXIS));
+        overallInput.setAlignmentX(LEFT_ALIGNMENT);
+        overallInput.add(inputPanel);
+        overallInput.add(inputScrollPane);
+
+        JPanel topSpacer = addSpacer(30);
 
         //add the textbox and the reply button together
         JButton postReply = new JButton("Post");
         postReply.setForeground(darkGreenColor);
-        Dimension postButtonSize = new Dimension(60, 40);
-        postReply.setPreferredSize(postButtonSize);
-        postReply.setMaximumSize(postButtonSize);
-        postReply.setMinimumSize(postButtonSize);
+        Dimension postButtonSize = new Dimension(80, 50);
+        setSizeInLayout(postReply, postButtonSize);
         postReply.addActionListener(this);
         JPanel overallInputPost = new JPanel();
         overallInputPost.setLayout(new FlowLayout());
-        overallInputPost.add(inputScrollPane);
+        overallInputPost.add(overallInput);
         overallInputPost.add(postReply);
         overallInputPost.setBackground(lightGreenColor);
 
+        //The spacer
+        JPanel spacer = addSpacer(30);
+
         //The rate function
         DropDownPanel ratePanel = new DropDownPanel(new JLabel("Rate this question"), rate);
-
-        //The three buttons
-        JPanel buttons = new JPanel();
-        buttons.setBackground(UIDesign.lightGreenColor);
-        buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS)); // Use X_AXIS for horizontal alignment
-        JButton closeQuestion = new JButton("Close question");
-        JButton rateQuestion = new JButton("Rate question");
-        closeQuestion.setPreferredSize(buttonSize);
-        rateQuestion.setPreferredSize(buttonSize);
-
-        buttons.add(closeQuestion);
-        buttons.add(rateQuestion);
-        closeQuestion.addActionListener(this);
+        JPanel rateOverall = new JPanel();
+        rateOverall.setOpaque(false);
+        JButton rateQuestion = new JButton("Rate");
+        rateQuestion.setForeground(darkGreenColor);
+        setSizeInLayout(rateQuestion, postButtonSize);
         rateQuestion.addActionListener(this);
+        rateOverall.add(ratePanel);
+        rateOverall.add(rateQuestion);
+
+        //The close function
+        JButton closeQuestion = new JButton("Close question");
+        closeQuestion.addActionListener(this);
+        closeQuestion.setForeground(darkGreenColor);
+        setSizeInLayout(closeQuestion, new Dimension(130, 50));
 
         //Add everything into JPanel
         JPanel contentPanel = new JPanel();
@@ -158,14 +160,14 @@ public class TheQuestionUI extends JPanel implements ActionListener {
         contentPanel.add(helloMessage);
         contentPanel.add(titlePanel);
         contentPanel.add(deadlineLine);
-        contentPanel.add(postScrollPane);
+        contentPanel.add(overallPosts);
+        contentPanel.add(topSpacer);
         contentPanel.add(overallInputPost); // Use the JScrollPane for inputPostArea
-        contentPanel.add(ratePanel);
-        contentPanel.add(buttons);
+        contentPanel.add(spacer);
+        contentPanel.add(rateOverall);
+        contentPanel.add(closeQuestion);
 
         this.add(contentPanel);
-
-
 
 
 
@@ -174,7 +176,7 @@ public class TheQuestionUI extends JPanel implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
-        if ("Post reply".equals(actionCommand)){
+        if ("Post".equals(actionCommand)){
             System.out.println("The user posts a reply.");
             PostControl postControl = controlContainer.getPostControl();
             postControl.createPost(questionId, userId, inputPostArea.getText());

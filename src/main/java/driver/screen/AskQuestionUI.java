@@ -16,7 +16,6 @@ import javax.swing.JPanel;
 
 import com.toedter.calendar.JDateChooser;
 
-import static driver.screen.UIDesign.buttonSize;
 import static javax.swing.BoxLayout.Y_AXIS;
 
 

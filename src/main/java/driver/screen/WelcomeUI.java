@@ -1,6 +1,7 @@
 package driver.screen;
 
 import adapter.controller.ControlContainer;
+import com.toedter.components.JTitlePanel;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -20,41 +21,47 @@ public class WelcomeUI extends JPanel implements ActionListener {
         this.cardLayout = cardLayout;
         this.screens = screens;
         this.controlContainer = controlContainer;
-        UIDesign.setBackgroundFrame(this);
 
+        //overall layout
+        UIDesign.setBackgroundFrame(this);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
+        //Top spacer
+        JPanel topSpacer = addSpacer(160);
+
+        //Welcome title
+        Dimension titleDimension = new Dimension(360, 80);
         JLabel title = new JLabel("Welcome");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        UIDesign.setTitleFont(title);
+        setSizeInLayout(title, titleDimension);
+        title.setOpaque(false);
+        setTitleFont(title);
 
-        int topMargin = 50;
-        int leftMargin = 0;
-        int bottomMargin = 100;
-        int rightMargin = 0;
-        title.setBorder(new EmptyBorder(topMargin, leftMargin, bottomMargin, rightMargin));
+        //Middle spacer
+        JPanel middleSpacer = addSpacer(80);
 
-        add(title);
+        //Buttons panel
 
         JPanel buttonsPanel = new JPanel();
-        buttonsPanel.setBackground(lightGreenColor);
+        buttonsPanel.setSize(new Dimension(360, 240));
         buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.X_AXIS)); // Use X_AXIS for horizontal alignment
+        buttonsPanel.setOpaque(false);
 
         JButton registerButton = new JButton("Register");
         JButton loginButton = new JButton("Login");
-
-        UIDesign.setButton(registerButton);
-        UIDesign.setButton(loginButton);
-
-        buttonsPanel.add(Box.createHorizontalGlue()); // Add glue to push buttons to the left
-        buttonsPanel.add(registerButton);
-        buttonsPanel.add(Box.createHorizontalGlue()); // Add glue to push buttons to the center
-        buttonsPanel.add(loginButton);
-        buttonsPanel.add(Box.createHorizontalGlue()); // Add glue to push buttons to the right
-
         registerButton.addActionListener(this);
         loginButton.addActionListener(this);
+        setGeneralButton(registerButton);
+        setGeneralButton(loginButton);
 
+        buttonsPanel.add(Box.createHorizontalGlue());
+        buttonsPanel.add(registerButton);
+        buttonsPanel.add(Box.createHorizontalGlue());
+        buttonsPanel.add(loginButton);
+        buttonsPanel.add(Box.createHorizontalGlue());
+
+        add(topSpacer);
+        add(title);
+        add(middleSpacer);
         add(buttonsPanel);
     }
 
