@@ -1,17 +1,19 @@
 package adapter.controller;
 
+import businessrule.inputboundary.ViewInputBoundary;
 import businessrule.requestmodel.BrowseRequestModel;
+import businessrule.requestmodel.ViewRequestModel;
 import businessrule.responsemodel.ViewResponseModel;
 import businessrule.inputboundary.BrowseInputBoundary;
 
-public class BrowseQuestionControl {
-    private final BrowseInputBoundary browseInputBoundary;
+public class BrowseQuestionControl extends ViewQuestionControllerBase{
 
-    public BrowseQuestionControl(BrowseInputBoundary browseInputBoundary) {
-        this.browseInputBoundary = browseInputBoundary;
+    public BrowseQuestionControl(ViewInputBoundary viewInputBoundary) {
+        super(viewInputBoundary);
     }
-    public ViewResponseModel browseQuestion(int attorneyId){
-        BrowseRequestModel browseRequestModel = new BrowseRequestModel(attorneyId);
-        return browseInputBoundary.browseQuestion(browseRequestModel);
+
+    public ViewResponseModel viewQuestion(int attorneyId){
+        ViewRequestModel viewRequestModel = new ViewRequestModel(attorneyId);
+        return viewInputBoundary.viewQuestion(viewRequestModel);
     }
 }

@@ -19,7 +19,8 @@ class QuestionMapConstructor {
             String title = question.getTitle();
             String type = question.getType();
             LocalDate legalDeadline = question.getLegalDeadline();
-            QuestionDisplayFormatter questionDisplayFormatter = new QuestionDisplayFormatter(title, type, legalDeadline);
+            boolean isClose = question.isClose();
+            QuestionDisplayFormatter questionDisplayFormatter = new QuestionDisplayFormatter(title, type, legalDeadline, isClose);
             questionMap.put(questionId, questionDisplayFormatter);
         }
         return questionMap;
