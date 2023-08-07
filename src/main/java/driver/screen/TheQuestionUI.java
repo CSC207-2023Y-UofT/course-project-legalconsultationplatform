@@ -93,7 +93,10 @@ public class TheQuestionUI extends JPanel implements ActionListener {
 
         JPanel overallPosts = new JPanel();
         JLabel label = new JLabel("Previous discussions");
+        label.setForeground(Color.white);
+        UIDesign.setNameFont(label);
         JPanel labelPanel = new JPanel();
+        labelPanel.setBackground(darkGreenColor);
         labelPanel.add(label);
         overallPosts.setLayout(new BoxLayout(overallPosts, BoxLayout.Y_AXIS));
         overallPosts.setAlignmentX(LEFT_ALIGNMENT);
@@ -111,7 +114,10 @@ public class TheQuestionUI extends JPanel implements ActionListener {
 
         JLabel input = new JLabel("Type your content here");
         JPanel inputPanel = new JPanel();
+        UIDesign.setNameFont(input);
+        input.setForeground(Color.white);
         inputPanel.add(input);
+        inputPanel.setBackground(darkGreenColor);
         JPanel overallInput = new JPanel();
         overallInput.setOpaque(false);
         overallInput.setLayout(new BoxLayout(overallInput, BoxLayout.Y_AXIS));
@@ -138,6 +144,7 @@ public class TheQuestionUI extends JPanel implements ActionListener {
 
         //The rate function
         DropDownPanel ratePanel = new DropDownPanel(new JLabel("Rate this question"), rate);
+        rate.setSize(new Dimension(150, 50));
         JPanel rateOverall = new JPanel();
         rateOverall.setOpaque(false);
         JButton rateQuestion = new JButton("Rate");

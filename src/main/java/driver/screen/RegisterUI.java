@@ -10,8 +10,10 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.rmi.server.UID;
 
-public class RegisterUI extends JPanel implements ActionListener{
+public class RegisterUI extends JPanel implements ActionListener {
     ControlContainer controlContainer;
+    CardLayout cardLayout;
+    JPanel screens;
 
     JTextField userName = new JTextField(15);
     JPasswordField password1 = new JPasswordField(15);
@@ -33,8 +35,10 @@ public class RegisterUI extends JPanel implements ActionListener{
     JComboBox<String> gender = new JComboBox<>(genderList);
     JComboBox<String> maritalStatus = new JComboBox<>(maritalStatusList);
 
-    public RegisterUI(ControlContainer controlContainer) {
+    public RegisterUI(ControlContainer controlContainer, CardLayout cardLayout, JPanel screens) {
         this.controlContainer = controlContainer;
+        this.cardLayout = cardLayout;
+        this.screens = screens;
         UIDesign.setBackgroundFrame(this);
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -96,36 +100,40 @@ public class RegisterUI extends JPanel implements ActionListener{
         //Register button here
         JButton buttonToSubmit = new JButton("Register");
         UIDesign.setButton(buttonToSubmit);
+        JButton homePage = new JButton("Welcome Page");
+        UIDesign.setButton(homePage);
         JPanel buttons = new JPanel();
         buttons.setBackground(UIDesign.lightGreenColor);
-        buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS)); // Use X_AXIS for horizontal alignment
+        buttons.setLayout(new BoxLayout(buttons, BoxLayout.Y_AXIS)); // Use X_AXIS for horizontal alignment
         buttons.add(buttonToSubmit);
+        buttons.add(Box.createVerticalStrut(10));
+        buttons.add(homePage);
+        buttons.setAlignmentX(LEFT_ALIGNMENT);
         buttonToSubmit.addActionListener(this);
+        homePage.addActionListener(this);
         add(buttons, gbc);
-    }
-    private void setFontForAllComponents(Container container, Font font) {
-        for (Component component : container.getComponents()) {
-            if (component instanceof Container) {
-                setFontForAllComponents((Container) component, font);
-            }
-        }
     }
 
 
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("User clicks register");
+        String actionCommand = e.getActionCommand();
         ClientRegisterControl clientRegisterControl = controlContainer.getClientRegisterControl();
-
-        try {
-            clientRegisterControl.create(userName.getText(), email.getText(), String.valueOf(password1.getPassword()),
-                    String.valueOf(password2.getPassword()), stateAbb.getText(), postalCode.getText(),
-                    (String)ethnicity.getSelectedItem(), Integer.parseInt(age.getText()), (String)gender.getSelectedItem(),
-                    (String)maritalStatus.getSelectedItem(), Integer.parseInt(numberOfHousehold.getText()),
-                    Float.parseFloat(annualIncome.getText()));
-        }
-        catch(Exception ex){
-            JOptionPane.showMessageDialog(this, ex.getMessage());
+        if ("Register".equals(actionCommand)) {
+            try {
+                clientRegisterControl.create(userName.getText(), email.getText(), String.valueOf(password1.getPassword()),
+                        String.valueOf(password2.getPassword()), stateAbb.getText(), postalCode.getText(),
+                        (String) ethnicity.getSelectedItem(), Integer.parseInt(age.getText()), (String) gender.getSelectedItem(),
+                        (String) maritalStatus.getSelectedItem(), Integer.parseInt(numberOfHousehold.getText()),
+                        Float.parseFloat(annualIncome.getText()));
+            } catch (Exception ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+            }
+        } else if ("Welcome Page".equals(actionCommand)) {
+            WelcomeUI welcomeUI = new WelcomeUI(controlContainer, cardLayout, screens);
+            screens.add(welcomeUI, "Welcome");
+            cardLayout.show(screens, "Welcome");
         }
     }
 }

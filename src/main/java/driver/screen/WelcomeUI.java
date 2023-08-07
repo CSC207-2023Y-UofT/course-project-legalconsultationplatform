@@ -69,13 +69,13 @@ public class WelcomeUI extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
         if ("Register".equals(actionCommand)){
-            RegisterUI registerUI = new RegisterUI(controlContainer);
+            RegisterUI registerUI = new RegisterUI(controlContainer, cardLayout, screens);
             JScrollPane registerScrollPane = new JScrollPane(registerUI);
             screens.add(registerScrollPane, "Register");
             cardLayout.show(screens, "Register");
             System.out.println("User chooses register\nRegister screen showed");
         } else if ("Login".equals(actionCommand)){
-            LoginUI loginUI = new LoginUI(controlContainer);
+            LoginUI loginUI = new LoginUI(controlContainer, cardLayout, screens);
             screens.add(loginUI, "Login");
             cardLayout.show(screens, "Login");
             System.out.println("User chooses login\nLogin screen showed");
