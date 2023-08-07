@@ -93,8 +93,8 @@ public class TheQuestionUI extends JPanel implements ActionListener {
 
         JPanel overallPosts = new JPanel();
         JLabel label = new JLabel("Previous discussions");
-        label.setForeground(Color.white);
         UIDesign.setNameFont(label);
+        label.setForeground(whiteColor);
         JPanel labelPanel = new JPanel();
         labelPanel.setBackground(darkGreenColor);
         labelPanel.add(label);
@@ -143,8 +143,16 @@ public class TheQuestionUI extends JPanel implements ActionListener {
         JPanel spacer = addSpacer(30);
 
         //The rate function
-        DropDownPanel ratePanel = new DropDownPanel(new JLabel("Rate this question"), rate);
-        rate.setSize(new Dimension(150, 50));
+
+        JLabel rateText = new JLabel("Rate this question");
+        JPanel ratePanel = new JPanel();
+        UIDesign.setNameFont(rateText);
+        rateText.setForeground(Color.white);
+        ratePanel.setBackground(darkGreenColor);
+        setSizeInLayout(rate, new Dimension(150, 50));
+        ratePanel.setLayout(new BoxLayout(ratePanel, BoxLayout.Y_AXIS));
+        ratePanel.add(rateText);
+        ratePanel.add(rate);
         JPanel rateOverall = new JPanel();
         rateOverall.setOpaque(false);
         JButton rateQuestion = new JButton("Rate");
