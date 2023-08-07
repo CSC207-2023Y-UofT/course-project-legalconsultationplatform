@@ -7,7 +7,10 @@ import businessrule.gateway.QuestionGateway;
 import entity.Question;
 import entity.User;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class BrowseQuestionInteractor extends ViewQuestionInteractorBase {
     final AttorneyGateway attorneyGateway;
@@ -19,7 +22,12 @@ public class BrowseQuestionInteractor extends ViewQuestionInteractorBase {
 
     @Override
     protected List<Question> fetchQuestions(ViewRequestModel viewRequestModel) {
-        return questionGateway.getNotTakenQuestion();
+        List<Question> notTakenList = questionGateway.getNotTakenQuestion();
+        List<Question> notCloseList = questionGateway.getNotClosedQuestion();
+        Set<Question> notTakenSet = new HashSet<>(notTakenList);
+        Set<Question> notCloseSet = new HashSet<>(notCloseList);
+        notCloseSet.retainAll(notTakenSet);
+        return new ArrayList<>(notCloseSet);
     }
 
     @Override
