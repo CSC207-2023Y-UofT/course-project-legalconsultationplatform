@@ -1,6 +1,7 @@
 package businessrule.usecase;
 
-import businessrule.gateway.UserGatewayFactory;
+import businessrule.usecase.util.PostDisplayFormatter;
+import businessrule.usecase.util.RandomNumberGenerator;
 import entity.*;
 import businessrule.inputboundary.QuestionInputBoundary;
 import businessrule.requestmodel.QuestionRequestModel;
@@ -8,6 +9,7 @@ import businessrule.gateway.ClientGateway;
 import businessrule.gateway.QuestionGateway;
 import businessrule.outputboundary.TheQuestionOutputBoundary;
 import businessrule.responsemodel.TheQuestionResponseModel;
+import entity.factory.QuestionFactory;
 
 import java.time.LocalDate;
 import java.util.HashMap;

@@ -1,17 +1,15 @@
 package businessrule.usecase;
 
 
-import adapter.presenter.RegisterResponseFormatter;
 import businessrule.gateway.ClientGateway;
 import businessrule.inputboundary.ClientRegisterInputBoundary;
 import businessrule.outputboundary.RegisterOutputBoundary;
 import businessrule.requestmodel.ClientRegisterRequestModel;
 import businessrule.responsemodel.RegisterResponseModel;
-import driver.database.ClientRepository;
 import entity.Client;
-import entity.ClientFactory;
-import entity.CredentialChecker;
-import entity.RandomNumberGenerator;
+import entity.factory.ClientFactory;
+import businessrule.usecase.util.CredentialChecker;
+import businessrule.usecase.util.RandomNumberGenerator;
 
 public class ClientRegisterInteractor implements ClientRegisterInputBoundary {
     final ClientGateway clientGateway;

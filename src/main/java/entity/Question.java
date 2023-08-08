@@ -1,5 +1,7 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -18,20 +20,30 @@ import java.util.Objects;
 @Entity
 public class Question {
     @Id
+    @JsonProperty(required = true)
     private int questionId;
+    @JsonProperty(required = true)
     private String type;
     private String title;
+    @JsonProperty(required = true)
     private LocalDate createAt;
+    @JsonProperty(required = true)
     private int askedByClient;
+    @JsonProperty(required = true)
     private LocalDate legalDeadline;
+    @JsonProperty(value = "isTaken", required = true)
     private boolean isTaken;
+    @JsonProperty(required = true)
     private int takenByAttorney;
+    @JsonProperty(required = true)
     private LocalDate takenAt;
+    @JsonProperty(value = "isClose", required = true)
     private boolean isClose;
+    @JsonProperty(required = true)
     private int rating;
     @OneToMany(targetEntity = Post.class, fetch = FetchType.EAGER)
+    @JsonProperty(required = true)
     private List<Post> posts;
-
     public static final int MISSING_RATING = -1;
 
 

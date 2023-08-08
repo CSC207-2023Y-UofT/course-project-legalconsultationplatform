@@ -6,12 +6,12 @@ import businessrule.requestmodel.PostRequestModel;
 import businessrule.responsemodel.HomePageResponseModel;
 import businessrule.gateway.PostGateway;
 import businessrule.gateway.QuestionGateway;
-import entity.RandomNumberGenerator;
+import businessrule.usecase.util.RandomNumberGenerator;
 import businessrule.gateway.UserGateway;
 import businessrule.gateway.UserGatewayFactory;
 import entity.Post;
 import entity.Question;
-import entity.PostFactory;
+import entity.factory.PostFactory;
 import entity.User;
 
 import java.time.LocalDate;

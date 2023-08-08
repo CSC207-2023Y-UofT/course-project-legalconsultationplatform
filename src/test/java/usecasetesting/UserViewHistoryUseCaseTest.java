@@ -9,16 +9,14 @@ import businessrule.inputboundary.ViewInputBoundary;
 import businessrule.outputboundary.ViewOutputBoundary;
 import businessrule.requestmodel.ViewRequestModel;
 import businessrule.responsemodel.ViewResponseModel;
-import businessrule.usecase.QuestionDisplayFormatter;
+import businessrule.usecase.util.QuestionDisplayFormatter;
 import businessrule.usecase.ViewQuestionInteractor;
 import driver.database.AttorneyRepository;
 import driver.database.ClientRepository;
-import driver.database.PostRepo;
 import driver.database.QuestionRepo;
 import entity.Attorney;
 import entity.Client;
 import entity.Question;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

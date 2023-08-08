@@ -1,7 +1,6 @@
 package adapter.controller;
 
 public class ControlContainer {
-    BrowseQuestionControl browseQuestionControl;
     ClientRegisterControl clientRegisterControl;
     CloseQuestionControl closeQuestionControl;
     PostControl postControl;
@@ -11,13 +10,7 @@ public class ControlContainer {
     UserLoginControl userLoginControl;
     ViewQuestionControl viewQuestionControl;
 
-    public ControlContainer(BrowseQuestionControl browseQuestionControl,
-                            ClientRegisterControl clientRegisterControl,
-                            CloseQuestionControl closeQuestionControl,
-                            PostControl postControl, QuestionControl questionControl,
-                            RateControl rateControl, SelectQuestionControl selectQuestionControl,
-                            UserLoginControl userLoginControl, ViewQuestionControl viewQuestionControl) {
-        this.browseQuestionControl = browseQuestionControl;
+    public ControlContainer(ClientRegisterControl clientRegisterControl, CloseQuestionControl closeQuestionControl, PostControl postControl, QuestionControl questionControl, RateControl rateControl, SelectQuestionControl selectQuestionControl, UserLoginControl userLoginControl, ViewQuestionControl viewQuestionControl) {
         this.clientRegisterControl = clientRegisterControl;
         this.closeQuestionControl = closeQuestionControl;
         this.postControl = postControl;
@@ -26,10 +19,6 @@ public class ControlContainer {
         this.selectQuestionControl = selectQuestionControl;
         this.userLoginControl = userLoginControl;
         this.viewQuestionControl = viewQuestionControl;
-    }
-
-    public BrowseQuestionControl getBrowseQuestionControl() {
-        return browseQuestionControl;
     }
 
     public ClientRegisterControl getClientRegisterControl() {

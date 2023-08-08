@@ -1,7 +1,6 @@
 package usecasetesting;
 
 import adapter.controller.ControlContainer;
-import adapter.presenter.HomePageResponseFormatter;
 import businessrule.gateway.*;
 import businessrule.inputboundary.PostInputBoundary;
 import businessrule.outputboundary.HomePageOutputBoundary;
@@ -12,8 +11,7 @@ import driver.database.*;
 
 import entity.*;
 
-import org.junit.AfterClass;
-import org.junit.BeforeClass;
+import entity.factory.PostFactory;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

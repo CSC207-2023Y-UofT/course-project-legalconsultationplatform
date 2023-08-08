@@ -10,16 +10,12 @@ import businessrule.requestmodel.QuestionRequestModel;
 import businessrule.responsemodel.TheQuestionResponseModel;
 import businessrule.usecase.AskQuestionInteractor;
 
-import businessrule.usecase.PostDisplayFormatter;
-import businessrule.usecase.QuestionDisplayFormatter;
 import driver.database.*;
 import entity.*;
-import org.junit.AfterClass;
+import entity.factory.QuestionFactory;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 ;

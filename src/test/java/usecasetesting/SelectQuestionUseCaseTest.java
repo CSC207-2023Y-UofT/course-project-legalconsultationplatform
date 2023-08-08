@@ -2,22 +2,18 @@ package usecasetesting;
 
 import adapter.controller.ControlContainer;
 import businessrule.gateway.*;
-import businessrule.inputboundary.QuestionInputBoundary;
 import businessrule.inputboundary.SelectInputBoundary;
 import businessrule.outputboundary.TheQuestionOutputBoundary;
 import businessrule.requestmodel.SelectRequestModel;
 import businessrule.responsemodel.TheQuestionResponseModel;
-import businessrule.usecase.AskQuestionInteractor;
-import businessrule.usecase.PostDisplayFormatter;
+import businessrule.usecase.util.PostDisplayFormatter;
 import businessrule.usecase.SelectQuestionInteractor;
 import driver.database.*;
 
 import entity.*;
 
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
