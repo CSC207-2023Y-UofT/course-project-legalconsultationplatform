@@ -7,9 +7,11 @@ import businessrule.gateway.QuestionGateway;
 import businessrule.inputboundary.BrowseInputBoundary;
 import businessrule.outputboundary.ViewOutputBoundary;
 import businessrule.requestmodel.BrowseRequestModel;
+import businessrule.requestmodel.ViewRequestModel;
 import businessrule.responsemodel.ViewResponseModel;
 import businessrule.usecase.BrowseQuestionInteractor;
 import businessrule.usecase.QuestionDisplayFormatter;
+import businessrule.usecase.ViewQuestionInteractorBase;
 import driver.database.*;
 
 import entity.*;
@@ -53,13 +55,13 @@ public class BrowseQuestionUseCaseTest {
             return null;
         }
     };
-    private BrowseInputBoundary browseInputBoundary;
+    private ViewQuestionInteractorBase viewQuestionInteractorBase;
 
     public void setUpBrowseUseCase(){
         questionGateway = new QuestionRepo();
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
-        browseInputBoundary = new BrowseQuestionInteractor(viewOutputBoundary, questionGateway, attorneyGateway);
+        viewQuestionInteractorBase = new BrowseQuestionInteractor(viewOutputBoundary, questionGateway, attorneyGateway);
 
         Client client = new Client();
         client.setUserId(CLIENT_ID);
@@ -96,9 +98,9 @@ public class BrowseQuestionUseCaseTest {
     @Test
     public void TestAttorneyBrowseQuestionUseCase(){
         setUpBrowseUseCase();
-        BrowseRequestModel inputData = new BrowseRequestModel(ATTORNEY_ID);
+        ViewRequestModel inputData = new ViewRequestModel(ATTORNEY_ID);
 
-        browseInputBoundary.browseQuestion(inputData);
+        viewQuestionInteractorBase.viewQuestion(inputData);
         ClearAllRepository();
     }
 

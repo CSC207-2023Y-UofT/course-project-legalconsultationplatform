@@ -62,7 +62,7 @@ public class RateAnswerUseCaseTest {
                 return null;
             }
         };
-        rateInputBoundary = new RateInteractor(questionGateway, homePageOutputBoundary, userGatewayFactory);
+        rateInputBoundary = new RateInteractor(questionGateway, homePageOutputBoundary, clientGateway);
 
         Question question = new Question();
         question.setQuestionId(QUESTION_ID);
