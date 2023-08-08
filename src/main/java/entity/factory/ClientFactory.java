@@ -1,4 +1,4 @@
-package entity;
+package entity.factory;
 import entity.Client;
 
 public class ClientFactory {

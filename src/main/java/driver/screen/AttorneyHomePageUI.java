@@ -1,17 +1,13 @@
 package driver.screen;
 
-import adapter.controller.BrowseQuestionControl;
 import adapter.controller.ControlContainer;
 import adapter.controller.ViewQuestionControl;
-import businessrule.usecase.QuestionDisplayFormatter;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.rmi.server.UID;
-import java.util.Map;
 
 public class AttorneyHomePageUI extends JPanel implements ActionListener {
     ControlContainer controlContainer;
@@ -75,7 +71,7 @@ public class AttorneyHomePageUI extends JPanel implements ActionListener {
         String actionCommand = e.getActionCommand();
         if ("Browse available questions".equals(actionCommand)){
             System.out.println("Attorney chooses browse available questions.");
-            BrowseQuestionControl browseQuestionControl = controlContainer.getBrowseQuestionControl();
+            // BrowseQuestionControl browseQuestionControl = controlContainer.getBrowseQuestionControl();
             // browseQuestionControl.browseQuestion(userId);
         } else if ("View question history".equals(actionCommand)){
             System.out.println("Attorney chooses view question history.");

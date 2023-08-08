@@ -13,7 +13,7 @@ import businessrule.usecase.RateInteractor;
 import driver.database.*;
 import entity.Attorney;
 import entity.Client;
-import entity.PostFactory;
+import entity.factory.PostFactory;
 import entity.Question;
 import org.junit.jupiter.api.Test;
 

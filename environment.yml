@@ -8,9 +8,9 @@
 # 3. Run the following command to create the conda environment:
 #    conda env create -f environment.yml
 # 4. Activate the environment with:
-#    conda activate base
+#    conda activate myenv
 
-name: base
+name: myenv
 channels:
   - conda-forge
   - defaults

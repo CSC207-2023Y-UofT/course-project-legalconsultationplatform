@@ -4,23 +4,16 @@ import adapter.controller.ControlContainer;
 import businessrule.gateway.AttorneyGateway;
 import businessrule.gateway.ClientGateway;
 import businessrule.gateway.QuestionGateway;
-import businessrule.inputboundary.BrowseInputBoundary;
 import businessrule.inputboundary.ViewInputBoundary;
 import businessrule.outputboundary.ViewOutputBoundary;
-import businessrule.requestmodel.BrowseRequestModel;
 import businessrule.requestmodel.ViewRequestModel;
 import businessrule.responsemodel.ViewResponseModel;
 import businessrule.usecase.BrowseQuestionInteractor;
-import businessrule.usecase.QuestionDisplayFormatter;
-import businessrule.usecase.ViewQuestionInteractorBase;
 import driver.database.*;
 
 import entity.*;
 
 import org.junit.jupiter.api.Test;
-
-import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 ;

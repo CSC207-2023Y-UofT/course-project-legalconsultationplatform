@@ -2,6 +2,8 @@ package businessrule.usecase;
 
 import businessrule.inputboundary.SelectInputBoundary;
 import businessrule.requestmodel.SelectRequestModel;
+import businessrule.usecase.util.PostDisplayFormatter;
+import businessrule.usecase.util.PostMapConstructor;
 import entity.Question;
 import businessrule.gateway.QuestionGateway;
 import businessrule.responsemodel.TheQuestionResponseModel;

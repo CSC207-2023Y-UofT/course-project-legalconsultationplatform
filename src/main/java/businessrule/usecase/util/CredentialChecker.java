@@ -1,4 +1,4 @@
-package entity;
+package businessrule.usecase.util;
 import org.apache.commons.validator.routines.EmailValidator;
 import java.util.regex.*;
 

@@ -1,8 +1,7 @@
 package businessrule.responsemodel;
 
-import businessrule.usecase.QuestionDisplayFormatter;
+import businessrule.usecase.util.QuestionDisplayFormatter;
 
-import java.util.List;
 import java.util.Map;
 
 public class ViewResponseModel {

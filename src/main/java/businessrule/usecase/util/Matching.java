@@ -1,4 +1,4 @@
-package attorneygetrecommendation;
+package businessrule.usecase.util;
 
 public class Matching {
 

@@ -4,17 +4,12 @@ import adapter.controller.CloseQuestionControl;
 import adapter.controller.ControlContainer;
 import adapter.controller.PostControl;
 import adapter.controller.RateControl;
-import businessrule.usecase.PostDisplayFormatter;
-import entity.Post;
+import businessrule.usecase.util.PostDisplayFormatter;
 
 import javax.swing.*;
-import javax.swing.event.DocumentEvent;
-import javax.swing.event.DocumentListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.awt.event.FocusEvent;
-import java.awt.event.FocusListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;

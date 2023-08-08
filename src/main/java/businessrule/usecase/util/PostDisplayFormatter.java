@@ -1,4 +1,4 @@
-package businessrule.usecase;
+package businessrule.usecase.util;
 
 import entity.Post;
 

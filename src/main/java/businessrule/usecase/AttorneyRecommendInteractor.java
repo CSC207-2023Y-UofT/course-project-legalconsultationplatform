@@ -1,4 +1,4 @@
-package attorneygetrecommendation;
+package businessrule.usecase;
 
 import businessrule.gateway.AttorneyGateway;
 import businessrule.gateway.QuestionGateway;

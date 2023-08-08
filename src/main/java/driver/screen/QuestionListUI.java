@@ -2,8 +2,7 @@ package driver.screen;
 
 import adapter.controller.ControlContainer;
 import adapter.controller.SelectQuestionControl;
-import businessrule.usecase.QuestionDisplayFormatter;
-import businessrule.usecase.SelectQuestionInteractor;
+import businessrule.usecase.util.QuestionDisplayFormatter;
 
 import javax.swing.*;
 import java.awt.*;

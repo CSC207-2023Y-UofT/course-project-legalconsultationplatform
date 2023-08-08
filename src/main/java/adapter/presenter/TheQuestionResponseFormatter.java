@@ -3,7 +3,7 @@ package adapter.presenter;
 import adapter.controller.ControlContainer;
 import businessrule.outputboundary.TheQuestionOutputBoundary;
 import businessrule.responsemodel.TheQuestionResponseModel;
-import businessrule.usecase.PostDisplayFormatter;
+import businessrule.usecase.util.PostDisplayFormatter;
 import driver.screen.ApplicationException;
 import driver.screen.TheQuestionUI;
 

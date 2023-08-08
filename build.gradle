@@ -21,10 +21,6 @@ dependencies {
     implementation 'cn.hutool:hutool-core:5.7.16'
 }
 
-task runPythonScript(type: Exec) {
-    commandLine 'python', 'test.py'
-}
-
 test {
     useJUnitPlatform()
     testLogging {

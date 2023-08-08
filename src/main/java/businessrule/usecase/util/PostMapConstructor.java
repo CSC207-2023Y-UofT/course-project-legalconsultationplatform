@@ -1,4 +1,4 @@
-package businessrule.usecase;
+package businessrule.usecase.util;
 
 import businessrule.gateway.UserGateway;
 import businessrule.gateway.UserGatewayFactory;
@@ -11,12 +11,12 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class PostMapConstructor {
+public class PostMapConstructor {
     private final UserGatewayFactory userGatewayFactory;
 
     public PostMapConstructor(UserGatewayFactory userGatewayFactory) {this.userGatewayFactory = userGatewayFactory;}
 
-    protected Map<Integer, PostDisplayFormatter> constructPostMap(Question question) {
+    public Map<Integer, PostDisplayFormatter> constructPostMap(Question question) {
         List<Post> postList = question.getPosts();
 
         // initialize post map
