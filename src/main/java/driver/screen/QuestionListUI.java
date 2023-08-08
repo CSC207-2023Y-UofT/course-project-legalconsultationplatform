@@ -8,12 +8,11 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.rmi.server.UID;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
-public class QuestionListUI extends JPanel{
+public class QuestionListUI extends JPanel implements ActionListener {
     ControlContainer controlContainer;
     CardLayout cardLayout;
     JPanel screens;
@@ -31,15 +30,16 @@ public class QuestionListUI extends JPanel{
         this.userName = userName;
         this.questionMap = questionMap;
 
+        JPanel spacer = UIDesign.addSpacer(10);
+        JPanel bottomSpacer = UIDesign.addSpacer(20);
         //UserName and UserId
-        String helloMessageString = "Hello, " + userName + "(" + userId + ")";
-        JLabel helloMessage = new JLabel(helloMessageString);
+        JPanel helloMessage = UIDesign.helloMessageConstructor(userName, userId);
 
         //The scrollable question buttons
-        int numberOfQuestions = questionMap.size();
-        JScrollPane questionScrollPane = new JScrollPane();
         JPanel questionScrollPanel = new JPanel();
-        questionScrollPanel.setLayout(new GridLayout(numberOfQuestions, 1));
+        UIDesign.setSizeInLayout(questionScrollPanel, new Dimension(350, 450));
+        questionScrollPanel.setBackground(UIDesign.lightGreenColor);
+        questionScrollPanel.setLayout(new BoxLayout(questionScrollPanel, BoxLayout.Y_AXIS));
         for (Integer questionId : questionMap.keySet()) {
             //read all variables from displayFormatter
             QuestionDisplayFormatter question = questionMap.get(questionId);
@@ -54,7 +54,7 @@ public class QuestionListUI extends JPanel{
             JPanel questionPanel = UIDesign.singleQuestionDrawer(title, type, deadlineLine);
 
             JButton questionButton = new JButton();
-            questionButton.setPreferredSize(new Dimension(400, 80));
+            UIDesign.setSizeInLayout(questionButton, new Dimension(340, 60));
             questionButton.add(questionPanel);
             questionButton.addActionListener(new ActionListener() {
                 @Override
@@ -66,28 +66,42 @@ public class QuestionListUI extends JPanel{
             });
             questionScrollPanel.add(questionButton);
         }
+
+        JScrollPane questionScrollPane = new JScrollPane();
         questionScrollPane.setViewportView(questionScrollPanel);
-        UIDesign.setSizeInLayout(questionScrollPane, new Dimension(360, 600));
+        UIDesign.setSizeInLayout(questionScrollPane, new Dimension(350, 450));
+        questionScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        questionScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         //Home page button
         JButton homePage = new JButton("Home Page");
         UIDesign.setGeneralButton(homePage);
-        String stringId = Integer.toString(userId);
-        homePage.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                if (stringId.startsWith("1")) {
-                    cardLayout.show(screens, "AttorneyHomePageUI");
-                } else {
-                    cardLayout.show(screens, "ClientHomePageUI");
-                }
-            }
-        });
+        homePage.setAlignmentX(CENTER_ALIGNMENT);
+        homePage.addActionListener(this);
 
         //Add everything in the panel
-        this.add(homePage);
-        this.add(helloMessage);
-        this.add(questionScrollPane);
-
+        setBackground(UIDesign.lightGreenColor);
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        add(spacer);
+        add(helloMessage);
+        add(questionScrollPane);
+        add(bottomSpacer);
+        add(homePage);
+    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String stringId = Integer.toString(userId);
+        if (stringId.startsWith("2")) {
+            ClientHomePageUI clientUI = new ClientHomePageUI(controlContainer, cardLayout,
+                    screens, userId, userName);
+            screens.add(clientUI, "ClientHomePage");
+            cardLayout.show(screens, "ClientHomePage");
+        } else {
+            AttorneyHomePageUI attorneyUI = new AttorneyHomePageUI(controlContainer, cardLayout,
+                    screens, userId, userName);
+            screens.add(attorneyUI, "AttorneyHomePage");
+            cardLayout.show(screens, "AttorneyHomePage");
+        }
     }
 }
+

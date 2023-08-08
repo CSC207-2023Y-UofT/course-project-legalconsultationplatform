@@ -149,7 +149,7 @@ public class UIDesign {
     public static JPanel singleQuestionDrawer(String title, String questionType, String deadline){
         JPanel questionTitle = questionTitleDrawer(questionType, title);
         JPanel singleQuestion = new JPanel();
-        setSizeInLayout(singleQuestion, new Dimension(400, 80));
+        setSizeInLayout(singleQuestion, new Dimension(340, 60));
         singleQuestion.setLayout(new BoxLayout(singleQuestion, BoxLayout.Y_AXIS));
         singleQuestion.add(questionTitle);
         JLabel deadlineText = new JLabel(deadline);
