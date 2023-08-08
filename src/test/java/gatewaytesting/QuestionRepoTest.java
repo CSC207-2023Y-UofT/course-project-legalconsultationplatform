@@ -31,6 +31,9 @@ public class QuestionRepoTest {
     final static int ATTORNEY_ID = 150;
     final static int ATTORNEY_ID1 = 151;
 
+    //Repo
+    static QuestionRepo repo = new QuestionRepo();
+
     @BeforeAll
     public static void setUp() {
         //Question
@@ -44,11 +47,11 @@ public class QuestionRepoTest {
         Question q1 = new Question(QUESTION_ID1, type, title, CREATE_AT, askedByClient1, legalDeadLine);
         QuestionRepo repo = new QuestionRepo();
 
-        repo.deleteAllQuestion();
+        repo.deleteAll();
         q1.setClose(true);
         q.setTaken(true);
-        repo.saveQuestion(q);
-        repo.saveQuestion(q1);
+        repo.save(q);
+        repo.save(q1);
 
         //Post
         LocalDate postCreateAt = LocalDate.now();
@@ -60,10 +63,10 @@ public class QuestionRepoTest {
         Post p3 = new Post(QUESTION_ID1, POST_ID2, postCreateAt, postText, belongsTo);
         PostRepo pRepo = new PostRepo();
 
-        pRepo.deleteAllPost();
-        pRepo.savePost(p);
-        pRepo.savePost(p1);
-        pRepo.savePost(p3);
+        pRepo.deleteAll();
+        pRepo.save(p);
+        pRepo.save(p1);
+        pRepo.save(p3);
 
         //Attorney
         String name = "obo";
@@ -76,9 +79,9 @@ public class QuestionRepoTest {
         Attorney a1 = new Attorney(ATTORNEY_ID1, name, email, password, stateAbb, postalCode);
         AttorneyRepository aRepo = new AttorneyRepository();
 
-        aRepo.deleteAllUser();
-        aRepo.addUser(a);
-        aRepo.addUser(a1);
+        aRepo.deleteAll();
+        aRepo.save(a);
+        aRepo.save(a1);
     }
 
     @Test
@@ -93,33 +96,29 @@ public class QuestionRepoTest {
     @Test
     public void testGetAllQuestion() {
         QuestionRepo repo = new QuestionRepo();
-        Question q = repo.getQuestion(QUESTION_ID);
-        Question q1 = repo.getQuestion(QUESTION_ID1);
+        Question q = repo.get(QUESTION_ID);
+        Question q1 = repo.get(QUESTION_ID1);
         List<Question> expectedList = new ArrayList<>();
         expectedList.add(q);
         expectedList.add(q1);
         //test getting all questions
-        assert expectedList.equals(repo.getAllQuestion());
+        assert expectedList.equals(repo.getAll());
         //test no questions in database
-        repo.deleteAllQuestion();
-        assertEquals(0, repo.getAllQuestion().size());
+        repo.deleteAll();
+        assertEquals(0, repo.getAll().size());
 
         //recover
         q1.setClose(true);
         q.setTaken(true);
-        repo.saveQuestion(q);
-        repo.saveQuestion(q1);
+        repo.save(q);
+        repo.save(q1);
     }
 
     @Test
     public void testGetNotTakenQuestion() {
         QuestionRepo repo = new QuestionRepo();
         List<Question> expectedList = new ArrayList<>();
-        expectedList.add(repo.getQuestion(QUESTION_ID1));
-        System.out.println(expectedList);
-        System.out.println(repo.getNotTakenQuestion());
-        System.out.println(repo.getQuestion(QUESTION_ID).isTaken());
-        System.out.println(repo.getQuestion(QUESTION_ID1).isTaken());
+        expectedList.add(repo.get(QUESTION_ID1));
         //test one taken question
         assert expectedList.equals(repo.getNotTakenQuestion());
     }
@@ -128,7 +127,7 @@ public class QuestionRepoTest {
     public void testGetNotClosedQuestion() {
         QuestionRepo repo = new QuestionRepo();
         List<Question> expectedList = new ArrayList<>();
-        expectedList.add(repo.getQuestion(QUESTION_ID));
+        expectedList.add(repo.get(QUESTION_ID));
         //test one taken question
         assert expectedList.equals(repo.getNotClosedQuestion());
     }
@@ -138,9 +137,8 @@ public class QuestionRepoTest {
         QuestionRepo repo = new QuestionRepo();
         PostRepo pRepo = new PostRepo();
         List<Post> expectedList = new ArrayList<>();
-        expectedList.add(pRepo.getPost(POST_ID));
-        expectedList.add(pRepo.getPost(POST_ID1));
-
+        expectedList.add(pRepo.get(POST_ID));
+        expectedList.add(pRepo.get(POST_ID1));
         //test get all Post by Question
         assert expectedList.equals(repo.getAllPostOfQuestion(QUESTION_ID));
     }
@@ -150,13 +148,13 @@ public class QuestionRepoTest {
         QuestionRepo repo = new QuestionRepo();
         //test update taken true
         repo.updateIsTaken(QUESTION_ID, true);
-        assertTrue(repo.getQuestion(QUESTION_ID).isTaken(), "Taken is not updated to true!");
+        assertTrue(repo.get(QUESTION_ID).isTaken(), "Taken is not updated to true!");
         //test update taken false
         repo.updateIsTaken(QUESTION_ID, false);
-        assertFalse(repo.getQuestion(QUESTION_ID).isTaken(), "Taken is not updated to false!");
+        assertFalse(repo.get(QUESTION_ID).isTaken(), "Taken is not updated to false!");
         //test update another question
         repo.updateIsTaken(QUESTION_ID1, true);
-        assertFalse(repo.getQuestion(QUESTION_ID).isTaken(), "Taken is updated for q!");
+        assertFalse(repo.get(QUESTION_ID).isTaken(), "Taken is updated for q!");
 
         //recover
         repo.updateIsTaken(QUESTION_ID, true);
@@ -168,11 +166,11 @@ public class QuestionRepoTest {
         QuestionRepo repo = new QuestionRepo();
         //test update taken by a
         repo.updateTakenByAttorney(QUESTION_ID, ATTORNEY_ID);
-        assertEquals(ATTORNEY_ID, repo.getQuestion(QUESTION_ID).getTakenByAttorney(), "q is not taken by a!");
+        assertEquals(ATTORNEY_ID, repo.get(QUESTION_ID).getTakenByAttorney(), "q is not taken by a!");
         //test update taken by a1
         repo.updateTakenByAttorney(QUESTION_ID, ATTORNEY_ID1);
-        assertEquals(ATTORNEY_ID1, repo.getQuestion(QUESTION_ID).getTakenByAttorney(), "q1 is not taken by a!");
-        assertNotEquals(ATTORNEY_ID, repo.getQuestion(QUESTION_ID).getTakenByAttorney(), "q is taken by a!");
+        assertEquals(ATTORNEY_ID1, repo.get(QUESTION_ID).getTakenByAttorney(), "q1 is not taken by a!");
+        assertNotEquals(ATTORNEY_ID, repo.get(QUESTION_ID).getTakenByAttorney(), "q is taken by a!");
     }
 
     @Test
@@ -180,13 +178,13 @@ public class QuestionRepoTest {
         QuestionRepo repo = new QuestionRepo();
         //test update is closed true
         repo.updateIsClose(QUESTION_ID, true);
-        assertTrue(repo.getQuestion(QUESTION_ID).isClose(), "Question has not been updated!");
+        assertTrue(repo.get(QUESTION_ID).isClose(), "Question has not been updated!");
         // test update is closed false
         repo.updateIsClose(QUESTION_ID, false);
-        assertFalse(repo.getQuestion(QUESTION_ID).isClose(), "Question has not been updated!");
+        assertFalse(repo.get(QUESTION_ID).isClose(), "Question has not been updated!");
         //test update another question
         repo.updateIsClose(QUESTION_ID1, true);
-        assertFalse(repo.getQuestion(QUESTION_ID).isClose(), "This question was updated!");
+        assertFalse(repo.get(QUESTION_ID).isClose(), "This question was updated!");
     }
 
     @Test
@@ -194,13 +192,13 @@ public class QuestionRepoTest {
         QuestionRepo repo = new QuestionRepo();
         //test update is closed true
         repo.updateRating(QUESTION_ID, 1);
-        assertEquals(1, repo.getQuestion(QUESTION_ID).getRating(), "Question has not been updated!");
+        assertEquals(1, repo.get(QUESTION_ID).getRating(), "Question has not been updated!");
         // test update is closed false
         repo.updateRating(QUESTION_ID, 0);
-        assertEquals(0, repo.getQuestion(QUESTION_ID).getRating(), "Question has not been updated!");
+        assertEquals(0, repo.get(QUESTION_ID).getRating(), "Question has not been updated!");
         //test update another question
         repo.updateRating(QUESTION_ID1, 1);
-        assertEquals(0, repo.getQuestion(QUESTION_ID).getRating(), "This question was updated!");
+        assertEquals(0, repo.get(QUESTION_ID).getRating(), "This question was updated!");
     }
 
     @Test
@@ -209,13 +207,13 @@ public class QuestionRepoTest {
         QuestionRepo repo = new QuestionRepo();
         //test successful update takenAt
         repo.updateTakenAt(QUESTION_ID, changeDate);
-        assertEquals(changeDate, repo.getQuestion(QUESTION_ID).getTakenAt(), "Question has not been updated!");
+        assertEquals(changeDate, repo.get(QUESTION_ID).getTakenAt(), "Question has not been updated!");
         // test updating takenAt back to createAt
         repo.updateTakenAt(QUESTION_ID, CREATE_AT);
-        assertEquals(CREATE_AT, repo.getQuestion(QUESTION_ID).getTakenAt(), "Question has not been updated!");
+        assertEquals(CREATE_AT, repo.get(QUESTION_ID).getTakenAt(), "Question has not been updated!");
         //test update another question
         repo.updateTakenAt(QUESTION_ID1, changeDate);
-        assertEquals(CREATE_AT, repo.getQuestion(QUESTION_ID).getTakenAt(), "This question was updated!");
+        assertEquals(CREATE_AT, repo.get(QUESTION_ID).getTakenAt(), "This question was updated!");
     }
 
     @Test
@@ -223,10 +221,10 @@ public class QuestionRepoTest {
         QuestionRepo repo = new QuestionRepo();
         PostRepo pRepo = new PostRepo();
         //test updating list
-        repo.updatePosts(QUESTION_ID, pRepo.getPost(POST_ID));
+        repo.updatePosts(QUESTION_ID, pRepo.get(POST_ID));
         ArrayList<Post> expectedList = new ArrayList<>();
-        expectedList.add(pRepo.getPost(POST_ID));
-        assert expectedList.equals(repo.getQuestion(QUESTION_ID).getPosts());
+        expectedList.add(pRepo.get(POST_ID));
+        assert expectedList.equals(repo.get(QUESTION_ID).getPosts());
     }
 
     @AfterAll
@@ -234,9 +232,9 @@ public class QuestionRepoTest {
         QuestionRepo repo = new QuestionRepo();
         PostRepo pRepo = new PostRepo();
         AttorneyRepository aRepo = new AttorneyRepository();
-        repo.deleteAllQuestion();
-        pRepo.deleteAllPost();
-        aRepo.deleteAllUser();
+        repo.deleteAll();
+        pRepo.deleteAll();
+        aRepo.deleteAll();
     }
 
     @Test
@@ -253,11 +251,11 @@ public class QuestionRepoTest {
         QuestionRepo repo = new QuestionRepo();
 
         //set up
-        repo.deleteQuestion(questionId);
+        repo.delete(questionId);
 
         //test saving a question into the database
         q.setTaken(true);
-        repo.saveQuestion(q);
+        repo.save(q);
         assertTrue(repo.existsById(questionId), "Question is not saved into the database!");
     }
 
@@ -275,12 +273,12 @@ public class QuestionRepoTest {
         QuestionRepo repo = new QuestionRepo();
 
         //set up
-        repo.deleteQuestion(questionId);
+        repo.delete(questionId);
         q.setTaken(true);
-        repo.saveQuestion(q);
+        repo.save(q);
 
         //test getting the correct post
-        assertEquals(q, repo.getQuestion(questionId), "That is not the correct question!");
+        assertEquals(q, repo.get(questionId), "That is not the correct question!");
     }
 
     @Test
@@ -298,20 +296,20 @@ public class QuestionRepoTest {
         QuestionRepo repo = new QuestionRepo();
 
         //set up
-        repo.deleteAllQuestion();
-        repo.saveQuestion(q);
+        repo.deleteAll();
+        repo.save(q);
 
         //test deleting an existing question from the database
         assertTrue(repo.existsById(questionId), "The post was not added!");
-        repo.deleteQuestion(questionId);
+        repo.delete(questionId);
         assertFalse(repo.existsById(questionId), "the post was not deleted!");
 
         //recover
-        repo.deleteAllQuestion();
+        repo.deleteAll();
         q1.setClose(true);
         q.setTaken(true);
-        repo.saveQuestion(q);
-        repo.saveQuestion(q1);
+        repo.save(q);
+        repo.save(q1);
     }
 
     @Test
@@ -329,26 +327,26 @@ public class QuestionRepoTest {
         QuestionRepo repo = new QuestionRepo();
 
         //set up
-        repo.deleteAllQuestion();
-        repo.saveQuestion(q);
-        repo.saveQuestion(q1);
+        repo.deleteAll();
+        repo.save(q);
+        repo.save(q1);
         EntityManager em = DatabaseConnection.getEntityManager();
 
         //test remove all posts
-        repo.deleteAllQuestion();
+        repo.deleteAll();
         Long count = em.createQuery("SELECT COUNT(q) FROM Question q", Long.class).getSingleResult();
         assertEquals(0, count, "The database still have saved post objects!");
         //test remove no posts
-        repo.deleteAllQuestion();
+        repo.deleteAll();
         Long count1 = em.createQuery("SELECT COUNT(q) FROM Question q", Long.class).getSingleResult();
         assertEquals(0, count1, "The database still have saved post objects!");
 
         //recover
-        repo.deleteAllQuestion();
+        repo.deleteAll();
         q1.setClose(true);
         q.setTaken(true);
-        repo.saveQuestion(q);
-        repo.saveQuestion(q1);
+        repo.save(q);
+        repo.save(q1);
     }
 
 }

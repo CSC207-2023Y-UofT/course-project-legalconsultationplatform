@@ -2,22 +2,18 @@ package usecasetesting;
 
 import adapter.controller.ControlContainer;
 import businessrule.gateway.*;
-import businessrule.inputboundary.QuestionInputBoundary;
 import businessrule.inputboundary.SelectInputBoundary;
 import businessrule.outputboundary.TheQuestionOutputBoundary;
 import businessrule.requestmodel.SelectRequestModel;
 import businessrule.responsemodel.TheQuestionResponseModel;
-import businessrule.usecase.AskQuestionInteractor;
-import businessrule.usecase.PostDisplayFormatter;
+import businessrule.usecase.util.PostDisplayFormatter;
 import businessrule.usecase.SelectQuestionInteractor;
 import driver.database.*;
 
 import entity.*;
 
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -72,33 +68,33 @@ public class SelectQuestionUseCaseTest {
 
         Client client = new Client();
         client.setUserId(CLIENT_ID);
-        clientGateway.addUser(client);
+        clientGateway.save(client);
 
         Attorney attorney = new Attorney();
         attorney.setUserId(ATTORNEY_ID);
-        attorneyGateway.addUser(attorney);
+        attorneyGateway.save(attorney);
 
         Attorney secondAttorney = new Attorney();
         secondAttorney.setUserId(SECOND_ATTORNEY_ID);
-        attorneyGateway.addUser(secondAttorney);
+        attorneyGateway.save(secondAttorney);
 
         Post postBelongsToClient = new Post();
         postBelongsToClient.setPostText("test text");
         postBelongsToClient.setPostId(CLIENT_POST_ID);
         postBelongsToClient.setBelongsTo(CLIENT_ID);
-        postGateway.savePost(postBelongsToClient);
+        postGateway.save(postBelongsToClient);
 
         Post postBelongsToAttorney = new Post();
         postBelongsToAttorney.setPostText("test text");
         postBelongsToAttorney.setPostId(ATTORNEY_POST_ID);
         postBelongsToAttorney.setBelongsTo(ATTORNEY_ID);
-        postGateway.savePost(postBelongsToAttorney);
+        postGateway.save(postBelongsToAttorney);
 
         Question question1 = new Question();
         question1.setQuestionId(QUESTION_ID);
         question1.addPosts(postBelongsToClient);
         question1.addPosts(postBelongsToAttorney);
-        questionGateway.saveQuestion(question1);
+        questionGateway.save(question1);
 
         Question question2 = new Question();
         question2.setQuestionId(TAKEN_QUESTION_ID);
@@ -106,12 +102,12 @@ public class SelectQuestionUseCaseTest {
         question2.setTakenByAttorney(ATTORNEY_ID);
         question2.addPosts(postBelongsToClient);
         question2.addPosts(postBelongsToAttorney);
-        questionGateway.saveQuestion(question2);
+        questionGateway.save(question2);
 
         Question question3 = new Question();
         question3.setQuestionId(CLOSED_QUESTION_ID);
         question3.setClose(true);
-        questionGateway.saveQuestion(question3);
+        questionGateway.save(question3);
     }
 
     @Test
@@ -165,9 +161,9 @@ public class SelectQuestionUseCaseTest {
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
         postGateway = new PostRepo();
-        clientGateway.deleteAllUser();
-        questionGateway.deleteAllQuestion();
-        attorneyGateway.deleteAllUser();
-        postGateway.deleteAllPost();
+        clientGateway.deleteAll();
+        questionGateway.deleteAll();
+        attorneyGateway.deleteAll();
+        postGateway.deleteAll();
     }
 }

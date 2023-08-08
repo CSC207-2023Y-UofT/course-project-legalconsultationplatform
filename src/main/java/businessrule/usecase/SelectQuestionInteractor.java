@@ -2,6 +2,8 @@ package businessrule.usecase;
 
 import businessrule.inputboundary.SelectInputBoundary;
 import businessrule.requestmodel.SelectRequestModel;
+import businessrule.usecase.util.PostDisplayFormatter;
+import businessrule.usecase.util.PostMapConstructor;
 import entity.Question;
 import businessrule.gateway.QuestionGateway;
 import businessrule.responsemodel.TheQuestionResponseModel;
@@ -31,10 +33,10 @@ public class SelectQuestionInteractor implements SelectInputBoundary {
 
         // use gateway factory to retrieve the correct type of repo
         UserGateway userGateway = userGatewayFactory.createUserGateway(userId);
-        User user = userGateway.getUser(userId);
+        User user = userGateway.get(userId);
 
         // get question
-        Question question = questionGateway.getQuestion(questionId);
+        Question question = questionGateway.get(questionId);
 
         // handle select question logic and prepare response model
         boolean isQuestionSelectable = user.isQuestionSelectable(question);

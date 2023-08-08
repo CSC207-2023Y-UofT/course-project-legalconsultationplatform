@@ -32,7 +32,7 @@ public class ViewQuestionInteractor extends ViewQuestionInteractorBase{
     protected User fetchUser(ViewRequestModel viewRequestModel) {
         int userId = viewRequestModel.getUserId();
         UserGateway userGateway = userGatewayFactory.createUserGateway(userId);
-        return userGateway.getUser(userId);
+        return userGateway.get(userId);
     }
 
 }

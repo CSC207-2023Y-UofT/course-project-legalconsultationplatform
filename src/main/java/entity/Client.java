@@ -1,5 +1,7 @@
 package entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
@@ -11,19 +13,28 @@ import java.util.Objects;
 @Entity
 public class Client implements User {
     @Id
+    @JsonProperty(required = true)
     private int userId;
-    private String userName;
+    private String name;
     private String email;
     private String password;
     private String stateAbb;
+    @JsonProperty(required = true)
     private String postalCode;
+    @JsonProperty(required = true)
     private String ethnicity;
+    @JsonProperty(required = true)
     private int age;
+    @JsonProperty(required = true)
     private String gender;
+    @JsonProperty(required = true)
     private String maritalStatus;
+    @JsonProperty(required = true)
     private int numberOfHousehold;
+    @JsonProperty(required = true)
     private float annualIncome;
     @OneToMany(targetEntity = Question.class, fetch = FetchType.EAGER)
+    @JsonProperty(required = true)
     private List<Question> questionsList;
 
     public Client() {
@@ -34,7 +45,7 @@ public class Client implements User {
                   String ethnicity, int age, String gender, String maritalStatus, int numberOfHousehold,
                   float annualIncome) {
         this.userId = userId;
-        this.userName = userName;
+        this.name = userName;
         this.email = email;
         this.password = password;
         this.stateAbb = stateAbb;
@@ -58,7 +69,7 @@ public class Client implements User {
         return password;
     }
 
-    public String getUserName() {return userName;}
+    public String getUserName() {return name;}
 
     @Override
     public String getEmail() {return email;}
@@ -100,7 +111,7 @@ public class Client implements User {
 
     public void setUserId(int userId) {this.userId = userId;}
 
-    public void setUserName(String userName) {this.userName = userName;}
+    public void setUserName(String userName) {this.name = userName;}
 
     public void setEmail(String email) {this.email = email;}
 
@@ -162,7 +173,7 @@ public class Client implements User {
 
     @Override
     public String toString() {
-        return String.format("[Client]: %s", userName);
+        return String.format("[Client]: %s", name);
     }
 
     @Override

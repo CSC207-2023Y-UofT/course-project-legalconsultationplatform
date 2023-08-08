@@ -9,16 +9,14 @@ import businessrule.inputboundary.ViewInputBoundary;
 import businessrule.outputboundary.ViewOutputBoundary;
 import businessrule.requestmodel.ViewRequestModel;
 import businessrule.responsemodel.ViewResponseModel;
-import businessrule.usecase.QuestionDisplayFormatter;
+import businessrule.usecase.util.QuestionDisplayFormatter;
 import businessrule.usecase.ViewQuestionInteractor;
 import driver.database.AttorneyRepository;
 import driver.database.ClientRepository;
-import driver.database.PostRepo;
 import driver.database.QuestionRepo;
 import entity.Attorney;
 import entity.Client;
 import entity.Question;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
@@ -69,17 +67,17 @@ public class UserViewHistoryUseCaseTest {
         Question question = new Question();
         question.setQuestionId(QUESTION_ID);
         question.setTitle("test title");
-        questionGateway.saveQuestion(question);
+        questionGateway.save(question);
 
         Client client = new Client();
         client.setUserId(CLIENT_ID);
         client.addQuestion(question);
-        clientGateway.addUser(client);
+        clientGateway.save(client);
 
         Attorney attorney = new Attorney();
         attorney.setUserId(ATTORNEY_ID);
         attorney.addQuestion(question);
-        attorneyGateway.addUser(attorney);
+        attorneyGateway.save(attorney);
     }
 
     @Test
@@ -104,8 +102,8 @@ public class UserViewHistoryUseCaseTest {
         questionGateway = new QuestionRepo();
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
-        clientGateway.deleteAllUser();
-        questionGateway.deleteAllQuestion();
-        attorneyGateway.deleteAllUser();
+        clientGateway.deleteAll();
+        questionGateway.deleteAll();
+        attorneyGateway.deleteAll();
     }
 }

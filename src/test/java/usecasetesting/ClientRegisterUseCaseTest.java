@@ -2,30 +2,16 @@ package usecasetesting;
 
 import adapter.controller.ControlContainer;
 import businessrule.gateway.ClientGateway;
-import businessrule.gateway.UserGatewayFactory;
 import businessrule.inputboundary.ClientRegisterInputBoundary;
-import businessrule.inputboundary.UserLoginInputBoundary;
-import businessrule.outputboundary.HomePageOutputBoundary;
 import businessrule.outputboundary.RegisterOutputBoundary;
 import businessrule.requestmodel.ClientRegisterRequestModel;
-import businessrule.responsemodel.HomePageResponseModel;
 import businessrule.responsemodel.RegisterResponseModel;
 import businessrule.usecase.ClientRegisterInteractor;
-import businessrule.usecase.UserLoginInteractor;
-import driver.database.AttorneyRepository;
 import driver.database.ClientRepository;
-import driver.database.PostRepo;
-import driver.database.QuestionRepo;
-import entity.Client;
-import entity.ClientFactory;
-import org.junit.BeforeClass;
+import entity.factory.ClientFactory;
 import org.junit.jupiter.api.Test;
 
-import java.sql.SQLOutput;
-import java.time.LocalDate;
-
 import static org.junit.Assert.fail;
-import static org.junit.jupiter.api.Assertions.*;
 ;
 
 public class ClientRegisterUseCaseTest {
@@ -130,6 +116,6 @@ public class ClientRegisterUseCaseTest {
 
     public void ClearAllRepository(){
         clientGateway = new ClientRepository();
-        clientGateway.deleteAllUser();;
+        clientGateway.deleteAll();;
     }
 }

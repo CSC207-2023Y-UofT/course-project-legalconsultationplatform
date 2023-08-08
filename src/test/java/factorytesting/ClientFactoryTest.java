@@ -1,7 +1,7 @@
 package factorytesting;
 
 import entity.Client;
-import entity.ClientFactory;
+import entity.factory.ClientFactory;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

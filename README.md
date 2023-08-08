@@ -7,11 +7,11 @@ The COVID-19 pandemic has brought numerous challenges to the forefront, one of w
 
 Despite the American Bar Association's (ABA) best efforts, their data reveals a worrying trend. Across the U.S., over 30% of legal questions posed on their platform remain unanswered by attorneys. In certain states like Louisiana, the neglect is even more pronounced with over 70% of inquiries going unanswered. Additionally, among the questions that do receive attention, approximately 35% are inadequately addressed.
 
-Addressing this gap, we introduce the Legal Consultation Platform+ , a solution tailored to serve both individuals seeking legal advice and registered, licensed attorneys willing to provide it. Our platform is designed to create an environment where individuals can post their legal inquiries free of charge, and attorneys can browse and respond to these questions at their convenience.
+Addressing this gap, we introduce the **Legal Consultation Platform+** , a solution tailored to serve both individuals seeking legal advice and registered, licensed attorneys willing to provide it. Our platform is designed to create an environment where individuals can post their legal inquiries free of charge, and attorneys can browse and respond to these questions at their convenience.
 
-One of the standout features of Legal Consultation Platform+ is its intelligent attorney-question matching system. This system recommends up to five questions from the feed to each attorney, based on their expertise and interests. This not only streamlines the process for attorneys, saving them valuable time, but also enhances the quality of responses. To ensure attorneys do not miss out on relevant inquiries, the platform also sends them email notifications.
+One of the standout features of **Legal Consultation Platform+** is its intelligent attorney-question matching system. This system recommends up to five questions from the feed to each attorney, based on their expertise and interests. This not only streamlines the process for attorneys, saving them valuable time, but also enhances the quality of responses. To ensure attorneys do not miss out on relevant inquiries, the platform also sends them email notifications.
 
-Our mission with Legal Consultation Platform+ is to democratize access to legal consultation and ensure no question goes unanswered or improperly addressed. Together, we can navigate these challenging times by making legal assistance more accessible and efficient for all.
+Our mission with **Legal Consultation Platform+** is to democratize access to legal consultation and ensure no question goes unanswered or improperly addressed. Together, we can navigate these challenging times by making legal assistance more accessible and efficient for all.
 
 ---
 

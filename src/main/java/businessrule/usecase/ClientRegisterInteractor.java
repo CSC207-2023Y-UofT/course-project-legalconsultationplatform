@@ -1,17 +1,15 @@
 package businessrule.usecase;
 
 
-import adapter.presenter.RegisterResponseFormatter;
 import businessrule.gateway.ClientGateway;
 import businessrule.inputboundary.ClientRegisterInputBoundary;
 import businessrule.outputboundary.RegisterOutputBoundary;
 import businessrule.requestmodel.ClientRegisterRequestModel;
 import businessrule.responsemodel.RegisterResponseModel;
-import driver.database.ClientRepository;
 import entity.Client;
-import entity.ClientFactory;
-import entity.CredentialChecker;
-import entity.RandomNumberGenerator;
+import entity.factory.ClientFactory;
+import businessrule.usecase.util.CredentialChecker;
+import businessrule.usecase.util.RandomNumberGenerator;
 
 public class ClientRegisterInteractor implements ClientRegisterInputBoundary {
     final ClientGateway clientGateway;
@@ -69,7 +67,7 @@ public class ClientRegisterInteractor implements ClientRegisterInputBoundary {
         Client client = clientFactory.create(randomUserId, inputUserName, inputEmail,
                 inputPassword1, inputStateAbb, inputPostalCode, inputEthnicity, inputAge,
                 inputGender, inputMaritalStatus, inputNumberOfHousehold, inputAnnualIncome);
-        clientGateway.addUser(client);
+        clientGateway.save(client);
         String message = "Your userId is " + randomUserId;
         return outputBoundary.prepareSuccess(message);
     }

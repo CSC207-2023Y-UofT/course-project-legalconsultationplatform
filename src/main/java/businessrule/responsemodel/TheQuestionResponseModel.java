@@ -1,6 +1,6 @@
 package businessrule.responsemodel;
 
-import businessrule.usecase.PostDisplayFormatter;
+import businessrule.usecase.util.PostDisplayFormatter;
 
 import java.time.LocalDate;
 import java.util.Map;
