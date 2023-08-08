@@ -1,36 +1,38 @@
 package businessrule.usecase;
 
 import businessrule.gateway.AttorneyGateway;
-import businessrule.inputboundary.BrowseInputBoundary;
 import businessrule.outputboundary.ViewOutputBoundary;
-import businessrule.requestmodel.BrowseRequestModel;
-import businessrule.responsemodel.ViewResponseModel;
+import businessrule.requestmodel.ViewRequestModel;
 import businessrule.gateway.QuestionGateway;
-import entity.Attorney;
 import entity.Question;
+import entity.User;
 
+import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
-import java.util.Map;
+import java.util.Set;
 
-public class BrowseQuestionInteractor implements BrowseInputBoundary {
-
-    final ViewOutputBoundary viewOutputBoundary;
-    final QuestionGateway questionGateway;
+public class BrowseQuestionInteractor extends ViewQuestionInteractorBase {
     final AttorneyGateway attorneyGateway;
 
     public BrowseQuestionInteractor(ViewOutputBoundary viewOutputBoundary, QuestionGateway questionGateway, AttorneyGateway attorneyGateway) {
-        this.viewOutputBoundary = viewOutputBoundary;
-        this.questionGateway = questionGateway;
+        super(viewOutputBoundary, questionGateway);
         this.attorneyGateway = attorneyGateway;
     }
 
-    public ViewResponseModel browseQuestion(BrowseRequestModel browseRequestModel){
-        // construct response model
-        List<Question> questionsList = questionGateway.getNotTakenQuestion();
-        QuestionMapConstructor questionMapConstructor = new QuestionMapConstructor();
-        Map<Integer, QuestionDisplayFormatter> questionMap = questionMapConstructor.constructQuestionMap(questionsList);
-        Attorney attorney = (Attorney) attorneyGateway.get(browseRequestModel.getAttorneyId());
-        ViewResponseModel viewResponseModel = new ViewResponseModel(attorney.getUserId(), attorney.getUserName(), questionMap);
-        return viewOutputBoundary.prepareSuccess(viewResponseModel);
+    @Override
+    protected List<Question> fetchQuestions(ViewRequestModel viewRequestModel) {
+        List<Question> notTakenList = questionGateway.getNotTakenQuestion();
+        List<Question> notCloseList = questionGateway.getNotClosedQuestion();
+        Set<Question> notTakenSet = new HashSet<>(notTakenList);
+        Set<Question> notCloseSet = new HashSet<>(notCloseList);
+        notCloseSet.retainAll(notTakenSet);
+        return new ArrayList<>(notCloseSet);
+    }
+
+    @Override
+    protected User fetchUser(ViewRequestModel viewRequestModel) {
+        int attorneyId = viewRequestModel.getUserId();
+        return attorneyGateway.get(attorneyId);
     }
 }

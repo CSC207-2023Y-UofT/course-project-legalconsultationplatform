@@ -12,15 +12,17 @@ public class TheQuestionResponseModel{
     private final String title;
     private final String type;
     private final LocalDate deadline;
+    private final boolean isClose;
     private final Map<Integer, PostDisplayFormatter> postMap;
 
-    public TheQuestionResponseModel(int userId, int questionId, String userName, String title, String type, LocalDate deadline, Map<Integer, PostDisplayFormatter> postMap) {
+    public TheQuestionResponseModel(int userId, int questionId, String userName, String title, String type, LocalDate deadline, boolean isClose, Map<Integer, PostDisplayFormatter> postMap) {
         this.userId = userId;
         this.questionId = questionId;
         this.userName = userName;
         this.title = title;
         this.type = type;
         this.deadline = deadline;
+        this.isClose = isClose;
         this.postMap = postMap;
     }
 
@@ -45,6 +47,8 @@ public class TheQuestionResponseModel{
     public LocalDate getDeadline() {
         return deadline;
     }
+
+    public boolean isClose() {return isClose;}
 
     public Map<Integer, PostDisplayFormatter> getPostMap() {
         return postMap;
