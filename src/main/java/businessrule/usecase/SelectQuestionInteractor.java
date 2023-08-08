@@ -43,7 +43,8 @@ public class SelectQuestionInteractor implements SelectInputBoundary {
         if (isQuestionSelectable) {
             PostMapConstructor postMapConstructor = new PostMapConstructor(userGatewayFactory);
             Map<Integer, PostDisplayFormatter> postMap = postMapConstructor.constructPostMap(question);
-            TheQuestionResponseModel theQuestionResponseModel = new TheQuestionResponseModel(userId, questionId, user.getUserName(), question.getTitle(), question.getType(), question.getLegalDeadline(), question.isClose(), postMap);
+            TheQuestionResponseModel theQuestionResponseModel = new TheQuestionResponseModel(userId, questionId, user.getUserName(),
+                    question.getTitle(), question.getType(), question.getLegalDeadline(), question.isClose(), user.isClient() , postMap);
             return theQuestionOutputBoundary.prepareSuccess(theQuestionResponseModel);
         } else {
             return theQuestionOutputBoundary.prepareFail("This question is not accessible.");
