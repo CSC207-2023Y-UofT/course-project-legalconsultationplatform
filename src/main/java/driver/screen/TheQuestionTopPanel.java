@@ -38,13 +38,21 @@ public class TheQuestionTopPanel extends JPanel{
         String helloMessageString = "Hello, " + userName + "(" + userId + ")";
         JLabel helloMessage = new JLabel(helloMessageString);
 
-        //Question title and type
+        //Question title and deadline
+        JPanel titleContainer = new JPanel();
+        titleContainer.setLayout(new BoxLayout(titleContainer, BoxLayout.Y_AXIS));
         JPanel titlePanel = UIDesign.questionTitleDrawer(type, title);
-        //Question deadline
+        titlePanel.setAlignmentX(CENTER_ALIGNMENT);
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String deadlineString = "Deadline: " + deadline.format(formatter);
         JLabel deadlineLine = new JLabel(deadlineString);
-        UIDesign.setPromptFont(deadlineLine);
+        deadlineLine.setOpaque(false);
+        deadlineLine.setAlignmentX(CENTER_ALIGNMENT);
+
+        titleContainer.add(titlePanel);
+        titleContainer.add(deadlineLine);
+        setSizeInLayout(titleContainer, new Dimension(360, 80));
 
 
         JPanel postScrollPanel = new JPanel();
@@ -76,6 +84,7 @@ public class TheQuestionTopPanel extends JPanel{
 
         JPanel overallPosts = new JPanel();
         JLabel label = new JLabel("Previous discussions");
+        setSizeInLayout(label, new Dimension(350, 30));
         UIDesign.setNameFont(label);
         label.setForeground(whiteColor);
         JPanel labelPanel = new JPanel();
@@ -88,14 +97,11 @@ public class TheQuestionTopPanel extends JPanel{
 
         //Add everything into JPanel
         UIDesign.setBackgroundFrame(this);
-        JPanel contentPanel = new JPanel();
-        contentPanel.setBackground(lightGreenColor);
-        contentPanel.setLayout(new FlowLayout(FlowLayout.LEFT));
-        contentPanel.add(helloMessage);
-        contentPanel.add(titlePanel);
-        contentPanel.add(deadlineLine);
-        contentPanel.add(overallPosts);
-
-        this.add(contentPanel);
+        setBackground(lightGreenColor);
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setSizeInLayout(this, new Dimension(360, 600));
+        add(helloMessage);
+        add(titleContainer);
+        add(overallPosts);
     }
 }

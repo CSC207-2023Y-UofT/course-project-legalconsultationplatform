@@ -218,8 +218,8 @@ public class UIDesign {
         titleText.setFont(subTitleFont);
 
         JPanel titlePanel = new JPanel();
-        titlePanel.setBackground(lightGreenColor);
-        titlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
+        titlePanel.setOpaque(false);
+        titlePanel.setLayout(new FlowLayout());
         titlePanel.add(typePanel);
         titlePanel.add(titleText);
         titlePanel.setPreferredSize(new Dimension(300, 30));
