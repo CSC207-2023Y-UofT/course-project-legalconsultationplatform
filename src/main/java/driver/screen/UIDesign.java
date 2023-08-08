@@ -146,6 +146,21 @@ public class UIDesign {
         return overallSinglePost;
     }
 
+    public static JPanel singleQuestionDrawer(String title, String questionType, String deadline){
+        JPanel questionTitle = questionTitleDrawer(questionType, title);
+        JPanel singleQuestion = new JPanel();
+        setSizeInLayout(singleQuestion, new Dimension(400, 80));
+        singleQuestion.setLayout(new BoxLayout(singleQuestion, BoxLayout.Y_AXIS));
+        singleQuestion.add(questionTitle);
+        JLabel deadlineText = new JLabel(deadline);
+        deadlineText.setHorizontalAlignment(SwingConstants.LEFT);
+        deadlineText.setOpaque(false);
+        setPromptFont(deadlineText);
+        singleQuestion.add(deadlineText);
+        singleQuestion.setAlignmentX(Component.LEFT_ALIGNMENT);
+        return singleQuestion;
+    }
+
     public static JPanel questionTitleDrawer(String questionType, String title){
         JPanel typePanel = new JPanel();
         Color color;
@@ -204,10 +219,25 @@ public class UIDesign {
 
         JPanel titlePanel = new JPanel();
         titlePanel.setBackground(lightGreenColor);
-        titlePanel.setLayout(new FlowLayout());
+        titlePanel.setLayout(new FlowLayout(FlowLayout.LEFT));
         titlePanel.add(typePanel);
         titlePanel.add(titleText);
+        titlePanel.setPreferredSize(new Dimension(300, 30));
         return titlePanel;
+    }
+
+    public static JPanel helloMessageConstructor(String userName, int userId){
+        JPanel helloMessage = new JPanel();
+        helloMessage.setLayout(new FlowLayout(FlowLayout.RIGHT));
+        helloMessage.setBackground(lightGreenColor);
+        setSizeInLayout(helloMessage, new Dimension(360, 40));
+
+        JLabel messageLabel = new JLabel("Hello, " + userName + " (" + userId + ")");
+        setPromptFont(messageLabel);
+
+        messageLabel.setHorizontalAlignment(SwingConstants.RIGHT);
+        helloMessage.add(messageLabel);
+        return helloMessage;
     }
 
 

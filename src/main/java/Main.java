@@ -57,12 +57,15 @@ public class Main {
                 gatewayFactory);
         CloseQuestionControl closeQuestionControl = new CloseQuestionControl(closeQuestionInteractor);
 
-        BrowseInputBoundary browseQuestionInterator = new BrowseQuestionInteractor(viewOutputBoundary, questionGateway,
+        ViewInputBoundary browseQuestionInterator = new BrowseQuestionInteractor(viewOutputBoundary, questionGateway,
                 attorneyGateway);
         BrowseQuestionControl browseQuestionControl = new BrowseQuestionControl(browseQuestionInterator);
 
         ViewInputBoundary viewQuestionInteractor = new ViewQuestionInteractor(questionGateway, viewOutputBoundary, gatewayFactory);
         ViewQuestionControl viewQuestionControl = new ViewQuestionControl(viewQuestionInteractor);
+
+        ViewInputBoundary viewRateableQuestionInteractor = new ViewRateableQuestionInteractor(viewOutputBoundary, questionGateway, clientGateway);
+        ViewRateableQuestionControl viewRateableQuestionControl = new ViewRateableQuestionControl(viewRateableQuestionInteractor);
 
         SelectInputBoundary selectQuestionInteractor = new SelectQuestionInteractor(questionGateway, theQuestionOutputBoundary, gatewayFactory);
         SelectQuestionControl selectQuestionControl = new SelectQuestionControl(selectQuestionInteractor);
@@ -72,14 +75,15 @@ public class Main {
         PostControl postControl = new PostControl(replyInteractor);
 
         RateInputBoundary rateInteractor = new RateInteractor(questionGateway, homePageOutputBoundary,
-                gatewayFactory);
+                clientGateway);
         RateControl rateControl = new RateControl(rateInteractor);
         System.out.println("System - finished set up use case");
 
         //control container
         ControlContainer controlContainer = new ControlContainer(browseQuestionControl,
                 registerControl, closeQuestionControl, postControl, questionControl,
-                rateControl, selectQuestionControl, loginControl, viewQuestionControl);
+                rateControl, selectQuestionControl, loginControl, viewQuestionControl,
+                viewRateableQuestionControl);
 
         //feed control container into the response formatter
         homePageOutputBoundary.setControlContainer(controlContainer);

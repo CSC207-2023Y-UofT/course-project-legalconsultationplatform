@@ -5,7 +5,9 @@ import businessrule.outputboundary.TheQuestionOutputBoundary;
 import businessrule.responsemodel.TheQuestionResponseModel;
 import businessrule.usecase.PostDisplayFormatter;
 import driver.screen.ApplicationException;
-import driver.screen.TheQuestionUI;
+import driver.screen.TheQuestionCloseUI;
+import driver.screen.TheQuestionOpenUI;
+import driver.screen.TheQuestionTopPanel;
 
 import javax.swing.*;
 import java.awt.*;
@@ -21,6 +23,7 @@ public class TheQuestionResponseFormatter implements TheQuestionOutputBoundary {
         this.cardLayout = cardLayout;
         this.screens = screens;
     }
+
     @Override
     public void setControlContainer(ControlContainer controlContainer) {
         this.controlContainer = controlContainer;
@@ -40,11 +43,19 @@ public class TheQuestionResponseFormatter implements TheQuestionOutputBoundary {
         String type = response.getType();
         LocalDate deadline = response.getDeadline();
         Map<Integer, PostDisplayFormatter> postMap = response.getPostMap();
+        boolean isClose = response.isClose();
 
-        TheQuestionUI questionUI = new TheQuestionUI(controlContainer, cardLayout, screens, userId, userName,
-                questionId,  title, type, deadline, postMap);
-        screens.add(questionUI, "question");
-        cardLayout.show(screens, "question");
+        if (isClose) {
+            TheQuestionCloseUI closeUI = new TheQuestionCloseUI(controlContainer, cardLayout, screens, userId, userName,
+                    questionId, title, type, deadline, postMap);
+            screens.add(closeUI, "Close");
+            cardLayout.show(screens, "Close");
+        } else {
+            TheQuestionOpenUI openUI = new TheQuestionOpenUI(controlContainer, cardLayout, screens, userId, userName,
+                    questionId, title, type, deadline, postMap);
+            screens.add(openUI, "Open");
+            cardLayout.show(screens, "Open");
+        }
         return response;
     }
 }

@@ -4,7 +4,6 @@ import adapter.controller.ControlContainer;
 import businessrule.gateway.AttorneyGateway;
 import businessrule.gateway.ClientGateway;
 import businessrule.gateway.QuestionGateway;
-import businessrule.inputboundary.BrowseInputBoundary;
 import businessrule.outputboundary.ViewOutputBoundary;
 import businessrule.requestmodel.BrowseRequestModel;
 import businessrule.responsemodel.ViewResponseModel;

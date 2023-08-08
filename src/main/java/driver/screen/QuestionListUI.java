@@ -9,6 +9,7 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.rmi.server.UID;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
@@ -49,17 +50,13 @@ public class QuestionListUI extends JPanel{
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate deadlineDate = question.getLegalDeadline();
             String deadline = deadlineDate.format(formatter);
-
-            //lines
-            // String titleLine = "(" + type + ")" + title;
             String deadlineLine = "Legal deadline: " + deadline;
-            // String overallText = titleLine + "\n" + deadlineLine;
-            String overallText = "<html><b>" + title+ "</b><br>" + deadlineLine + "</html>";
-
             //Format them all into a textArea
-            JButton questionButton = new JButton(overallText);
-            questionButton.setPreferredSize(new Dimension(400, 50));
-            questionScrollPanel.add(questionButton);
+            JPanel questionPanel = UIDesign.singleQuestionDrawer(title, type, deadlineLine);
+
+            JButton questionButton = new JButton();
+            questionButton.setPreferredSize(new Dimension(400, 80));
+            questionButton.add(questionPanel);
             questionButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -68,11 +65,18 @@ public class QuestionListUI extends JPanel{
                     selectQuestionControl.selectQuestion(questionId, userId);
                 }
             });
+            questionScrollPanel.add(questionButton);
         }
         questionScrollPane.setViewportView(questionScrollPanel);
+        UIDesign.setSizeInLayout(questionScrollPane, new Dimension(360, 600));
+
+        //Home page button
+        JButton homePage = new JButton("Home Page");
+        UIDesign.setGeneralButton(homePage);
 
         //Add everything in the panel
         this.add(helloMessage);
         this.add(questionScrollPane);
+        this.add(homePage);
     }
 }
