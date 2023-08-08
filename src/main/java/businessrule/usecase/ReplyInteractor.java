@@ -17,13 +17,8 @@ import entity.User;
 import java.time.LocalDate;
 
 /**
- * The "ReplyInteractor" class is an implementation of the "PostInputBoundary" interface, representing the use case for
- *
- * creating a new post (reply) in response to a question.
- * The class handles the business logic for creating a post (reply) to a specific question. It interacts with various
- * gateways, entities, and output boundaries to perform the necessary operations related to creating and saving the post.
+ * This class represents representing the use case for creating a new post (reply) in response to a question.
  */
-
 public class ReplyInteractor implements PostInputBoundary {
 
     final QuestionGateway questionGateway;
@@ -32,7 +27,9 @@ public class ReplyInteractor implements PostInputBoundary {
     final PostFactory postFactory;
     final UserGatewayFactory userGatewayFactory;
 
-    public ReplyInteractor(QuestionGateway questionGateway, PostGateway postGateway, HomePageOutputBoundary homePageOutputBoundary, PostFactory postFactory, UserGatewayFactory userGatewayFactory) {
+    public ReplyInteractor(QuestionGateway questionGateway, PostGateway postGateway,
+                           HomePageOutputBoundary homePageOutputBoundary, PostFactory postFactory,
+                           UserGatewayFactory userGatewayFactory) {
         this.questionGateway = questionGateway;
         this.postGateway = postGateway;
         this.homePageOutputBoundary = homePageOutputBoundary;
@@ -40,6 +37,12 @@ public class ReplyInteractor implements PostInputBoundary {
         this.userGatewayFactory = userGatewayFactory;
     }
 
+    /**
+     * Creates a new post (reply) in response to a question.
+     *
+     * @param postRequestModel The request model containing the details for the new post.
+     * @return A response model containing information about the user who replied to the question.
+     */
     @Override
     public HomePageResponseModel createPost(PostRequestModel postRequestModel) {
         // get input data
@@ -65,22 +68,23 @@ public class ReplyInteractor implements PostInputBoundary {
         String userType;
         if (isQuestionReplyable) {
             // if replyable, prepare post entity and update related field
-            Post post = postFactory.create(randomPostId, postRequestModel.getQuestionId(), now, postRequestModel.getPostText(), postRequestModel.getUserId());
+            Post post = postFactory.create(randomPostId, postRequestModel.getQuestionId(), now,
+                    postRequestModel.getPostText(), postRequestModel.getUserId());
             questionGateway.updatePosts(postRequestModel.getQuestionId(), post);
             postGateway.savePost(post);
             questionGateway.updateIsTaken(question.getQuestionId(), question.isTaken());
             questionGateway.updateTakenByAttorney(question.getQuestionId(), question.getTakenByAttorney());
             questionGateway.updateTakenAt(question.getQuestionId(), question.getTakenAt());
             userGateway.updateQuestionList(userId, question);
-            if (user.isClient()){
+            if (user.isClient()) {
                 userType = "Client";
-            } else{
+            } else {
                 userType = "Attorney";
             }
-            HomePageResponseModel homePageResponseModel = new HomePageResponseModel(user.getUserId(), user.getUserName(), userType);
+            HomePageResponseModel homePageResponseModel = new HomePageResponseModel(user.getUserId(),
+                    user.getUserName(), userType);
             return homePageOutputBoundary.prepareSuccess(homePageResponseModel);
-        }
-        else{
+        } else {
             return homePageOutputBoundary.prepareFail("You cannot reply to this question");
         }
     }

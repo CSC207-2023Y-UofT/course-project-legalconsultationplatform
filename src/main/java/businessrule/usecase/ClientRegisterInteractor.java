@@ -1,12 +1,5 @@
 package businessrule.usecase;
 
-/**
- * This class represents the interactor for registering a new client user.
- *
- * The "ClientRegisterInteractor" class is responsible for handling the business logic related to registering
- * a new client user
- */
-
 import adapter.presenter.RegisterResponseFormatter;
 import businessrule.gateway.ClientGateway;
 import businessrule.inputboundary.ClientRegisterInputBoundary;
@@ -19,20 +12,51 @@ import entity.ClientFactory;
 import entity.CredentialChecker;
 import entity.RandomNumberGenerator;
 
+/**
+ * This class represents the interactor for registering a new client user.
+ * The "ClientRegisterInteractor" class is responsible for handling the business logic related to registering
+ * a new client user.
+ */
 public class ClientRegisterInteractor implements ClientRegisterInputBoundary {
+
+    /**
+     * The gateway for accessing client-related operations.
+     */
     final ClientGateway clientGateway;
+
+    /**
+     * The output boundary for preparing registration responses.
+     */
     final RegisterOutputBoundary outputBoundary;
+
+    /**
+     * The factory for creating Client entities.
+     */
     final ClientFactory clientFactory;
 
+    /**
+     * Constructs an instance of ClientRegisterInteractor with the necessary dependencies.
+     *
+     * @param clientGateway   The gateway for client-related operations.
+     * @param outputBoundary  The output boundary for preparing registration responses.
+     * @param clientFactory   The factory for creating Client entities.
+     */
     public ClientRegisterInteractor(ClientGateway clientGateway, RegisterOutputBoundary outputBoundary, ClientFactory clientFactory) {
         this.clientGateway = clientGateway;
         this.outputBoundary = outputBoundary;
         this.clientFactory = clientFactory;
     }
 
+    /**
+     * Creates a new client user based on the provided ClientRegisterRequestModel and returns a registration response model.
+     *
+     * @param requestModel The model containing information for registering a new client user.
+     * @return The response model indicating the outcome of the registration attempt.
+     */
     @Override
-    public RegisterResponseModel create(ClientRegisterRequestModel requestModel){
-        // prepare input data
+    public RegisterResponseModel create(ClientRegisterRequestModel requestModel) {
+
+    // prepare input data
         String inputUserName = requestModel.getUserName();
         String inputEmail = requestModel.getEmail();
         String inputPassword1 = requestModel.getPassword();

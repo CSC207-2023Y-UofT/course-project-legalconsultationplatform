@@ -17,7 +17,7 @@ import java.util.Map;
  *
  * This class facilitates browsing and retrieving a list of not-taken questions from the data source.
  */
-public class BrowseQuestionInterator implements BrowseInputBoundary {
+public class BrowseQuestionInteractor implements BrowseInputBoundary {
 
     /**
      * The output boundary for preparing view responses.
@@ -41,7 +41,7 @@ public class BrowseQuestionInterator implements BrowseInputBoundary {
      * @param questionGateway    The gateway for question-related operations.
      * @param attorneyGateway    The gateway for attorney-related operations.
      */
-    public BrowseQuestionInterator(ViewOutputBoundary viewOutputBoundary, QuestionGateway questionGateway, AttorneyGateway attorneyGateway) {
+    public BrowseQuestionInteractor(ViewOutputBoundary viewOutputBoundary, QuestionGateway questionGateway, AttorneyGateway attorneyGateway) {
         this.viewOutputBoundary = viewOutputBoundary;
         this.questionGateway = questionGateway;
         this.attorneyGateway = attorneyGateway;

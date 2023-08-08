@@ -12,28 +12,37 @@ import driver.screen.ApplicationException;
 import java.time.LocalDateTime;
 
 /**
- * This class is responsible for handling the user login use case in the application.
- * It interacts with the "UserGatewayFactory" to access user information from the data source and
- * validates user credentials to authenticate the user.
- * The class uses the "HomePageOutputBoundary" to prepare and return the appropriate response model
- * based on the result of the login attempt.
+ * This class represents the interactor for the user login use case.
  */
-public class UserLoginInteractor implements UserLoginInputBoundary{
-    final UserGatewayFactory userGatewayFactory;
-    final HomePageOutputBoundary outputBoundary;
+public class UserLoginInteractor implements UserLoginInputBoundary {
 
+    private final UserGatewayFactory userGatewayFactory;
+    private final HomePageOutputBoundary outputBoundary;
+
+    /**
+     * Constructs a UserLoginInteractor with the given dependencies.
+     *
+     * @param userGatewayFactory Factory to create UserGateway instances.
+     * @param outputBoundary     Output boundary for the home page.
+     */
     public UserLoginInteractor(UserGatewayFactory userGatewayFactory, HomePageOutputBoundary outputBoundary) {
         this.userGatewayFactory = userGatewayFactory;
         this.outputBoundary = outputBoundary;
     }
 
+    /**
+     * Attempts to log in a user using the provided login credentials.
+     *
+     * @param requestModel The login request model containing user credentials.
+     * @return A response model indicating the login status and user information.
+     */
     @Override
     public HomePageResponseModel login(UserLoginRequestModel requestModel) {
-        // get input data
+        // Get input data
         int inputUserId = requestModel.getUserId();
         String inputPassword = requestModel.getPassword();
 
-        // use user gateway factory to retrieve the correct type of repo
+        // Use user gateway factory to retrieve the correct type of repository
         UserGateway userGateway;
         try {
             userGateway = userGatewayFactory.createUserGateway(inputUserId);
@@ -41,7 +50,7 @@ public class UserLoginInteractor implements UserLoginInputBoundary{
             return outputBoundary.prepareFail("User ID does not exist");
         }
 
-        // handle login logic
+        // Handle login logic
         if (!userGateway.existsById(inputUserId)) {
             return outputBoundary.prepareFail("User ID does not exist");
         }
@@ -51,12 +60,12 @@ public class UserLoginInteractor implements UserLoginInputBoundary{
             return outputBoundary.prepareFail("Password is incorrect");
         }
 
-        // construct response model
+        // Construct response model
         String userType;
         User user = userGateway.getUser(inputUserId);
-        if (user.isClient()){
+        if (user.isClient()) {
             userType = "Client";
-        } else{
+        } else {
             userType = "Attorney";
         }
         HomePageResponseModel accountResponseModel = new HomePageResponseModel(inputUserId,

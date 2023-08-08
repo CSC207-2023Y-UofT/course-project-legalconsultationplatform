@@ -11,7 +11,7 @@ import entity.Question;
 import entity.User;
 
 /**
- * The "RateInteractor" class represents the interactor for rating an answer to a question.
+ * This class represents interacting for rating an answer to a question.
  */
 public class RateInteractor implements RateInputBoundary {
 
@@ -19,6 +19,13 @@ public class RateInteractor implements RateInputBoundary {
     private final HomePageOutputBoundary homePageOutputBoundary;
     private final UserGatewayFactory userGatewayFactory;
 
+    /**
+     * Constructs a RateInteractor instance with the required dependencies.
+     *
+     * @param questionGateway         The gateway for accessing question-related data.
+     * @param homePageOutputBoundary The output boundary for the homepage responses.
+     * @param userGatewayFactory     The factory for creating UserGateways.
+     */
     public RateInteractor(QuestionGateway questionGateway, HomePageOutputBoundary homePageOutputBoundary, UserGatewayFactory userGatewayFactory) {
         this.questionGateway = questionGateway;
         this.homePageOutputBoundary = homePageOutputBoundary;
@@ -38,7 +45,7 @@ public class RateInteractor implements RateInputBoundary {
         String userType;
         if (user.isQuestionRateable(answer)) {
             questionGateway.updateRating(answerId, rating);
-            if (user.isClient()){
+            if (user.isClient()) {
                 userType = "Client";
             } else {
                 userType = "Attorney";
