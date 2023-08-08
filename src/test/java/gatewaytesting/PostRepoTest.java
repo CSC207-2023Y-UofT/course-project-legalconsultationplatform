@@ -29,8 +29,8 @@ public class PostRepoTest {
         PostRepo repo = new PostRepo();
 
         //set up
-        repo.deleteAllPost();
-        repo.savePost(p);
+        repo.deleteAll();
+        repo.save(p);
     }
 
     @Test
@@ -56,10 +56,10 @@ public class PostRepoTest {
         PostRepo repo = new PostRepo();
 
         //set up
-        repo.deleteAllPost();
+        repo.deleteAll();
 
         //test saving a post into the database
-        repo.savePost(p);
+        repo.save(p);
         assertTrue(repo.existsById(postId), "Post is not saved into the database!");
     }
 
@@ -76,11 +76,11 @@ public class PostRepoTest {
         PostRepo repo = new PostRepo();
 
         //set up
-        repo.deleteAllPost();
-        repo.savePost(p);
+        repo.deleteAll();
+        repo.save(p);
 
         //test getting the correct post
-        assertEquals(p, repo.getPost(postId), "That is not the correct post!");
+        assertEquals(p, repo.get(postId), "That is not the correct post!");
     }
 
     @Test
@@ -96,12 +96,12 @@ public class PostRepoTest {
         PostRepo repo = new PostRepo();
 
         //set up
-        repo.deleteAllPost();
-        repo.savePost(p);
+        repo.deleteAll();
+        repo.save(p);
 
         //test deleting an existing client from the database
         assertTrue(repo.existsById(postId), "The post was not added!");
-        repo.deletePost(postId);
+        repo.delete(postId);
         assertFalse(repo.existsById(postId), "the post was not deleted!");
     }
 
@@ -118,12 +118,12 @@ public class PostRepoTest {
         PostRepo repo = new PostRepo();
 
         //set up
-        repo.deleteAllPost();
-        repo.savePost(p);
+        repo.deleteAll();
+        repo.save(p);
         EntityManager em = DatabaseConnection.getEntityManager();
 
         //test remove all posts
-        repo.deleteAllPost();
+        repo.deleteAll();
         Long count = em.createQuery("SELECT COUNT(p) FROM Post p", Long.class).getSingleResult();
         assertEquals(0, count, "The database still have saved post objects!");
     }
@@ -131,6 +131,6 @@ public class PostRepoTest {
     @AfterEach
     public void tearDown() {
         PostRepo repo = new PostRepo();
-        repo.deleteAllPost();
+        repo.deleteAll();
     }
 }

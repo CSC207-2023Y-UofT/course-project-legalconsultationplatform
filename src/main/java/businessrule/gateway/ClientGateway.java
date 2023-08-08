@@ -1,5 +1,7 @@
 package businessrule.gateway;
 
-public interface ClientGateway extends UserGateway {
+import entity.Client;
+
+public interface ClientGateway extends UserGateway<Client> {
 
 }
