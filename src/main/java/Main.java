@@ -7,6 +7,7 @@ import businessrule.usecase.*;
 import driver.database.*;
 import driver.screen.UIDesign;
 import driver.screen.WelcomeUI;
+import entity.Attorney;
 import entity.factory.ClientFactory;
 import entity.factory.PostFactory;
 import entity.factory.QuestionFactory;
@@ -27,6 +28,14 @@ public class Main {
     PostFactory postFactory = new PostFactory();
     PostGateway postGateway = new PostRepo();
     System.out.println("System - finished set up repo");
+
+    //Test attorney
+        AttorneyRepository attorneyRepo = new AttorneyRepository();
+        Attorney attorney = new Attorney();
+        attorney.setName("Kaxi");
+        attorney.setPassword("12345678");
+        attorney.setUserId(12345678);
+        attorneyRepo.save(attorney);
 
     //set up jframe
     JFrame application = new JFrame("Legal Consultation Platform");

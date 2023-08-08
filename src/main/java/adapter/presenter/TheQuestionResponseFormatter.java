@@ -45,6 +45,7 @@ public class TheQuestionResponseFormatter implements TheQuestionOutputBoundary {
         Map<Integer, PostDisplayFormatter> postMap = response.getPostMap();
         boolean isClose = response.isClose();
 
+
         if (isClose) {
             TheQuestionCloseUI closeUI = new TheQuestionCloseUI(controlContainer, cardLayout, screens, userId, userName,
                     questionId, title, type, deadline, postMap);
