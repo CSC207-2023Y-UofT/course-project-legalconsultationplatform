@@ -1,5 +1,11 @@
 package businessrule.gateway;
 
-public interface AttorneyGateway extends UserGateway {
+import entity.Attorney;
+import entity.User;
+
+public interface AttorneyGateway extends UserGateway<Attorney> {
+
+    @Override
+    Attorney get(int id);
 
 }

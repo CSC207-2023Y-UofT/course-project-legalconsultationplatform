@@ -62,26 +62,26 @@ public class ReplyUseCaseTest {
 
         Question question = new Question();
         question.setQuestionId(QUESTION_ID);
-        questionGateway.saveQuestion(question);
+        questionGateway.save(question);
 
         Question closedQuestion = new Question();
         closedQuestion.setQuestionId(CLOSED_QUESTION_ID);
-        questionGateway.saveQuestion(closedQuestion);
+        questionGateway.save(closedQuestion);
 
         Client client = new Client();
         client.setUserId(CLIENT_ID);
         client.setEmail("josephpc0612@gmail.com");
         client.addQuestion(question);
-        clientGateway.addUser(client);
+        clientGateway.save(client);
 
         Attorney attorney = new Attorney();
         attorney.setUserId(ATTORNEY_ID);
         attorney.setEmail("josephpc0612@gmail.com");
-        attorneyGateway.addUser(attorney);
+        attorneyGateway.save(attorney);
 
         Attorney secondAttorney = new Attorney();
         secondAttorney.setUserId(SECOND_ATTORNEY_ID);
-        attorneyGateway.addUser(secondAttorney);
+        attorneyGateway.save(secondAttorney);
     }
 
     @Test
@@ -89,7 +89,7 @@ public class ReplyUseCaseTest {
         setUpReplyUseCase();
         PostRequestModel inputData1 = new PostRequestModel(QUESTION_ID, CLIENT_ID, "Test text");
         postInputBoundary.createPost(inputData1);
-        Question question = questionGateway.getQuestion(QUESTION_ID);
+        Question question = questionGateway.get(QUESTION_ID);
         Post post1 = question.getPosts().get(0);
         assertEquals(post1.getBelongsTo(), CLIENT_ID);
         assertEquals(post1.getPostText(), "Test text");
@@ -102,11 +102,11 @@ public class ReplyUseCaseTest {
 
         PostRequestModel inputData2 = new PostRequestModel(QUESTION_ID, ATTORNEY_ID, "Test text");
         postInputBoundary.createPost(inputData2);
-        Question question = questionGateway.getQuestion(QUESTION_ID);
+        Question question = questionGateway.get(QUESTION_ID);
         Post post2 = question.getPosts().get(0);
         assertEquals(post2.getBelongsTo(), ATTORNEY_ID);
         assertEquals(post2.getPostText(), "Test text");
-        User user = attorneyGateway.getUser(ATTORNEY_ID);
+        User user = attorneyGateway.get(ATTORNEY_ID);
         Question attorneyQuestion = user.getQuestionsList().get(0);
         assertEquals(attorneyQuestion.getQuestionId(), QUESTION_ID);
         assertEquals(attorneyQuestion.getTakenByAttorney(), ATTORNEY_ID);
@@ -119,7 +119,7 @@ public class ReplyUseCaseTest {
         PostRequestModel inputData = new PostRequestModel(QUESTION_ID, ATTORNEY_ID, "Test text");
         postInputBoundary.createPost(inputData);
 
-        User user = attorneyGateway.getUser(ATTORNEY_ID);
+        User user = attorneyGateway.get(ATTORNEY_ID);
         Question attorneyquestion = user.getQuestionsList().get(0);
         assertEquals(attorneyquestion.getQuestionId(), QUESTION_ID);
         assertEquals(attorneyquestion.getTakenByAttorney(), ATTORNEY_ID);
@@ -127,7 +127,7 @@ public class ReplyUseCaseTest {
 
         PostRequestModel inputData2 = new PostRequestModel(QUESTION_ID, ATTORNEY_ID, "Test text2");
         postInputBoundary.createPost(inputData2);
-        Question question = questionGateway.getQuestion(QUESTION_ID);
+        Question question = questionGateway.get(QUESTION_ID);
         Post post2 = question.getPosts().get(1);
         assertEquals(post2.getBelongsTo(), ATTORNEY_ID);
         assertEquals(post2.getPostText(), "Test text2");
@@ -154,7 +154,7 @@ public class ReplyUseCaseTest {
         PostRequestModel inputData2 = new PostRequestModel(QUESTION_ID, SECOND_ATTORNEY_ID, "Test text");
         postInputBoundary.createPost(inputData2);
 
-        User user = attorneyGateway.getUser(ATTORNEY_ID);
+        User user = attorneyGateway.get(ATTORNEY_ID);
         Question attorneyquestion = user.getQuestionsList().get(0);
         assertEquals(attorneyquestion.getQuestionId(), QUESTION_ID);
         assertEquals(attorneyquestion.getTakenByAttorney(), ATTORNEY_ID);
@@ -167,9 +167,9 @@ public class ReplyUseCaseTest {
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
         postGateway = new PostRepo();
-        clientGateway.deleteAllUser();
-        questionGateway.deleteAllQuestion();
-        attorneyGateway.deleteAllUser();
-        postGateway.deleteAllPost();
+        clientGateway.deleteAll();
+        questionGateway.deleteAll();
+        attorneyGateway.deleteAll();
+        postGateway.deleteAll();
     }
 }

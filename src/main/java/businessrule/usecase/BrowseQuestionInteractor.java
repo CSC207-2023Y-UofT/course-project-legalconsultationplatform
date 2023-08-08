@@ -33,6 +33,6 @@ public class BrowseQuestionInteractor extends ViewQuestionInteractorBase {
     @Override
     protected User fetchUser(ViewRequestModel viewRequestModel) {
         int attorneyId = viewRequestModel.getUserId();
-        return attorneyGateway.getUser(attorneyId);
+        return attorneyGateway.get(attorneyId);
     }
 }

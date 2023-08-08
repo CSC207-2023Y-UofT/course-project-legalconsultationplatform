@@ -63,15 +63,15 @@ public class AskQuestionUseCaseTest {
 
         Client client = new Client();
         client.setUserId(CLIENT_ID);
-        clientGateway.addUser(client);
+        clientGateway.save(client);
 
         Attorney attorney = new Attorney();
         attorney.setUserId(ATTORNEY_ID);
-        attorneyGateway.addUser(attorney);
+        attorneyGateway.save(attorney);
 
         Attorney secondAttorney = new Attorney();
         attorney.setUserId(SECOND_ATTORNEY_ID);
-        attorneyGateway.addUser(secondAttorney);
+        attorneyGateway.save(secondAttorney);
     }
 
     @Test
@@ -82,7 +82,7 @@ public class AskQuestionUseCaseTest {
 
         questionInputBoundary.createQuestion(inputData);
 
-        User user = clientGateway.getUser(CLIENT_ID);
+        User user = clientGateway.get(CLIENT_ID);
         assertEquals(1, user.getQuestionsList().size(), "The ask question use case failed.");
         ClearAllRepository();
     }
@@ -95,7 +95,7 @@ public class AskQuestionUseCaseTest {
 
         questionInputBoundary.createQuestion(inputData);
 
-        User user = clientGateway.getUser(CLIENT_ID);
+        User user = clientGateway.get(CLIENT_ID);
         assertEquals(0, user.getQuestionsList().size(), "The ask question use case failed.");
         ClearAllRepository();
     }
@@ -104,8 +104,8 @@ public class AskQuestionUseCaseTest {
         questionGateway = new QuestionRepo();
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
-        clientGateway.deleteAllUser();
-        questionGateway.deleteAllQuestion();
-        attorneyGateway.deleteAllUser();
+        clientGateway.deleteAll();
+        questionGateway.deleteAll();
+        attorneyGateway.deleteAll();
     }
 }

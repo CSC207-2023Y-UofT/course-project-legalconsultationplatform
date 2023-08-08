@@ -50,7 +50,7 @@ public class UserLoginUseCaseTest {
         Client client = new Client();
         client.setUserId(CLIENT_ID);
         client.setPassword(PASSWORD);
-        clientGateway.addUser(client);
+        clientGateway.save(client);
     }
     @Test
     public void TestLoginPass(){
@@ -76,6 +76,6 @@ public class UserLoginUseCaseTest {
 
     public void ClearAllRepository(){
         clientGateway = new ClientRepository();
-        clientGateway.deleteAllUser();
+        clientGateway.deleteAll();
     }
 }

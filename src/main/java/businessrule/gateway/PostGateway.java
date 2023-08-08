@@ -1,11 +1,12 @@
 package businessrule.gateway;
 
 import entity.Post;
+import entity.Question;
+import entity.User;
 
-public interface PostGateway {
-    void savePost(Post post);
-    Post getPost(int postId);
-    boolean existsById(int postId);
-    void deletePost(int postId);
-    void deleteAllPost();
+public interface PostGateway extends GenericGateway<Post>{
+
+    @Override
+    Post get(int id);
+
 }

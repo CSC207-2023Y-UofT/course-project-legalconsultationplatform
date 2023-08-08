@@ -63,11 +63,11 @@ public class BrowseQuestionUseCaseTest {
 
         Attorney attorney = new Attorney();
         attorney.setUserId(ATTORNEY_ID);
-        attorneyGateway.addUser(attorney);
+        attorneyGateway.save(attorney);
 
         Attorney secondAttorney = new Attorney();
         attorney.setUserId(SECOND_ATTORNEY_ID);
-        attorneyGateway.addUser(secondAttorney);
+        attorneyGateway.save(secondAttorney);
 
         Post post = new Post();
         post.setPostId(POST_ID);
@@ -78,12 +78,12 @@ public class BrowseQuestionUseCaseTest {
         question2.setTakenByAttorney(ATTORNEY_ID);
         question2.setAskedByClient(CLIENT_ID);
         question2.addPosts(post);
-        questionGateway.saveQuestion(question2);
+        questionGateway.save(question2);
 
         Client client = new Client();
         client.setUserId(CLIENT_ID);
         client.addQuestion(question2);
-        clientGateway.addUser(client);
+        clientGateway.save(client);
 
     }
 
@@ -100,8 +100,8 @@ public class BrowseQuestionUseCaseTest {
         questionGateway = new QuestionRepo();
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
-        clientGateway.deleteAllUser();
-        questionGateway.deleteAllQuestion();
-        attorneyGateway.deleteAllUser();
+        clientGateway.deleteAll();
+        questionGateway.deleteAll();
+        attorneyGateway.deleteAll();
     }
 }

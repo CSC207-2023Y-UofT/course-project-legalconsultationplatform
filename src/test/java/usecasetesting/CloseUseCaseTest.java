@@ -66,24 +66,24 @@ public class CloseUseCaseTest {
 
         Question closedQuestion = new Question();
         closedQuestion.setQuestionId(CLOSED_QUESTION_ID);
-        questionGateway.saveQuestion(closedQuestion);
+        questionGateway.save(closedQuestion);
 
         Client client = new Client();
         client.setUserId(CLIENT_ID);
         client.addQuestion(question);
-        clientGateway.addUser(client);
+        clientGateway.save(client);
 
         Attorney attorney = new Attorney();
         attorney.setUserId(ATTORNEY_ID);
-        attorneyGateway.addUser(attorney);
+        attorneyGateway.save(attorney);
 
         Attorney secondAttorney = new Attorney();
         attorney.setUserId(SECOND_ATTORNEY_ID);
-        attorneyGateway.addUser(secondAttorney);
+        attorneyGateway.save(secondAttorney);
 
         question.setTakenByAttorney(ATTORNEY_ID);
         question.setTaken(true);
-        questionGateway.saveQuestion(question);
+        questionGateway.save(question);
     }
     @Test
     public void TestClientCloseableQuestion(){
@@ -92,7 +92,7 @@ public class CloseUseCaseTest {
         CloseRequestModel inputData = new CloseRequestModel(QUESTION_ID, CLIENT_ID);
 
         closeInputBoundary.closeQuestion(inputData);
-        Question question = questionGateway.getQuestion(QUESTION_ID);
+        Question question = questionGateway.get(QUESTION_ID);
         assertEquals(question.isClose(), true);
         ClearAllRepository();
     }
@@ -102,7 +102,7 @@ public class CloseUseCaseTest {
         CloseRequestModel inputData = new CloseRequestModel(QUESTION_ID, ATTORNEY_ID);
 
         closeInputBoundary.closeQuestion(inputData);
-        Question question = questionGateway.getQuestion(QUESTION_ID);
+        Question question = questionGateway.get(QUESTION_ID);
         assertEquals(question.isClose(), true);
         ClearAllRepository();
     }
@@ -138,9 +138,9 @@ public class CloseUseCaseTest {
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
         postGateway = new PostRepo();
-        clientGateway.deleteAllUser();
-        questionGateway.deleteAllQuestion();
-        attorneyGateway.deleteAllUser();
-        postGateway.deleteAllPost();
+        clientGateway.deleteAll();
+        questionGateway.deleteAll();
+        attorneyGateway.deleteAll();
+        postGateway.deleteAll();
     }
 }

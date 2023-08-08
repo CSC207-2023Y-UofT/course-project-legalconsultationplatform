@@ -38,7 +38,7 @@ public class UserLoginInteractor implements UserLoginInputBoundary{
         if (!userGateway.existsById(inputUserId)) {
             return outputBoundary.prepareFail("User ID does not exist");
         }
-        User filedUser = userGateway.getUser(inputUserId);
+        User filedUser = userGateway.get(inputUserId);
         String filedPassword = filedUser.getPassword();
         if (!inputPassword.equals(filedPassword)) {
             return outputBoundary.prepareFail("Password is incorrect");
@@ -46,14 +46,14 @@ public class UserLoginInteractor implements UserLoginInputBoundary{
 
         // construct response model
         String userType;
-        User user = userGateway.getUser(inputUserId);
+        User user = userGateway.get(inputUserId);
         if (user.isClient()){
             userType = "Client";
         } else{
             userType = "Attorney";
         }
         HomePageResponseModel accountResponseModel = new HomePageResponseModel(inputUserId,
-                userGateway.getUser(inputUserId).getUserName(), userType);
+                userGateway.get(inputUserId).getUserName(), userType);
         return outputBoundary.prepareSuccess(accountResponseModel);
     }
 }

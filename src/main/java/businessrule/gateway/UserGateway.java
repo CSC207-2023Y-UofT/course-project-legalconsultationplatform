@@ -1,17 +1,11 @@
 package businessrule.gateway;
 
-import entity.User;
 import entity.Question;
+import entity.User;
 
-import java.util.List;
-
-public interface UserGateway {
-    boolean existsById(int userId);
-    User getUser(int userId);
-    void addUser(User user);
-    void deleteUser(int userId);
-    void deleteAllUser();
+public interface UserGateway<T extends User> extends GenericGateway<T>{
     boolean existsByName(String inputUserName);
-    List<Question> getAllQuestionById(int userId);
     void updateQuestionList(int id, Question question);
+    @Override
+    User get(int id);
 }
