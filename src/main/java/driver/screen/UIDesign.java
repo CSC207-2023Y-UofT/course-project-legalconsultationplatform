@@ -216,6 +216,7 @@ public class UIDesign {
 
         JLabel titleText = new JLabel(title);
         titleText.setFont(subTitleFont);
+        titleText.setOpaque(false);
 
         JPanel titlePanel = new JPanel();
         titlePanel.setOpaque(false);
@@ -223,6 +224,7 @@ public class UIDesign {
         titlePanel.add(typePanel);
         titlePanel.add(titleText);
         titlePanel.setPreferredSize(new Dimension(300, 30));
+        titlePanel.setOpaque(false);
         return titlePanel;
     }
 

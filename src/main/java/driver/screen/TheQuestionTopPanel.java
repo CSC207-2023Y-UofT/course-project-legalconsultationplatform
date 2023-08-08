@@ -52,8 +52,17 @@ public class TheQuestionTopPanel extends JPanel{
 
         titleContainer.add(titlePanel);
         titleContainer.add(deadlineLine);
-        setSizeInLayout(titleContainer, new Dimension(360, 80));
+        setSizeInLayout(titleContainer, new Dimension(360, 50));
 
+        JPanel previousPosts = new JPanel();
+
+        JLabel label = new JLabel("Previous discussions");
+        UIDesign.setNameFont(label);
+        label.setForeground(whiteColor);
+        JPanel labelPanel = new JPanel();
+        labelPanel.setBackground(darkGreenColor);
+        setSizeInLayout(labelPanel, new Dimension(350, 30));
+        labelPanel.add(label);
 
         JPanel postScrollPanel = new JPanel();
         postScrollPanel.setLayout(new BoxLayout(postScrollPanel, BoxLayout.Y_AXIS));
@@ -82,26 +91,18 @@ public class TheQuestionTopPanel extends JPanel{
         setSizeInLayout(postScrollPane, new Dimension(350, 200));
         postScrollPane.setOpaque(false);
 
-        JPanel overallPosts = new JPanel();
-        JLabel label = new JLabel("Previous discussions");
-        setSizeInLayout(label, new Dimension(350, 30));
-        UIDesign.setNameFont(label);
-        label.setForeground(whiteColor);
-        JPanel labelPanel = new JPanel();
-        labelPanel.setBackground(darkGreenColor);
-        labelPanel.add(label);
-        overallPosts.setLayout(new BoxLayout(overallPosts, BoxLayout.Y_AXIS));
-        overallPosts.setAlignmentX(LEFT_ALIGNMENT);
-        overallPosts.add(labelPanel);
-        overallPosts.add(postScrollPane);
+        previousPosts.setLayout(new BoxLayout(previousPosts, BoxLayout.Y_AXIS));
+        setSizeInLayout(previousPosts, new Dimension(350, 250));
+        previousPosts.add(labelPanel);
+        previousPosts.add(postScrollPane);
 
         //Add everything into JPanel
         UIDesign.setBackgroundFrame(this);
         setBackground(lightGreenColor);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setSizeInLayout(this, new Dimension(360, 600));
+        setSizeInLayout(this, new Dimension(360, 500));
         add(helloMessage);
         add(titleContainer);
-        add(overallPosts);
+        add(postScrollPane);
     }
 }
