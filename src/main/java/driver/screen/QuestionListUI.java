@@ -73,10 +73,22 @@ public class QuestionListUI extends JPanel{
         //Home page button
         JButton homePage = new JButton("Home Page");
         UIDesign.setGeneralButton(homePage);
+        String stringId = Integer.toString(userId);
+        homePage.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                if (stringId.startsWith("1")) {
+                    cardLayout.show(screens, "AttorneyHomePageUI");
+                } else {
+                    cardLayout.show(screens, "ClientHomePageUI");
+                }
+            }
+        });
 
         //Add everything in the panel
+        this.add(homePage);
         this.add(helloMessage);
         this.add(questionScrollPane);
-        this.add(homePage);
+
     }
 }
