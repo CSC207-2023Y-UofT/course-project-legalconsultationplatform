@@ -24,7 +24,7 @@ public class AttorneyRepository extends UserRepository<Attorney> implements Atto
     public void clearAllRecommendations() {
         EntityManager em = DatabaseConnection.getEntityManager();
         EntityTransaction transaction = em.getTransaction();
-        List<Attorney> list = getAllAttorney();
+        List<Attorney> list = getAll();
         ArrayList<Question> emptyList = new ArrayList<>();
         try {
             transaction.begin();

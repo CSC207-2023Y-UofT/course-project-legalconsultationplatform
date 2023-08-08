@@ -11,8 +11,6 @@ public interface AttorneyGateway extends UserGateway<Attorney> {
     @Override
     Attorney get(int id);
 
-    public List<Attorney> getAllAttorney();
-
     public void clearAllRecommendations();
 
     public void addRecommendation (int Userid, Question question);

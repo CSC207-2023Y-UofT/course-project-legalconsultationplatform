@@ -1,12 +1,13 @@
 package attorneygetrecommendation;
 
+import adapter.controller.ViewQuestionControllerBase;
+import businessrule.inputboundary.ViewInputBoundary;
 import businessrule.responsemodel.ViewResponseModel;
 
-public class AttorneyRecommendControl {
-    private final RecommendInputBoundary recommendInputBoundary;
+public class AttorneyRecommendControl extends ViewQuestionControllerBase {
 
-    public AttorneyRecommendControl(RecommendInputBoundary recommendInputBoundary) {
-        this.recommendInputBoundary = recommendInputBoundary;
+    public AttorneyRecommendControl(ViewInputBoundary viewInputBoundary) {
+        super(viewInputBoundary);
     }
 
     public ViewResponseModel getMatching(int attorneyId) {

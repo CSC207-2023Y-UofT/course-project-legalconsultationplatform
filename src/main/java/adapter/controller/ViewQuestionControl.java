@@ -4,13 +4,14 @@ import businessrule.responsemodel.ViewResponseModel;
 import businessrule.inputboundary.ViewInputBoundary;
 import businessrule.requestmodel.ViewRequestModel;
 
-public class ViewQuestionControl extends ViewQuestionControllerBase{
+public class ViewQuestionControl{
+
+    private final ViewInputBoundary viewInputBoundary;
 
     public ViewQuestionControl(ViewInputBoundary viewInputBoundary) {
-        super(viewInputBoundary);
+        this.viewInputBoundary = viewInputBoundary;
     }
 
-    @Override
     public ViewResponseModel viewQuestion(int userId){
         ViewRequestModel viewRequestModel = new ViewRequestModel(userId);
         return viewInputBoundary.viewQuestion(viewRequestModel);

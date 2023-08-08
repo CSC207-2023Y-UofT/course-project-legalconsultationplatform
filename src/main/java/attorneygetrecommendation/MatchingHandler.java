@@ -50,15 +50,15 @@ public class MatchingHandler {
 
         // update
         for (Matching matching: matchingResult.getMatchingResult()){
-            Attorney attorney = (Attorney) attorneyGateway.getUser(matching.getAttorneyId());
-            Question question = questionGateway.getQuestion(matching.getQuestionId());
+            Attorney attorney = (Attorney) attorneyGateway.get(matching.getAttorneyId());
+            Question question = questionGateway.get(matching.getQuestionId());
             attorneyGateway.addRecommendation(matching.getAttorneyId(), question);
         }
     }
 
     public MatchingResult getMatching() throws IOException {
         List<Question> questionList = questionGateway.getNotTakenQuestion();
-        List<Attorney> attorneyList = attorneyGateway.getAllAttorney();
+        List<Attorney> attorneyList = attorneyGateway.getAll();
         Map<Integer[], Double> weights = constructWeight(questionList, attorneyList);
 
         List<Integer[]> matchingResult = pythonMatching(getQuestionIdList(questionList), getAttorneyIdList(attorneyList), weights);
@@ -93,7 +93,7 @@ public class MatchingHandler {
 
         // Loop over question and attorney list
         for (Question question: questionList) {
-            Client client = (Client) clientGateway.getUser(question.getAskedByClient());
+            Client client = (Client) clientGateway.get(question.getAskedByClient());
             for (Attorney attorney: attorneyList){
                 // initialize the array to store question, attorney id pair
                 Integer[] pair = new Integer[]{question.getQuestionId(), attorney.getUserId()};
