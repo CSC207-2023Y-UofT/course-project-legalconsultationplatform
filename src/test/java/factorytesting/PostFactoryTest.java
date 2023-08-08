@@ -3,7 +3,7 @@ package factorytesting;
 import static org.junit.jupiter.api.Assertions.*;
 
 import entity.Post;
-import entity.PostFactory;
+import entity.factory.PostFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

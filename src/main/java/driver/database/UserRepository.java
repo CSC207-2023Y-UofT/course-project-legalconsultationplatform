@@ -1,89 +1,39 @@
 package driver.database;
 
+import businessrule.gateway.UserGateway;
 import entity.Question;
 import entity.User;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
+import javax.jdo.JDOHelper;
+import java.util.List;
 
+public class UserRepository<T extends User> extends GenericRepository<T> implements UserGateway<T> {
 
-abstract class UserRepository implements UserGateway{
-
-    @Override
-    public boolean existsById(int userId) {
-        EntityManager entityManager = DatabaseConnection.getEntityManager();
-        try {
-            User exists = entityManager.find(User.class, userId);
-            return (exists != null);
-        } finally {
-            entityManager.close();
-        }
+    public UserRepository(Class<T> entityType) {
+        super(entityType);
     }
 
     @Override
-    public User getUser(int userId) {
-        EntityManager entityManager = DatabaseConnection.getEntityManager();
-        try {
-            return entityManager.find(User.class, userId);
-        } finally {
-            entityManager.close();
-        }
+    public boolean existsByName(String inputUserName) {
+        return executeTransactionWithResult(entityManager -> {
+            List<T> users = entityManager.createQuery("SELECT u FROM " + entityType.getSimpleName() +
+                    " u WHERE u.name =: name", entityType).setParameter("name", inputUserName).getResultList();
+            return !users.isEmpty();
+        });
     }
 
     @Override
-    public void updateQuestionList(int userId, Question question) {
-        EntityManager entityManager = DatabaseConnection.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        User user = getUser(userId);
-        try {
-            transaction.begin();
-            user.addQuestion(question);
-            // makeDirty(user, "questionsList");
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction.isActive()) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            entityManager.close();
-        }
+    public void updateQuestionList(int id, Question question) {
+        executeTransaction(entityManager -> {
+            User u = entityManager.find(entityType, id);
+            u.addQuestion(question);
+            JDOHelper.makeDirty(u, "questionsList");
+        });
     }
 
     @Override
-    public void addUser(User user) {
-        EntityManager entityManager = DatabaseConnection.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        try {
-            transaction.begin();
-            entityManager.persist(user);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction.isActive()) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            entityManager.close();
-        }
-    }
-
-    @Override
-    public void deleteUser(int userId) {
-        EntityManager em = DatabaseConnection.getEntityManager();
-        try {
-            em.getTransaction().begin();
-            User user = em.find(User.class, userId);
-            em.remove(user);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            em.close();
-        }
+    public User get(int id) {
+        return (User) super.get(id);
     }
 
 }

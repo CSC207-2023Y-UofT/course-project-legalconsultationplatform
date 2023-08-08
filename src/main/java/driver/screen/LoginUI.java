@@ -8,8 +8,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-
+import java.rmi.server.UID;
 
 
 /**
@@ -25,43 +24,43 @@ public class LoginUI extends JPanel implements ActionListener{
     public LoginUI(ControlContainer controlContainer) {
 
         this.controlContainer = controlContainer;
-        setBackground(UIDesign.backgroundColor);
-
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        UIDesign.setBackgroundFrame(this);
+        setLayout(new GridBagLayout());
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.gridx = 0;
+        gbc.gridy = GridBagConstraints.RELATIVE;
+        gbc.anchor = GridBagConstraints.WEST;
+        gbc.insets = new Insets(5, 5, 5, 5); // Padding around each component
 
         // Create the title label
         JLabel title = new JLabel("Log In");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        UIDesign.setTitleFont(title);
         int topMargin = 30;
         int leftMargin = 0;
         int bottomMargin = 0;
         int rightMargin = 0;
         title.setBorder(new EmptyBorder(topMargin, leftMargin, bottomMargin, rightMargin));
-        add(title);
+        add(title, gbc);
 
         // Add some vertical glue between the title, userId, and password
-        add(Box.createVerticalGlue());
 
-        // Add userId panel
-        LabelTextPanel userIdInfo = new LabelTextPanel(new JLabel("UserId"), userId);
-        add(userIdInfo);
+        gbc.gridx = 0; // Set the gridx to 0 to place components under the title
 
-        // Add some vertical glue between userId and password
-        add(Box.createVerticalGlue());
+        LabelTextPanel userIdPanel = new LabelTextPanel(new JLabel("User Id"), userId);
+        add(userIdPanel, gbc);
 
-        // Add password panel
-        LabelTextPanel passwordInfo = new LabelTextPanel(new JLabel("Password"), password);
-        add(passwordInfo);
+        LabelTextPanel passwordPanel = new LabelTextPanel(new JLabel("Password"), password);
+        add(passwordPanel, gbc);
 
-        // Add some vertical glue between password and the login button
-        add(Box.createVerticalGlue());
-
-        // Add the login button
-        JButton login = new JButton("Login");
+        JButton buttonToSubmit = new JButton("Login");
+        UIDesign.setButton(buttonToSubmit);
         JPanel buttons = new JPanel();
-        buttons.add(login);
-        login.addActionListener(this);
-        add(buttons);
+        buttons.setBackground(UIDesign.lightGreenColor);
+        buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS)); // Use X_AXIS for horizontal alignment
+        buttons.add(buttonToSubmit);
+        buttonToSubmit.addActionListener(this);
+        add(buttons, gbc);
 
     }
     @Override

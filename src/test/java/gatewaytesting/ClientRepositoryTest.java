@@ -15,7 +15,6 @@ import javax.persistence.EntityManager;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -52,8 +51,8 @@ public class ClientRepositoryTest {
 
         ClientRepository repo = new ClientRepository();
 
-        repo.deleteAllUser();
-        repo.addUser(c);
+        repo.deleteAll();
+        repo.save(c);
 
         //Attorney
         String attorneyUsername = "yao";
@@ -67,8 +66,8 @@ public class ClientRepositoryTest {
 
         AttorneyRepository aRepo = new AttorneyRepository();
 
-        aRepo.deleteAllUser();
-        aRepo.addUser(a);
+        aRepo.deleteAll();
+        aRepo.save(a);
 
         //Question
         String type = "Theft";
@@ -82,10 +81,10 @@ public class ClientRepositoryTest {
 
         QuestionRepo qRepo = new QuestionRepo();
 
-        qRepo.deleteAllQuestion();
-        qRepo.saveQuestion(q);
-        qRepo.saveQuestion(q1);
-        qRepo.saveQuestion(q2);
+        qRepo.deleteAll();
+        qRepo.save(q);
+        qRepo.save(q1);
+        qRepo.save(q2);
     }
 
     @Test
@@ -107,26 +106,14 @@ public class ClientRepositoryTest {
     }
 
     @Test
-    public void getAllQuestionById() {
-        ClientRepository repo = new ClientRepository();
-        QuestionRepo qRepo = new QuestionRepo();
-        //set up
-        List<Question> expectedList = new ArrayList<>();
-        expectedList.add(qRepo.getQuestion(QUESTION_ID));
-        expectedList.add(qRepo.getQuestion(QUESTION_ID2));
-        //test get all Post by Question
-        assert expectedList.equals(repo.getAllQuestionById(CLIENT_ID));
-    }
-
-    @Test
     public void testUpdateQuestionList() {
         ClientRepository repo = new ClientRepository();
         QuestionRepo qRepo = new QuestionRepo();
         //test updating list
-        repo.updateQuestionList(CLIENT_ID, qRepo.getQuestion(QUESTION_ID));
+        repo.updateQuestionList(CLIENT_ID, qRepo.get(QUESTION_ID));
         ArrayList<Question> expectedList = new ArrayList<>();
-        expectedList.add(qRepo.getQuestion(QUESTION_ID));
-        assert expectedList.equals(repo.getUser(CLIENT_ID).getQuestionsList());
+        expectedList.add(qRepo.get(QUESTION_ID));
+        assert expectedList.equals(repo.get(CLIENT_ID).getQuestionsList());
     }
 
     @AfterAll
@@ -134,9 +121,9 @@ public class ClientRepositoryTest {
         ClientRepository repo = new ClientRepository();
         AttorneyRepository aRepo = new AttorneyRepository();
         QuestionRepo qRepo = new QuestionRepo();
-        repo.deleteAllUser();
-        aRepo.deleteAllUser();
-        qRepo.deleteAllQuestion();
+        repo.deleteAll();
+        aRepo.deleteAll();
+        qRepo.deleteAll();
     }
 
     @Test
@@ -159,11 +146,11 @@ public class ClientRepositoryTest {
                 clientEthnicity, clientAge, clientGender, clientMaritalStatus, clientNumHouseHold, clientAnnualIncome);
         ClientRepository repo = new ClientRepository();
         //set up
-        repo.deleteAllUser();
-        repo.addUser(c);
+        repo.deleteAll();
+        repo.save(c);
 
         //test getting the correct client
-        assertEquals(c, repo.getUser(100), "That is not the correct client!");
+        assertEquals(c, repo.get(100), "That is not the correct client!");
     }
 
     @Test
@@ -186,10 +173,10 @@ public class ClientRepositoryTest {
                 clientEthnicity, clientAge, clientGender, clientMaritalStatus, clientNumHouseHold, clientAnnualIncome);
         ClientRepository repo = new ClientRepository();
         //set up
-        repo.deleteAllUser();
+        repo.deleteAll();
 
         //test adding a client into the database
-        repo.addUser(c);
+        repo.save(c);
         assertTrue(repo.existsById(100), "The client is not added!");
     }
 
@@ -213,16 +200,16 @@ public class ClientRepositoryTest {
                 clientEthnicity, clientAge, clientGender, clientMaritalStatus, clientNumHouseHold, clientAnnualIncome);
         ClientRepository repo = new ClientRepository();
         //set up
-        repo.deleteAllUser();
-        repo.addUser(c);
+        repo.deleteAll();
+        repo.save(c);
 
         //test delete an existing client from the database
         assertTrue(repo.existsById(clientId), "The client was not added!");
-        repo.deleteUser(clientId);
+        repo.delete(clientId);
         assertFalse(repo.existsById(clientId), "The client is still in the database!");
 
         //recover
-        repo.addUser(c);
+        repo.save(c);
     }
 
     @Test
@@ -251,35 +238,35 @@ public class ClientRepositoryTest {
         ClientRepository repo = new ClientRepository();
         AttorneyRepository attorneyRepo = new AttorneyRepository();
         //set up
-        repo.deleteAllUser();
-        attorneyRepo.deleteAllUser();
-        repo.addUser(c);
-        repo.addUser(c1);
-        attorneyRepo.addUser(a);
+        repo.deleteAll();
+        attorneyRepo.deleteAll();
+        repo.save(c);
+        repo.save(c1);
+        attorneyRepo.save(a);
 
         //test remove two users
-        repo.deleteAllUser();
+        repo.deleteAll();
         assertFalse(repo.existsById(clientId), "Client c has not been removed!");
         assertFalse(repo.existsById(clientId2), "Client c1 has not been removed!");
 
         //set up
-        repo.addUser(c);
-        repo.addUser(c1);
+        repo.save(c);
+        repo.save(c1);
         EntityManager em = DatabaseConnection.getEntityManager();
 
         //test remove all client
-        repo.deleteAllUser();
+        repo.deleteAll();
         Long count = em.createQuery("SELECT COUNT(c) FROM Client c", Long.class).getSingleResult();
         assertEquals(0, count, "The database still has saved client objects!");
         //test attorney a still in database
         assertTrue(attorneyRepo.existsById(150), "Attorney a is no longer in the database");
         //test remove empty
-        repo.deleteAllUser();
+        repo.deleteAll();
         assertEquals(0, count, "The database still has saved client objects!");
 
         //recover
-        repo.addUser(c);
-        repo.addUser(c1);
+        repo.save(c);
+        repo.save(c1);
     }
 
 }

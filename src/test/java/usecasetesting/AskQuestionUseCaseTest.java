@@ -1,7 +1,9 @@
 package usecasetesting;
 
+import adapter.controller.ControlContainer;
 import businessrule.gateway.AttorneyGateway;
 import businessrule.gateway.ClientGateway;
+import businessrule.gateway.QuestionGateway;
 import businessrule.inputboundary.QuestionInputBoundary;
 import businessrule.outputboundary.TheQuestionOutputBoundary;
 import businessrule.requestmodel.QuestionRequestModel;
@@ -10,16 +12,18 @@ import businessrule.usecase.AskQuestionInteractor;
 
 import driver.database.*;
 import entity.*;
+import entity.factory.QuestionFactory;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 ;
 
 public class AskQuestionUseCaseTest {
-    final static int CLIENT_ID = 11345678;
-    final static int ATTORNEY_ID = 21345678;
-    final static int SECOND_ATTORNEY_ID = 22222222;
+    final static int CLIENT_ID = 21345678;
+    final static int ATTORNEY_ID = 11345678;
+    final static int SECOND_ATTORNEY_ID = 12222222;
     private QuestionGateway questionGateway;
     private QuestionFactory questionFactory;
     private ClientGateway clientGateway;
@@ -34,6 +38,11 @@ public class AskQuestionUseCaseTest {
         attorneyGateway = new AttorneyRepository();
         theQuestionOutputBoundary = new TheQuestionOutputBoundary() {
             @Override
+            public void setControlContainer(ControlContainer controlContainer) {
+
+            }
+
+            @Override
             public TheQuestionResponseModel prepareFail(String msg) {
                 assertEquals("Please specify your question type.", msg);
                 return null;
@@ -41,6 +50,7 @@ public class AskQuestionUseCaseTest {
 
             @Override
             public TheQuestionResponseModel prepareSuccess(TheQuestionResponseModel response) {
+                assertEquals(0, response.getPostMap().size(), "PostMap is not correct");
                 return null;
             }
         };
@@ -49,15 +59,15 @@ public class AskQuestionUseCaseTest {
 
         Client client = new Client();
         client.setUserId(CLIENT_ID);
-        clientGateway.addUser(client);
+        clientGateway.save(client);
 
         Attorney attorney = new Attorney();
         attorney.setUserId(ATTORNEY_ID);
-        attorneyGateway.addUser(attorney);
+        attorneyGateway.save(attorney);
 
         Attorney secondAttorney = new Attorney();
         attorney.setUserId(SECOND_ATTORNEY_ID);
-        attorneyGateway.addUser(secondAttorney);
+        attorneyGateway.save(secondAttorney);
     }
 
     @Test
@@ -67,6 +77,10 @@ public class AskQuestionUseCaseTest {
         QuestionRequestModel inputData = new QuestionRequestModel("fraud", "Test title", LocalDate.now(), CLIENT_ID, LocalDate.now());
 
         questionInputBoundary.createQuestion(inputData);
+
+        User user = clientGateway.get(CLIENT_ID);
+        assertEquals(1, user.getQuestionsList().size(), "The ask question use case failed.");
+        ClearAllRepository();
     }
 
     @Test
@@ -76,5 +90,18 @@ public class AskQuestionUseCaseTest {
         QuestionRequestModel inputData = new QuestionRequestModel(null, "Test title", LocalDate.now(), CLIENT_ID, LocalDate.now());
 
         questionInputBoundary.createQuestion(inputData);
+
+        User user = clientGateway.get(CLIENT_ID);
+        assertEquals(0, user.getQuestionsList().size(), "The ask question use case failed.");
+        ClearAllRepository();
+    }
+
+    public void ClearAllRepository(){
+        questionGateway = new QuestionRepo();
+        clientGateway = new ClientRepository();
+        attorneyGateway = new AttorneyRepository();
+        clientGateway.deleteAll();
+        questionGateway.deleteAll();
+        attorneyGateway.deleteAll();
     }
 }

@@ -1,15 +1,13 @@
 package driver.screen;
 
-import adapter.controller.BrowseQuestionControl;
 import adapter.controller.ControlContainer;
 import adapter.controller.ViewQuestionControl;
-import businessrule.usecase.QuestionDisplayFormatter;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Map;
 
 public class AttorneyHomePageUI extends JPanel implements ActionListener {
     ControlContainer controlContainer;
@@ -24,19 +22,36 @@ public class AttorneyHomePageUI extends JPanel implements ActionListener {
         this.userName = userName;
         this.cardLayout = cardLayout;
         this.screens = screens;
+
+        UIDesign.setBackgroundFrame(this);
         //The title
         JLabel title = new JLabel("Home Page");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        UIDesign.setTitleFont(title);
+
+        int topMargin = 50;
+        int leftMargin = 0;
+        int bottomMargin = 0;
+        int rightMargin = 0;
+        title.setBorder(new EmptyBorder(topMargin, leftMargin, bottomMargin, rightMargin));
 
         //The userName and userId
         String helloMessageString = "Hello, " + userName + "(" + userId + ")";
         JLabel helloMessage = new JLabel(helloMessageString);
+        helloMessage.setBorder(new EmptyBorder(0,0,30,0));
 
         //The three buttons
         JPanel buttons = new JPanel();
+        buttons.setBackground(UIDesign.lightGreenColor);
         JButton browseQuestions = new JButton("Browse available questions");
+        browseQuestions.setBorder(new EmptyBorder(0,0,20,0));
         JButton viewQuestionHistory = new JButton("View question history");
+        viewQuestionHistory.setBorder(new EmptyBorder(0,0,20,0));
         JButton recommendation = new JButton("Recommended questions");
+
+        UIDesign.setHomePageButton(browseQuestions);
+        UIDesign.setHomePageButton(viewQuestionHistory);
+        UIDesign.setHomePageButton(recommendation);
 
         buttons.add(browseQuestions);
         buttons.add(viewQuestionHistory);
@@ -56,8 +71,8 @@ public class AttorneyHomePageUI extends JPanel implements ActionListener {
         String actionCommand = e.getActionCommand();
         if ("Browse available questions".equals(actionCommand)){
             System.out.println("Attorney chooses browse available questions.");
-            BrowseQuestionControl browseQuestionControl = controlContainer.getBrowseQuestionControl();
-            browseQuestionControl.browseQuestion(userId);
+            // BrowseQuestionControl browseQuestionControl = controlContainer.getBrowseQuestionControl();
+            // browseQuestionControl.browseQuestion(userId);
         } else if ("View question history".equals(actionCommand)){
             System.out.println("Attorney chooses view question history.");
             ViewQuestionControl viewQuestionControl = controlContainer.getViewQuestionControl();

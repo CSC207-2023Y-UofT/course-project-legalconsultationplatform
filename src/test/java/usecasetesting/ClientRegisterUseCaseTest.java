@@ -1,31 +1,21 @@
 package usecasetesting;
 
+import adapter.controller.ControlContainer;
 import businessrule.gateway.ClientGateway;
-import businessrule.gateway.UserGatewayFactory;
 import businessrule.inputboundary.ClientRegisterInputBoundary;
-import businessrule.inputboundary.UserLoginInputBoundary;
-import businessrule.outputboundary.HomePageOutputBoundary;
 import businessrule.outputboundary.RegisterOutputBoundary;
 import businessrule.requestmodel.ClientRegisterRequestModel;
-import businessrule.responsemodel.HomePageResponseModel;
 import businessrule.responsemodel.RegisterResponseModel;
 import businessrule.usecase.ClientRegisterInteractor;
-import businessrule.usecase.UserLoginInteractor;
 import driver.database.ClientRepository;
-import entity.Client;
-import entity.ClientFactory;
-import org.junit.BeforeClass;
+import entity.factory.ClientFactory;
 import org.junit.jupiter.api.Test;
 
-import java.sql.SQLOutput;
-import java.time.LocalDate;
-
 import static org.junit.Assert.fail;
-import static org.junit.jupiter.api.Assertions.*;
 ;
 
 public class ClientRegisterUseCaseTest {
-    final static String PASSWORD = "abcdefg";
+    final static String PASSWORD = "abcdefghi";
     private ClientFactory clientFactory;
     private ClientGateway clientGateway;
     private RegisterOutputBoundary registerOutputBoundary;
@@ -34,6 +24,11 @@ public class ClientRegisterUseCaseTest {
         clientGateway = new ClientRepository();
         clientFactory = new ClientFactory();
         registerOutputBoundary = new RegisterOutputBoundary() {
+            @Override
+            public void setControlContainer(ControlContainer controlContainer) {
+
+            }
+
             @Override
             public RegisterResponseModel prepareSuccess(String msg) {
                 System.out.println(msg);
@@ -55,17 +50,16 @@ public class ClientRegisterUseCaseTest {
     public void TestSuccessfulRegistration(){
         setUpClientRegisterUseCase();
 
-        ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "test@gmail.com", PASSWORD, PASSWORD, "test state", "M5A 1R1", "test ethinicity", 18, "male", "single", 1, 1000.0F);
+        ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "test@gmail.com", PASSWORD, PASSWORD, "test state", "21000", "test ethinicity", 18, "male", "single", 1, 1000.0F);
 
         clientRegisterInputBoundary.create(inputData);
-
     }
 
     @Test
     public void TestRegistrationFailByAlreadyExists(){
         setUpClientRegisterUseCase();
 
-        ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "test@gmail.com", PASSWORD, PASSWORD, "test state", "M5A 1R1", "test ethinicity", 18, "male", "single", 1, 1000.0F);
+        ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "test@gmail.com", PASSWORD, PASSWORD, "test state", "21000", "test ethinicity", 18, "male", "single", 1, 1000.0F);
 
         clientRegisterInputBoundary.create(inputData);
 
@@ -75,7 +69,7 @@ public class ClientRegisterUseCaseTest {
     public void TestRegistrationFailByPasswordDoesNotMatch(){
         setUpClientRegisterUseCase();
 
-        ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "test@gmail.com", PASSWORD, "a", "test state", "M5A 1R1", "test ethinicity", 18, "male", "single", 1, 1000.0F);
+        ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "test@gmail.com", PASSWORD, "a", "test state", "21000", "test ethinicity", 18, "male", "single", 1, 1000.0F);
 
         clientRegisterInputBoundary.create(inputData);
 
@@ -84,7 +78,7 @@ public class ClientRegisterUseCaseTest {
     public void TestRegistrationFailByPasswordLengthTooSmall(){
         setUpClientRegisterUseCase();
 
-        ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "test@gmail.com", "a", "a", "test state", "M5A 1R1", "test ethinicity", 18, "male", "single", 1, 1000.0F);
+        ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "test@gmail.com", "a", "a", "test state", "21000", "test ethinicity", 18, "male", "single", 1, 1000.0F);
 
         clientRegisterInputBoundary.create(inputData);
 
@@ -94,20 +88,20 @@ public class ClientRegisterUseCaseTest {
     public void TestRegistrationFailByInvalidEmail(){
         setUpClientRegisterUseCase();
 
-        ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "invalid email", PASSWORD, PASSWORD, "test state", "M5A 1R1", "test ethinicity", 18, "male", "single", 1, 1000.0F);
+        ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "invalid email", PASSWORD, PASSWORD, "test state", "21000", "test ethinicity", 18, "male", "single", 1, 1000.0F);
 
         clientRegisterInputBoundary.create(inputData);
-
+        ClearAllRepository();
     }
 
     @Test
     public void TestRegistrationFailByInvalidAge(){
         setUpClientRegisterUseCase();
 
-        ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "test@gmail.com", PASSWORD, PASSWORD, "test state", "M5A 1R1", "test ethinicity", 222, "male", "single", 1, 1000.0F);
+        ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "test@gmail.com", PASSWORD, PASSWORD, "test state", "21000", "test ethinicity", 222, "male", "single", 1, 1000.0F);
 
         clientRegisterInputBoundary.create(inputData);
-
+        ClearAllRepository();
     }
 
     @Test
@@ -117,6 +111,11 @@ public class ClientRegisterUseCaseTest {
         ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "test@gmail.com", PASSWORD, PASSWORD, "test state", "abcdefg", "test ethinicity", 18, "male", "single", 1, 1000.0F);
 
         clientRegisterInputBoundary.create(inputData);
+        ClearAllRepository();
+    }
 
+    public void ClearAllRepository(){
+        clientGateway = new ClientRepository();
+        clientGateway.deleteAll();;
     }
 }

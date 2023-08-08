@@ -2,9 +2,7 @@ package gatewaytesting;
 
 import driver.database.DatabaseConnection;
 import driver.database.PostRepo;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import entity.Post;
 
 import javax.persistence.EntityManager;
@@ -20,8 +18,8 @@ public class PostRepoTest {
     //Question
     final static int QUESTION_ID = 10;
 
-    @BeforeAll
-    public static void setUp() {
+    @BeforeEach
+    public void setUp() {
         LocalDate createdAt = LocalDate.now();
         String postText = "hello!";
         int belongsTo = 100;
@@ -31,8 +29,8 @@ public class PostRepoTest {
         PostRepo repo = new PostRepo();
 
         //set up
-        repo.deleteAllPost();
-        repo.savePost(p);
+        repo.deleteAll();
+        repo.save(p);
     }
 
     @Test
@@ -44,11 +42,6 @@ public class PostRepoTest {
         assertFalse(repo.existsById(15), "The id exists!");
     }
 
-    @AfterAll
-    public static void tearDown() {
-        PostRepo repo = new PostRepo();
-        repo.deleteAllPost();
-    }
 
     @Test
     public void testSavePost() {
@@ -63,10 +56,10 @@ public class PostRepoTest {
         PostRepo repo = new PostRepo();
 
         //set up
-        repo.deleteAllPost();
+        repo.deleteAll();
 
         //test saving a post into the database
-        repo.savePost(p);
+        repo.save(p);
         assertTrue(repo.existsById(postId), "Post is not saved into the database!");
     }
 
@@ -83,11 +76,11 @@ public class PostRepoTest {
         PostRepo repo = new PostRepo();
 
         //set up
-        repo.deleteAllPost();
-        repo.savePost(p);
+        repo.deleteAll();
+        repo.save(p);
 
         //test getting the correct post
-        assertEquals(p, repo.getPost(postId), "That is not the correct post!");
+        assertEquals(p, repo.get(postId), "That is not the correct post!");
     }
 
     @Test
@@ -103,12 +96,12 @@ public class PostRepoTest {
         PostRepo repo = new PostRepo();
 
         //set up
-        repo.deleteAllPost();
-        repo.savePost(p);
+        repo.deleteAll();
+        repo.save(p);
 
         //test deleting an existing client from the database
         assertTrue(repo.existsById(postId), "The post was not added!");
-        repo.deletePost(postId);
+        repo.delete(postId);
         assertFalse(repo.existsById(postId), "the post was not deleted!");
     }
 
@@ -125,14 +118,19 @@ public class PostRepoTest {
         PostRepo repo = new PostRepo();
 
         //set up
-        repo.deleteAllPost();
-        repo.savePost(p);
+        repo.deleteAll();
+        repo.save(p);
         EntityManager em = DatabaseConnection.getEntityManager();
 
         //test remove all posts
-        repo.deleteAllPost();
+        repo.deleteAll();
         Long count = em.createQuery("SELECT COUNT(p) FROM Post p", Long.class).getSingleResult();
         assertEquals(0, count, "The database still have saved post objects!");
     }
 
+    @AfterEach
+    public void tearDown() {
+        PostRepo repo = new PostRepo();
+        repo.deleteAll();
+    }
 }

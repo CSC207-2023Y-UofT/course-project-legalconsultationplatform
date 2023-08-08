@@ -2,7 +2,7 @@ package factorytesting;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import entity.CredentialChecker;
+import businessrule.usecase.util.CredentialChecker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

@@ -1,6 +1,7 @@
 package businessrule.usecase;
 
-import businessrule.gateway.UserGatewayFactory;
+import businessrule.usecase.util.PostDisplayFormatter;
+import businessrule.usecase.util.RandomNumberGenerator;
 import entity.*;
 import businessrule.inputboundary.QuestionInputBoundary;
 import businessrule.requestmodel.QuestionRequestModel;
@@ -8,6 +9,7 @@ import businessrule.gateway.ClientGateway;
 import businessrule.gateway.QuestionGateway;
 import businessrule.outputboundary.TheQuestionOutputBoundary;
 import businessrule.responsemodel.TheQuestionResponseModel;
+import entity.factory.QuestionFactory;
 
 import java.time.LocalDate;
 import java.util.HashMap;
@@ -47,14 +49,14 @@ public class AskQuestionInteractor implements QuestionInputBoundary {
         // create question entity
         LocalDate now = LocalDate.now();
         int askedByClient = questionRequestModel.getAskedByClient();
-        Client askedBy = (Client) clientGateway.getUser(askedByClient);
+        Client askedBy = (Client) clientGateway.get(askedByClient);
         Question question = questionFactory.create(randomQuestionId, questionRequestModel.getQuestionCategory(), questionRequestModel.getTitle(), now, askedByClient, questionRequestModel.getLegalDeadline());
-        questionGateway.saveQuestion(question);
+        questionGateway.save(question);
         clientGateway.updateQuestionList(questionRequestModel.getAskedByClient(), question);
 
         // construct response model
         Map<Integer, PostDisplayFormatter> postMap = new HashMap<>();
-        TheQuestionResponseModel theQuestionResponseModel = new TheQuestionResponseModel(questionRequestModel.getAskedByClient(), question.getQuestionId(), askedBy.getUserName(), question.getTitle(), question.getType(), question.getLegalDeadline(), postMap);
+        TheQuestionResponseModel theQuestionResponseModel = new TheQuestionResponseModel(questionRequestModel.getAskedByClient(), question.getQuestionId(), askedBy.getUserName(), question.getTitle(), question.getType(), question.getLegalDeadline(),false, postMap);
         return theQuestionOutputBoundary.prepareSuccess(theQuestionResponseModel);
     }
 }

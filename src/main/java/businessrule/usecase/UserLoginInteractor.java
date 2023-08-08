@@ -11,38 +11,22 @@ import driver.screen.ApplicationException;
 
 import java.time.LocalDateTime;
 
-/**
- * This class represents the interactor for the user login use case.
- */
-public class UserLoginInteractor implements UserLoginInputBoundary {
+public class UserLoginInteractor implements UserLoginInputBoundary{
+    final UserGatewayFactory userGatewayFactory;
+    final HomePageOutputBoundary outputBoundary;
 
-    private final UserGatewayFactory userGatewayFactory;
-    private final HomePageOutputBoundary outputBoundary;
-
-    /**
-     * Constructs a UserLoginInteractor with the given dependencies.
-     *
-     * @param userGatewayFactory Factory to create UserGateway instances.
-     * @param outputBoundary     Output boundary for the home page.
-     */
     public UserLoginInteractor(UserGatewayFactory userGatewayFactory, HomePageOutputBoundary outputBoundary) {
         this.userGatewayFactory = userGatewayFactory;
         this.outputBoundary = outputBoundary;
     }
 
-    /**
-     * Attempts to log in a user using the provided login credentials.
-     *
-     * @param requestModel The login request model containing user credentials.
-     * @return A response model indicating the login status and user information.
-     */
     @Override
     public HomePageResponseModel login(UserLoginRequestModel requestModel) {
-        // Get input data
+        // get input data
         int inputUserId = requestModel.getUserId();
         String inputPassword = requestModel.getPassword();
 
-        // Use user gateway factory to retrieve the correct type of repository
+        // use user gateway factory to retrieve the correct type of repo
         UserGateway userGateway;
         try {
             userGateway = userGatewayFactory.createUserGateway(inputUserId);
@@ -50,26 +34,26 @@ public class UserLoginInteractor implements UserLoginInputBoundary {
             return outputBoundary.prepareFail("User ID does not exist");
         }
 
-        // Handle login logic
+        // handle login logic
         if (!userGateway.existsById(inputUserId)) {
             return outputBoundary.prepareFail("User ID does not exist");
         }
-        User filedUser = userGateway.getUser(inputUserId);
+        User filedUser = userGateway.get(inputUserId);
         String filedPassword = filedUser.getPassword();
         if (!inputPassword.equals(filedPassword)) {
             return outputBoundary.prepareFail("Password is incorrect");
         }
 
-        // Construct response model
+        // construct response model
         String userType;
-        User user = userGateway.getUser(inputUserId);
-        if (user.isClient()) {
+        User user = userGateway.get(inputUserId);
+        if (user.isClient()){
             userType = "Client";
-        } else {
+        } else{
             userType = "Attorney";
         }
         HomePageResponseModel accountResponseModel = new HomePageResponseModel(inputUserId,
-                userGateway.getUser(inputUserId).getUserName(), userType);
+                userGateway.get(inputUserId).getUserName(), userType);
         return outputBoundary.prepareSuccess(accountResponseModel);
     }
 }
