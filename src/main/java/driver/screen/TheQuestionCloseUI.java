@@ -2,7 +2,7 @@ package driver.screen;
 
 import adapter.controller.ControlContainer;
 import adapter.controller.RateControl;
-import businessrule.usecase.PostDisplayFormatter;
+import businessrule.usecase.util.PostDisplayFormatter;
 
 import javax.swing.*;
 import java.awt.*;
@@ -30,8 +30,8 @@ public class TheQuestionCloseUI extends JPanel implements ActionListener {
     JComboBox<String> rate;
 
     public TheQuestionCloseUI(ControlContainer controlContainer, CardLayout cardLayout,
-                             JPanel screens, int userId, String userName, int questionId, String title,
-                             String type, LocalDate deadline, Map<Integer, PostDisplayFormatter> postMap) {
+                              JPanel screens, int userId, String userName, int questionId, String title,
+                              String type, LocalDate deadline, Map<Integer, PostDisplayFormatter> postMap) {
         this.controlContainer = controlContainer;
         this.cardLayout = cardLayout;
         this.screens = screens;

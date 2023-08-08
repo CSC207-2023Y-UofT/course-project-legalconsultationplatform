@@ -71,8 +71,8 @@ public class AttorneyHomePageUI extends JPanel implements ActionListener {
         String actionCommand = e.getActionCommand();
         if ("Browse available questions".equals(actionCommand)){
             System.out.println("Attorney chooses browse available questions.");
-            // BrowseQuestionControl browseQuestionControl = controlContainer.getBrowseQuestionControl();
-            // browseQuestionControl.browseQuestion(userId);
+            ViewQuestionControl browseQuestionControl = controlContainer.getBrowseQuestionControl();
+            browseQuestionControl.viewQuestion(userId);
         } else if ("View question history".equals(actionCommand)){
             System.out.println("Attorney chooses view question history.");
             ViewQuestionControl viewQuestionControl = controlContainer.getViewQuestionControl();

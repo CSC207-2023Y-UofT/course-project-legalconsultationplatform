@@ -4,7 +4,7 @@ import adapter.controller.CloseQuestionControl;
 import adapter.controller.ControlContainer;
 import adapter.controller.PostControl;
 import adapter.controller.RateControl;
-import businessrule.usecase.PostDisplayFormatter;
+import businessrule.usecase.util.PostDisplayFormatter;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;

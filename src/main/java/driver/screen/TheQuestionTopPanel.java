@@ -1,6 +1,6 @@
 package driver.screen;
 
-import businessrule.usecase.PostDisplayFormatter;
+import businessrule.usecase.util.PostDisplayFormatter;
 
 import javax.swing.*;
 import java.awt.*;
