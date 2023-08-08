@@ -1,6 +1,7 @@
 package entity;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import java.time.LocalDate;
@@ -24,10 +25,11 @@ public class Attorney implements User {
     private String password;
     private String stateAbb;
     private String postalCode;
-    @OneToMany
+    @OneToMany(targetEntity = Question.class, fetch = FetchType.EAGER)
     private List<Question> questionsList;
 
     public Attorney() {
+        questionsList = new ArrayList<Question>();
     }
 
     public Attorney(int userId, String name, String email, String password, String stateAbb, String postalCode) {
@@ -82,9 +84,6 @@ public class Attorney implements User {
 
     @Override
     public void addQuestion(Question question) {
-        if (questionsList == null) {
-            questionsList = new ArrayList<>();
-        }
         if (! questionsList.contains(question)) {
             questionsList.add(question);
         }
@@ -130,11 +129,13 @@ public class Attorney implements User {
                 question.setTaken(true);
                 question.setTakenByAttorney(userId);
                 question.setTakenAt(LocalDate.now());
+                addQuestion(question);
                 return true;
             }
         }
         return false;
     }
+
 
     @Override
     public boolean equals(Object obj) {

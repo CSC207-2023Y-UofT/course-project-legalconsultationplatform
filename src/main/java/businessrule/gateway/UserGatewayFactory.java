@@ -5,9 +5,7 @@ import driver.database.ClientRepository;
 import driver.database.UserGateway;
 
 import screen.ApplicationException;
-/**
- * This class represents a factory for creating instances of the "UserGateway" interface based on the given user ID.
- */
+
 public class UserGatewayFactory {
 
     public UserGateway createUserGateway(int userId) {

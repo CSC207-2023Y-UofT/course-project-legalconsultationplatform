@@ -5,8 +5,8 @@ import businessrule.inputboundary.RateInputBoundary;
 import businessrule.outputboundary.HomePageOutputBoundary;
 import businessrule.requestmodel.RateRequestModel;
 import businessrule.responsemodel.HomePageResponseModel;
-import driver.database.QuestionGateway;
-import driver.database.UserGateway;
+import businessrule.gateway.QuestionGateway;
+import businessrule.gateway.UserGateway;
 import entity.Question;
 import entity.User;
 
@@ -35,10 +35,15 @@ public class RateInteractor implements RateInputBoundary {
         User user = userGateway.getUser(userId);
 
         Question answer = questionGateway.getQuestion(answerId);
-
+        String userType;
         if (user.isQuestionRateable(answer)) {
             questionGateway.updateRating(answerId, rating);
-            HomePageResponseModel homePageResponseModel = new HomePageResponseModel(userId, user.getUserName());
+            if (user.isClient()){
+                userType = "Client";
+            } else {
+                userType = "Attorney";
+            }
+            HomePageResponseModel homePageResponseModel = new HomePageResponseModel(userId, user.getUserName(), userType);
             return homePageOutputBoundary.prepareSuccess(homePageResponseModel);
         } else {
             return homePageOutputBoundary.prepareFail("You cannot rate this question!");

@@ -7,6 +7,8 @@ package entity;
 
 import java.util.List;
 
+import javax.persistence.Entity;
+
 public interface User {
     int getUserId();
     String getUserName();
@@ -19,4 +21,5 @@ public interface User {
     boolean isQuestionSelectable(Question question);
     boolean isQuestionReplyable(Question question);
     boolean isQuestionRateable(Question question);
+
 }

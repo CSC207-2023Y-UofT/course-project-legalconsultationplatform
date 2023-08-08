@@ -6,9 +6,6 @@ import entity.User;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 
-/**
- * This abstract class representing for accessing and managing user data in the database.
- */
 
 abstract class UserRepository implements UserGateway{
 

@@ -5,7 +5,7 @@ import businessrule.inputboundary.UserLoginInputBoundary;
 import businessrule.outputboundary.HomePageOutputBoundary;
 import businessrule.requestmodel.UserLoginRequestModel;
 import businessrule.responsemodel.HomePageResponseModel;
-import driver.database.UserGateway;
+import businessrule.gateway.UserGateway;
 import entity.User;
 import driver.screen.ApplicationException;
 
@@ -29,8 +29,11 @@ public class UserLoginInteractor implements UserLoginInputBoundary{
 
     @Override
     public HomePageResponseModel login(UserLoginRequestModel requestModel) {
+        // get input data
         int inputUserId = requestModel.getUserId();
         String inputPassword = requestModel.getPassword();
+
+        // use user gateway factory to retrieve the correct type of repo
         UserGateway userGateway;
         try {
             userGateway = userGatewayFactory.createUserGateway(inputUserId);
@@ -38,6 +41,7 @@ public class UserLoginInteractor implements UserLoginInputBoundary{
             return outputBoundary.prepareFail("User ID does not exist");
         }
 
+        // handle login logic
         if (!userGateway.existsById(inputUserId)) {
             return outputBoundary.prepareFail("User ID does not exist");
         }
@@ -46,8 +50,17 @@ public class UserLoginInteractor implements UserLoginInputBoundary{
         if (!inputPassword.equals(filedPassword)) {
             return outputBoundary.prepareFail("Password is incorrect");
         }
-        LocalDateTime now = LocalDateTime.now();
-        HomePageResponseModel accountResponseModel = new HomePageResponseModel(inputUserId, userGateway.getUser(inputUserId).getUserName());
+
+        // construct response model
+        String userType;
+        User user = userGateway.getUser(inputUserId);
+        if (user.isClient()){
+            userType = "Client";
+        } else{
+            userType = "Attorney";
+        }
+        HomePageResponseModel accountResponseModel = new HomePageResponseModel(inputUserId,
+                userGateway.getUser(inputUserId).getUserName(), userType);
         return outputBoundary.prepareSuccess(accountResponseModel);
     }
 }

@@ -1,13 +1,13 @@
 package driver.screen;
 
+import adapter.controller.ControlContainer;
 import adapter.controller.UserLoginControl;
 
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-
-import static javax.swing.JOptionPane.showMessageDialog;
 
 
 
@@ -16,41 +16,61 @@ import static javax.swing.JOptionPane.showMessageDialog;
  * This class represents a user interface for logging in as both a client and an attorney.
  */
 public class LoginUI extends JPanel implements ActionListener{
-    UserLoginControl control;
+    ControlContainer controlContainer;
     JTextField userId = new JTextField(15);
     JPasswordField password = new JPasswordField(15);
     /**
      * Creates new form UserLogin
      */
-    public LoginUI(UserLoginControl control) {
+    public LoginUI(ControlContainer controlContainer) {
 
-        this.control = control;
+        this.controlContainer = controlContainer;
+        setBackground(UIDesign.backgroundColor);
 
-        JLabel title = new JLabel("Login Screen");
+        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+
+        // Create the title label
+        JLabel title = new JLabel("Log In");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
+        int topMargin = 30;
+        int leftMargin = 0;
+        int bottomMargin = 0;
+        int rightMargin = 0;
+        title.setBorder(new EmptyBorder(topMargin, leftMargin, bottomMargin, rightMargin));
+        add(title);
 
+        // Add some vertical glue between the title, userId, and password
+        add(Box.createVerticalGlue());
+
+        // Add userId panel
         LabelTextPanel userIdInfo = new LabelTextPanel(new JLabel("UserId"), userId);
+        add(userIdInfo);
+
+        // Add some vertical glue between userId and password
+        add(Box.createVerticalGlue());
+
+        // Add password panel
         LabelTextPanel passwordInfo = new LabelTextPanel(new JLabel("Password"), password);
-        JButton buttonToSubmit = new JButton("Submit");
+        add(passwordInfo);
 
+        // Add some vertical glue between password and the login button
+        add(Box.createVerticalGlue());
+
+        // Add the login button
+        JButton login = new JButton("Login");
         JPanel buttons = new JPanel();
-        buttons.add(buttonToSubmit);
-
-        buttonToSubmit.addActionListener(this);
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-
-        this.add(title);
-        this.add(userIdInfo);
-        this.add(passwordInfo);
-        this.add(buttons);
+        buttons.add(login);
+        login.addActionListener(this);
+        add(buttons);
 
     }
     @Override
     public void actionPerformed(ActionEvent evt){
         System.out.println("Click" + evt.getActionCommand());
+        UserLoginControl loginControl = controlContainer.getUserLoginControl();
 
         try {
-            control.login(Integer.parseInt(userId.getText()), String.valueOf(password.getPassword()));
+            loginControl.login(Integer.parseInt(userId.getText()), String.valueOf(password.getPassword()));
         }
         catch(Exception e){
             JOptionPane.showMessageDialog(this, e.getMessage());

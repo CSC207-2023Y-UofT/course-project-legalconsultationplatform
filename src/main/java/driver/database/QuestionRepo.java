@@ -8,9 +8,6 @@ import javax.persistence.EntityTransaction;
 import java.time.LocalDate;
 import java.util.List;
 
-/**
- * This class represents the persistence operations for Question entities in the data store.
- */
 public class QuestionRepo implements QuestionGateway{
 
     @Override
