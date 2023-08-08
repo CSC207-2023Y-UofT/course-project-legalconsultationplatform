@@ -9,6 +9,7 @@ import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
 import static driver.screen.UIDesign.*;
+import static java.awt.Color.white;
 
 public class TheQuestionTopPanel extends JPanel{
     int userId;
@@ -34,6 +35,7 @@ public class TheQuestionTopPanel extends JPanel{
         this.deadline = deadline;
         this.postMap = postMap;
 
+        JPanel topSpacer = addSpacer(10);
         //UserName and UserId
         String helloMessageString = "Hello, " + userName + "(" + userId + ")";
         JLabel helloMessage = new JLabel(helloMessageString);
@@ -47,22 +49,24 @@ public class TheQuestionTopPanel extends JPanel{
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String deadlineString = "Deadline: " + deadline.format(formatter);
         JLabel deadlineLine = new JLabel(deadlineString);
-        deadlineLine.setOpaque(false);
         deadlineLine.setAlignmentX(CENTER_ALIGNMENT);
 
         titleContainer.add(titlePanel);
         titleContainer.add(deadlineLine);
         setSizeInLayout(titleContainer, new Dimension(360, 50));
+        titleContainer.setOpaque(false);
+
+        JPanel spacer = UIDesign.addSpacer(30);
 
         JPanel previousPosts = new JPanel();
 
+        JPanel previousDiscussionsPanel = new JPanel();
+        setSizeInLayout(previousDiscussionsPanel, new Dimension(350, 30));
         JLabel label = new JLabel("Previous discussions");
-        UIDesign.setNameFont(label);
-        label.setForeground(whiteColor);
-        JPanel labelPanel = new JPanel();
-        labelPanel.setBackground(darkGreenColor);
-        setSizeInLayout(labelPanel, new Dimension(350, 30));
-        labelPanel.add(label);
+        label.setFont(new Font("Novo Sans", Font.BOLD, 16));
+        label.setForeground(white);
+        previousDiscussionsPanel.add(label);
+        previousDiscussionsPanel.setBackground(darkGreenColor);
 
         JPanel postScrollPanel = new JPanel();
         postScrollPanel.setLayout(new BoxLayout(postScrollPanel, BoxLayout.Y_AXIS));
@@ -93,16 +97,18 @@ public class TheQuestionTopPanel extends JPanel{
 
         previousPosts.setLayout(new BoxLayout(previousPosts, BoxLayout.Y_AXIS));
         setSizeInLayout(previousPosts, new Dimension(350, 250));
-        previousPosts.add(labelPanel);
         previousPosts.add(postScrollPane);
 
         //Add everything into JPanel
         UIDesign.setBackgroundFrame(this);
         setBackground(lightGreenColor);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setSizeInLayout(this, new Dimension(360, 500));
+        setSizeInLayout(this, new Dimension(360, 360));
+        add(topSpacer);
         add(helloMessage);
         add(titleContainer);
+        add(spacer);
+        add(previousDiscussionsPanel);
         add(postScrollPane);
     }
 }

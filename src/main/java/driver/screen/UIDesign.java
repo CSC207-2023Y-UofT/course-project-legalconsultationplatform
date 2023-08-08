@@ -219,7 +219,6 @@ public class UIDesign {
         titleText.setOpaque(false);
 
         JPanel titlePanel = new JPanel();
-        titlePanel.setOpaque(false);
         titlePanel.setLayout(new FlowLayout());
         titlePanel.add(typePanel);
         titlePanel.add(titleText);
