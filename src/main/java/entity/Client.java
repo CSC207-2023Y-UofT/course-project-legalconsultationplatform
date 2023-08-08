@@ -12,7 +12,7 @@ import java.util.Objects;
 public class Client implements User {
     @Id
     private int userId;
-    private String userName;
+    private String name;
     private String email;
     private String password;
     private String stateAbb;
@@ -34,7 +34,7 @@ public class Client implements User {
                   String ethnicity, int age, String gender, String maritalStatus, int numberOfHousehold,
                   float annualIncome) {
         this.userId = userId;
-        this.userName = userName;
+        this.name = userName;
         this.email = email;
         this.password = password;
         this.stateAbb = stateAbb;
@@ -58,7 +58,7 @@ public class Client implements User {
         return password;
     }
 
-    public String getUserName() {return userName;}
+    public String getUserName() {return name;}
 
     @Override
     public String getEmail() {return email;}
@@ -100,7 +100,7 @@ public class Client implements User {
 
     public void setUserId(int userId) {this.userId = userId;}
 
-    public void setUserName(String userName) {this.userName = userName;}
+    public void setUserName(String userName) {this.name = userName;}
 
     public void setEmail(String email) {this.email = email;}
 
@@ -162,7 +162,7 @@ public class Client implements User {
 
     @Override
     public String toString() {
-        return String.format("[Client]: %s", userName);
+        return String.format("[Client]: %s", name);
     }
 
     @Override

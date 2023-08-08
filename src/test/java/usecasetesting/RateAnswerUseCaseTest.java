@@ -71,32 +71,32 @@ public class RateAnswerUseCaseTest {
         Question closedQuestion = new Question();
         closedQuestion.setQuestionId(CLOSED_QUESTION_ID);
         closedQuestion.setClose(true);
-        questionGateway.saveQuestion(closedQuestion);
+        questionGateway.save(closedQuestion);
 
         Client client = new Client();
         client.setUserId(CLIENT_ID);
         client.addQuestion(question);
         client.addQuestion(closedQuestion);
-        clientGateway.addUser(client);
+        clientGateway.save(client);
 
         Attorney attorney = new Attorney();
         attorney.setUserId(ATTORNEY_ID);
-        attorneyGateway.addUser(attorney);
+        attorneyGateway.save(attorney);
 
         Attorney secondAttorney = new Attorney();
         attorney.setUserId(SECOND_ATTORNEY_ID);
-        attorneyGateway.addUser(secondAttorney);
+        attorneyGateway.save(secondAttorney);
 
         question.setTakenByAttorney(ATTORNEY_ID);
         question.setTaken(true);
-        questionGateway.saveQuestion(question);
+        questionGateway.save(question);
     }
     @Test
     public void TestClientRateClosedQuestion(){
         setUpRateAnswerUseCase();
         RateRequestModel inputData = new RateRequestModel(10, CLOSED_QUESTION_ID, CLIENT_ID);
         rateInputBoundary.rateAnswer(inputData);
-        assertEquals(10, questionGateway.getQuestion(CLOSED_QUESTION_ID).getRating());
+        assertEquals(10, questionGateway.get(CLOSED_QUESTION_ID).getRating());
         ClearAllRepository();
     }
     @Test
@@ -119,9 +119,9 @@ public class RateAnswerUseCaseTest {
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
         postGateway = new PostRepo();
-        clientGateway.deleteAllUser();
-        questionGateway.deleteAllQuestion();
-        attorneyGateway.deleteAllUser();
-        postGateway.deleteAllPost();
+        clientGateway.deleteAll();
+        questionGateway.deleteAll();
+        attorneyGateway.deleteAll();
+        postGateway.deleteAll();
     }
 }

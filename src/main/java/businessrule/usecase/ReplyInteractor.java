@@ -38,8 +38,8 @@ public class ReplyInteractor implements PostInputBoundary {
         // get input data
         int userId = postRequestModel.getUserId();
         UserGateway userGateway = userGatewayFactory.createUserGateway(userId);
-        User user = userGateway.getUser(userId);
-        Question question = questionGateway.getQuestion(postRequestModel.getQuestionId());
+        User user = userGateway.get(userId);
+        Question question = questionGateway.get(postRequestModel.getQuestionId());
 
         // generate post id
         RandomNumberGenerator generator = new RandomNumberGenerator();
@@ -60,7 +60,7 @@ public class ReplyInteractor implements PostInputBoundary {
             // if replyable, prepare post entity and update related field
             Post post = postFactory.create(randomPostId, postRequestModel.getQuestionId(), now, postRequestModel.getPostText(), postRequestModel.getUserId());
             questionGateway.updatePosts(postRequestModel.getQuestionId(), post);
-            postGateway.savePost(post);
+            postGateway.save(post);
             questionGateway.updateIsTaken(question.getQuestionId(), question.isTaken());
             questionGateway.updateTakenByAttorney(question.getQuestionId(), question.getTakenByAttorney());
             questionGateway.updateTakenAt(question.getQuestionId(), question.getTakenAt());

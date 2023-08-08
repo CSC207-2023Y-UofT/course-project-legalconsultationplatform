@@ -30,7 +30,7 @@ public class ViewQuestionInteractor implements ViewInputBoundary {
         // get user who performed the operation
         int userId = viewRequestModel.getUserId();
         UserGateway userGateway = userGatewayFactory.createUserGateway(userId);
-        User user = userGateway.getUser(userId);
+        User user = userGateway.get(userId);
 
         // get question list to view by the user
         List<Question> questionList = user.getQuestionsList();

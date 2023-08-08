@@ -21,8 +21,8 @@ public class GenericRepository<T> implements GenericGateway<T> {
     }
 
     @Override
-    public T get(int id) {
-        return executeTransactionWithResult(entityManager -> entityManager.find(entityType, id));
+    public Object get(int id) {
+        return entityType.cast(executeTransactionWithResult(entityManager -> entityManager.find(entityType, id)));
     }
 
     @Override

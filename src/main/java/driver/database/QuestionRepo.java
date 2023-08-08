@@ -1,8 +1,10 @@
 package driver.database;
 
 import businessrule.gateway.QuestionGateway;
+import entity.Client;
 import entity.Post;
 import entity.Question;
+import entity.User;
 
 import javax.jdo.JDOHelper;
 import javax.persistence.EntityManager;
@@ -14,17 +16,6 @@ public class QuestionRepo extends GenericRepository<Question> implements Questio
 
     public QuestionRepo() {
         super(Question.class);
-    }
-
-    @Override
-    public boolean existsById(int questionId){
-        EntityManager entityManager = DatabaseConnection.getEntityManager();
-        try {
-            Question exists = entityManager.find(Question.class, questionId);
-            return (exists != null);
-        } finally {
-            entityManager.close();
-        }
     }
 
     @Override
@@ -168,6 +159,11 @@ public class QuestionRepo extends GenericRepository<Question> implements Questio
         } finally {
             em.close();
         }
+    }
+
+    @Override
+    public Question get(int id) {
+        return (Question) super.get(id);
     }
 
 }

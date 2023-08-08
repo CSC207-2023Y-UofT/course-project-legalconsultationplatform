@@ -29,7 +29,7 @@ public class BrowseQuestionInteractor implements BrowseInputBoundary {
         List<Question> questionsList = questionGateway.getNotTakenQuestion();
         QuestionMapConstructor questionMapConstructor = new QuestionMapConstructor();
         Map<Integer, QuestionDisplayFormatter> questionMap = questionMapConstructor.constructQuestionMap(questionsList);
-        Attorney attorney = (Attorney) attorneyGateway.getUser(browseRequestModel.getAttorneyId());
+        Attorney attorney = (Attorney) attorneyGateway.get(browseRequestModel.getAttorneyId());
         ViewResponseModel viewResponseModel = new ViewResponseModel(attorney.getUserId(), attorney.getUserName(), questionMap);
         return viewOutputBoundary.prepareSuccess(viewResponseModel);
     }

@@ -1,7 +1,6 @@
 package driver.database;
 
 import businessrule.gateway.UserGateway;
-import entity.Attorney;
 import entity.Question;
 import entity.User;
 
@@ -17,8 +16,8 @@ public class UserRepository<T extends User> extends GenericRepository<T> impleme
     @Override
     public boolean existsByName(String inputUserName) {
         return executeTransactionWithResult(entityManager -> {
-            List<Attorney> users = entityManager.createQuery("SELECT a FROM Attorney a WHERE a.name =: name",
-                            Attorney.class).setParameter("name", inputUserName).getResultList();
+            List<T> users = entityManager.createQuery("SELECT u FROM " + entityType.getSimpleName() +
+                    " u WHERE u.name =: name", entityType).setParameter("name", inputUserName).getResultList();
             return !users.isEmpty();
         });
     }
@@ -26,15 +25,15 @@ public class UserRepository<T extends User> extends GenericRepository<T> impleme
     @Override
     public void updateQuestionList(int id, Question question) {
         executeTransaction(entityManager -> {
-            User u = entityManager.find(User.class, id);
+            User u = entityManager.find(entityType, id);
             u.addQuestion(question);
             JDOHelper.makeDirty(u, "questionsList");
         });
     }
 
     @Override
-    public T get(int id) {
-        return (T) super.get(id);
+    public User get(int id) {
+        return (User) super.get(id);
     }
 
 }

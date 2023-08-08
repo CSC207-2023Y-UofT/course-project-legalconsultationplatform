@@ -2,6 +2,7 @@ package businessrule.gateway;
 
 import entity.Post;
 import entity.Question;
+import entity.User;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -16,4 +17,6 @@ public interface QuestionGateway extends GenericGateway<Question>{
     void updateRating(int questionId, int rating);
     void updateTakenAt(int questionId, LocalDate time);
     void updatePosts(int id, Post post);
+    @Override
+    Question get(int id);
 }

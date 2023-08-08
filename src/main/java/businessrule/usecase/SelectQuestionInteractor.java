@@ -31,10 +31,10 @@ public class SelectQuestionInteractor implements SelectInputBoundary {
 
         // use gateway factory to retrieve the correct type of repo
         UserGateway userGateway = userGatewayFactory.createUserGateway(userId);
-        User user = userGateway.getUser(userId);
+        User user = userGateway.get(userId);
 
         // get question
-        Question question = questionGateway.getQuestion(questionId);
+        Question question = questionGateway.get(questionId);
 
         // handle select question logic and prepare response model
         boolean isQuestionSelectable = user.isQuestionSelectable(question);

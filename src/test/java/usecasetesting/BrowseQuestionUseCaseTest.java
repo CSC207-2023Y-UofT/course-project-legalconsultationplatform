@@ -63,15 +63,15 @@ public class BrowseQuestionUseCaseTest {
 
         Client client = new Client();
         client.setUserId(CLIENT_ID);
-        clientGateway.addUser(client);
+        clientGateway.save(client);
 
         Attorney attorney = new Attorney();
         attorney.setUserId(ATTORNEY_ID);
-        attorneyGateway.addUser(attorney);
+        attorneyGateway.save(attorney);
 
         Attorney secondAttorney = new Attorney();
         attorney.setUserId(SECOND_ATTORNEY_ID);
-        attorneyGateway.addUser(secondAttorney);
+        attorneyGateway.save(secondAttorney);
 
         Question question1 = new Question();
         question1.setQuestionId(QUESTION_ID);
@@ -79,18 +79,18 @@ public class BrowseQuestionUseCaseTest {
         Post post = new Post();
         post.setPostId(POST_ID);
         question1.addPosts(post);
-        questionGateway.saveQuestion(question1);
+        questionGateway.save(question1);
 
         Question question2 = new Question();
         question2.setQuestionId(TAKEN_QUESTION_ID);
         question2.setTaken(true);
         question2.setTakenByAttorney(ATTORNEY_ID);
-        questionGateway.saveQuestion(question2);
+        questionGateway.save(question2);
 
         Question question3 = new Question();
         question3.setQuestionId(CLOSED_QUESTION_ID);
         question3.setClose(true);
-        questionGateway.saveQuestion(question3);
+        questionGateway.save(question3);
     }
 
     @Test
@@ -106,8 +106,8 @@ public class BrowseQuestionUseCaseTest {
         questionGateway = new QuestionRepo();
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
-        clientGateway.deleteAllUser();
-        questionGateway.deleteAllQuestion();
-        attorneyGateway.deleteAllUser();
+        clientGateway.deleteAll();
+        questionGateway.deleteAll();
+        attorneyGateway.deleteAll();
     }
 }

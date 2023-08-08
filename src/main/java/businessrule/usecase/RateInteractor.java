@@ -29,9 +29,9 @@ public class RateInteractor implements RateInputBoundary {
         int userId = rateRequestModel.getUserId();
 
         UserGateway userGateway = userGatewayFactory.createUserGateway(userId);
-        User user = userGateway.getUser(userId);
+        User user = userGateway.get(userId);
 
-        Question answer = questionGateway.getQuestion(answerId);
+        Question answer = questionGateway.get(answerId);
         String userType;
         if (user.isQuestionRateable(answer)) {
             questionGateway.updateRating(answerId, rating);
