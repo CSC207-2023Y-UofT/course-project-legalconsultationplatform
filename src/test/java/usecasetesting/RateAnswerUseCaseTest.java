@@ -62,7 +62,7 @@ public class RateAnswerUseCaseTest {
                 return null;
             }
         };
-        rateInputBoundary = new RateInteractor(questionGateway, homePageOutputBoundary, userGatewayFactory);
+        rateInputBoundary = new RateInteractor(questionGateway, homePageOutputBoundary, clientGateway);
 
         Question question = new Question();
         question.setQuestionId(QUESTION_ID);
@@ -106,14 +106,6 @@ public class RateAnswerUseCaseTest {
         rateInputBoundary.rateAnswer(inputData);
         ClearAllRepository();
     }
-    @Test
-    public void TestAttorneyRate(){
-        setUpRateAnswerUseCase();
-        RateRequestModel inputData = new RateRequestModel(10, QUESTION_ID, ATTORNEY_ID);
-        rateInputBoundary.rateAnswer(inputData);
-        ClearAllRepository();
-    }
-
     public void ClearAllRepository(){
         questionGateway = new QuestionRepo();
         clientGateway = new ClientRepository();
