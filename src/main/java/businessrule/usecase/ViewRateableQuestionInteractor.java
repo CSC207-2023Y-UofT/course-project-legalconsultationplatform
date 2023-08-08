@@ -35,6 +35,6 @@ public class ViewRateableQuestionInteractor extends ViewQuestionInteractorBase{
     @Override
     protected User fetchUser(ViewRequestModel viewRequestModel) {
         int attorneyId = viewRequestModel.getUserId();
-        return clientGateway.getUser(attorneyId);
+        return clientGateway.get(attorneyId);
     }
 }
