@@ -130,6 +130,6 @@ public class ClientRegisterUseCaseTest {
 
     public void ClearAllRepository(){
         clientGateway = new ClientRepository();
-        clientGateway.deleteAllUser();;
+        clientGateway.deleteAll();;
     }
 }

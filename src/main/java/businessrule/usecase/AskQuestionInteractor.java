@@ -47,14 +47,14 @@ public class AskQuestionInteractor implements QuestionInputBoundary {
         // create question entity
         LocalDate now = LocalDate.now();
         int askedByClient = questionRequestModel.getAskedByClient();
-        Client askedBy = (Client) clientGateway.getUser(askedByClient);
+        Client askedBy = (Client) clientGateway.get(askedByClient);
         Question question = questionFactory.create(randomQuestionId, questionRequestModel.getQuestionCategory(), questionRequestModel.getTitle(), now, askedByClient, questionRequestModel.getLegalDeadline());
-        questionGateway.saveQuestion(question);
+        questionGateway.save(question);
         clientGateway.updateQuestionList(questionRequestModel.getAskedByClient(), question);
 
         // construct response model
         Map<Integer, PostDisplayFormatter> postMap = new HashMap<>();
-        TheQuestionResponseModel theQuestionResponseModel = new TheQuestionResponseModel(questionRequestModel.getAskedByClient(), question.getQuestionId(), askedBy.getUserName(), question.getTitle(), question.getType(), question.getLegalDeadline(), postMap);
+        TheQuestionResponseModel theQuestionResponseModel = new TheQuestionResponseModel(questionRequestModel.getAskedByClient(), question.getQuestionId(), askedBy.getUserName(), question.getTitle(), question.getType(), question.getLegalDeadline(),false, postMap);
         return theQuestionOutputBoundary.prepareSuccess(theQuestionResponseModel);
     }
 }

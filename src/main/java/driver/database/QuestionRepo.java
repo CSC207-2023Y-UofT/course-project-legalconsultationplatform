@@ -1,8 +1,10 @@
 package driver.database;
 
 import businessrule.gateway.QuestionGateway;
+import entity.Client;
 import entity.Post;
 import entity.Question;
+import entity.User;
 
 import javax.jdo.JDOHelper;
 import javax.persistence.EntityManager;
@@ -10,56 +12,10 @@ import javax.persistence.EntityTransaction;
 import java.time.LocalDate;
 import java.util.List;
 
-public class QuestionRepo implements QuestionGateway {
+public class QuestionRepo extends GenericRepository<Question> implements QuestionGateway {
 
-    @Override
-    public void saveQuestion(Question question) {
-        EntityManager entityManager = DatabaseConnection.getEntityManager();
-        EntityTransaction transaction = entityManager.getTransaction();
-        try {
-            transaction.begin();
-            entityManager.persist(question);
-            transaction.commit();
-        } catch (Exception e) {
-            if (transaction.isActive()) {
-                transaction.rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            entityManager.close();
-        }
-    }
-
-
-    @Override
-    public boolean existsById(int questionId){
-        EntityManager entityManager = DatabaseConnection.getEntityManager();
-        try {
-            Question exists = entityManager.find(Question.class, questionId);
-            return (exists != null);
-        } finally {
-            entityManager.close();
-        }
-    }
-
-    @Override
-    public Question getQuestion(int questionId) {
-        EntityManager entityManager = DatabaseConnection.getEntityManager();
-        try {
-            return entityManager.find(Question.class, questionId);
-        } finally {
-            entityManager.close();
-        }
-    }
-
-    @Override
-    public List<Question> getAllQuestion() {
-        EntityManager em = DatabaseConnection.getEntityManager();
-        try {
-            return em.createQuery("SELECT q FROM Question q", Question.class).getResultList();
-        } finally {
-            em.close();
-        }
+    public QuestionRepo() {
+        super(Question.class);
     }
 
     @Override
@@ -186,41 +142,6 @@ public class QuestionRepo implements QuestionGateway {
     }
 
     @Override
-    public void deleteQuestion(int questionId) {
-        EntityManager em = DatabaseConnection.getEntityManager();
-        try {
-            em.getTransaction().begin();
-            Question question = em.find(Question.class, questionId);
-            em.remove(question);
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            em.close();
-        }
-    }
-
-    @Override
-    public void deleteAllQuestion() {
-        EntityManager em = DatabaseConnection.getEntityManager();
-        try {
-            em.getTransaction().begin();
-            em.createQuery("DELETE FROM Question q").executeUpdate();
-            em.getTransaction().commit();
-        } catch (Exception e) {
-            if (em.getTransaction().isActive()) {
-                em.getTransaction().rollback();
-            }
-            e.printStackTrace();
-        } finally {
-            em.close();
-        }
-    }
-
-    @Override
     public void updatePosts(int questionId, Post post) {
         EntityManager em = DatabaseConnection.getEntityManager();
         EntityTransaction transaction = em.getTransaction();
@@ -238,6 +159,11 @@ public class QuestionRepo implements QuestionGateway {
         } finally {
             em.close();
         }
+    }
+
+    @Override
+    public Question get(int id) {
+        return (Question) super.get(id);
     }
 
 }

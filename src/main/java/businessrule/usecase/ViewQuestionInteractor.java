@@ -13,32 +13,26 @@ import entity.User;
 import java.util.List;
 import java.util.Map;
 
-public class ViewQuestionInteractor implements ViewInputBoundary {
-    final QuestionGateway questionGateway;
-    final ViewOutputBoundary viewOutputBoundary;
+public class ViewQuestionInteractor extends ViewQuestionInteractorBase{
     final UserGatewayFactory userGatewayFactory;
 
     public ViewQuestionInteractor(QuestionGateway questionGateway, ViewOutputBoundary viewOutputBoundary,
                                   UserGatewayFactory userGatewayFactory) {
-        this.questionGateway = questionGateway;
-        this.viewOutputBoundary = viewOutputBoundary;
+        super(viewOutputBoundary, questionGateway);
         this.userGatewayFactory = userGatewayFactory;
     }
 
     @Override
-    public ViewResponseModel viewQuestion(ViewRequestModel viewRequestModel) {
-        // get user who performed the operation
+    protected List<Question> fetchQuestions(ViewRequestModel viewRequestModel) {
+        User user = fetchUser(viewRequestModel);
+        return user.getQuestionsList();
+    }
+
+    @Override
+    protected User fetchUser(ViewRequestModel viewRequestModel) {
         int userId = viewRequestModel.getUserId();
         UserGateway userGateway = userGatewayFactory.createUserGateway(userId);
-        User user = userGateway.getUser(userId);
-
-        // get question list to view by the user
-        List<Question> questionList = user.getQuestionsList();
-
-        // construct response model
-        QuestionMapConstructor questionMapConstructor = new QuestionMapConstructor();
-        Map<Integer, QuestionDisplayFormatter> questionMap = questionMapConstructor.constructQuestionMap(questionList);
-        ViewResponseModel viewResponseModel = new ViewResponseModel(user.getUserId(), user.getUserName(), questionMap);
-        return viewOutputBoundary.prepareSuccess(viewResponseModel);
+        return userGateway.get(userId);
     }
+
 }

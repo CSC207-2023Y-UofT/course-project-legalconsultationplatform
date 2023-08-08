@@ -31,17 +31,17 @@ public class SelectQuestionInteractor implements SelectInputBoundary {
 
         // use gateway factory to retrieve the correct type of repo
         UserGateway userGateway = userGatewayFactory.createUserGateway(userId);
-        User user = userGateway.getUser(userId);
+        User user = userGateway.get(userId);
 
         // get question
-        Question question = questionGateway.getQuestion(questionId);
+        Question question = questionGateway.get(questionId);
 
         // handle select question logic and prepare response model
         boolean isQuestionSelectable = user.isQuestionSelectable(question);
         if (isQuestionSelectable) {
             PostMapConstructor postMapConstructor = new PostMapConstructor(userGatewayFactory);
             Map<Integer, PostDisplayFormatter> postMap = postMapConstructor.constructPostMap(question);
-            TheQuestionResponseModel theQuestionResponseModel = new TheQuestionResponseModel(userId, questionId, user.getUserName(), question.getTitle(), question.getType(), question.getLegalDeadline(), postMap);
+            TheQuestionResponseModel theQuestionResponseModel = new TheQuestionResponseModel(userId, questionId, user.getUserName(), question.getTitle(), question.getType(), question.getLegalDeadline(), question.isClose(), postMap);
             return theQuestionOutputBoundary.prepareSuccess(theQuestionResponseModel);
         } else {
             return theQuestionOutputBoundary.prepareFail("This question is not accessible.");

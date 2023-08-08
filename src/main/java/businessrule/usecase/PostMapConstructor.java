@@ -29,7 +29,7 @@ class PostMapConstructor {
         for (Post post: postList) {
             int postId = post.getPostId();
             UserGateway userGateway = userGatewayFactory.createUserGateway(post.getBelongsTo());
-            User user = userGateway.getUser(post.getBelongsTo());
+            User user = userGateway.get(post.getBelongsTo());
             boolean isClient = user.isClient();
             String name = user.getUserName();
             String postText = post.getPostText();

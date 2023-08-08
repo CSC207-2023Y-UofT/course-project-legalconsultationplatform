@@ -27,8 +27,8 @@ public class CloseQuestionInteractor implements CloseInputBoundary {
         int userId = closeRequestModel.getUserId();;
         int questionId = closeRequestModel.getQuestionId();
         UserGateway userGateway = userGatewayFactory.createUserGateway(userId);
-        User user = userGateway.getUser(userId);
-        Question question = questionGateway.getQuestion(questionId);
+        User user = userGateway.get(userId);
+        Question question = questionGateway.get(questionId);
 
         // handle close logic and prepare response model
         boolean isQuestionCloseable = user.isQuestionCloseable(question);
