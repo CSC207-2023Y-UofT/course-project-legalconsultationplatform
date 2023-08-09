@@ -16,8 +16,8 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class QuestionControlTest {
-    private static int USER_ID = 1;
-    private static int QUESTION_ID = 100;
+    private static int USER_ID = 11234567;
+    private static int QUESTION_ID = 333333333;
     private static String USER_NAME = "SampleUser";
     private static String TITLE = "SampleTitle";
     private static String TYPE = "SampleType";
