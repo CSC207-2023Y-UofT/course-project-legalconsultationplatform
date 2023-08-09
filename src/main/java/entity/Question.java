@@ -54,10 +54,10 @@ public class Question {
     /**
      * Constructs a new Question instance.
      *
-     * @param questionId The ID of the question.
-     * @param type The type of the question.
-     * @param title The title of the question.
-     * @param createAt The creation date of the question.
+     * @param questionId    The ID of the question.
+     * @param type          The type of the question.
+     * @param title         The title of the question.
+     * @param createAt      The creation date of the question.
      * @param askedByClient The ID of the client who asked the question.
      * @param legalDeadline The legal deadline for the question.
      */
@@ -77,14 +77,18 @@ public class Question {
      *
      * @return The question ID.
      */
-    public int getQuestionId() {return questionId;}
+    public int getQuestionId() {
+        return questionId;
+    }
 
     /**
      * Gets the type of the question.
      *
      * @return The question type.
      */
-    public String getType() {return type;}
+    public String getType() {
+        return type;
+    }
 
     /**
      * Gets the title of the question.
@@ -100,140 +104,180 @@ public class Question {
      *
      * @return The creation date.
      */
-    public LocalDate getCreateAt() {return createAt;}
+    public LocalDate getCreateAt() {
+        return createAt;
+    }
 
     /**
      * Gets the ID of the client who asked the question.
      *
      * @return The client ID.
      */
-    public int getAskedByClient() {return askedByClient;}
+    public int getAskedByClient() {
+        return askedByClient;
+    }
 
     /**
      * Gets the legal deadline for the question.
      *
      * @return The legal deadline.
      */
-    public LocalDate getLegalDeadline() {return legalDeadline;}
+    public LocalDate getLegalDeadline() {
+        return legalDeadline;
+    }
 
     /**
      * Checks if the question has been taken.
      *
      * @return True if the question is taken, false otherwise.
      */
-    public boolean isTaken() {return isTaken;}
+    public boolean isTaken() {
+        return isTaken;
+    }
 
     /**
      * Gets the ID of the attorney who took the question.
      *
      * @return The attorney ID.
      */
-    public int getTakenByAttorney() {return takenByAttorney;}
+    public int getTakenByAttorney() {
+        return takenByAttorney;
+    }
 
     /**
      * Gets the date when the question was taken.
      *
      * @return The taken date.
      */
-    public LocalDate getTakenAt() {return takenAt;}
+    public LocalDate getTakenAt() {
+        return takenAt;
+    }
 
     /**
      * Checks if the question is closed.
      *
      * @return True if the question is closed, false otherwise.
      */
-    public boolean isClose() {return isClose;}
+    public boolean isClose() {
+        return isClose;
+    }
 
     /**
      * Gets the rating of the question.
      *
      * @return The question rating.
      */
-    public int getRating() {return rating;}
+    public int getRating() {
+        return rating;
+    }
 
     /**
      * Gets the list of posts belonging to the question.
      *
      * @return The list of posts.
      */
-    public List<Post> getPosts() {return posts;}
+    public List<Post> getPosts() {
+        return posts;
+    }
 
     /**
      * Sets the ID of the question.
      *
      * @param questionId The question ID to set.
      */
-    public void setQuestionId(int questionId) {this.questionId = questionId;}
+    public void setQuestionId(int questionId) {
+        this.questionId = questionId;
+    }
 
     /**
      * Sets the type of the question.
      *
      * @param type The question type to set.
      */
-    public void setType(String type) {this.type = type;}
+    public void setType(String type) {
+        this.type = type;
+    }
 
     /**
      * Sets the title of the question.
      *
      * @param title The question title to set.
      */
-    public void setTitle(String title) {this.title = title;}
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
     /**
      * Sets the creation date of the question.
      *
      * @param createAt The creation date to set.
      */
-    public void setCreateAt(LocalDate createAt) {this.createAt = createAt;}
+    public void setCreateAt(LocalDate createAt) {
+        this.createAt = createAt;
+    }
 
     /**
      * Sets the ID of the client who asked the question.
      *
      * @param askedByClient The client ID to set.
      */
-    public void setAskedByClient(int askedByClient) {this.askedByClient = askedByClient;}
+    public void setAskedByClient(int askedByClient) {
+        this.askedByClient = askedByClient;
+    }
 
     /**
      * Sets the legal deadline for the question.
      *
      * @param legalDeadline The legal deadline to set.
      */
-    public void setLegalDeadline(LocalDate legalDeadline) {this.legalDeadline = legalDeadline;}
+    public void setLegalDeadline(LocalDate legalDeadline) {
+        this.legalDeadline = legalDeadline;
+    }
 
     /**
      * Sets whether the question is taken or not.
      *
      * @param taken True if taken, false otherwise.
      */
-    public void setTaken(boolean taken) {isTaken = taken;}
+    public void setTaken(boolean taken) {
+        isTaken = taken;
+    }
 
     /**
      * Sets the ID of the attorney who took the question.
      *
      * @param takenByAttorney The attorney ID to set.
      */
-    public void setTakenByAttorney(int takenByAttorney) {this.takenByAttorney = takenByAttorney;}
+    public void setTakenByAttorney(int takenByAttorney) {
+        this.takenByAttorney = takenByAttorney;
+    }
 
     /**
      * Sets the date when the question was taken.
      *
      * @param takenAt The taken date to set.
      */
-    public void setTakenAt(LocalDate takenAt) {this.takenAt = takenAt;}
+    public void setTakenAt(LocalDate takenAt) {
+        this.takenAt = takenAt;
+    }
 
     /**
      * Sets whether the question is closed or not.
      *
      * @param close True if closed, false otherwise.
      */
-    public void setClose(boolean close) {isClose = close;}
+    public void setClose(boolean close) {
+        isClose = close;
+    }
 
     /**
      * Sets the rating of the question.
      *
      * @param rating The question rating to set.
      */
-    public void setRating(int rating) {this.rating = rating;}
+    public void setRating(int rating) {
+        this.rating = rating;
+    }
 
     /**
      * Adds a post to the list of posts belonging to the question.
@@ -279,3 +323,4 @@ public class Question {
     public String toString() {
         return String.format("This is a %s type question asked by %d", type, askedByClient);
     }
+}
