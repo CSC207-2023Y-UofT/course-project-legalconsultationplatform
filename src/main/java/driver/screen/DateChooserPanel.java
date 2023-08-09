@@ -4,7 +4,9 @@ import com.toedter.calendar.JDateChooser;
 
 import javax.swing.*;
 import java.awt.*;
-
+/**
+ * This class represents a JPanel for the date choose interface.
+ */
 public class DateChooserPanel extends JPanel{
     public DateChooserPanel(JLabel label, JDateChooser dateChooser){
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));

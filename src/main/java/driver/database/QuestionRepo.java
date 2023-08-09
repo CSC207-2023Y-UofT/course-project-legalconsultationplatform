@@ -12,8 +12,15 @@ import javax.persistence.EntityTransaction;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * This class represents managing Question entities in the database.
+ */
 public class QuestionRepo extends GenericRepository<Question> implements QuestionGateway {
 
+    /**
+     * Constructs a QuestionRepo instance.
+     * Initializes the superclass with the Question class.
+     */
     public QuestionRepo() {
         super(Question.class);
     }
@@ -44,7 +51,7 @@ public class QuestionRepo extends GenericRepository<Question> implements Questio
     public List<Post> getAllPostOfQuestion(int questionId) {
         EntityManager em = DatabaseConnection.getEntityManager();
         try {
-            return em.createQuery("SELECT p FROM Post p WHERE p.questionId =: questionId", Post.class)
+            return em.createQuery("SELECT p FROM Post p WHERE p.questionId = :questionId", Post.class)
                     .setParameter("questionId", questionId).getResultList();
         } finally {
             em.close();
@@ -165,5 +172,4 @@ public class QuestionRepo extends GenericRepository<Question> implements Questio
     public Question get(int id) {
         return (Question) super.get(id);
     }
-
 }

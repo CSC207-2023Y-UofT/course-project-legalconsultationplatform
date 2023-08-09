@@ -11,22 +11,39 @@ import driver.screen.ApplicationException;
 
 import java.time.LocalDateTime;
 
-public class UserLoginInteractor implements UserLoginInputBoundary{
+/**
+ * This class represents the interactor responsible for handling user login.
+ *
+ * This interactor handles the process of authenticating user login credentials,retrieving user information,
+ * and preparing the appropriate response model.
+ */
+public class UserLoginInteractor implements UserLoginInputBoundary {
+
     final UserGatewayFactory userGatewayFactory;
     final HomePageOutputBoundary outputBoundary;
 
+    /**
+     * Constructor for UserLoginInteractor.
+     *
+     * @param userGatewayFactory The factory for creating user gateways.
+     * @param outputBoundary The output boundary for preparing home page response models.
+     */
     public UserLoginInteractor(UserGatewayFactory userGatewayFactory, HomePageOutputBoundary outputBoundary) {
         this.userGatewayFactory = userGatewayFactory;
         this.outputBoundary = outputBoundary;
     }
 
+    /**
+     * Authenticate user login and prepare the response model.
+     *
+     * @param requestModel The request model containing user login details.
+     * @return The response model for the home page.
+     */
     @Override
     public HomePageResponseModel login(UserLoginRequestModel requestModel) {
-        // get input data
         int inputUserId = requestModel.getUserId();
         String inputPassword = requestModel.getPassword();
 
-        // use user gateway factory to retrieve the correct type of repo
         UserGateway userGateway;
         try {
             userGateway = userGatewayFactory.createUserGateway(inputUserId);
@@ -34,7 +51,6 @@ public class UserLoginInteractor implements UserLoginInputBoundary{
             return outputBoundary.prepareFail("User ID does not exist");
         }
 
-        // handle login logic
         if (!userGateway.existsById(inputUserId)) {
             return outputBoundary.prepareFail("User ID does not exist");
         }
@@ -44,12 +60,11 @@ public class UserLoginInteractor implements UserLoginInputBoundary{
             return outputBoundary.prepareFail("Password is incorrect");
         }
 
-        // construct response model
         String userType;
         User user = userGateway.get(inputUserId);
-        if (user.isClient()){
+        if (user.isClient()) {
             userType = "Client";
-        } else{
+        } else {
             userType = "Attorney";
         }
         HomePageResponseModel accountResponseModel = new HomePageResponseModel(inputUserId,

@@ -17,7 +17,7 @@ import entity.User;
 import java.time.LocalDate;
 
 /**
- * This class represents representing the use case for creating a new post (reply) in response to a question.
+ * This class represents the use case for creating a new post (reply) in response to a question.
  */
 public class ReplyInteractor implements PostInputBoundary {
 

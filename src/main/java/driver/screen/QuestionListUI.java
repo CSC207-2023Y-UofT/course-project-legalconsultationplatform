@@ -12,7 +12,10 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
-public class QuestionListUI extends JPanel{
+/**
+ * This class represents a JPanel for a list of questions displayed in the user interface.
+ */
+public class QuestionListUI extends JPanel {
     ControlContainer controlContainer;
     CardLayout cardLayout;
     JPanel screens;
@@ -20,6 +23,16 @@ public class QuestionListUI extends JPanel{
     String userName;
     Map<Integer, QuestionDisplayFormatter> questionMap;
 
+    /**
+     * Constructs a new QuestionListUI instance.
+     *
+     * @param controlContainer The container for controllers.
+     * @param cardLayout The CardLayout for managing screens.
+     * @param screens The parent panel containing multiple screens.
+     * @param userId The ID of the logged-in user.
+     * @param userName The name of the logged-in user.
+     * @param questionMap A map of question IDs to their display formatters.
+     */
     public QuestionListUI(ControlContainer controlContainer, CardLayout cardLayout,
                           JPanel screens, int userId, String userName,
                           Map<Integer, QuestionDisplayFormatter> questionMap) {
@@ -30,17 +43,17 @@ public class QuestionListUI extends JPanel{
         this.userName = userName;
         this.questionMap = questionMap;
 
-        //UserName and UserId
+        // User greeting message
         String helloMessageString = "Hello, " + userName + "(" + userId + ")";
         JLabel helloMessage = new JLabel(helloMessageString);
 
-        //The scrollable question buttons
+        // Scrollable question buttons
         int numberOfQuestions = questionMap.size();
         JScrollPane questionScrollPane = new JScrollPane();
         JPanel questionScrollPanel = new JPanel();
         questionScrollPanel.setLayout(new GridLayout(numberOfQuestions, 1));
+
         for (Integer questionId : questionMap.keySet()) {
-            //read all variables from displayFormatter
             QuestionDisplayFormatter question = questionMap.get(questionId);
             String title = question.getTitle();
             String type = question.getType();
@@ -49,16 +62,12 @@ public class QuestionListUI extends JPanel{
             LocalDate deadlineDate = question.getLegalDeadline();
             String deadline = deadlineDate.format(formatter);
 
-            //lines
-            // String titleLine = "(" + type + ")" + title;
-            String deadlineLine = "Legal deadline: " + deadline;
-            // String overallText = titleLine + "\n" + deadlineLine;
-            String overallText = "<html><b>" + title+ "</b><br>" + deadlineLine + "</html>";
+            String overallText = "<html><b>" + title + "</b><br>" + "Legal deadline: " + deadline + "</html>";
 
-            //Format them all into a textArea
             JButton questionButton = new JButton(overallText);
             questionButton.setPreferredSize(new Dimension(400, 50));
             questionScrollPanel.add(questionButton);
+
             questionButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -68,9 +77,10 @@ public class QuestionListUI extends JPanel{
                 }
             });
         }
+
         questionScrollPane.setViewportView(questionScrollPanel);
 
-        //Add everything in the panel
+        // Add components to the panel
         this.add(helloMessage);
         this.add(questionScrollPane);
     }

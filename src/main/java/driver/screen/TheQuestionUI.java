@@ -17,6 +17,11 @@ import java.util.Objects;
 
 import static driver.screen.UIDesign.*;
 
+/**
+ * TheQuestionUI class represents the user interface for a specific question.
+ * It displays information about the question, posts, and provides interaction
+ * options such as posting replies, closing the question, and rating it.
+ */
 public class TheQuestionUI extends JPanel implements ActionListener {
     ControlContainer controlContainer;
     CardLayout cardLayout;
@@ -29,11 +34,24 @@ public class TheQuestionUI extends JPanel implements ActionListener {
     LocalDate deadline;
     Map<Integer, PostDisplayFormatter> postMap;
 
-
     JTextArea inputPostArea = new JTextArea();
     String[] rateList = {"Satisfied", "Not satisfied"};
     JComboBox<String> rate = new JComboBox<>(rateList);
 
+    /**
+     * Constructs a new instance of TheQuestionUI with provided data and components.
+     *
+     * @param controlContainer The container holding various controller instances.
+     * @param cardLayout       The CardLayout used for managing screen transitions.
+     * @param screens          The panel containing various screens.
+     * @param userId           The ID of the user interacting with the UI.
+     * @param userName         The name of the user.
+     * @param questionId       The ID of the question being displayed.
+     * @param title            The title of the question.
+     * @param type             The type/category of the question.
+     * @param deadline         The deadline associated with the question.
+     * @param postMap          A map of post IDs to their display formatters.
+     */
     public TheQuestionUI(ControlContainer controlContainer, CardLayout cardLayout,
                          JPanel screens, int userId, String userName, int questionId, String title,
                          String type, LocalDate deadline, Map<Integer, PostDisplayFormatter> postMap) {
@@ -48,8 +66,6 @@ public class TheQuestionUI extends JPanel implements ActionListener {
         this.deadline = deadline;
         this.postMap = postMap;
 
-        UIDesign.setBackgroundFrame(this);
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
 
         //UserName and UserId
         String helloMessageString = "Hello, " + userName + "(" + userId + ")";
@@ -165,7 +181,11 @@ public class TheQuestionUI extends JPanel implements ActionListener {
 
 
     }
-
+    /**
+     * Handles user actions performed within the UI.
+     *
+     * @param e The ActionEvent representing the user action.
+     */
     @Override
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();

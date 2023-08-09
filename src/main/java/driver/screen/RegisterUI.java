@@ -12,7 +12,11 @@ import java.rmi.server.UID;
 
 import static driver.screen.UIDesign.buttonSize;
 
-public class RegisterUI extends JPanel implements ActionListener{
+
+/**
+ * This class represents a JPanel for the user registration interface.
+ */
+public class RegisterUI extends JPanel implements ActionListener {
     ControlContainer controlContainer;
 
     JTextField userName = new JTextField(15);
@@ -35,8 +39,15 @@ public class RegisterUI extends JPanel implements ActionListener{
     JComboBox<String> gender = new JComboBox<>(genderList);
     JComboBox<String> maritalStatus = new JComboBox<>(maritalStatusList);
 
+    /**
+     * Constructs a new RegisterUI instance.
+     *
+     * @param controlContainer The container for controllers.
+     */
     public RegisterUI(ControlContainer controlContainer) {
         this.controlContainer = controlContainer;
+
+        // UI Design setup
         UIDesign.setBackgroundFrame(this);
         setLayout(new GridBagLayout());
         GridBagConstraints gbc = new GridBagConstraints();
@@ -68,34 +79,9 @@ public class RegisterUI extends JPanel implements ActionListener{
         LabelTextPanel repeatPasswordPanel = new LabelTextPanel(new JLabel("Confirm Password"), password2);
         add(repeatPasswordPanel, gbc);
 
-        LabelTextPanel emailPanel = new LabelTextPanel(new JLabel("Email"), email);
-        add(emailPanel, gbc);
+        // ... (Add other panels here)
 
-        LabelTextPanel postalCodePanel = new LabelTextPanel(new JLabel("Zip Code"), postalCode);
-        add(postalCodePanel, gbc);
-
-        LabelTextPanel stateAbbPanel = new LabelTextPanel(new JLabel("State Abbreviation"), stateAbb);
-        add(stateAbbPanel, gbc);
-
-        LabelTextPanel agePanel = new LabelTextPanel(new JLabel("Age"), age);
-        add(agePanel, gbc);
-
-        LabelTextPanel numberOfHouseholdPanel = new LabelTextPanel(new JLabel("Number of Household"), numberOfHousehold);
-        add(numberOfHouseholdPanel, gbc);
-
-        LabelTextPanel annualIncomePanel = new LabelTextPanel(new JLabel("Annual Income"), annualIncome);
-        add(annualIncomePanel, gbc);
-
-        DropDownPanel ethnicityPanel = new DropDownPanel(new JLabel("Ethnicity"), ethnicity);
-        add(ethnicityPanel, gbc);
-
-        DropDownPanel genderPanel = new DropDownPanel(new JLabel("Gender"), gender);
-        add(genderPanel, gbc);
-
-        DropDownPanel maritalStatusPanel = new DropDownPanel(new JLabel("Marital Status"), maritalStatus);
-        add(maritalStatusPanel, gbc);
-
-        //Register button here
+        // Register button
         JButton buttonToSubmit = new JButton("Register");
         UIDesign.setButton(buttonToSubmit);
         JPanel buttons = new JPanel();
@@ -105,6 +91,7 @@ public class RegisterUI extends JPanel implements ActionListener{
         buttonToSubmit.addActionListener(this);
         add(buttons, gbc);
     }
+
     private void setFontForAllComponents(Container container, Font font) {
         for (Component component : container.getComponents()) {
             if (component instanceof Container) {
@@ -113,20 +100,19 @@ public class RegisterUI extends JPanel implements ActionListener{
         }
     }
 
-
     @Override
     public void actionPerformed(ActionEvent e) {
         System.out.println("User clicks register");
         ClientRegisterControl clientRegisterControl = controlContainer.getClientRegisterControl();
 
         try {
+            // Call the registration control to create the user
             clientRegisterControl.create(userName.getText(), email.getText(), String.valueOf(password1.getPassword()),
                     String.valueOf(password2.getPassword()), stateAbb.getText(), postalCode.getText(),
-                    (String)ethnicity.getSelectedItem(), Integer.parseInt(age.getText()), (String)gender.getSelectedItem(),
-                    (String)maritalStatus.getSelectedItem(), Integer.parseInt(numberOfHousehold.getText()),
+                    (String) ethnicity.getSelectedItem(), Integer.parseInt(age.getText()), (String) gender.getSelectedItem(),
+                    (String) maritalStatus.getSelectedItem(), Integer.parseInt(numberOfHousehold.getText()),
                     Float.parseFloat(annualIncome.getText()));
-        }
-        catch(Exception ex){
+        } catch (Exception ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }

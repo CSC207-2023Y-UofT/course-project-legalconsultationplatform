@@ -9,17 +9,34 @@ import javax.persistence.EntityTransaction;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * This class represents managing Attorney entities in the database.
+ */
 public class AttorneyRepository extends UserRepository<Attorney> implements AttorneyGateway {
 
+    /**
+     * Constructs an AttorneyRepository instance.
+     * Initializes the superclass with the Attorney class.
+     */
     public AttorneyRepository() {
         super(Attorney.class);
     }
 
+    /**
+     * Retrieves an Attorney entity with the specified ID from the database.
+     *
+     * @param id The ID of the Attorney entity to retrieve.
+     * @return The Attorney entity associated with the specified ID, or null if not found.
+     */
     @Override
     public Attorney get(int id) {
         return (Attorney) super.get(id);
     }
 
+    /**
+     * Clears all recommendations associated with Attorneys in the database.
+     * This method removes all recommendations from each Attorney entity.
+     */
     @Override
     public void clearAllRecommendations() {
         EntityManager em = DatabaseConnection.getEntityManager();
@@ -43,6 +60,12 @@ public class AttorneyRepository extends UserRepository<Attorney> implements Atto
         }
     }
 
+    /**
+     * Adds a recommendation to an Attorney entity in the database.
+     *
+     * @param Userid The ID of the Attorney entity to which the recommendation will be added.
+     * @param question The Question entity representing the recommendation.
+     */
     @Override
     public void addRecommendation(int Userid, Question question) {
         EntityManager em = DatabaseConnection.getEntityManager();

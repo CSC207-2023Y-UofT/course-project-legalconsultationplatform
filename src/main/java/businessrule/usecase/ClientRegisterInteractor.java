@@ -1,6 +1,5 @@
 package businessrule.usecase;
 
-
 import businessrule.gateway.ClientGateway;
 import businessrule.inputboundary.ClientRegisterInputBoundary;
 import businessrule.outputboundary.RegisterOutputBoundary;
@@ -11,17 +10,36 @@ import entity.factory.ClientFactory;
 import businessrule.usecase.util.CredentialChecker;
 import businessrule.usecase.util.RandomNumberGenerator;
 
+/**
+ * This class represents the interactor responsible for handling client registration.
+ *
+ * This interactor validates input data, generates a unique client ID, creates a new client entity,
+ * and prepares the response for client registration.
+ */
 public class ClientRegisterInteractor implements ClientRegisterInputBoundary {
     final ClientGateway clientGateway;
     final RegisterOutputBoundary outputBoundary;
     final ClientFactory clientFactory;
 
+    /**
+     * Constructor for ClientRegisterInteractor.
+     *
+     * @param clientGateway The gateway for managing client entities.
+     * @param outputBoundary The output boundary for preparing registration response models.
+     * @param clientFactory The factory for creating client entities.
+     */
     public ClientRegisterInteractor(ClientGateway clientGateway, RegisterOutputBoundary outputBoundary, ClientFactory clientFactory) {
         this.clientGateway = clientGateway;
         this.outputBoundary = outputBoundary;
         this.clientFactory = clientFactory;
     }
 
+    /**
+     * Create a new client based on the provided request model.
+     *
+     * @param requestModel The request model containing client registration details.
+     * @return The response model for the client registration process.
+     */
     @Override
     public RegisterResponseModel create(ClientRegisterRequestModel requestModel){
         // prepare input data
@@ -43,7 +61,7 @@ public class ClientRegisterInteractor implements ClientRegisterInputBoundary {
         if (clientGateway.existsByName(inputUserName)) {
             return outputBoundary.prepareFail("User name already exists");
         } else if (!inputPassword1.equals(inputPassword2)) {
-            return outputBoundary.prepareFail("Passwords does not match");
+            return outputBoundary.prepareFail("Passwords do not match");
         } else if (inputPassword1.length() < 8) {
             return outputBoundary.prepareFail("Password is less than 8 characters");
         } else if (!checker.checkEmail(inputEmail)) {
@@ -54,7 +72,7 @@ public class ClientRegisterInteractor implements ClientRegisterInputBoundary {
             return outputBoundary.prepareFail("Postal Code is invalid");
         }
 
-        // create user id
+        // create user ID
         RandomNumberGenerator generator = new RandomNumberGenerator();
         int randomUserId = generator.generateClientId(8);
         boolean exists = clientGateway.existsById(randomUserId);

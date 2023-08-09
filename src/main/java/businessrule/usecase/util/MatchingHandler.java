@@ -22,6 +22,10 @@ import java.util.Map;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.nio.charset.StandardCharsets;
 
+/**
+ * This class represents the process of matching questions with attorneys.
+ * It uses various gateways and utility classes to reach this process.
+ */
 public class MatchingHandler {
     final AttorneyGateway attorneyGateway;
     final ClientGateway clientGateway;
@@ -29,12 +33,22 @@ public class MatchingHandler {
     final ObjectMapper objectMapper = new ObjectMapper();
     final PythonReader pythonReader = new PythonReader();
 
+    /**
+     * Constructs a `MatchingHandler` object with the given gateways.
+     *
+     * @param attorneyGateway The gateway for accessing attorney information.
+     * @param clientGateway The gateway for accessing client information.
+     * @param questionGateway The gateway for accessing question information.
+     */
     public MatchingHandler(AttorneyGateway attorneyGateway, ClientGateway clientGateway, QuestionGateway questionGateway) {
         this.attorneyGateway = attorneyGateway;
         this.clientGateway = clientGateway;
         this.questionGateway = questionGateway;
     }
 
+    /**
+     * Initiates the matching process by obtaining matching results and updating recommendations.
+     */
     public void match() {
         try {
             MatchingResult matchingResult = getMatching();
@@ -44,6 +58,11 @@ public class MatchingHandler {
         }
     }
 
+    /**
+     * Updates attorney recommendations based on the matching results.
+     *
+     * @param matchingResult The result of the matching process.
+     */
     public void updateMatching(MatchingResult matchingResult) {
         // clear all matching
         attorneyGateway.clearAllRecommendations();
@@ -56,18 +75,25 @@ public class MatchingHandler {
         }
     }
 
+    /**
+     * Retrieves matching results by processing questions and attorneys.
+     *
+     * @return The matching results.
+     * @throws IOException If there's an I/O error during the process.
+     */
     public MatchingResult getMatching() throws IOException {
         List<Question> questionList = questionGateway.getNotTakenQuestion();
         List<Attorney> attorneyList = attorneyGateway.getAll();
         Map<Integer[], Double> weights = constructWeight(questionList, attorneyList);
 
         List<Integer[]> matchingResult = pythonMatching(getQuestionIdList(questionList), getAttorneyIdList(attorneyList), weights);
-        List<Matching> matchingList = new ArrayList<Matching>();
+        List<Matching> matchingList = new ArrayList<>();
         for (Integer[] match: matchingResult) {
             matchingList.add(new Matching(match[0], match[1]));
         }
         return new MatchingResult(matchingList);
     }
+
 
     private List<Integer[]> pythonMatching(List<Integer> questions, List<Integer> attorneys, Map<Integer[], Double> weights) throws IOException{
         Map<String, Object> javaPara = new HashMap<>();

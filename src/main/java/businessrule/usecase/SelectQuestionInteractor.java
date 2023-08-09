@@ -13,11 +13,25 @@ import businessrule.gateway.UserGateway;
 import businessrule.gateway.UserGatewayFactory;
 import java.util.Map;
 
+/**
+ * This class represents the interactor responsible for selecting a question.
+ *
+ * This interactor handles the process of selecting a question based on user input and
+ * preparing and formatting the response model.
+ */
 public class SelectQuestionInteractor implements SelectInputBoundary {
+
     final QuestionGateway questionGateway;
     final TheQuestionOutputBoundary theQuestionOutputBoundary;
     final UserGatewayFactory userGatewayFactory;
 
+    /**
+     * Constructor for SelectQuestionInteractor.
+     *
+     * @param questionGateway The gateway for managing question entities.
+     * @param theQuestionOutputBoundary The output boundary for preparing question response models.
+     * @param userGatewayFactory The factory for creating user gateways.
+     */
     public SelectQuestionInteractor(QuestionGateway questionGateway, TheQuestionOutputBoundary theQuestionOutputBoundary,
                                     UserGatewayFactory userGatewayFactory) {
         this.questionGateway = questionGateway;
@@ -25,20 +39,22 @@ public class SelectQuestionInteractor implements SelectInputBoundary {
         this.userGatewayFactory = userGatewayFactory;
     }
 
+    /**
+     * Select a question and prepare the response model.
+     *
+     * @param selectRequestModel The request model containing selection details.
+     * @return The response model for the selected question.
+     */
     @Override
     public TheQuestionResponseModel selectQuestion(SelectRequestModel selectRequestModel) {
-        // get input data
         int userId = selectRequestModel.getUserId();
         int questionId = selectRequestModel.getQuestionId();
 
-        // use gateway factory to retrieve the correct type of repo
         UserGateway userGateway = userGatewayFactory.createUserGateway(userId);
         User user = userGateway.get(userId);
 
-        // get question
         Question question = questionGateway.get(questionId);
 
-        // handle select question logic and prepare response model
         boolean isQuestionSelectable = user.isQuestionSelectable(question);
         if (isQuestionSelectable) {
             PostMapConstructor postMapConstructor = new PostMapConstructor(userGatewayFactory);
@@ -49,6 +65,4 @@ public class SelectQuestionInteractor implements SelectInputBoundary {
             return theQuestionOutputBoundary.prepareFail("This question is not accessible.");
         }
     }
-
-
 }

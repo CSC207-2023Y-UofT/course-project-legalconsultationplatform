@@ -15,12 +15,26 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * This class represents the interactor responsible for asking a new question.
+ *
+ * This interactor validates input, generates a unique question ID, creates a question entity,
+ * updates relevant gateways, and constructs the response model.
+ */
 public class AskQuestionInteractor implements QuestionInputBoundary {
     final QuestionGateway questionGateway;
     final TheQuestionOutputBoundary theQuestionOutputBoundary;
     final QuestionFactory questionFactory;
     final ClientGateway clientGateway;
 
+    /**
+     * Constructor for AskQuestionInteractor.
+     *
+     * @param questionGateway The gateway for managing question entities.
+     * @param theQuestionOutputBoundary The output boundary for preparing question response models.
+     * @param questionFactory The factory for creating question entities.
+     * @param clientGateway The gateway for managing client entities.
+     */
     public AskQuestionInteractor(QuestionGateway questionGateway, TheQuestionOutputBoundary theQuestionOutputBoundary, QuestionFactory questionFactory, ClientGateway clientGateway) {
         this.questionGateway = questionGateway;
         this.theQuestionOutputBoundary = theQuestionOutputBoundary;
@@ -28,6 +42,12 @@ public class AskQuestionInteractor implements QuestionInputBoundary {
         this.clientGateway = clientGateway;
     }
 
+    /**
+     * Create a new question based on the provided request model.
+     *
+     * @param questionRequestModel The request model containing question details.
+     * @return The response model for the newly created question.
+     */
     public TheQuestionResponseModel createQuestion(QuestionRequestModel questionRequestModel){
 
         // validate input
