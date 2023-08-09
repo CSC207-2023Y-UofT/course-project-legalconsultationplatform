@@ -2,14 +2,12 @@ package adapter.presenter;
 import adapter.controller.ControlContainer;
 import businessrule.outputboundary.HomePageOutputBoundary;
 import businessrule.responsemodel.HomePageResponseModel;
-import driver.screen.ApplicationException;
+import entity.ApplicationException;
 import driver.screen.AttorneyHomePageUI;
 import driver.screen.ClientHomePageUI;
 
 import javax.swing.*;
 import java.awt.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class HomePageResponseFormatter implements HomePageOutputBoundary {
     CardLayout cardLayout;
