@@ -13,8 +13,13 @@ One of the standout features of **Legal Consultation Platform+** is its intellig
 
 Our mission with **Legal Consultation Platform+** is to democratize access to legal consultation and ensure no question goes unanswered or improperly addressed. Together, we can navigate these challenging times by making legal assistance more accessible and efficient for all.
 
----
 
+
+---
+## Installation Guide
+[*In Development*]
+
+---
 ## Client User Guide
 
 ### Registration and Account Set-Up
@@ -63,6 +68,41 @@ Attorneys also receive a weekly email containing a feed of recommended questions
 
 ---
 
+## Architecture Overview
+
+### User Request Flow
+
+Our application's design and packaging strategy rigorously adheres to the principles of Clean Architecture, ensuring a clear separation of concerns and a maintainable structure. Here's a breakdown of how user requests navigate through our system:
+
+1. **Request Initiation**: Users engage with the system via the UI.
+2. **Data Bundling**: The Controller captures the user's input, crafting it into a standardized 'request model'.
+3. **Use Case Processing**: The bundled input is directly passed to the appropriate use case or interactor by the Controller. Here, operating within the confines of our business rules, it processes the input. All interactions, whether storing new data or fetching existing ones, are channeled through a 'gateway' interface, ensuring modularity and a clear distinction between business logic and data access.
+4. **Response Structuring**: Post-processing, the use case returns a response, tailored in a format that the Presenter can easily interpret and utilize.
+5. **UI Update**: With the processed response in hand, the Presenter manages the presentation logic, ensuring that the UI is updated seamlessly to either showcase results or reflect necessary changes.
+
+
+### Design Patterns
+
+
+#### 1. Dependency Injection
+Our use of the dependency injection principle is especially pronounced in the database interfaces and output boundaries. Through this principle, we inject such dependencies as the output boundary and gateway into our use cases. This approach ensures our use case development remains isolated from the concrete implementations, thus enhancing modularity and maintainability.
+
+#### 2. Factory Design Pattern
+The Factory design pattern, evidenced in components like `UserGatewayFactory` and `UserFactory`, empowers our system to cater to varying use-case requirements by dynamically instantiating the appropriate objects. This approach ensures our software can adapt to new requirements or changes without disrupting existing functionalities.
+
+#### 3. Builder Design Pattern
+
+Our user registration process prominently showcases the application of the Builder design pattern. This pattern facilitates the step-by-step construction of complex objects, such as our `Client` and `Attorney` entities. By employing the Builder, our system becomes inherently adaptable to future field additions, negating the need for significant changes to existing factory classes. Moreover, it endows classes like `Attorney` and `Client` with the flexibility to introduce distinct fields as needed.
+
+#### 4. Strategy Design Pattern
+The question viewing mechanism in our system showcases the strategy design pattern. The `ViewQuestionInteractorBase` class offers a foundational blueprint for viewing questions. However, the specifics—fetching questions list and user details—are abstracted and variably implemented in derived classes like `ViewRateableQuestionInteractor`. This encapsulation of specific strategies enhances our flexibility to new features with similar requirements.
+
+#### 5. Hybrid MVP and MVC Design Pattern
+Our software adopts a hybrid Model-View-Controller (MVC) and Model-View-Presenter (MVP) design approach. While the Model, represented by interactors, manages data and business logic, the View remains a passive display component. The Controller processes user inputs, and in a nuanced departure from traditional patterns, the Presenter is dedicated to output formatting and display. This blend of MVC and MVP principles enhances modularity, isolates UI changes from business logic, and optimizes testability.
+
+
+---
+
 ## Team Members and Roles
 
 ### Yifan Liu - Project Manager & Machine Learning Specialist
@@ -83,9 +123,6 @@ Xingfu oversees the testing of higher-level entities in the platform, ensuring o
 ### River Qi - Back-End Developer
 River Qi, as a Back-End Developer, spearheads the 'View Question' feature of our platform. His efforts have been instrumental in ensuring that our users can easily access and navigate their queries.
 
----
-## Installation Guide
-[*In Development*]
 
 ---
 ## Matching System Specification
