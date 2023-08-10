@@ -1,13 +1,13 @@
 package adapter.controller;
 
-import businessrule.inputboundary.ClientRegisterInputBoundary;
-import businessrule.requestmodel.ClientRegisterRequestModel;
+import businessrule.inputboundary.UserRegisterInputBoundary;
+import businessrule.requestmodel.RegistrationData;
 import businessrule.responsemodel.RegisterResponseModel;
 
 public class ClientRegisterControl {
-    private final ClientRegisterInputBoundary inputBoundary;
+    private final UserRegisterInputBoundary inputBoundary;
 
-    public ClientRegisterControl(ClientRegisterInputBoundary inputBoundary) {
+    public ClientRegisterControl(UserRegisterInputBoundary inputBoundary) {
         this.inputBoundary = inputBoundary;
     }
 
@@ -15,7 +15,7 @@ public class ClientRegisterControl {
                                          String StateAbb, String PostalCode,
                                          String ethnicity, int age, String gender, String maritalStatus,
                                          int numberOfHousehold, float annualIncome){
-        ClientRegisterRequestModel requestModel = new ClientRegisterRequestModel(userName, email, password1, password2, StateAbb,
+        RegistrationData requestModel = new RegistrationData(userName, email, password1, password2, StateAbb,
                 PostalCode, ethnicity, age, gender, maritalStatus, numberOfHousehold, annualIncome);
         return inputBoundary.create(requestModel);
     }
