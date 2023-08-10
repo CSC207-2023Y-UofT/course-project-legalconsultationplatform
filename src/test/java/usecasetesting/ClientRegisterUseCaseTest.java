@@ -2,10 +2,8 @@ package usecasetesting;
 
 import adapter.controller.ControlContainer;
 import businessrule.gateway.ClientGateway;
-import businessrule.inputboundary.ClientRegisterInputBoundary;
 import businessrule.inputboundary.UserRegisterInputBoundary;
 import businessrule.outputboundary.RegisterOutputBoundary;
-import businessrule.requestmodel.ClientRegisterRequestModel;
 import businessrule.requestmodel.RegistrationData;
 import businessrule.responsemodel.RegisterResponseModel;
 import businessrule.usecase.ClientRegisterInteractor;
