@@ -4,7 +4,7 @@ import adapter.controller.ControlContainer;
 import businessrule.outputboundary.ViewOutputBoundary;
 import businessrule.responsemodel.ViewResponseModel;
 import businessrule.usecase.util.QuestionDisplayFormatter;
-import driver.screen.ApplicationException;
+import entity.ApplicationException;
 import driver.screen.QuestionListUI;
 
 import javax.swing.*;

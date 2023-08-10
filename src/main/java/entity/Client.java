@@ -1,26 +1,13 @@
 package entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import businessrule.requestmodel.RegistrationData;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
 
 @Entity
-public class Client implements User {
-    @Id
-    @JsonProperty(required = true)
-    private int userId;
-    private String name;
-    private String email;
-    private String password;
-    private String stateAbb;
-    @JsonProperty(required = true)
-    private String postalCode;
+public class Client extends UserImp {
     @JsonProperty(required = true)
     private String ethnicity;
     @JsonProperty(required = true)
@@ -33,53 +20,64 @@ public class Client implements User {
     private int numberOfHousehold;
     @JsonProperty(required = true)
     private float annualIncome;
-    @OneToMany(targetEntity = Question.class, fetch = FetchType.EAGER)
-    @JsonProperty(required = true)
-    private List<Question> questionsList;
 
-    public Client() {
-        questionsList = new ArrayList<Question>();
-    }
+    public Client() {super();}
 
-    public Client(int userId, String userName, String email, String password, String stateAbb, String postalCode,
-                  String ethnicity, int age, String gender, String maritalStatus, int numberOfHousehold,
-                  float annualIncome) {
-        this.userId = userId;
-        this.name = userName;
-        this.email = email;
-        this.password = password;
-        this.stateAbb = stateAbb;
-        this.postalCode = postalCode;
-        this.ethnicity = ethnicity;
-        this.age = age;
-        this.gender = gender;
-        this.maritalStatus = maritalStatus;
-        this.numberOfHousehold = numberOfHousehold;
-        this.annualIncome = annualIncome;
+    private Client(Builder builder) {
+        super(builder);
+        this.ethnicity = builder.data.ethnicity;
+        this.age = builder.data.age;
+        this.gender = builder.data.gender;
+        this.maritalStatus = builder.data.maritalStatus;
+        this.numberOfHousehold = builder.data.numberOfHousehold;
+        this.annualIncome = builder.data.annualIncome;
         this.questionsList = new ArrayList<Question>();
     }
 
-    @Override
-    public int getUserId() {
-        return userId;
-    }
+    public static class Builder extends UserImp.Builder<Builder> {
+        public Builder(RegistrationData data) {
+            super(data);
+        }
 
-    @Override
-    public String getPassword() {
-        return password;
-    }
+        public Builder ethnicity(String ethnicity) {
+            this.data.ethnicity = ethnicity;
+            return this;
+        }
 
-    public String getUserName() {return name;}
+        public Builder age(int age) {
+            this.data.age = age;
+            return this;
+        }
 
-    @Override
-    public String getEmail() {return email;}
+        public Builder gender(String gender) {
+            this.data.gender = gender;
+            return this;
+        }
 
-    public String getStateAbb() {
-        return stateAbb;
-    }
+        public Builder maritalStatus(String maritalStatus) {
+            this.data.maritalStatus = maritalStatus;
+            return this;
+        }
 
-    public String getPostalCode() {
-        return postalCode;
+        public Builder numberOfHousehold(int numberOfHousehold) {
+            this.data.numberOfHousehold = numberOfHousehold;
+            return this;
+        }
+
+        public Builder annualIncome(float annualIncome) {
+            this.data.annualIncome = annualIncome;
+            return this;
+        }
+
+        @Override
+        protected Builder self() {
+            return this;
+        }
+
+        @Override
+        public Client build() {
+            return new Client(this);
+        }
     }
 
     public String getEthnicity() {
@@ -106,21 +104,6 @@ public class Client implements User {
         return annualIncome;
     }
 
-    @Override
-    public List<Question> getQuestionsList() {return questionsList;}
-
-    public void setUserId(int userId) {this.userId = userId;}
-
-    public void setUserName(String userName) {this.name = userName;}
-
-    public void setEmail(String email) {this.email = email;}
-
-    public void setPassword(String password) {this.password = password;}
-
-    public void setStateAbb(String stateAbb) {this.stateAbb = stateAbb;}
-
-    public void setPostalCode(String postalCode) {this.postalCode = postalCode;}
-
     public void setEthnicity(String ethnicity) {this.ethnicity = ethnicity;}
 
     public void setAge(int age) {this.age = age;}
@@ -133,17 +116,9 @@ public class Client implements User {
 
     public void setAnnualIncome(float annualIncome) {this.annualIncome = annualIncome;}
 
+    @Transient
     @Override
-    public void addQuestion(Question question) {
-        if (! questionsList.contains(question)) {
-            questionsList.add(question);
-        }
-    }
-
-    @Override
-    public boolean isClient() {
-        return true;
-    }
+    public boolean isClient() {return true;}
 
     @Override
     public boolean isQuestionCloseable(Question question) {
@@ -160,9 +135,6 @@ public class Client implements User {
     public boolean isQuestionReplyable(Question question) {
         return !question.isClose();
     }
-
-    @Override
-    public int hashCode() {return Objects.hashCode(userId);}
 
     @Override
     public boolean equals(Object obj) {
