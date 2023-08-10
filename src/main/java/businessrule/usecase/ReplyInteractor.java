@@ -24,6 +24,7 @@ public class ReplyInteractor implements PostInputBoundary {
     final HomePageOutputBoundary homePageOutputBoundary;
     final PostFactory postFactory;
     final UserGatewayFactory userGatewayFactory;
+    final static String EMPTY_CONTENT = "Type your content here...";
 
     public ReplyInteractor(QuestionGateway questionGateway, PostGateway postGateway, HomePageOutputBoundary homePageOutputBoundary, PostFactory postFactory, UserGatewayFactory userGatewayFactory) {
         this.questionGateway = questionGateway;
@@ -40,6 +41,11 @@ public class ReplyInteractor implements PostInputBoundary {
         UserGateway userGateway = userGatewayFactory.createUserGateway(userId);
         User user = userGateway.get(userId);
         Question question = questionGateway.get(postRequestModel.getQuestionId());
+
+        // check empty content
+        if (postRequestModel.getPostText().equals(EMPTY_CONTENT)) {
+            homePageOutputBoundary.prepareFail("Please specify your reply content.");
+        }
 
         // generate post id
         RandomNumberGenerator generator = new RandomNumberGenerator();

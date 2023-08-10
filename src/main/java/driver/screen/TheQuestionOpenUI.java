@@ -161,13 +161,21 @@ public class TheQuestionOpenUI extends JPanel implements ActionListener {
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
         if ("Post".equals(actionCommand)){
-            System.out.println("The user posts a reply.");
-            PostControl postControl = controlContainer.getPostControl();
-            postControl.createPost(questionId, userId, inputPostArea.getText());
+            System.out.println("The user wants to post a reply.");
+            try {
+                PostControl postControl = controlContainer.getPostControl();
+                postControl.createPost(questionId, userId, inputPostArea.getText());
+            } catch (ApplicationException ex) {
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+            }
         } else if ("Close question".equals(actionCommand)){
-            System.out.println("Client closes the question, return to client home page");
-            CloseQuestionControl closeQuestionControl = controlContainer.getCloseQuestionControl();
-            closeQuestionControl.closeQuestion(questionId, userId);
+            System.out.println("Client want to close the question");
+            try {
+                CloseQuestionControl closeQuestionControl = controlContainer.getCloseQuestionControl();
+                closeQuestionControl.closeQuestion(questionId, userId);
+            } catch (ApplicationException ex){
+                JOptionPane.showMessageDialog(this, ex.getMessage());
+            }
         } else if ("Home Page".equals(actionCommand)){
             ClientHomePageUI homePageUI = new ClientHomePageUI(controlContainer, cardLayout,
                     screens, userId, userName);

@@ -14,12 +14,14 @@ import entity.factory.QuestionFactory;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class AskQuestionInteractor implements QuestionInputBoundary {
     final QuestionGateway questionGateway;
     final TheQuestionOutputBoundary theQuestionOutputBoundary;
     final QuestionFactory questionFactory;
     final ClientGateway clientGateway;
+    final static String EMPTY_TITLE = "";
 
     public AskQuestionInteractor(QuestionGateway questionGateway, TheQuestionOutputBoundary theQuestionOutputBoundary, QuestionFactory questionFactory, ClientGateway clientGateway) {
         this.questionGateway = questionGateway;
@@ -33,8 +35,10 @@ public class AskQuestionInteractor implements QuestionInputBoundary {
         // validate input
         if (questionRequestModel.getQuestionCategory() == null){
             return theQuestionOutputBoundary.prepareFail("Please specify your question type.");
-        } else if (questionRequestModel.getTitle() == null){
+        } else if (Objects.equals(questionRequestModel.getTitle(), EMPTY_TITLE)){
             return theQuestionOutputBoundary.prepareFail("Please specify your question title.");
+        } else if (questionRequestModel.getLegalDeadline() == null){
+            return theQuestionOutputBoundary.prepareFail("Please specify your question's deadline");
         }
 
         // generate question id
