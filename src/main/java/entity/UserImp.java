@@ -35,6 +35,7 @@ public abstract class UserImp implements User{
         this.password = builder.data.password;
         this.stateAbb = builder.data.stateAbb;
         this.postalCode = builder.data.postalCode;
+        this.questionsList = new ArrayList<>();
     }
 
     public static abstract class Builder<T extends Builder<T>> {

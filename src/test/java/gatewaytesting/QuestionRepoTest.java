@@ -1,7 +1,9 @@
 package gatewaytesting;
 
+import businessrule.requestmodel.RegistrationData;
 import driver.database.*;
 import entity.Post;
+import entity.factory.AttorneyFactory;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -30,9 +32,6 @@ public class QuestionRepoTest {
     //Attorney
     final static int ATTORNEY_ID = 150;
     final static int ATTORNEY_ID1 = 151;
-
-    //Repo
-    static QuestionRepo repo = new QuestionRepo();
 
     @BeforeAll
     public static void setUp() {
@@ -70,13 +69,20 @@ public class QuestionRepoTest {
 
         //Attorney
         String name = "obo";
+        String name2 = "joseph";
         String email = "obo.obo@hotmail.com";
-        String password = "obo321";
+        String password = "obo123321";
+        String password2 = "obo123321";
         String stateAbb = "NO";
         String postalCode = "A6AM1M";
 
-        Attorney a = new Attorney(ATTORNEY_ID, name, email, password, stateAbb, postalCode);
-        Attorney a1 = new Attorney(ATTORNEY_ID1, name, email, password, stateAbb, postalCode);
+        RegistrationData registrationData = new RegistrationData(name, email, password, password2, stateAbb, postalCode);
+        RegistrationData registrationData2 = new RegistrationData(name2, email, password, password2, stateAbb, postalCode);
+        AttorneyFactory attorneyFactory = new AttorneyFactory();
+        Attorney a  = attorneyFactory.createUser(registrationData);
+        a.setUserId(ATTORNEY_ID);
+        Attorney a1 = attorneyFactory.createUser(registrationData2);
+        a1.setUserId(ATTORNEY_ID1);
         AttorneyRepository aRepo = new AttorneyRepository();
 
         aRepo.deleteAll();

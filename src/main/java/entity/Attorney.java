@@ -18,7 +18,7 @@ public class Attorney extends UserImp {
 
     public Attorney() {
         super();
-        recommendations = new ArrayList<Question>();
+        recommendations = new ArrayList<>();
     }
 
     public Attorney(Builder builder) {

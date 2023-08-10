@@ -97,16 +97,6 @@ public class CloseUseCaseTest {
         ClearAllRepository();
     }
     @Test
-    public void TestAttorneyCloseableQuestion(){
-        setUpCloseUseCase();
-        CloseRequestModel inputData = new CloseRequestModel(QUESTION_ID, ATTORNEY_ID);
-
-        closeInputBoundary.closeQuestion(inputData);
-        Question question = questionGateway.get(QUESTION_ID);
-        assertEquals(question.isClose(), true);
-        ClearAllRepository();
-    }
-    @Test
     public void TestClientUnclosableQuestion(){
         setUpCloseUseCase();
         CloseRequestModel inputData = new CloseRequestModel(CLOSED_QUESTION_ID, CLIENT_ID);

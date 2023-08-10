@@ -3,8 +3,10 @@ package usecasetesting;
 import adapter.controller.ControlContainer;
 import businessrule.gateway.ClientGateway;
 import businessrule.inputboundary.ClientRegisterInputBoundary;
+import businessrule.inputboundary.UserRegisterInputBoundary;
 import businessrule.outputboundary.RegisterOutputBoundary;
 import businessrule.requestmodel.ClientRegisterRequestModel;
+import businessrule.requestmodel.RegistrationData;
 import businessrule.responsemodel.RegisterResponseModel;
 import businessrule.usecase.ClientRegisterInteractor;
 import driver.database.ClientRepository;
@@ -16,10 +18,23 @@ import static org.junit.Assert.fail;
 
 public class ClientRegisterUseCaseTest {
     final static String PASSWORD = "abcdefghi";
+    final static int USER_ID = 11234567;
+    final static String USER_NAME = "joseph";
+    final static String EMAIL = "test@gmail.com";
+    final static String STATE_ABB = "ca";
+    final static String POSTALCODE = "21500";
+    final String ETHNICITY = "test ethnicity";
+    final int AGE = 30;
+    final static String GENDER = "male";
+    final static String MARITAL_STATUS = "single";
+    final static int NUMBER_OF_HOUSEHOLD = 1;
+    final static float ANNUAL_INCOME = 1000.0f;
+    final static String PASSWORD2 = "abcdefghif";
+
     private ClientFactory clientFactory;
     private ClientGateway clientGateway;
     private RegisterOutputBoundary registerOutputBoundary;
-    private ClientRegisterInputBoundary clientRegisterInputBoundary;
+    private UserRegisterInputBoundary clientRegisterInputBoundary;
     public void setUpClientRegisterUseCase(){
         clientGateway = new ClientRepository();
         clientFactory = new ClientFactory();
@@ -43,52 +58,53 @@ public class ClientRegisterUseCaseTest {
             }
         };
 
-        clientRegisterInputBoundary = new ClientRegisterInteractor(clientGateway, registerOutputBoundary, clientFactory);
+        clientRegisterInputBoundary = new ClientRegisterInteractor(clientGateway, clientFactory, registerOutputBoundary);
 
     }
     @Test
     public void TestSuccessfulRegistration(){
         setUpClientRegisterUseCase();
 
-        ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "test@gmail.com", PASSWORD, PASSWORD, "test state", "21000", "test ethinicity", 18, "male", "single", 1, 1000.0F);
+        RegistrationData inputData = new RegistrationData(USER_NAME, EMAIL, PASSWORD, PASSWORD2, STATE_ABB, POSTALCODE, ETHNICITY, AGE, GENDER, MARITAL_STATUS, NUMBER_OF_HOUSEHOLD, ANNUAL_INCOME);
 
         clientRegisterInputBoundary.create(inputData);
+        ClearAllRepository();
     }
 
     @Test
     public void TestRegistrationFailByAlreadyExists(){
         setUpClientRegisterUseCase();
 
-        ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "test@gmail.com", PASSWORD, PASSWORD, "test state", "21000", "test ethinicity", 18, "male", "single", 1, 1000.0F);
-
+        RegistrationData inputData = new RegistrationData(USER_NAME, EMAIL, PASSWORD, PASSWORD2, STATE_ABB, POSTALCODE, ETHNICITY, AGE, GENDER, MARITAL_STATUS, NUMBER_OF_HOUSEHOLD, ANNUAL_INCOME);
+        clientRegisterInputBoundary.create(inputData);
         clientRegisterInputBoundary.create(inputData);
 
+        ClearAllRepository();
     }
 
     @Test
     public void TestRegistrationFailByPasswordDoesNotMatch(){
         setUpClientRegisterUseCase();
 
-        ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "test@gmail.com", PASSWORD, "a", "test state", "21000", "test ethinicity", 18, "male", "single", 1, 1000.0F);
-
+        RegistrationData inputData = new RegistrationData(USER_NAME, EMAIL, PASSWORD, "a", STATE_ABB, POSTALCODE, ETHNICITY, AGE, GENDER, MARITAL_STATUS, NUMBER_OF_HOUSEHOLD, ANNUAL_INCOME);
         clientRegisterInputBoundary.create(inputData);
-
+        ClearAllRepository();
     }
     @Test
     public void TestRegistrationFailByPasswordLengthTooSmall(){
         setUpClientRegisterUseCase();
 
-        ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "test@gmail.com", "a", "a", "test state", "21000", "test ethinicity", 18, "male", "single", 1, 1000.0F);
+        RegistrationData inputData = new RegistrationData(USER_NAME, EMAIL, "a", "a", STATE_ABB, POSTALCODE, ETHNICITY, AGE, GENDER, MARITAL_STATUS, NUMBER_OF_HOUSEHOLD, ANNUAL_INCOME);
 
         clientRegisterInputBoundary.create(inputData);
-
+        ClearAllRepository();
     }
 
     @Test
     public void TestRegistrationFailByInvalidEmail(){
         setUpClientRegisterUseCase();
 
-        ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "invalid email", PASSWORD, PASSWORD, "test state", "21000", "test ethinicity", 18, "male", "single", 1, 1000.0F);
+        RegistrationData inputData = new RegistrationData(USER_NAME, "abcd", PASSWORD, PASSWORD2, STATE_ABB, POSTALCODE, ETHNICITY, AGE, GENDER, MARITAL_STATUS, NUMBER_OF_HOUSEHOLD, ANNUAL_INCOME);
 
         clientRegisterInputBoundary.create(inputData);
         ClearAllRepository();
@@ -98,7 +114,7 @@ public class ClientRegisterUseCaseTest {
     public void TestRegistrationFailByInvalidAge(){
         setUpClientRegisterUseCase();
 
-        ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "test@gmail.com", PASSWORD, PASSWORD, "test state", "21000", "test ethinicity", 222, "male", "single", 1, 1000.0F);
+        RegistrationData inputData = new RegistrationData(USER_NAME, EMAIL, PASSWORD, PASSWORD2, STATE_ABB, POSTALCODE, ETHNICITY, 300, GENDER, MARITAL_STATUS, NUMBER_OF_HOUSEHOLD, ANNUAL_INCOME);
 
         clientRegisterInputBoundary.create(inputData);
         ClearAllRepository();
@@ -108,7 +124,7 @@ public class ClientRegisterUseCaseTest {
     public void TestRegistrationFailByInvalidPostalCode(){
         setUpClientRegisterUseCase();
 
-        ClientRegisterRequestModel inputData = new ClientRegisterRequestModel("joseph", "test@gmail.com", PASSWORD, PASSWORD, "test state", "abcdefg", "test ethinicity", 18, "male", "single", 1, 1000.0F);
+        RegistrationData inputData = new RegistrationData(USER_NAME, EMAIL, PASSWORD, PASSWORD2, STATE_ABB, "test code", ETHNICITY, AGE, GENDER, MARITAL_STATUS, NUMBER_OF_HOUSEHOLD, ANNUAL_INCOME);
 
         clientRegisterInputBoundary.create(inputData);
         ClearAllRepository();
