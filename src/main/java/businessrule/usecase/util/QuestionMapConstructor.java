@@ -4,12 +4,13 @@ import entity.Question;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
 public class QuestionMapConstructor {
     public Map<Integer, QuestionDisplayFormatter> constructQuestionMap(List<Question> questionList) {
-        Map<Integer, QuestionDisplayFormatter> questionMap = new HashMap<>();
+        Map<Integer, QuestionDisplayFormatter> questionMap = new LinkedHashMap<>();
         if (questionList.isEmpty()) {
             return questionMap;
         }

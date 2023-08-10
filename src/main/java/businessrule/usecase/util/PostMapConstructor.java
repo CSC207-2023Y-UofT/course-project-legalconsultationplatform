@@ -8,6 +8,7 @@ import entity.User;
 
 import java.time.LocalDate;
 import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -20,7 +21,7 @@ public class PostMapConstructor {
         List<Post> postList = question.getPosts();
 
         // initialize post map
-        Map<Integer, PostDisplayFormatter> postMap = new HashMap<>();
+        Map<Integer, PostDisplayFormatter> postMap = new LinkedHashMap<>();
 
         // handle the empty post list
         if (postList.isEmpty()) {return postMap;}
