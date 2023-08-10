@@ -110,9 +110,11 @@ public class AskQuestionUI extends JPanel implements ActionListener {
             QuestionControl questionControl = controlContainer.getQuestionControl();
             Date deadlineDate = deadlineChooser.getDate();
             LocalDate deadlinelocalDate = null;
-            Instant instant = deadlineDate.toInstant();
-            ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
-            deadlinelocalDate = zonedDateTime.toLocalDate();
+            if (deadlineDate != null) {
+                Instant instant = deadlineDate.toInstant();
+                ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+                deadlinelocalDate = zonedDateTime.toLocalDate();
+            }
             try {
                 questionControl.createQuestion((String) questionType.getSelectedItem(),
                         titleForQuestion.getText(), LocalDate.now(), userId, deadlinelocalDate);
