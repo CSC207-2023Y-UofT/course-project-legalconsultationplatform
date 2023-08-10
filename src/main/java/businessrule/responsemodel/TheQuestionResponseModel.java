@@ -1,6 +1,7 @@
 package businessrule.responsemodel;
 
 import businessrule.usecase.util.PostDisplayFormatter;
+import businessrule.usecase.util.QuestionDisplayFormatter;
 
 import java.time.LocalDate;
 import java.util.Map;
@@ -15,7 +16,8 @@ public class TheQuestionResponseModel{
     private final boolean isClose;
     private final Map<Integer, PostDisplayFormatter> postMap;
 
-    public TheQuestionResponseModel(int userId, int questionId, String userName, String title, String type, LocalDate deadline, boolean isClose, Map<Integer, PostDisplayFormatter> postMap) {
+    public TheQuestionResponseModel(int userId, int questionId, String userName, String title, String type,
+                                    LocalDate deadline, boolean isClose, Map<Integer, PostDisplayFormatter> postMap) {
         this.userId = userId;
         this.questionId = questionId;
         this.userName = userName;

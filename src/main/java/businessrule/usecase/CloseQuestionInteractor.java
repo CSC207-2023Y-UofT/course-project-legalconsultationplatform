@@ -4,11 +4,14 @@ import businessrule.inputboundary.CloseInputBoundary;
 import businessrule.outputboundary.HomePageOutputBoundary;
 import businessrule.requestmodel.CloseRequestModel;
 import businessrule.responsemodel.HomePageResponseModel;
+import businessrule.responsemodel.TheQuestionResponseModel;
 import entity.Question;
 import businessrule.gateway.QuestionGateway;
 import entity.User;
 import businessrule.gateway.UserGateway;
 import businessrule.gateway.UserGatewayFactory;
+
+import java.time.LocalDate;
 
 public class CloseQuestionInteractor implements CloseInputBoundary {
     final QuestionGateway questionGateway;
@@ -29,6 +32,7 @@ public class CloseQuestionInteractor implements CloseInputBoundary {
         UserGateway userGateway = userGatewayFactory.createUserGateway(userId);
         User user = userGateway.get(userId);
         Question question = questionGateway.get(questionId);
+
 
         // handle close logic and prepare response model
         boolean isQuestionCloseable = user.isQuestionCloseable(question);

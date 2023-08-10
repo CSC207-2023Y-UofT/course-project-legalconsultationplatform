@@ -162,7 +162,6 @@ public class UIDesign {
     }
 
     public static JPanel questionTitleDrawer(String questionType, String title){
-        JPanel typePanel = new JPanel();
         Color color;
         String abb;
         switch (questionType) {
@@ -207,14 +206,20 @@ public class UIDesign {
                 abb = "Other";
                 break;
         }
+        JPanel typePanel = new JPanel();
+        typePanel.setLayout(new BoxLayout(typePanel, BoxLayout.PAGE_AXIS));
         JLabel typeText = new JLabel(abb);
+        typeText.setAlignmentX(Component.CENTER_ALIGNMENT);
         typeText.setFont(boldFont);
         typeText.setForeground(whiteColor);
         typePanel.setBackground(color);
         typePanel.setPreferredSize(new Dimension(60, 20));
+        typePanel.add(Box.createVerticalGlue());
         typePanel.add(typeText);
+        typePanel.add(Box.createVerticalGlue());
 
-        JLabel titleText = new JLabel(title);
+        String manipulatedTitle = titleManipulation(title);
+        JLabel titleText = new JLabel(manipulatedTitle);
         titleText.setFont(subTitleFont);
         titleText.setOpaque(false);
 
@@ -239,6 +244,14 @@ public class UIDesign {
         messageLabel.setHorizontalAlignment(SwingConstants.RIGHT);
         helloMessage.add(messageLabel);
         return helloMessage;
+    }
+
+    public static String titleManipulation(String input) {
+        if (input.length() <= 15) {
+            return input; // Return unchanged if length is 15 or less
+        } else {
+            return input.substring(0, 15) + "..."; // Truncate and add "..."
+        }
     }
 
 

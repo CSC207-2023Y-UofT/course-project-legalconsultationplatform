@@ -5,6 +5,7 @@ import adapter.controller.ControlContainer;
 import adapter.controller.PostControl;
 import adapter.controller.RateControl;
 import businessrule.usecase.util.PostDisplayFormatter;
+import businessrule.usecase.util.QuestionDisplayFormatter;
 
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
@@ -32,11 +33,10 @@ public class TheQuestionOpenUI extends JPanel implements ActionListener {
 
     JTextArea inputPostArea = new JTextArea(3, 30);
     String[] rateList = {"Satisfied", "Not satisfied"};
-    JComboBox<String> rate = new JComboBox<>(rateList);
 
     public TheQuestionOpenUI(ControlContainer controlContainer, CardLayout cardLayout,
-                               JPanel screens, int userId, String userName, int questionId, String title,
-                               String type, LocalDate deadline, Map<Integer, PostDisplayFormatter> postMap) {
+                             JPanel screens, int userId, String userName, int questionId, String title,
+                             String type, LocalDate deadline, Map<Integer, PostDisplayFormatter> postMap) {
         this.controlContainer = controlContainer;
         this.cardLayout = cardLayout;
         this.screens = screens;
@@ -79,13 +79,21 @@ public class TheQuestionOpenUI extends JPanel implements ActionListener {
         //The spacer
         JPanel bottomSpacer = addSpacer(30);
         JPanel spacer = addSpacer(20);
+        JPanel middleSpacer = addSpacer(20);
 
         //The close function
         JButton closeQuestion = new JButton("Close question");
         closeQuestion.addActionListener(this);
         closeQuestion.setForeground(darkGreenColor);
         setGeneralButton(closeQuestion);
+        setSizeInLayout(closeQuestion, new Dimension(200, 50));
         closeQuestion.setAlignmentX(CENTER_ALIGNMENT);
+
+        //Question list button
+        JButton questionList = new JButton("Questions");
+        UIDesign.setGeneralButton(questionList);
+        questionList.setAlignmentX(CENTER_ALIGNMENT);
+        questionList.addActionListener(this);
 
         //Home Page button
         JButton homePage = new JButton("Home Page");
@@ -100,6 +108,8 @@ public class TheQuestionOpenUI extends JPanel implements ActionListener {
         add(overallInputPost);
         add(closeQuestion);
         add(spacer);
+        add(questionList);
+        add(middleSpacer);
         add(homePage);
         add(bottomSpacer);
     }
@@ -168,6 +178,11 @@ public class TheQuestionOpenUI extends JPanel implements ActionListener {
             System.out.println("Client closes the question, return to client home page");
             CloseQuestionControl closeQuestionControl = controlContainer.getCloseQuestionControl();
             closeQuestionControl.closeQuestion(questionId, userId);
+            JFrame rateFrame = new JFrame("Rate this question");
+            RatePanel ratePanel = new RatePanel(controlContainer, rateFrame, userId, questionId);
+            rateFrame.add(ratePanel);
+            rateFrame.pack();
+            rateFrame.setVisible(true);
         } else if ("Home Page".equals(actionCommand)){
             ClientHomePageUI homePageUI = new ClientHomePageUI(controlContainer, cardLayout,
                     screens, userId, userName);

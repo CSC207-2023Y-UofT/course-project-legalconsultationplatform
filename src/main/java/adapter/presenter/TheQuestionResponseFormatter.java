@@ -4,10 +4,8 @@ import adapter.controller.ControlContainer;
 import businessrule.outputboundary.TheQuestionOutputBoundary;
 import businessrule.responsemodel.TheQuestionResponseModel;
 import businessrule.usecase.util.PostDisplayFormatter;
-import driver.screen.ApplicationException;
-import driver.screen.TheQuestionCloseUI;
-import driver.screen.TheQuestionOpenUI;
-import driver.screen.TheQuestionTopPanel;
+import businessrule.usecase.util.QuestionDisplayFormatter;
+import driver.screen.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -47,10 +45,10 @@ public class TheQuestionResponseFormatter implements TheQuestionOutputBoundary {
 
 
         if (isClose) {
-            TheQuestionCloseUI closeUI = new TheQuestionCloseUI(controlContainer, cardLayout, screens, userId, userName,
-                    questionId, title, type, deadline, postMap);
-            screens.add(closeUI, "Close");
-            cardLayout.show(screens, "Close");
+            TheQuestionCloseUI plainQuestionUI = new TheQuestionCloseUI(controlContainer, cardLayout, screens, userId,
+                    userName, questionId, title, type, deadline, postMap);
+            screens.add(plainQuestionUI, "ClosedQuestion");
+            cardLayout.show(screens, "ClosedQuestion");
         } else {
             TheQuestionOpenUI openUI = new TheQuestionOpenUI(controlContainer, cardLayout, screens, userId, userName,
                     questionId, title, type, deadline, postMap);
