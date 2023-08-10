@@ -119,9 +119,6 @@ To find the optimal pairings, we employ the Hungarian algorithm, maximizing the 
 
 The weight for a match between client i, question j, and attorney k is computed as:
 
-![CodeCogsEqn.svg](..%2F..%2FCodeCogsEqn.svg)
-
-
 ### Predictive Modeling
 
 The probability of client satisfaction is derived from a Random Forest classifier. This model is trained on a rich dataset that incorporates client demographics, question language attributes, and various attorney attributes.
