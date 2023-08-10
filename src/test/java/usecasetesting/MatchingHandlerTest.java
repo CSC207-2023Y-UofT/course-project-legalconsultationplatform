@@ -19,23 +19,12 @@ import entity.factory.AttorneyFactory;
 import entity.factory.ClientFactory;
 import entity.factory.PostFactory;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import adapter.controller.ControlContainer;
-import businessrule.gateway.*;
-import businessrule.inputboundary.PostInputBoundary;
-import businessrule.outputboundary.HomePageOutputBoundary;
-import businessrule.requestmodel.PostRequestModel;
-import businessrule.responsemodel.HomePageResponseModel;
-import businessrule.usecase.ReplyInteractor;
-import driver.database.*;
-
-import entity.*;
-
-import entity.factory.PostFactory;
 import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.time.LocalDate;
+import java.util.List;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.*;
 ;
@@ -52,7 +41,7 @@ public class MatchingHandlerTest {
     private UserGatewayFactory userGatewayFactory;
     private ClientGateway clientGateway;
     private AttorneyGateway attorneyGateway;
-    public void setUpReplyUseCase(){
+    public void setUpUseCase(){
 
         questionGateway = new QuestionRepo();
         postGateway = new PostRepo();
@@ -61,56 +50,84 @@ public class MatchingHandlerTest {
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();;
 
+        String clientName = "joseph";
+        String clientEmail = "bob.bob@gmail.com";
+        String clientPassword = "bob123321";
+        String clientPassword2 = "bob123321";
+        String clientState = "ON";
+        String clientPostalCode = "M1MA6A";
+        String clientEthnicity = "asian";
+        int clientAge = 20;
+        String clientGender = "Male";
+        String clientMaritalStatus = "Single";
+        int clientNumHouseHold = 1;
+        float clientAnnualIncome = 100;
 
-//        String clientName = "joseph";
-//        String clientEmail = "bob.bob@gmail.com";
-//        String clientPassword = "bob123321";
-//        String clientPassword2 = "bob123321";
-//        String clientState = "ON";
-//        String clientPostalCode = "M1MA6A";
-//        String clientEthnicity = "asian";
-//        int clientAge = 20;
-//        String clientGender = "Male";
-//        String clientMaritalStatus = "Single";
-//        int clientNumHouseHold = 1;
-//        float clientAnnualIncome = 100;
-//
-//        RegistrationData registrationData = new RegistrationData(clientName, clientEmail, clientPassword, clientPassword2, clientState, clientPostalCode, clientEthnicity, clientAge, clientGender, clientMaritalStatus, clientNumHouseHold, clientAnnualIncome);
-//
-//        ClientFactory clientFactory = new ClientFactory();
-//        Client c  = clientFactory.createUser(registrationData);
-//
-//        clientGateway.save(c);
-//
-//        //Attorney
-//        String attorneyUsername = "yao";
-//        String attorneyEmail = "yao.yao@gmail.com";
-//        String attorneyPassword = "yao123321";
-//        String attorneyPassword2 = "yao123321";
-//        String attorneyState = "ON";
-//        String attorneyPostalCode = "M8MO1P";
-//
-//        RegistrationData registrationData2 = new RegistrationData(attorneyUsername, attorneyEmail, attorneyPassword, attorneyPassword2, attorneyState, attorneyPostalCode);
-//        AttorneyFactory attorneyFactory = new AttorneyFactory();
-//        Attorney a = attorneyFactory.createUser(registrationData2);
-//
-//        attorneyGateway.save(a);
-//
-//        //Question
-//        String type = "Theft";
-//        String title = "hi";
-//        LocalDate createAt = LocalDate.now();
-//        LocalDate legalDeadLine = LocalDate.now();
-//
-//        Question q = new Question(QUESTION_ID, type, title, createAt, CLIENT_ID, legalDeadLine);
-//
-//        questionGateway.save(q);
+        clientGateway.deleteAll();
+        attorneyGateway.deleteAll();
+        questionGateway.deleteAll();
+
+        RegistrationData registrationData = new RegistrationData(clientName, clientEmail, clientPassword, clientPassword2, clientState, clientPostalCode, clientEthnicity, clientAge, clientGender, clientMaritalStatus, clientNumHouseHold, clientAnnualIncome);
+
+        ClientFactory clientFactory = new ClientFactory();
+        Client c  = clientFactory.createUser(registrationData);
+
+        clientGateway.save(c);
+
+        //Attorney
+        String attorneyUsername = "yao";
+        String attorneyEmail = "yao.yao@gmail.com";
+        String attorneyPassword = "yao123321";
+        String attorneyPassword2 = "yao123321";
+        String attorneyState = "ON";
+        String attorneyPostalCode = "M8MO1P";
+
+        RegistrationData registrationData2 = new RegistrationData(attorneyUsername, attorneyEmail, attorneyPassword, attorneyPassword2, attorneyState, attorneyPostalCode);
+        AttorneyFactory attorneyFactory = new AttorneyFactory();
+        Attorney a = attorneyFactory.createUser(registrationData2);
+
+        attorneyGateway.save(a);
+
+        //Question
+        String type = "Theft";
+        String title = "hi";
+        LocalDate createAt = LocalDate.now();
+        LocalDate legalDeadLine = LocalDate.now();
+
+        Question q = new Question(QUESTION_ID, type, title, createAt, CLIENT_ID, legalDeadLine);
+        q.setTakenByAttorney(ATTORNEY_ID);
+
+        questionGateway.save(q);
     }
 
     @Test
     public void GetMatchingTest() throws IOException {
+        setUpUseCase();
         MatchingHandler matchingHandler = new MatchingHandler(attorneyGateway, clientGateway, questionGateway);
-        System.out.println(questionGateway.getNotTakenQuestion());
-        System.out.println(matchingHandler.getMatching());
+        System.out.println(matchingHandler.getMatching().getMatchingResult());
+        ClearAllRepository();
     }
+
+    @Test
+    public void ContructWeightTest() throws IOException {
+        setUpUseCase();
+        MatchingHandler matchingHandler = new MatchingHandler(attorneyGateway, clientGateway, questionGateway);
+        List<Question> questionList = questionGateway.getNotTakenQuestion();
+        List<Attorney> attorneyList = attorneyGateway.getAll();
+        Map<Integer[], Double> weights = matchingHandler.constructWeight(questionList, attorneyList);
+        System.out.println(weights);
+    }
+
+    public void ClearAllRepository(){
+        questionGateway = new QuestionRepo();
+        clientGateway = new ClientRepository();
+        attorneyGateway = new AttorneyRepository();
+        postGateway = new PostRepo();
+        clientGateway.deleteAll();
+        questionGateway.deleteAll();
+        attorneyGateway.deleteAll();
+        postGateway.deleteAll();
+    }
+
+
 }

@@ -3,9 +3,11 @@ package businessrule.usecase.util;
 import businessrule.gateway.AttorneyGateway;
 import businessrule.gateway.ClientGateway;
 import businessrule.gateway.QuestionGateway;
+import businessrule.requestmodel.RegistrationData;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.io.*;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import driver.database.AttorneyRepository;
 import driver.database.ClientRepository;
 import driver.database.QuestionRepo;
@@ -20,6 +22,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import entity.factory.ClientFactory;
+
 import java.nio.charset.StandardCharsets;
 
 public class MatchingHandler {
@@ -87,7 +91,7 @@ public class MatchingHandler {
         return objectMapper.readValue(result, new TypeReference<>() {});
     }
 
-    private Map<Integer[], Double> constructWeight(List<Question> questionList, List<Attorney> attorneyList) throws IOException{
+    public Map<Integer[], Double> constructWeight(List<Question> questionList, List<Attorney> attorneyList) throws IOException{
         // initialize the map to store weights
         Map<Integer[], Double> weights = new HashMap<>();
 
@@ -141,6 +145,7 @@ public class MatchingHandler {
 
     private String serialize(Object entity) {
         try {
+            objectMapper.registerModule(new JavaTimeModule());
             return objectMapper.writeValueAsString(entity);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
@@ -157,9 +162,28 @@ public class MatchingHandler {
         AttorneyGateway attorneyGateway1 = new AttorneyRepository();
         QuestionGateway questionGateway1 = new QuestionRepo();
 
+        String clientName = "joseph";
+        String clientEmail = "bob.bob@gmail.com";
+        String clientPassword = "bob123321";
+        String clientPassword2 = "bob123321";
+        String clientState = "ON";
+        String clientPostalCode = "M1MA6A";
+        String clientEthnicity = "asian";
+        int clientAge = 20;
+        String clientGender = "Male";
+        String clientMaritalStatus = "Single";
+        int clientNumHouseHold = 1;
+        float clientAnnualIncome = 100;
+
+        RegistrationData registrationData = new RegistrationData(clientName, clientEmail, clientPassword, clientPassword2, clientState, clientPostalCode, clientEthnicity, clientAge, clientGender, clientMaritalStatus, clientNumHouseHold, clientAnnualIncome);
+
+        ClientFactory clientFactory = new ClientFactory();
+        Client c  = clientFactory.createUser(registrationData);
+
         MatchingHandler m = new MatchingHandler(attorneyGateway1, clientGateway1, questionGateway1);
-        Client c = new Client();
-        c.setUserId(CLIENT_ID);
+//        Client c = new Client();
+//        c.setUserId(CLIENT_ID);
+//        c.setAge(20);
         Question q = new Question();
         q.setQuestionId(QUESTION_ID);
         Attorney a = new Attorney();

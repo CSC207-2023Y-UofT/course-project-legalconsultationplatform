@@ -1,7 +1,5 @@
 package businessrule.usecase.util;
 
-import businessrule.usecase.util.Matching;
-
 import java.util.List;
 
 public class MatchingResult {
