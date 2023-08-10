@@ -1,6 +1,8 @@
 package controllertesting;
 
 import adapter.controller.ClientRegisterControl;
+import businessrule.inputboundary.UserRegisterInputBoundary;
+import businessrule.requestmodel.RegistrationData;
 import businessrule.responsemodel.RegisterResponseModel;
 
 import org.junit.jupiter.api.Test;
@@ -33,8 +35,8 @@ public class ClientRegisterControlTest {
     public void testCreateClientRegistration() {
         setUpClientRegisterControl();
 
-        ClientRegisterInputBoundary mockInputBoundary = mock(ClientRegisterInputBoundary.class);
-        when(mockInputBoundary.create(any(ClientRegisterRequestModel.class))).thenReturn(expectedResponse);
+        UserRegisterInputBoundary mockInputBoundary = mock(UserRegisterInputBoundary.class);
+        when(mockInputBoundary.create(any(RegistrationData.class))).thenReturn(expectedResponse);
 
         ClientRegisterControl control = new ClientRegisterControl(mockInputBoundary);
 
@@ -46,6 +48,6 @@ public class ClientRegisterControlTest {
         assertNotNull(actualResponse);
 
         // Verify interactions
-        verify(mockInputBoundary, times(1)).create(any(ClientRegisterRequestModel.class));
+        verify(mockInputBoundary, times(1)).create(any(RegistrationData.class));
     }
 }
