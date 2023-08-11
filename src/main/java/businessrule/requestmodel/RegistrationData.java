@@ -1,5 +1,7 @@
 package businessrule.requestmodel;
 
+import java.util.Set;
+
 public class RegistrationData {
     // common fields for user registration
     public int userId;
@@ -18,9 +20,10 @@ public class RegistrationData {
     public float annualIncome;
     public String password2;
 
-    // fields for attorney registration TBD
+    // fields for attorney registration
+    public Set<String> professionals;
 
-    // for attorney registration
+    // for user
     public RegistrationData(String userName, String email, String password, String password2, String stateAbb, String postalCode) {
         this.userName = userName;
         this.email = email;
@@ -28,7 +31,6 @@ public class RegistrationData {
         this.password2 = password2;
         this.stateAbb = stateAbb;
         this.postalCode = postalCode;
-
     }
 
     // for client registration
@@ -45,6 +47,16 @@ public class RegistrationData {
         this.maritalStatus = maritalStatus;
         this.numberOfHousehold = numberOfHousehold;
         this.annualIncome = annualIncome;
+    }
+
+    public RegistrationData(String userName, String email, String password, String password2, String stateAbb, String postalCode, Set<String> professionals) {
+        this.userName = userName;
+        this.email = email;
+        this.password = password;
+        this.password2 = password2;
+        this.stateAbb = stateAbb;
+        this.postalCode = postalCode;
+        this.professionals = professionals;
     }
 
 

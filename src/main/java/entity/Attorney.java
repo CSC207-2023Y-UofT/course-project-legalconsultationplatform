@@ -2,13 +2,17 @@ package entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 import businessrule.requestmodel.RegistrationData;
+import driver.database.AttorneyRepository;
 
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.OneToMany;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Set;
 
 /**
  * This is a class representing attorney user.
@@ -22,10 +26,13 @@ public class Attorney extends UserImp {
     @OneToMany(targetEntity = Question.class, fetch = FetchType.EAGER)
     @JsonProperty(required = true)
     private List<Question> recommendations;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<String> professionals;
 
     public Attorney() {
         super();
         recommendations = new ArrayList<>();
+        professionals = new HashSet<>();
     }
 
     public Attorney(Builder builder) {
@@ -34,6 +41,11 @@ public class Attorney extends UserImp {
     public static class Builder extends UserImp.Builder<Builder> {
         public Builder(RegistrationData data) {
             super(data);
+        }
+
+        public Attorney.Builder professionals(Set<String> professionals) {
+            this.data.professionals = professionals;
+            return this;
         }
         @Override
         protected Attorney.Builder self() {
@@ -57,6 +69,10 @@ public class Attorney extends UserImp {
             recommendations.add(question);
         }
     }
+
+    public Set<String> getProfessionals() {return professionals;}
+
+    public void setProfessionals(Set<String> professionals) {this.professionals = professionals;}
 
     @Override
     public boolean isClient() {

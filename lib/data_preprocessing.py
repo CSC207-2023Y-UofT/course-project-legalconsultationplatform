@@ -48,6 +48,19 @@ def data_preprocessing(client_dict, question_dict, attorney_dict):
     return standardize_data(data)
 
 
+def professional_match(question: dict, attorney: dict) -> int:
+    if not attorney['professionals']:
+        return 0
+    for professional in attorney['professionals']:
+        if question['type'] == professional:
+            return 1
+    return 0
+
+
+def location_match(client: dict, attorney: dict) -> int:
+    return int(client['stateAbb'] == attorney['stateAbb'])
+
+
 def standardize_data(input_data):
     """
     :param input_data: input data follows the sklearn API

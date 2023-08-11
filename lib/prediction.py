@@ -17,7 +17,9 @@ def calculate_probability(client: dict, question: dict, attorney: dict):
     data = data_preprocessing.data_preprocessing(client,
                                                  question,
                                                  attorney)
-    return float(model.predict_proba(data)[:, 1])
+    match1 = data_preprocessing.professional_match(question, attorney)
+    match2 = data_preprocessing.location_match(client, attorney)
+    return float(model.predict_proba(data)[:, 1] * 0.5 + match1 * 0.25 + match2 * 0.25)
 
 
 if __name__ == "__main__":
