@@ -14,6 +14,12 @@ public interface User {
     String getEmail();
     List<Question> getQuestionsList();
     void addQuestion(Question question);
+    void setUserName(String name);
+    void setEmail(String value);
+    void setStateAbb(String value);
+    void setPostalCode(String value);
+    void setPassword(String value);
+    void setUserId(int value);
     boolean isClient();
     boolean isQuestionCloseable(Question question);
     boolean isQuestionSelectable(Question question);

@@ -5,7 +5,7 @@ import adapter.controller.ControlContainer;
 import businessrule.outputboundary.TheQuestionOutputBoundary;
 import businessrule.responsemodel.TheQuestionResponseModel;
 import businessrule.usecase.util.PostDisplayFormatter;
-import driver.screen.ApplicationException;
+import entity.ApplicationException;
 import driver.screen.TheQuestionUI;
 
 import javax.swing.*;

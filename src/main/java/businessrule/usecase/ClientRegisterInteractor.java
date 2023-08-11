@@ -1,92 +1,61 @@
 package businessrule.usecase;
 
+
 import businessrule.gateway.ClientGateway;
-import businessrule.inputboundary.ClientRegisterInputBoundary;
 import businessrule.outputboundary.RegisterOutputBoundary;
-import businessrule.requestmodel.ClientRegisterRequestModel;
 import businessrule.responsemodel.RegisterResponseModel;
+import entity.ApplicationException;
 import entity.Client;
 import entity.factory.ClientFactory;
 import businessrule.usecase.util.CredentialChecker;
-import businessrule.usecase.util.RandomNumberGenerator;
+import businessrule.requestmodel.RegistrationData;
 
-/**
- * This class represents the interactor responsible for handling client registration.
- *
- * This interactor validates input data, generates a unique client ID, creates a new client entity,
- * and prepares the response for client registration.
- */
-public class ClientRegisterInteractor implements ClientRegisterInputBoundary {
-    final ClientGateway clientGateway;
-    final RegisterOutputBoundary outputBoundary;
-    final ClientFactory clientFactory;
+public class ClientRegisterInteractor extends UserRegisterInteractor<ClientGateway, ClientFactory, Client> {
 
-    /**
-     * Constructor for ClientRegisterInteractor.
-     *
-     * @param clientGateway The gateway for managing client entities.
-     * @param outputBoundary The output boundary for preparing registration response models.
-     * @param clientFactory The factory for creating client entities.
-     */
-    public ClientRegisterInteractor(ClientGateway clientGateway, RegisterOutputBoundary outputBoundary, ClientFactory clientFactory) {
-        this.clientGateway = clientGateway;
-        this.outputBoundary = outputBoundary;
-        this.clientFactory = clientFactory;
+    public ClientRegisterInteractor(ClientGateway clientGateway, ClientFactory clientFactory, RegisterOutputBoundary outputBoundary) {
+        super(clientGateway, clientFactory, outputBoundary);
     }
 
-    /**
-     * Create a new client based on the provided request model.
-     *
-     * @param requestModel The request model containing client registration details.
-     * @return The response model for the client registration process.
-     */
     @Override
-    public RegisterResponseModel create(ClientRegisterRequestModel requestModel){
+    public RegisterResponseModel create(RegistrationData requestModel) {
+        try {checkCredential(requestModel);}
+        catch (ApplicationException e) {
+            return outputBoundary.prepareFail(e.getMessage());
+        }
+        int userId = generateId();
+        String message = "Your userId is " + userId;
+        return outputBoundary.prepareSuccess(message);
+    }
+
+    private void checkCredential(RegistrationData requestModel) throws ApplicationException{
         // prepare input data
-        String inputUserName = requestModel.getUserName();
-        String inputEmail = requestModel.getEmail();
-        String inputPassword1 = requestModel.getPassword();
-        String inputPassword2 = requestModel.getPassword2();
-        String inputStateAbb = requestModel.getStateAbb();
-        String inputPostalCode = requestModel.getPostalCode();
-        String inputEthnicity = requestModel.getEthnicity();
-        int inputAge = requestModel.getAge();
-        String inputGender = requestModel.getGender();
-        String inputMaritalStatus = requestModel.getMaritalStatus();
-        int inputNumberOfHousehold = requestModel.getNumberOfHousehold();
-        float inputAnnualIncome = requestModel.getAnnualIncome();
+        String inputUserName = requestModel.userName;
+        String inputEmail = requestModel.email;
+        String inputPassword1 = requestModel.password;
+        String inputPassword2 = requestModel.password2;
+        String inputStateAbb = requestModel.stateAbb;
+        String inputPostalCode = requestModel.postalCode;
+        String inputEthnicity = requestModel.ethnicity;
+        int inputAge = requestModel.age;
+        String inputGender = requestModel.gender;
+        String inputMaritalStatus = requestModel.maritalStatus;
+        int inputNumberOfHousehold = requestModel.numberOfHousehold;
+        float inputAnnualIncome = requestModel.annualIncome;
 
         // validate input data
         CredentialChecker checker = new CredentialChecker();
-        if (clientGateway.existsByName(inputUserName)) {
-            return outputBoundary.prepareFail("User name already exists");
+        if (userGateway.existsByName(inputUserName)) {
+            throw new ApplicationException("User name already exists");
         } else if (!inputPassword1.equals(inputPassword2)) {
-            return outputBoundary.prepareFail("Passwords do not match");
+            throw new ApplicationException("Passwords does not match");
         } else if (inputPassword1.length() < 8) {
-            return outputBoundary.prepareFail("Password is less than 8 characters");
+            throw new ApplicationException("Password is less than 8 characters");
         } else if (!checker.checkEmail(inputEmail)) {
-            return outputBoundary.prepareFail("Email is invalid");
+            throw new ApplicationException("Email is invalid");
         } else if (!checker.checkAge(inputAge)) {
-            return outputBoundary.prepareFail("Age is invalid");
+            throw new ApplicationException("Age is invalid");
         } else if (!checker.checkPostalCode(inputPostalCode)) {
-            return outputBoundary.prepareFail("Postal Code is invalid");
+            throw new ApplicationException("Postal Code is invalid");
         }
-
-        // create user ID
-        RandomNumberGenerator generator = new RandomNumberGenerator();
-        int randomUserId = generator.generateClientId(8);
-        boolean exists = clientGateway.existsById(randomUserId);
-        while (exists) {
-            randomUserId = generator.generateClientId(8);
-            exists = clientGateway.existsById(randomUserId);
-        }
-
-        // add user
-        Client client = clientFactory.create(randomUserId, inputUserName, inputEmail,
-                inputPassword1, inputStateAbb, inputPostalCode, inputEthnicity, inputAge,
-                inputGender, inputMaritalStatus, inputNumberOfHousehold, inputAnnualIncome);
-        clientGateway.save(client);
-        String message = "Your userId is " + randomUserId;
-        return outputBoundary.prepareSuccess(message);
     }
 }

@@ -3,7 +3,7 @@ package adapter.presenter;
 import adapter.controller.ControlContainer;
 import businessrule.outputboundary.RegisterOutputBoundary;
 import businessrule.responsemodel.RegisterResponseModel;
-import driver.screen.ApplicationException;
+import entity.ApplicationException;
 import driver.screen.WelcomeUI;
 
 import javax.swing.*;

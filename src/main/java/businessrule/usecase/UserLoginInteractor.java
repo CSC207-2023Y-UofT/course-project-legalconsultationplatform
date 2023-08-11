@@ -7,9 +7,7 @@ import businessrule.requestmodel.UserLoginRequestModel;
 import businessrule.responsemodel.HomePageResponseModel;
 import businessrule.gateway.UserGateway;
 import entity.User;
-import driver.screen.ApplicationException;
-
-import java.time.LocalDateTime;
+import entity.ApplicationException;
 
 /**
  * This class represents the interactor responsible for handling user login.

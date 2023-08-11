@@ -1,4 +1,4 @@
-package driver.screen;
+package entity;
 
 /**
  * This class represents a custom runtime exception that can be thrown during application execution.
