@@ -17,10 +17,8 @@ import entity.Attorney;
 import entity.Client;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
+
 import com.fasterxml.jackson.databind.ObjectMapper;
 import entity.factory.ClientFactory;
 
@@ -74,10 +72,16 @@ public class MatchingHandler {
     }
 
     private List<Integer[]> pythonMatching(List<Integer> questions, List<Integer> attorneys, Map<Integer[], Double> weights) throws IOException{
+        Map<String, Double> stringWeights = new HashMap<>();
+        for (Map.Entry<Integer[], Double> entry : weights.entrySet()) {
+            String keyAsString = Arrays.toString(entry.getKey());
+            stringWeights.put(keyAsString, entry.getValue());
+        }
+
         Map<String, Object> javaPara = new HashMap<>();
         javaPara.put("questions", questions);
         javaPara.put("attorneys", attorneys);
-        javaPara.put("weights", weights);
+        javaPara.put("weights", stringWeights);
         String input = serialize(javaPara);
 
         // Java code to write to a temp file

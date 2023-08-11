@@ -103,7 +103,7 @@ def calculate_question_length(question_dict):
 
 def ddl_at(question_dict):
     """
-    :return: return the time the question was created and the legal deadline of
+    :return: return gap between the time the question was created and the legal deadline of
     that question
     """
     create_at = question_dict['createAt']
@@ -242,7 +242,7 @@ def calculate_distance(attorney_dict, client_dict):
                int(client_dict['postalCode']))
 
 
-def convert_date(date: str):
+def convert_date(date: list):
     if date is None:
         date = np.nan
-    return pd.to_datetime(date)
+    return pd.to_datetime(f"{date[0]}-{date[1]}-{date[2]}")

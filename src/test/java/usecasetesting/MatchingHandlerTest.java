@@ -8,6 +8,8 @@ import businessrule.requestmodel.RegistrationData;
 import businessrule.responsemodel.HomePageResponseModel;
 import businessrule.usecase.ReplyInteractor;
 import businessrule.usecase.util.MatchingHandler;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import driver.database.AttorneyRepository;
 import driver.database.ClientRepository;
 import driver.database.PostRepo;
@@ -23,8 +25,7 @@ import org.junit.jupiter.api.Test;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 import static org.junit.jupiter.api.Assertions.*;
 ;
@@ -55,7 +56,7 @@ public class MatchingHandlerTest {
         String clientPassword = "bob123321";
         String clientPassword2 = "bob123321";
         String clientState = "ON";
-        String clientPostalCode = "M1MA6A";
+        String clientPostalCode = "67890";
         String clientEthnicity = "asian";
         int clientAge = 20;
         String clientGender = "Male";
@@ -70,6 +71,7 @@ public class MatchingHandlerTest {
         RegistrationData registrationData = new RegistrationData(clientName, clientEmail, clientPassword, clientPassword2, clientState, clientPostalCode, clientEthnicity, clientAge, clientGender, clientMaritalStatus, clientNumHouseHold, clientAnnualIncome);
 
         ClientFactory clientFactory = new ClientFactory();
+        registrationData.setUserId(CLIENT_ID);
         Client c  = clientFactory.createUser(registrationData);
 
         clientGateway.save(c);
@@ -80,10 +82,11 @@ public class MatchingHandlerTest {
         String attorneyPassword = "yao123321";
         String attorneyPassword2 = "yao123321";
         String attorneyState = "ON";
-        String attorneyPostalCode = "M8MO1P";
+        String attorneyPostalCode = "12345";
 
         RegistrationData registrationData2 = new RegistrationData(attorneyUsername, attorneyEmail, attorneyPassword, attorneyPassword2, attorneyState, attorneyPostalCode);
         AttorneyFactory attorneyFactory = new AttorneyFactory();
+        registrationData2.setUserId(ATTORNEY_ID);
         Attorney a = attorneyFactory.createUser(registrationData2);
 
         attorneyGateway.save(a);
@@ -115,7 +118,7 @@ public class MatchingHandlerTest {
         List<Question> questionList = questionGateway.getNotTakenQuestion();
         List<Attorney> attorneyList = attorneyGateway.getAll();
         Map<Integer[], Double> weights = matchingHandler.constructWeight(questionList, attorneyList);
-        System.out.println(weights);
+        System.out.println(new ObjectMapper().writeValueAsString(weights));
     }
 
     public void ClearAllRepository(){
@@ -127,6 +130,7 @@ public class MatchingHandlerTest {
         questionGateway.deleteAll();
         attorneyGateway.deleteAll();
         postGateway.deleteAll();
+
     }
 
 
