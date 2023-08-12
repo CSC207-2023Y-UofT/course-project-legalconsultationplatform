@@ -49,9 +49,9 @@ public class ReplyInteractor implements PostInputBoundary {
         String userType;
         if (isQuestionReplyable) {
             // if replyable, prepare post entity and update related field
-            Post post = postFactory.create(randomPostId, postRequestModel.getQuestionId(), now, postRequestModel.getPostText(), postRequestModel.getUserId());
-            questionGateway.updatePosts(postRequestModel.getQuestionId(), post);
+            Post post = createPostEntity(postRequestModel);
             postGateway.save(post);
+            questionGateway.updatePosts(postRequestModel.getQuestionId(), post);
             questionGateway.updateIsTaken(question.getQuestionId(), question.isTaken());
             questionGateway.updateTakenByAttorney(question.getQuestionId(), question.getTakenByAttorney());
             questionGateway.updateTakenAt(question.getQuestionId(), question.getTakenAt());
