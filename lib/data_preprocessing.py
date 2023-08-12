@@ -37,11 +37,11 @@ def data_preprocessing(client_dict, question_dict, attorney_dict):
     client_is_single = int(client_dict['maritalStatus'] == 'Single')
 
     data = np.array([client_age, client_num_household, client_income,
-                      client_is_caucasian, client_is_female, question_sentiment,
-                      question_len, question_emergency, attorney_sentiment,
-                      attorney_len, attorney_num_question,
-                      attorney_answer_within, area_match, ddl_match, distance,
-                      client_is_divorced, client_is_married, client_is_single])
+                     client_is_caucasian, client_is_female, question_sentiment,
+                     question_len, question_emergency, attorney_sentiment,
+                     attorney_len, attorney_num_question,
+                     attorney_answer_within, area_match, ddl_match, distance,
+                     client_is_divorced, client_is_married, client_is_single])
     mask = np.isnan(data)
     data[mask] = 0
     data = data.reshape(1, -1)
@@ -228,8 +228,7 @@ def will_ddl_pass(attorney_dict, question_dict):
     :return: return true iff the attorney typically answered the question
     before the question's ddl
     """
-    return int((ddl_at(question_dict).total_seconds()) / (24 * 3600) < \
-        calculate_attorney_efficiency(attorney_dict))
+    return int((ddl_at(question_dict).total_seconds()) / (24 * 3600) < calculate_attorney_efficiency(attorney_dict))
 
 
 def calculate_distance(attorney_dict, client_dict):

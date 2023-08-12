@@ -18,10 +18,8 @@ import entity.Client;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.*;
-
 import com.fasterxml.jackson.databind.ObjectMapper;
 import entity.factory.ClientFactory;
-
 import java.nio.charset.StandardCharsets;
 
 public class MatchingHandler {
@@ -52,7 +50,6 @@ public class MatchingHandler {
 
         // update
         for (Matching matching: matchingResult.getMatchingResult()){
-            Attorney attorney = (Attorney) attorneyGateway.get(matching.getAttorneyId());
             Question question = questionGateway.get(matching.getQuestionId());
             attorneyGateway.addRecommendation(matching.getAttorneyId(), question);
         }
@@ -64,7 +61,7 @@ public class MatchingHandler {
         Map<Integer[], Double> weights = constructWeight(questionList, attorneyList);
 
         List<Integer[]> matchingResult = pythonMatching(getQuestionIdList(questionList), getAttorneyIdList(attorneyList), weights);
-        List<Matching> matchingList = new ArrayList<Matching>();
+        List<Matching> matchingList = new ArrayList<>();
         for (Integer[] match: matchingResult) {
             matchingList.add(new Matching(match[0], match[1]));
         }
@@ -101,7 +98,7 @@ public class MatchingHandler {
 
         // Loop over question and attorney list
         for (Question question: questionList) {
-            Client client = (Client) clientGateway.get(question.getAskedByClient());
+            Client client = clientGateway.get(question.getAskedByClient());
             for (Attorney attorney: attorneyList){
                 // initialize the array to store question, attorney id pair
                 Integer[] pair = new Integer[]{question.getQuestionId(), attorney.getUserId()};
