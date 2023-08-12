@@ -33,8 +33,9 @@ public class ReplyInteractor implements PostInputBoundary {
         this.userGatewayFactory = userGatewayFactory;
     }
 
+
     @Override
-    public HomePageResponseModel createPost(PostRequestModel postRequestModel) {
+    public HomePageResponseModel createPost(PostRequestModel postRequestModel){
         // get input data
         int userId = postRequestModel.getUserId();
         UserGateway userGateway = userGatewayFactory.createUserGateway(userId);
@@ -67,8 +68,32 @@ public class ReplyInteractor implements PostInputBoundary {
             userGateway.updateQuestionList(userId, question);
             if (user.isClient()){
                 userType = "Client";
+                if (question.isTaken()) {
+                    try {
+                        UserGateway attorneyGateway = userGatewayFactory.createUserGateway(question.getTakenByAttorney());
+                        User attorney = attorneyGateway.get(question.getTakenByAttorney());
+                        // Send email notification to the attorney
+                        String attorneyEmail = attorney.getEmail();
+                        String title = "Please reply to the client";
+                        String content = "A new reply has been posted to your taken question. Please check our platform for details.";
+                        EmailNotificationSender.sendEmail(attorneyEmail, title, content);
+                    } catch (Exception e){
+                        e.printStackTrace();
+                    }
+                }
             } else{
                 userType = "Attorney";
+                try {
+                    UserGateway clientGateway = userGatewayFactory.createUserGateway(userId);
+                    User client = clientGateway.get(question.getTakenByAttorney());
+                    // Send email notification to the attorney
+                    String clientEmail = client.getEmail();
+                    String title = "New Reply to Your Question";
+                    String content = "A new reply has been posted to your question. Please check our platform for details.";
+                    EmailNotificationSender.sendEmail(clientEmail, title, content);
+                } catch (Exception e){
+                    e.printStackTrace();
+                }
             }
             HomePageResponseModel homePageResponseModel = new HomePageResponseModel(user.getUserId(), user.getUserName(), userType);
             return homePageOutputBoundary.prepareSuccess(homePageResponseModel);
