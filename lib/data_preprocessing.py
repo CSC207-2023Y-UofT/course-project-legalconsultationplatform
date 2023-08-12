@@ -237,8 +237,13 @@ def calculate_distance(attorney_dict, client_dict):
     postal code. Note: this is a simplified version of distance measure due to
     the resources constraint
     """
-    return abs(int(attorney_dict['postalCode']) -
-               int(client_dict['postalCode']))
+    a_code = attorney_dict['postalCode']
+    c_code = client_dict['postalCode']
+    if not a_code:
+        a_code = 0
+    if not c_code:
+        c_code = 0
+    return abs(int(a_code) - int(c_code))
 
 
 def convert_date(date: list):
