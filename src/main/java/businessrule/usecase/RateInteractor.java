@@ -1,16 +1,13 @@
 package businessrule.usecase;
 
 import businessrule.gateway.ClientGateway;
-import businessrule.gateway.UserGatewayFactory;
 import businessrule.inputboundary.RateInputBoundary;
 import businessrule.outputboundary.HomePageOutputBoundary;
 import businessrule.requestmodel.RateRequestModel;
 import businessrule.responsemodel.HomePageResponseModel;
 import businessrule.gateway.QuestionGateway;
-import businessrule.gateway.UserGateway;
 import entity.Client;
 import entity.Question;
-import entity.User;
 
 public class RateInteractor implements RateInputBoundary {
 

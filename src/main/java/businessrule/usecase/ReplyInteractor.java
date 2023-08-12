@@ -37,7 +37,7 @@ public class ReplyInteractor implements PostInputBoundary {
     public HomePageResponseModel createPost(PostRequestModel postRequestModel) {
         // get input data
         int userId = postRequestModel.getUserId();
-        UserGateway userGateway = userGatewayFactory.createUserGateway(userId);
+        UserGateway<? extends User> userGateway = userGatewayFactory.createUserGateway(userId);
         User user = userGateway.get(userId);
         Question question = questionGateway.get(postRequestModel.getQuestionId());
 

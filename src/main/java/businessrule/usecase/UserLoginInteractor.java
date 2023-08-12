@@ -25,7 +25,7 @@ public class UserLoginInteractor implements UserLoginInputBoundary{
         String inputPassword = requestModel.getPassword();
 
         // use user gateway factory to retrieve the correct type of repo
-        UserGateway userGateway;
+        UserGateway<? extends User> userGateway;
         try {
             userGateway = userGatewayFactory.createUserGateway(inputUserId);
         } catch (ApplicationException e) {

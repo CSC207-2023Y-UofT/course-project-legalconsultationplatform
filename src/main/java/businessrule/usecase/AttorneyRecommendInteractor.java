@@ -7,7 +7,6 @@ import businessrule.requestmodel.ViewRequestModel;
 import entity.Attorney;
 import entity.Question;
 import entity.User;
-
 import java.util.List;
 
 public class AttorneyRecommendInteractor extends ViewQuestionInteractorBase {

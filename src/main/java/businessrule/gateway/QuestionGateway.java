@@ -2,8 +2,6 @@ package businessrule.gateway;
 
 import entity.Post;
 import entity.Question;
-import entity.User;
-
 import java.time.LocalDate;
 import java.util.List;
 

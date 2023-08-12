@@ -5,7 +5,6 @@ import businessrule.responsemodel.HomePageResponseModel;
 import entity.ApplicationException;
 import driver.screen.AttorneyHomePageUI;
 import driver.screen.ClientHomePageUI;
-
 import javax.swing.*;
 import java.awt.*;
 

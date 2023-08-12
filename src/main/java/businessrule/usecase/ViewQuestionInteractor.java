@@ -6,7 +6,6 @@ import businessrule.gateway.QuestionGateway;
 import businessrule.gateway.UserGateway;
 import businessrule.gateway.UserGatewayFactory;
 import businessrule.outputboundary.ViewOutputBoundary;
-
 import entity.Question;
 import entity.User;
 import java.util.List;
@@ -29,7 +28,7 @@ public class ViewQuestionInteractor extends ViewQuestionInteractorBase{
     @Override
     protected User fetchUser(ViewRequestModel viewRequestModel) {
         int userId = viewRequestModel.getUserId();
-        UserGateway userGateway = userGatewayFactory.createUserGateway(userId);
+        UserGateway<? extends User> userGateway = userGatewayFactory.createUserGateway(userId);
         return userGateway.get(userId);
     }
 

@@ -1,7 +1,5 @@
 package businessrule.requestmodel;
 
-import java.time.LocalDate;
-
 public class PostRequestModel {
     private final int questionId;
     private final int userId;
