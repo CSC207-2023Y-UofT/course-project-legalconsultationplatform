@@ -33,14 +33,8 @@ public class ClientRegisterInteractor extends UserRegisterInteractor<ClientGatew
         String inputEmail = requestModel.email;
         String inputPassword1 = requestModel.password;
         String inputPassword2 = requestModel.password2;
-        String inputStateAbb = requestModel.stateAbb;
         String inputPostalCode = requestModel.postalCode;
-        String inputEthnicity = requestModel.ethnicity;
         int inputAge = requestModel.age;
-        String inputGender = requestModel.gender;
-        String inputMaritalStatus = requestModel.maritalStatus;
-        int inputNumberOfHousehold = requestModel.numberOfHousehold;
-        float inputAnnualIncome = requestModel.annualIncome;
 
         // validate input data
         CredentialChecker checker = new CredentialChecker();

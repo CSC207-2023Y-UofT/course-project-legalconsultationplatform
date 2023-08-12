@@ -30,7 +30,7 @@ public class RateInteractor implements RateInputBoundary {
         int answerId = rateRequestModel.getAnswerId();
         int userId = rateRequestModel.getUserId();
 
-        Client user = (Client) clientGateway.get(userId);
+        Client user = clientGateway.get(userId);
         Question answer = questionGateway.get(answerId);
 
         if (answer.isClose() || answer.isTaken()) {

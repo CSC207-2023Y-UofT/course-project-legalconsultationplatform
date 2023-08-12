@@ -29,15 +29,32 @@ public class AskQuestionInteractor implements QuestionInputBoundary {
     }
 
     public TheQuestionResponseModel createQuestion(QuestionRequestModel questionRequestModel){
-
-        // validate input
-        if (questionRequestModel.getQuestionCategory() == null){
-            return theQuestionOutputBoundary.prepareFail("Please specify your question type.");
-        } else if (questionRequestModel.getTitle() == null){
-            return theQuestionOutputBoundary.prepareFail("Please specify your question title.");
+        try {checkValidateInput(questionRequestModel);}
+        catch (ApplicationException e) {
+            return theQuestionOutputBoundary.prepareFail(e.getMessage());
         }
 
-        // generate question id
+        // create question entity
+        Question question = createQuestionEntity(questionRequestModel);
+        int askedByClient = questionRequestModel.getAskedByClient();
+        Client askedBy = clientGateway.get(askedByClient);
+
+        // construct response model
+        Map<Integer, PostDisplayFormatter> postMap = new HashMap<>();
+        TheQuestionResponseModel theQuestionResponseModel = new TheQuestionResponseModel(questionRequestModel.getAskedByClient(), question.getQuestionId(), askedBy.getUserName(), question.getTitle(), question.getType(), question.getLegalDeadline(),false, postMap);
+        return theQuestionOutputBoundary.prepareSuccess(theQuestionResponseModel);
+    }
+
+    private void checkValidateInput(QuestionRequestModel questionRequestModel) {
+        if (questionRequestModel.getQuestionCategory() == null) {
+            throw new ApplicationException("Please specify your question type.");
+        } else if (questionRequestModel.getTitle() == null) {
+            throw new ApplicationException("Please specify your question title.");
+        }
+
+    }
+
+    private int generateQuestionId(){
         RandomNumberGenerator generator = new RandomNumberGenerator();
         int randomQuestionId = generator.generateQuestionId(9);
         boolean exists = questionGateway.existsById(randomQuestionId);
@@ -45,18 +62,21 @@ public class AskQuestionInteractor implements QuestionInputBoundary {
             randomQuestionId = generator.generateQuestionId(9);
             exists = questionGateway.existsById(randomQuestionId);
         }
+        return randomQuestionId;
+    }
+
+    private Question createQuestionEntity(QuestionRequestModel questionRequestModel){
+        // generate question id
+        int randomQuestionId = generateQuestionId();
 
         // create question entity
         LocalDate now = LocalDate.now();
-        int askedByClient = questionRequestModel.getAskedByClient();
-        Client askedBy = (Client) clientGateway.get(askedByClient);
-        Question question = questionFactory.create(randomQuestionId, questionRequestModel.getQuestionCategory(), questionRequestModel.getTitle(), now, askedByClient, questionRequestModel.getLegalDeadline());
+        Question question = questionFactory.create(randomQuestionId, questionRequestModel.getQuestionCategory(), questionRequestModel.getTitle(), now, questionRequestModel.getAskedByClient(), questionRequestModel.getLegalDeadline());
         questionGateway.save(question);
         clientGateway.updateQuestionList(questionRequestModel.getAskedByClient(), question);
 
-        // construct response model
-        Map<Integer, PostDisplayFormatter> postMap = new HashMap<>();
-        TheQuestionResponseModel theQuestionResponseModel = new TheQuestionResponseModel(questionRequestModel.getAskedByClient(), question.getQuestionId(), askedBy.getUserName(), question.getTitle(), question.getType(), question.getLegalDeadline(),false, postMap);
-        return theQuestionOutputBoundary.prepareSuccess(theQuestionResponseModel);
+        return question;
     }
 }
+
+

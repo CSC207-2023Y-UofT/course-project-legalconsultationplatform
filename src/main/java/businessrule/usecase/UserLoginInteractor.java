@@ -54,4 +54,6 @@ public class UserLoginInteractor implements UserLoginInputBoundary{
                 userGateway.get(inputUserId).getUserName(), userType);
         return outputBoundary.prepareSuccess(accountResponseModel);
     }
+
+
 }

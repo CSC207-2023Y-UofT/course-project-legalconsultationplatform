@@ -41,29 +41,19 @@ public class ReplyInteractor implements PostInputBoundary {
         User user = userGateway.get(userId);
         Question question = questionGateway.get(postRequestModel.getQuestionId());
 
-        // generate post id
-        RandomNumberGenerator generator = new RandomNumberGenerator();
-        int randomPostId = generator.generatePostId(9);
-        boolean exist = postGateway.existsById(randomPostId);
-        while (exist) {
-            randomPostId = generator.generatePostId(9);
-            exist = postGateway.existsById(randomPostId);
-        }
-
-        // prepare the post entity
-        LocalDate now = LocalDate.now();
+        // handle reply logic and prepare response model
         boolean isQuestionReplyable = user.isQuestionReplyable(question);
 
-        // handle reply logic and prepare response model
         String userType;
         if (isQuestionReplyable) {
             // if replyable, prepare post entity and update related field
-            Post post = postFactory.create(randomPostId, postRequestModel.getQuestionId(), now, postRequestModel.getPostText(), postRequestModel.getUserId());
-            questionGateway.updatePosts(postRequestModel.getQuestionId(), post);
+            Post post = createPostEntity(postRequestModel);
             postGateway.save(post);
+            questionGateway.updatePosts(postRequestModel.getQuestionId(), post);
             questionGateway.updateIsTaken(question.getQuestionId(), question.isTaken());
             questionGateway.updateTakenByAttorney(question.getQuestionId(), question.getTakenByAttorney());
             questionGateway.updateTakenAt(question.getQuestionId(), question.getTakenAt());
+
             userGateway.updateQuestionList(userId, question);
             if (user.isClient()){
                 userType = "Client";
@@ -76,5 +66,26 @@ public class ReplyInteractor implements PostInputBoundary {
         else{
             return homePageOutputBoundary.prepareFail("You cannot reply to this question");
         }
+    }
+
+    private int generatePostId(){
+        RandomNumberGenerator generator = new RandomNumberGenerator();
+        int randomPostId = generator.generatePostId(9);
+        boolean exists = postGateway.existsById(randomPostId);
+        while (exists){
+            randomPostId = generator.generatePostId(9);
+            exists = postGateway.existsById(randomPostId);
+        }
+        return randomPostId;
+    }
+
+
+    private Post createPostEntity(PostRequestModel RequestModel){
+        // generate question id
+        int randomPostId = generatePostId();
+
+        // create question entity
+        LocalDate now = LocalDate.now();
+        return postFactory.create(randomPostId, RequestModel.getQuestionId(), now, RequestModel.getPostText(), RequestModel.getUserId());
     }
 }
