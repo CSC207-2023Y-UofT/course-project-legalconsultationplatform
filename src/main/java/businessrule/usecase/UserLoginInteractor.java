@@ -1,5 +1,7 @@
 package businessrule.usecase;
 
+import businessrule.SessionManager;
+import businessrule.UserSession;
 import businessrule.gateway.UserGatewayFactory;
 import businessrule.inputboundary.UserLoginInputBoundary;
 import businessrule.outputboundary.HomePageOutputBoundary;
@@ -43,6 +45,10 @@ public class UserLoginInteractor implements UserLoginInputBoundary{
         if (!inputPassword.equals(filedPassword)) {
             return outputBoundary.prepareFail("Password is incorrect");
         }
+
+        // start new session
+        UserSession userSession = new UserSession(filedUser);
+        SessionManager.setSession(filedUser.getUserId(), userSession);
 
         // construct response model
         String userType;

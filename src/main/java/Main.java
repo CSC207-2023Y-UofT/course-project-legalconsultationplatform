@@ -29,13 +29,13 @@ public class Main {
     PostGateway postGateway = new PostRepo();
     System.out.println("System - finished set up repo");
 
-    //Test attorney
-        AttorneyRepository attorneyRepo = new AttorneyRepository();
-        Attorney attorney = new Attorney();
-        attorney.setName("Kaxi");
-        attorney.setPassword("12345678");
-        attorney.setUserId(12345678);
-        attorneyRepo.save(attorney);
+//    //Test attorney
+//        AttorneyRepository attorneyRepo = new AttorneyRepository();
+//        Attorney attorney = new Attorney();
+//        attorney.setName("Kaxi");
+//        attorney.setPassword("12345678");
+//        attorney.setUserId(12345678);
+//        attorneyRepo.save(attorney);
 
     //set up jframe
     JFrame application = new JFrame("Legal Consultation Platform");
