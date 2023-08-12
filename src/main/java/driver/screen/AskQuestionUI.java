@@ -2,7 +2,6 @@ package driver.screen;
 
 import adapter.controller.ControlContainer;
 import adapter.controller.QuestionControl;
-
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -24,11 +23,22 @@ import static javax.swing.BoxLayout.Y_AXIS;
  * @author joseph
  */
 public class AskQuestionUI extends JPanel implements ActionListener {
-    ControlContainer controlContainer;
-    CardLayout cardLayout;
-    JPanel screens;
-    int userId;
-    String userName;
+    private static final String TITLE = "New Question";
+    private static final int DEFAULT_WIDTH = 360;
+    private static final int DEFAULT_HEIGHT = 600;
+    private static final int DEFAULT_SPACING = 50;
+    private static final String[] QUESTION_TYPE_LIST = {
+            "Family and Children", "Individual Rights",
+            "Consumer Financial Questions", "Housing and Homelessness",
+            "Income Maintenance", "Health and Disability",
+            "Work, Employment and Unemployment", "Juvenile", "Education", "Other"
+    };
+
+    private ControlContainer controlContainer;
+    private CardLayout cardLayout;
+    private JPanel screens;
+    private int userId;
+    private String userName;
     String[] questionTypeList = {"Family and Children", "Individual Rights",
             "Consumer Financial Questions", "Housing and Homelessness",
             "Income Maintenance", "Health and Disability",
@@ -99,6 +109,10 @@ public class AskQuestionUI extends JPanel implements ActionListener {
         this.add(title);
         this.add(spacer2);
         this.add(restPanel);
+
+    }
+
+    public void initializeUI() {
 
     }
 

@@ -26,7 +26,7 @@ public class UIDesign {
     //All shape and sizes used in the UI
     public static Dimension frameSize = new Dimension(360, 640);
     public static int frameWidth = 360;
-    public int frameHeight = 640;
+    public static int frameHeight = 640;
 
     private UIDesign() {
     }
@@ -253,6 +253,4 @@ public class UIDesign {
             return input.substring(0, 15) + "..."; // Truncate and add "..."
         }
     }
-
-
 }
