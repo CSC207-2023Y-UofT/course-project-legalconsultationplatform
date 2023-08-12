@@ -102,4 +102,25 @@ public class ReplyInteractor implements PostInputBoundary {
             return homePageOutputBoundary.prepareFail("You cannot reply to this question");
         }
     }
+
+    private int generatePostId(){
+        RandomNumberGenerator generator = new RandomNumberGenerator();
+        int randomPostId = generator.generatePostId(9);
+        boolean exists = postGateway.existsById(randomPostId);
+        while (exists){
+            randomPostId = generator.generatePostId(9);
+            exists = postGateway.existsById(randomPostId);
+        }
+        return randomPostId;
+    }
+
+
+    private Post createPostEntity(PostRequestModel RequestModel){
+        // generate question id
+        int randomPostId = generatePostId();
+
+        // create question entity
+        LocalDate now = LocalDate.now();
+        return postFactory.create(randomPostId, RequestModel.getQuestionId(), now, RequestModel.getPostText(), RequestModel.getUserId());
+    }
 }
