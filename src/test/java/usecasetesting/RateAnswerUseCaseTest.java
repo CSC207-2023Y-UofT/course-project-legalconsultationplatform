@@ -45,6 +45,10 @@ public class RateAnswerUseCaseTest {
         userGatewayFactory = new UserGatewayFactory();
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
+        clientGateway.deleteAll();
+        questionGateway.deleteAll();
+        attorneyGateway.deleteAll();
+        postGateway.deleteAll();
         homePageOutputBoundary = new HomePageOutputBoundary() {
             @Override
             public void setControlContainer(ControlContainer controlContainer) {
@@ -62,7 +66,7 @@ public class RateAnswerUseCaseTest {
                 return null;
             }
         };
-        rateInputBoundary = new RateInteractor(questionGateway, homePageOutputBoundary, clientGateway);
+        rateInputBoundary = new RateInteractor(questionGateway, homePageOutputBoundary,  clientGateway, attorneyGateway);
 
         Question question = new Question();
         question.setQuestionId(QUESTION_ID);
@@ -71,6 +75,8 @@ public class RateAnswerUseCaseTest {
         Question closedQuestion = new Question();
         closedQuestion.setQuestionId(CLOSED_QUESTION_ID);
         closedQuestion.setClose(true);
+        closedQuestion.setTakenByAttorney(ATTORNEY_ID);
+        closedQuestion.setTaken(true);
         questionGateway.save(closedQuestion);
 
         Client client = new Client();
@@ -81,11 +87,8 @@ public class RateAnswerUseCaseTest {
 
         Attorney attorney = new Attorney();
         attorney.setUserId(ATTORNEY_ID);
+        attorney.setEmail("josephpc0612@gmail.com");
         attorneyGateway.save(attorney);
-
-        Attorney secondAttorney = new Attorney();
-        attorney.setUserId(SECOND_ATTORNEY_ID);
-        attorneyGateway.save(secondAttorney);
 
         question.setTakenByAttorney(ATTORNEY_ID);
         question.setTaken(true);

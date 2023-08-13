@@ -9,9 +9,7 @@ import businessrule.requestmodel.UserLoginRequestModel;
 import businessrule.responsemodel.HomePageResponseModel;
 import businessrule.gateway.UserGateway;
 import entity.User;
-import driver.screen.ApplicationException;
-
-import java.time.LocalDateTime;
+import entity.ApplicationException;
 
 public class UserLoginInteractor implements UserLoginInputBoundary{
     final UserGatewayFactory userGatewayFactory;

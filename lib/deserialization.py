@@ -1,6 +1,5 @@
 import json
 import joblib
-import sklearn
 
 
 def deserialize_entity(json_string):
