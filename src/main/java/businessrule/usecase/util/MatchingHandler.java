@@ -3,9 +3,11 @@ package businessrule.usecase.util;
 import businessrule.gateway.AttorneyGateway;
 import businessrule.gateway.ClientGateway;
 import businessrule.gateway.QuestionGateway;
+import businessrule.requestmodel.RegistrationData;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import java.io.*;
 import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.datatype.jsr310.JavaTimeModule;
 import driver.database.AttorneyRepository;
 import driver.database.ClientRepository;
 import driver.database.QuestionRepo;
@@ -15,11 +17,9 @@ import entity.Attorney;
 import entity.Client;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import entity.factory.ClientFactory;
 import java.nio.charset.StandardCharsets;
 
 public class MatchingHandler {
@@ -50,7 +50,6 @@ public class MatchingHandler {
 
         // update
         for (Matching matching: matchingResult.getMatchingResult()){
-            Attorney attorney = (Attorney) attorneyGateway.get(matching.getAttorneyId());
             Question question = questionGateway.get(matching.getQuestionId());
             attorneyGateway.addRecommendation(matching.getAttorneyId(), question);
         }
@@ -62,7 +61,7 @@ public class MatchingHandler {
         Map<Integer[], Double> weights = constructWeight(questionList, attorneyList);
 
         List<Integer[]> matchingResult = pythonMatching(getQuestionIdList(questionList), getAttorneyIdList(attorneyList), weights);
-        List<Matching> matchingList = new ArrayList<Matching>();
+        List<Matching> matchingList = new ArrayList<>();
         for (Integer[] match: matchingResult) {
             matchingList.add(new Matching(match[0], match[1]));
         }
@@ -70,10 +69,16 @@ public class MatchingHandler {
     }
 
     private List<Integer[]> pythonMatching(List<Integer> questions, List<Integer> attorneys, Map<Integer[], Double> weights) throws IOException{
+        Map<String, Double> stringWeights = new HashMap<>();
+        for (Map.Entry<Integer[], Double> entry : weights.entrySet()) {
+            String keyAsString = Arrays.toString(entry.getKey());
+            stringWeights.put(keyAsString, entry.getValue());
+        }
+
         Map<String, Object> javaPara = new HashMap<>();
         javaPara.put("questions", questions);
         javaPara.put("attorneys", attorneys);
-        javaPara.put("weights", weights);
+        javaPara.put("weights", stringWeights);
         String input = serialize(javaPara);
 
         // Java code to write to a temp file
@@ -87,13 +92,13 @@ public class MatchingHandler {
         return objectMapper.readValue(result, new TypeReference<>() {});
     }
 
-    private Map<Integer[], Double> constructWeight(List<Question> questionList, List<Attorney> attorneyList) throws IOException{
+    public Map<Integer[], Double> constructWeight(List<Question> questionList, List<Attorney> attorneyList) throws IOException{
         // initialize the map to store weights
         Map<Integer[], Double> weights = new HashMap<>();
 
         // Loop over question and attorney list
         for (Question question: questionList) {
-            Client client = (Client) clientGateway.get(question.getAskedByClient());
+            Client client = clientGateway.get(question.getAskedByClient());
             for (Attorney attorney: attorneyList){
                 // initialize the array to store question, attorney id pair
                 Integer[] pair = new Integer[]{question.getQuestionId(), attorney.getUserId()};
@@ -141,60 +146,11 @@ public class MatchingHandler {
 
     private String serialize(Object entity) {
         try {
+            objectMapper.registerModule(new JavaTimeModule());
             return objectMapper.writeValueAsString(entity);
         } catch (JsonProcessingException e) {
             e.printStackTrace();
             return null;
-        }
-    }
-
-    public static void main(String[] args) {
-        int QUESTION_ID = 3000;
-        int ATTORNEY_ID = 1000;
-        int CLIENT_ID = 2000;
-
-        ClientGateway clientGateway1 = new ClientRepository();
-        AttorneyGateway attorneyGateway1 = new AttorneyRepository();
-        QuestionGateway questionGateway1 = new QuestionRepo();
-
-        MatchingHandler m = new MatchingHandler(attorneyGateway1, clientGateway1, questionGateway1);
-        Client c = new Client();
-        c.setUserId(CLIENT_ID);
-        Question q = new Question();
-        q.setQuestionId(QUESTION_ID);
-        Attorney a = new Attorney();
-        a.setUserId(ATTORNEY_ID);
-
-        Post attorneyPost = new Post();
-        Post clientPost = new Post();
-        clientPost.setPostId(1);
-        clientPost.setPostText("I have a really trick issue. I really worry about that for more than one year and cannot figure that out. Could someone help me?");
-        clientPost.setBelongsTo(CLIENT_ID);
-        clientPost.setQuestionId(QUESTION_ID);
-        attorneyPost.setPostId(2);
-        attorneyPost.setPostText("ok, I understand. Unfortunately, I cannot answer this question. I suggest you ask for a new attorney or search on other website to better understand this problem");
-        attorneyPost.setBelongsTo(ATTORNEY_ID);
-        attorneyPost.setQuestionId(QUESTION_ID);
-
-        q.setAskedByClient(CLIENT_ID);
-        q.setTaken(true);
-        q.setTakenByAttorney(ATTORNEY_ID);
-        q.addPosts(clientPost);
-        q.addPosts(attorneyPost);
-        q.setRating(0);
-
-        c.addQuestion(q);
-        c.setPostalCode("0");
-        a.setPostalCode("10000000");
-        c.setAnnualIncome(10000);
-        c.setGender("Female");
-
-        a.addQuestion(q);
-
-        try {
-            System.out.println(m.getProb(c, q, a));}
-        catch (IOException e) {
-            e.printStackTrace();
         }
     }
 }
