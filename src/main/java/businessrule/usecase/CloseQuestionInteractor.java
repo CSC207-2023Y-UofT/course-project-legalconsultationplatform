@@ -29,7 +29,7 @@ public class CloseQuestionInteractor implements CloseInputBoundary {
         // get input data
         int userId = closeRequestModel.getUserId();;
         int questionId = closeRequestModel.getQuestionId();
-        UserGateway userGateway = userGatewayFactory.createUserGateway(userId);
+        UserGateway<? extends User> userGateway = userGatewayFactory.createUserGateway(userId);
         User user = userGateway.get(userId);
         Question question = questionGateway.get(questionId);
 
@@ -44,6 +44,5 @@ public class CloseQuestionInteractor implements CloseInputBoundary {
         else{
             return homePageOutputBoundary.prepareFail("You cannot close this question!");
         }
-
     }
 }

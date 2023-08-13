@@ -1,7 +1,6 @@
 package driver.database;
 
 import businessrule.gateway.GenericGateway;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.util.List;
@@ -15,9 +14,7 @@ public class GenericRepository<T> implements GenericGateway<T> {
 
     @Override
     public void save(T entity) {
-        executeTransaction(entityManager -> {
-            entityManager.persist(entity);
-        });
+        executeTransaction(entityManager -> entityManager.persist(entity));
     }
 
     @Override
@@ -45,9 +42,7 @@ public class GenericRepository<T> implements GenericGateway<T> {
 
     @Override
     public void deleteAll() {
-        executeTransaction(entityManager -> {
-            entityManager.createQuery("DELETE FROM " + entityType.getSimpleName()).executeUpdate();
-        });
+        executeTransaction(entityManager -> entityManager.createQuery("DELETE FROM " + entityType.getSimpleName()).executeUpdate());
     }
 
     @Override

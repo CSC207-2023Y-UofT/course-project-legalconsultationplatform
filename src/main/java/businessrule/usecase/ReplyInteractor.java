@@ -52,7 +52,6 @@ public class ReplyInteractor implements PostInputBoundary {
         // handle reply logic and prepare response model
         boolean isQuestionReplyable = user.isQuestionReplyable(question);
 
-        // handle reply logic and prepare response model
         String userType;
         if (isQuestionReplyable) {
             // if replyable, prepare post entity and update related field
@@ -62,6 +61,7 @@ public class ReplyInteractor implements PostInputBoundary {
             questionGateway.updateIsTaken(question.getQuestionId(), question.isTaken());
             questionGateway.updateTakenByAttorney(question.getQuestionId(), question.getTakenByAttorney());
             questionGateway.updateTakenAt(question.getQuestionId(), question.getTakenAt());
+
             userGateway.updateQuestionList(userId, question);
             if (user.isClient()){
                 userType = "Client";

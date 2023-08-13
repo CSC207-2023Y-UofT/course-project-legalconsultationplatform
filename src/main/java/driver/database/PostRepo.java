@@ -2,10 +2,6 @@ package driver.database;
 
 import businessrule.gateway.PostGateway;
 import entity.Post;
-import entity.User;
-
-import javax.persistence.EntityManager;
-import javax.persistence.EntityTransaction;
 
 public class PostRepo extends GenericRepository<Post> implements PostGateway {
 

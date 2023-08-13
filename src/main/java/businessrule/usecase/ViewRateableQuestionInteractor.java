@@ -1,6 +1,5 @@
 package businessrule.usecase;
 
-import businessrule.gateway.AttorneyGateway;
 import businessrule.gateway.ClientGateway;
 import businessrule.gateway.QuestionGateway;
 import businessrule.outputboundary.ViewOutputBoundary;

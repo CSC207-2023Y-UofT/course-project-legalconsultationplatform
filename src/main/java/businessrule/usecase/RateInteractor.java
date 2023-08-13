@@ -1,10 +1,12 @@
 package businessrule.usecase;
 
+import businessrule.gateway.ClientGateway;
 import businessrule.gateway.*;
 import businessrule.inputboundary.RateInputBoundary;
 import businessrule.outputboundary.HomePageOutputBoundary;
 import businessrule.requestmodel.RateRequestModel;
 import businessrule.responsemodel.HomePageResponseModel;
+import businessrule.gateway.QuestionGateway;
 import businessrule.usecase.util.EmailNotificationSender;
 import entity.Attorney;
 import entity.Client;
