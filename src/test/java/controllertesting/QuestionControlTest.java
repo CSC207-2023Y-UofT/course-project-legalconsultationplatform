@@ -15,7 +15,11 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+/**
+ * This class contains unit tests for the QuestionControl class.
+ */
 public class QuestionControlTest {
+
     private static int USER_ID = 11234567;
     private static int QUESTION_ID = 333333333;
     private static String USER_NAME = "SampleUser";
@@ -24,21 +28,30 @@ public class QuestionControlTest {
 
     private static TheQuestionResponseModel expectedResponse;
 
-    public void setUpQuestionControl(){
+    /**
+     * Sets up the necessary resources for testing QuestionControl.
+     */
+    public void setUpQuestionControl() {
         // Arrange
         LocalDate deadline = LocalDate.now().plusDays(5);
         boolean isClose = false;
         Map<Integer, PostDisplayFormatter> postMap = new HashMap<>(); // Assuming suitable values or empty
 
-         expectedResponse = new TheQuestionResponseModel(USER_ID, QUESTION_ID, USER_NAME, TITLE, TYPE, deadline, isClose, postMap);
+        expectedResponse = new TheQuestionResponseModel(USER_ID, QUESTION_ID, USER_NAME, TITLE, TYPE, deadline, isClose, postMap);
     }
 
+    /**
+     * Tests the createQuestion method of QuestionControl.
+     */
     @Test
     public void testCreateQuestion() {
         setUpQuestionControl();
+
+        // Create a mock for QuestionInputBoundary
         QuestionInputBoundary mockInputBoundary = mock(QuestionInputBoundary.class);
         when(mockInputBoundary.createQuestion(any(QuestionRequestModel.class))).thenReturn(expectedResponse);
 
+        // Create an instance of QuestionControl
         QuestionControl control = new QuestionControl(mockInputBoundary);
 
         // Sample input parameters

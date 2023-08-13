@@ -7,9 +7,15 @@ import entity.Post;
 import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
+/**
+ * This class contains unit tests for the Post class.
+ */
 
 class PostTest {
 
+    /**
+     * Test the constructor and getter methods of the Post class.
+     */
     @Test
     void testConstructorAndGetter() {
         // expected values
@@ -30,6 +36,9 @@ class PostTest {
         assertEquals(expectedBelongsTo, post.getBelongsTo(), "BelongsTo is wrong.");
     }
 
+    /**
+     * Test the setter methods of the Post class.
+     */
     @Test
     void testSetters() {
         // expected values
@@ -57,12 +66,18 @@ class PostTest {
         assertEquals(expectedBelongsTo, post.getBelongsTo(), "BelongsTo is wrong.");
     }
 
+    /**
+     * Test the equals method of the Post class when objects are the same.
+     */
     @Test
     void testEqualsSucceed() {
         Post post1 = new Post(1000000, 2000000, LocalDate.now(), "This is a post.", 3000000);
         assertEquals(true, post1.equals(post1), "The equal method is wrong");
     }
 
+    /**
+     * Test the equals method of the Post class with objects of different classes.
+     */
     @Test
     void testEqualsFailByDifferentClass() {
         Post post1 = new Post(1000000, 2000000, LocalDate.now(), "This is a post.", 3000000);
@@ -70,6 +85,9 @@ class PostTest {
         assertEquals(false, post1.equals(question), "The equal method is wrong");
     }
 
+    /**
+     * Test the equals method of the Post class with objects having different post IDs.
+     */
     @Test
     void testEqualsFailByDifferentPostId() {
         Post post1 = new Post(1000000, 2000000, LocalDate.now(), "This is a post.", 3000000);
@@ -77,6 +95,9 @@ class PostTest {
         assertEquals(false, post1.equals(post2), "The equal method is wrong");
     }
 
+    /**
+     * Test the toString method of the Post class when it succeeds.
+     */
     @Test
     void testToStringSucceed() {
         int expectedQuestionId = 1000000;
@@ -86,6 +107,9 @@ class PostTest {
         assertEquals(expectedToString, post.toString(), "The toString method is wrong");
     }
 
+    /**
+     * Test the toString method of the Post class when it fails.
+     */
     @Test
     void testToStringFail() {
         int expectedQuestionId = 1000000;

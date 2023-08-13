@@ -7,6 +7,10 @@ import org.junit.jupiter.api.Test;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+/**
+ * This class contains unit tests for the Attorney class.
+ */
+
 class AttorneyTest {
     int expectedUserId = 1000000;
     String expectedName = "Xingfu Wu";
@@ -16,6 +20,9 @@ class AttorneyTest {
     String expectedStateAbb = "CA";
     String expectedPostalCode = "12345";
 
+    /**
+     * Test the constructor and getter methods of the Attorney class.
+     */
     @Test
     void testConstructorAndGetter() {
         RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
@@ -32,6 +39,9 @@ class AttorneyTest {
         assertEquals(expectedPostalCode, attorney.getPostalCode(), "Postal code is not set correctly in the constructor.");
     }
 
+    /**
+     * Test the setter methods of the Attorney class.
+     */
     @Test
     void testSetters() {
 
@@ -58,6 +68,10 @@ class AttorneyTest {
         assertEquals(expectedStateAbb, attorney.getStateAbb(), "The state abbreviation should be updated.");
         assertEquals(expectedPostalCode, attorney.getPostalCode(), "The postal code should be updated.");
     }
+
+    /**
+     * Test adding questions to the Attorney's question list.
+     */
     @Test
     void testAddQuestion() {
         RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
@@ -79,6 +93,10 @@ class AttorneyTest {
         attorney.addQuestion(question1);
         assertEquals(2, questions.size(), "After adding a duplicate question, the number of questions in the list should remain at 2.");
     }
+
+    /**
+     * Test if a question is closeable when it's not taken.
+     */
     @Test
     void testCloseableIfNotTaken() {
         RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
@@ -94,6 +112,10 @@ class AttorneyTest {
         boolean actual = attorney.isQuestionCloseable(question);
         assertEquals(expected, actual, "The question should not be closeable when it is not taken.");
     }
+
+    /**
+     * Test if a question is not closeable when taken by another attorney.
+     */
     @Test
     void testCloseableIfTakenByOthers() {
         RegistrationData registrationData1 = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
@@ -115,6 +137,9 @@ class AttorneyTest {
         assertEquals(expected, actual, "The question should not be closeable when it is taken by a different attorney.");
     }
 
+    /**
+     * Test the isClient() method of the Attorney class.
+     */
     @Test
     void testIsClient() {
         RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
@@ -125,6 +150,10 @@ class AttorneyTest {
         boolean actual = attorney.isClient();
         assertEquals(expected, actual, "The isClient method of an Attorney should always return false.");
     }
+
+    /**
+     * Test if a question is not selectable when it's closed.
+     */
     @Test
     void testSelectableIfClosed() {
         RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
@@ -139,6 +168,10 @@ class AttorneyTest {
         boolean actual = attorney.isQuestionSelectable(question);
         assertEquals(expected, actual, "The question should not be selectable when it is closed.");
 }
+
+    /**
+     * Test if a question is selectable when it's not taken.
+     */
     @Test
     void testSelectableIfNotTaken() {
         RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
@@ -153,6 +186,10 @@ class AttorneyTest {
         boolean actual = attorney.isQuestionSelectable(question);
         assertEquals(expected, actual, "The question should be selectable when it is not taken.");
     }
+
+    /**
+     * Test if a question is not selectable when taken by another attorney.
+     */
     @Test
     void testSelectableIfTakenByOthers() {
         RegistrationData registrationData1 = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
@@ -175,6 +212,9 @@ class AttorneyTest {
         assertEquals(expected, actual, "The question should not be selectable when it is taken by a different attorney.");
     }
 
+    /**
+     * Test if a question is selectable when taken by the current attorney.
+     */
     @Test
     void testSelectableIfTakenBySelf() {
         RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
@@ -191,6 +231,9 @@ class AttorneyTest {
         assertEquals(expected, actual, "The question should be selectable when it is taken by the current attorney.");
     }
 
+    /**
+     * Test if a question is not replyable when it is closed.
+     */
     @Test
     void testReplyableIfClosed() {
         RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
@@ -205,6 +248,10 @@ class AttorneyTest {
         boolean actual = attorney.isQuestionReplyable(question);
         assertEquals(expected, actual, "The question should not be replyable when it is closed.");
     }
+
+    /**
+     * Test if a question is not replyable when it is taken by a different attorney.".
+     */
     @Test
     void testReplyableIfTakenByOthers() {
         RegistrationData registrationData1 = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
@@ -226,6 +273,9 @@ class AttorneyTest {
         assertEquals(expected, actual, "The question should not be replyable when it is taken by a different attorney.");
     }
 
+    /**
+     * Test if a question is replyable when it is taken by the current attorney.
+     */
     @Test
     void testReplyableIfTakenBySelf() {
         RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
@@ -242,6 +292,9 @@ class AttorneyTest {
         assertEquals(expected, actual, "The question should be replyable when it is taken by the current attorney.");
     }
 
+    /**
+     * Test if a question is replyable when it is not taken by any user.
+     */
     @Test
     void testReplyableIfNotTaken() {
         RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
@@ -259,6 +312,9 @@ class AttorneyTest {
         assertEquals(attorney.getUserId(), question.getTakenByAttorney(), "The attorney who took the question should be set to the current attorney after isQuestionReplyable is called.");
     }
 
+    /**
+     * Test the equals method for a successful comparison between two identical Attorneys.
+     */
     @Test
     void testEqualsSucceed(){
         RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
@@ -267,6 +323,10 @@ class AttorneyTest {
         Attorney attorney  = attorneyFactory.createUser(registrationData);
         assertEquals(true,attorney.equals(attorney),"The equal method is wrong");
     }
+
+    /**
+     * Test the equals method where the comparison fails due to one object being an Attorney and the other a Question.
+     */
     @Test
     void testEqualFailByNotClient(){
         RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
@@ -276,7 +336,12 @@ class AttorneyTest {
         Question question = new Question();
 
         assertEquals(false,attorney.equals(question),"The equal method is wrong");
-    }@Test
+    }
+
+    /**
+     * Test the equals method where the comparison fails due to two different Attorneys.
+     */
+    @Test
     void testEqualsFailByNotEqual(){
         RegistrationData registrationData1 = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
                 expectedPostalCode);
@@ -288,7 +353,9 @@ class AttorneyTest {
         assertEquals(true, attorney1.equals(attorney2),"The equal method is wrong");
     }
 
-
+    /**
+     * Test if a question is not rateable by an Attorney.
+     */
     @Test
     void testIsQuestionRateable() {
         RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,

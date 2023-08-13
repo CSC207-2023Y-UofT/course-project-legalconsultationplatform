@@ -6,8 +6,14 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+/**
+ * This class contains unit tests for the ControlContainer class.
+ */
 public class ControlContainerTest {
 
+    /**
+     * Tests the getClientRegisterControl method of ControlContainer.
+     */
     @Test
     public void testGetClientRegisterControl() {
         ClientRegisterControl mockClientRegisterControl = mock(ClientRegisterControl.class);
@@ -15,6 +21,9 @@ public class ControlContainerTest {
         assertEquals(mockClientRegisterControl, controlContainer.getClientRegisterControl());
     }
 
+    /**
+     * Tests the getCloseQuestionControl method of ControlContainer.
+     */
     @Test
     public void testGetCloseQuestionControl() {
         CloseQuestionControl mockCloseQuestionControl = mock(CloseQuestionControl.class);
@@ -22,6 +31,9 @@ public class ControlContainerTest {
         assertEquals(mockCloseQuestionControl, controlContainer.getCloseQuestionControl());
     }
 
+    /**
+     * Tests the getPostControl method of ControlContainer.
+     */
     @Test
     public void testGetPostControl() {
         PostControl mockPostControl = mock(PostControl.class);
@@ -29,6 +41,9 @@ public class ControlContainerTest {
         assertEquals(mockPostControl, controlContainer.getPostControl());
     }
 
+    /**
+     * Tests the getQuestionControl method of ControlContainer.
+     */
     @Test
     public void testGetQuestionControl() {
         QuestionControl mockQuestionControl = mock(QuestionControl.class);
@@ -36,6 +51,9 @@ public class ControlContainerTest {
         assertEquals(mockQuestionControl, controlContainer.getQuestionControl());
     }
 
+    /**
+     * Tests the getRateControl method of ControlContainer.
+     */
     @Test
     public void testGetRateControl() {
         RateControl mockRateControl = mock(RateControl.class);
@@ -43,6 +61,9 @@ public class ControlContainerTest {
         assertEquals(mockRateControl, controlContainer.getRateControl());
     }
 
+    /**
+     * Tests the getSelectQuestionControl method of ControlContainer.
+     */
     @Test
     public void testGetSelectQuestionControl() {
         SelectQuestionControl mockSelectQuestionControl = mock(SelectQuestionControl.class);
@@ -50,6 +71,9 @@ public class ControlContainerTest {
         assertEquals(mockSelectQuestionControl, controlContainer.getSelectQuestionControl());
     }
 
+    /**
+     * Tests the getUserLoginControl method of ControlContainer.
+     */
     @Test
     public void testGetUserLoginControl() {
         UserLoginControl mockUserLoginControl = mock(UserLoginControl.class);
@@ -57,6 +81,9 @@ public class ControlContainerTest {
         assertEquals(mockUserLoginControl, controlContainer.getUserLoginControl());
     }
 
+    /**
+     * Tests the getViewQuestionControl method of ControlContainer.
+     */
     @Test
     public void testGetViewQuestionControl() {
         ViewQuestionControl mockViewQuestionControl = mock(ViewQuestionControl.class);

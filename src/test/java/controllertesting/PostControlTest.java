@@ -10,7 +10,11 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+/**
+ * This class contains unit tests for the PostControl class.
+ */
 public class PostControlTest {
+
     private static int USER_ID = 11234567;
     private static String USER_NAME = "SampleUser";
     private static String USER_TYPE = "SampleType";
@@ -19,18 +23,26 @@ public class PostControlTest {
 
     private static HomePageResponseModel expectedResponse;
 
+    /**
+     * Sets up the necessary resources for testing PostControl.
+     */
     public void setUpPostControl() {
         // Arrange
         expectedResponse = new HomePageResponseModel(USER_ID, USER_NAME, USER_TYPE);
     }
 
+    /**
+     * Tests the createPost method of PostControl.
+     */
     @Test
     public void testCreatePost() {
         setUpPostControl();
 
+        // Create a mock for PostInputBoundary
         PostInputBoundary mockInputBoundary = mock(PostInputBoundary.class);
         when(mockInputBoundary.createPost(any(PostRequestModel.class))).thenReturn(expectedResponse);
 
+        // Create an instance of PostControl
         PostControl control = new PostControl(mockInputBoundary);
 
         // Act

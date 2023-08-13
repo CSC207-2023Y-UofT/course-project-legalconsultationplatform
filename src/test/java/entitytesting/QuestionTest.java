@@ -9,9 +9,14 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * This class contains unit tests for the Question class.
+ */
 class QuestionTest {
 
+    /**
+     * Test the constructor and getter methods of the Question class.
+     */
     @Test
     void testConstructorAndGetter() {
         int expectedQuestionId = 1000000;
@@ -37,6 +42,9 @@ class QuestionTest {
         assertTrue(question.getPosts().isEmpty(), "Posts should be empty initially.");
     }
 
+    /**
+     * Test the setter methods of the Question class.
+     */
     @Test
     void testSetters() {
         int expectedQuestionId = 1000000;
@@ -63,12 +71,19 @@ class QuestionTest {
         assertEquals(expectedAskedByClient, question.getAskedByClient(), "AskedByClient is wrong.");
         assertEquals(expectedLegalDeadline, question.getLegalDeadline(), "LegalDeadline is wrong.");
     }
+
+    /**
+     * Test the equals method of the Question class when objects are the same.
+     */
     @Test
     void testEqualsSucceed() {
         Question question1 = new Question(1, "fraud", "Question Title", LocalDate.now(), 2000000, LocalDate.now());
         assertEquals(true, question1.equals(question1), "The equal method is wrong");
     }
 
+    /**
+     * Test the equals method of the Question class with objects of different classes.
+     */
     @Test
     void testEqualsFailByNotQuestion() {
         Question question1 = new Question(1, "fraud", "Question Title", LocalDate.now(), 2000000, LocalDate.now());
@@ -77,6 +92,9 @@ class QuestionTest {
         assertEquals(false, question1.equals(attorney), "The equal method is wrong");
     }
 
+    /**
+     * Test the equals method of the Question class with objects that are not equal.
+     */
     @Test
     void testEqualsFailByNotEqual() {
         Question question1 = new Question(1, "fraud", "Question Title", LocalDate.now(), 2000000, LocalDate.now());
@@ -84,18 +102,27 @@ class QuestionTest {
         assertEquals(false, question1.equals(question2), "The equal method is wrong");
     }
 
+    /**
+     * Test the hashCode method of the Question class when it fails.
+     */
     @Test
     void testHashCodeFail() {
         Question question1 = new Question(1, "fraud", "Question Title", LocalDate.now(), 2000000, LocalDate.now());
         assertEquals(false, question1.hashCode() == Objects.hashCode(2), "The hashCode is wrong");
     }
 
+    /**
+     * Test the hashCode method of the Question class when it succeeds.
+     */
     @Test
     void testHashCodeSucceed() {
         Question question1 = new Question(1, "fraud", "Question Title", LocalDate.now(), 2000000, LocalDate.now());
         assertEquals(question1.hashCode(), Objects.hashCode(1), "The hashCode is wrong");
     }
 
+    /**
+     * Test the toString method of the Question class when it succeeds.
+     */
     @Test
     void testToStringSucceed() {
         String expectedType = "fraud";
@@ -105,6 +132,9 @@ class QuestionTest {
         assertEquals(expectedToString, question1.toString(), "The toString method is wrong");
     }
 
+    /**
+     * Test the toString method of the Question class when it fails.
+     */
     @Test
     void testToStringFail() {
         String unexpectedType = "criminal";
