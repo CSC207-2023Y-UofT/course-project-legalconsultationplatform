@@ -37,15 +37,28 @@ def data_preprocessing(client_dict, question_dict, attorney_dict):
     client_is_single = int(client_dict['maritalStatus'] == 'Single')
 
     data = np.array([client_age, client_num_household, client_income,
-                      client_is_caucasian, client_is_female, question_sentiment,
-                      question_len, question_emergency, attorney_sentiment,
-                      attorney_len, attorney_num_question,
-                      attorney_answer_within, area_match, ddl_match, distance,
-                      client_is_divorced, client_is_married, client_is_single])
+                     client_is_caucasian, client_is_female, question_sentiment,
+                     question_len, question_emergency, attorney_sentiment,
+                     attorney_len, attorney_num_question,
+                     attorney_answer_within, area_match, ddl_match, distance,
+                     client_is_divorced, client_is_married, client_is_single])
     mask = np.isnan(data)
     data[mask] = 0
     data = data.reshape(1, -1)
     return standardize_data(data)
+
+
+def professional_match(question: dict, attorney: dict) -> int:
+    if not attorney['professionals']:
+        return 0
+    for professional in attorney['professionals']:
+        if question['type'] == professional:
+            return 1
+    return 0
+
+
+def location_match(client: dict, attorney: dict) -> int:
+    return int(client['stateAbb'] == attorney['stateAbb'])
 
 
 def standardize_data(input_data):
@@ -90,7 +103,7 @@ def calculate_question_length(question_dict):
 
 def ddl_at(question_dict):
     """
-    :return: return the time the question was created and the legal deadline of
+    :return: return gap between the time the question was created and the legal deadline of
     that question
     """
     create_at = question_dict['createAt']
@@ -215,8 +228,7 @@ def will_ddl_pass(attorney_dict, question_dict):
     :return: return true iff the attorney typically answered the question
     before the question's ddl
     """
-    return int((ddl_at(question_dict).total_seconds()) / (24 * 3600) < \
-        calculate_attorney_efficiency(attorney_dict))
+    return int((ddl_at(question_dict).total_seconds()) / (24 * 3600) < calculate_attorney_efficiency(attorney_dict))
 
 
 def calculate_distance(attorney_dict, client_dict):
@@ -225,11 +237,16 @@ def calculate_distance(attorney_dict, client_dict):
     postal code. Note: this is a simplified version of distance measure due to
     the resources constraint
     """
-    return abs(int(attorney_dict['postalCode']) -
-               int(client_dict['postalCode']))
+    a_code = attorney_dict['postalCode']
+    c_code = client_dict['postalCode']
+    if not a_code:
+        a_code = 0
+    if not c_code:
+        c_code = 0
+    return abs(int(a_code) - int(c_code))
 
 
-def convert_date(date: str):
+def convert_date(date: list):
     if date is None:
         date = np.nan
-    return pd.to_datetime(date)
+    return pd.to_datetime(f"{date[0]}-{date[1]}-{date[2]}")

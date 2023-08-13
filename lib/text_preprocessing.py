@@ -59,5 +59,3 @@ def text_len(text):
     """
     text = text_preprocessing(text)
     return len(word_tokenize(text))
-
-
