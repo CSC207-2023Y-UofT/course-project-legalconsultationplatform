@@ -1,8 +1,6 @@
 import argparse
 import json
-
-import data_preprocessing
-import deserialization
+import ast
 import numpy as np
 from scipy.optimize import linear_sum_assignment
 
@@ -15,7 +13,6 @@ def matching_algo(problems, attorneys, edge_weights):
     pairs to the probability of customer satisfaction
     :return:
     """
-
     num_problems = len(problems)
     num_attorneys = len(attorneys)
 
@@ -51,6 +48,7 @@ if __name__ == "__main__":
     questions = input_data['questions']
     attorneys = input_data['attorneys']
     weights = input_data['weights']
+    weights = {(tuple(ast.literal_eval(key))): value for key, value in weights.items()}
     matching = matching_algo(questions, attorneys, weights)
     print(json.dumps(matching))
 

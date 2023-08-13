@@ -10,6 +10,7 @@ import javax.jdo.JDOHelper;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -31,6 +32,8 @@ public class QuestionRepo extends GenericRepository<Question> implements Questio
         try {
             return em.createQuery("SELECT q FROM Question q WHERE q.isTaken = false", Question.class)
                     .getResultList();
+        } catch(Exception e) {
+            return new ArrayList<>();
         } finally {
             em.close();
         }
@@ -42,6 +45,8 @@ public class QuestionRepo extends GenericRepository<Question> implements Questio
         try {
             return em.createQuery("SELECT q FROM Question q WHERE q.isClose = false", Question.class)
                     .getResultList();
+        } catch(Exception e) {
+            return new ArrayList<>();
         } finally {
             em.close();
         }
@@ -51,8 +56,10 @@ public class QuestionRepo extends GenericRepository<Question> implements Questio
     public List<Post> getAllPostOfQuestion(int questionId) {
         EntityManager em = DatabaseConnection.getEntityManager();
         try {
-            return em.createQuery("SELECT p FROM Post p WHERE p.questionId = :questionId", Post.class)
+            return em.createQuery("SELECT p FROM Post p WHERE p.questionId =: questionId", Post.class)
                     .setParameter("questionId", questionId).getResultList();
+        } catch(Exception e) {
+            return new ArrayList<>();
         } finally {
             em.close();
         }
@@ -172,4 +179,5 @@ public class QuestionRepo extends GenericRepository<Question> implements Questio
     public Question get(int id) {
         return (Question) super.get(id);
     }
+
 }
