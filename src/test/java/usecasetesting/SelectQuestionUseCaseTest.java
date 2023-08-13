@@ -3,7 +3,6 @@ package usecasetesting;
 import adapter.controller.ControlContainer;
 import businessrule.gateway.*;
 import businessrule.inputboundary.SelectInputBoundary;
-import businessrule.outputboundary.TheQuestionOutputBoundary;
 import businessrule.requestmodel.SelectRequestModel;
 import businessrule.responsemodel.TheQuestionResponseModel;
 import businessrule.usecase.util.PostDisplayFormatter;

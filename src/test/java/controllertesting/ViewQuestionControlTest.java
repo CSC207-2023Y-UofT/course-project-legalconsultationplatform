@@ -2,7 +2,6 @@ package controllertesting;
 
 import adapter.controller.ViewQuestionControl;
 import businessrule.inputboundary.ViewInputBoundary;
-import businessrule.requestmodel.ViewRequestModel;
 import businessrule.responsemodel.ViewResponseModel;
 import businessrule.usecase.util.QuestionDisplayFormatter;
 

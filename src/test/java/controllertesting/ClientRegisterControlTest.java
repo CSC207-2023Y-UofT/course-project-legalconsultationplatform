@@ -3,7 +3,6 @@ package controllertesting;
 import adapter.controller.ClientRegisterControl;
 import businessrule.inputboundary.UserRegisterInputBoundary;
 import businessrule.requestmodel.RegistrationData;
-import businessrule.responsemodel.RegisterResponseModel;
 
 import org.junit.jupiter.api.Test;
 

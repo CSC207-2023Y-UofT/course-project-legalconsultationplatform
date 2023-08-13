@@ -124,7 +124,7 @@ public abstract class UserImp implements User{
     @Override
     public int hashCode() {return Objects.hashCode(userId);}
 
-    public abstract boolean isClient();
+    public abstract String getUserType();
 
     public abstract boolean isQuestionCloseable(Question question);
 

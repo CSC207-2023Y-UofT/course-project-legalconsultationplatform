@@ -3,7 +3,6 @@ package controllertesting;
 import adapter.controller.RateControl;
 import businessrule.inputboundary.RateInputBoundary;
 import businessrule.requestmodel.RateRequestModel;
-import businessrule.responsemodel.HomePageResponseModel;
 
 import org.junit.jupiter.api.Test;
 

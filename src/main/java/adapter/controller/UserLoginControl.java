@@ -2,7 +2,7 @@ package adapter.controller;
 
 import businessrule.inputboundary.UserLoginInputBoundary;
 import businessrule.requestmodel.UserLoginRequestModel;
-import businessrule.responsemodel.HomePageResponseModel;
+import businessrule.responsemodel.UserResponseModel;
 
 public class UserLoginControl {
     private final UserLoginInputBoundary inputBoundary;
@@ -11,7 +11,7 @@ public class UserLoginControl {
         this.inputBoundary = inputBoundary;
     }
 
-    public HomePageResponseModel login(int userId, String password){
+    public UserResponseModel login(int userId, String password){
         UserLoginRequestModel requestModel = new UserLoginRequestModel(userId, password);
         return inputBoundary.login(requestModel);
     }

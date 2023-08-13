@@ -2,7 +2,7 @@ package adapter.controller;
 
 import businessrule.inputboundary.RateInputBoundary;
 import businessrule.requestmodel.RateRequestModel;
-import businessrule.responsemodel.HomePageResponseModel;
+import businessrule.responsemodel.UserResponseModel;
 
 public class RateControl {
     private final RateInputBoundary rateInput;
@@ -11,8 +11,8 @@ public class RateControl {
         this.rateInput = input;
     }
 
-    public HomePageResponseModel rateAnswer(int rate, int questionId, int userId) {
-        RateRequestModel rating = new RateRequestModel(rate, questionId, userId);
+    public UserResponseModel rateAnswer(int rate, int questionId) {
+        RateRequestModel rating = new RateRequestModel(rate, questionId);
         return rateInput.rateAnswer(rating);
     }
 

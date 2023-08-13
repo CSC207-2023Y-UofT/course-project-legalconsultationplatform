@@ -1,15 +1,14 @@
 package adapter.presenter;
 
 import adapter.controller.ControlContainer;
-import businessrule.outputboundary.RegisterOutputBoundary;
-import businessrule.responsemodel.RegisterResponseModel;
+import businessrule.outputboundary.BaseOutputBoundary;
+import businessrule.responsemodel.BaseResponseModel;
 import entity.ApplicationException;
 import driver.screen.WelcomeUI;
-
 import javax.swing.*;
 import java.awt.*;
 
-public class RegisterResponseFormatter implements RegisterOutputBoundary {
+public class RegisterResponseFormatter implements BaseOutputBoundary {
     CardLayout cardLayout;
     JPanel screens;
     ControlContainer controlContainer;
@@ -24,15 +23,15 @@ public class RegisterResponseFormatter implements RegisterOutputBoundary {
     }
 
     @Override
-    public RegisterResponseModel prepareFail(String msg) {
+    public BaseResponseModel prepareFail(String msg) {
         throw new ApplicationException(msg);
     }
     @Override
-    public RegisterResponseModel prepareSuccess(String msg) {
+    public BaseResponseModel prepareSuccess(String msg) {
         WelcomeUI welcomeUI = new WelcomeUI(controlContainer, cardLayout, screens);
         screens.add(welcomeUI, "Welcome");
         cardLayout.show(screens, "Welcome");
         JOptionPane.showMessageDialog(null, msg);
-        return new RegisterResponseModel();
+        return new BaseResponseModel();
     }
 }

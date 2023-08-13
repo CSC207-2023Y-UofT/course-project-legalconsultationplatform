@@ -4,23 +4,34 @@ import businessrule.usecase.util.QuestionDisplayFormatter;
 
 import java.util.Map;
 
-public class ViewResponseModel {
-    private final int userId;
-    private final String userName;
+public class ViewResponseModel extends UserResponseModel{
+
     private final Map<Integer, QuestionDisplayFormatter> questionMap;
 
-    public ViewResponseModel(int userId, String userName, Map<Integer, QuestionDisplayFormatter> questionMap) {
-        this.userId = userId;
-        this.userName = userName;
-        this.questionMap = questionMap;
+    public ViewResponseModel(Builder builder) {
+        super(builder.userId, builder.userName, builder.userType);
+        this.questionMap = builder.questionMap;
     }
 
-    public int getUserId() {
-        return userId;
-    }
+    public static class Builder {
+        private int userId;
+        private String userName;
+        private String userType;
+        private Map<Integer, QuestionDisplayFormatter> questionMap;
+        public Builder(UserResponseModel userModel) {
+            this.userId = userModel.getUserId();
+            this.userName = userModel.getUserName();
+            this.userType = userModel.getUserType();
+        }
 
-    public String getUserName() {
-        return userName;
+        public  Builder questionMap(Map<Integer, QuestionDisplayFormatter> questionMap) {
+            this.questionMap = questionMap;
+            return this;
+        }
+
+        public ViewResponseModel build() {
+            return new ViewResponseModel(this);
+        }
     }
 
     public Map<Integer, QuestionDisplayFormatter> getQuestionMap() {

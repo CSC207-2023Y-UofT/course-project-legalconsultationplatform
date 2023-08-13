@@ -5,7 +5,6 @@ import businessrule.gateway.AttorneyGateway;
 import businessrule.gateway.ClientGateway;
 import businessrule.gateway.QuestionGateway;
 import businessrule.inputboundary.QuestionInputBoundary;
-import businessrule.outputboundary.TheQuestionOutputBoundary;
 import businessrule.requestmodel.QuestionRequestModel;
 import businessrule.responsemodel.TheQuestionResponseModel;
 import businessrule.usecase.AskQuestionInteractor;

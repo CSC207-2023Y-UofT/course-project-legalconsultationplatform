@@ -4,58 +4,63 @@ import businessrule.SessionManager;
 import businessrule.UserSession;
 import businessrule.gateway.UserGatewayFactory;
 import businessrule.inputboundary.UserLoginInputBoundary;
-import businessrule.outputboundary.HomePageOutputBoundary;
+import businessrule.outputboundary.UserOutputBoundary;
 import businessrule.requestmodel.UserLoginRequestModel;
-import businessrule.responsemodel.HomePageResponseModel;
 import businessrule.gateway.UserGateway;
+import businessrule.responsemodel.UserResponseModel;
 import entity.User;
 import entity.ApplicationException;
 
 public class UserLoginInteractor implements UserLoginInputBoundary{
     final UserGatewayFactory userGatewayFactory;
-    final HomePageOutputBoundary outputBoundary;
+    final UserOutputBoundary outputBoundary;
 
-    public UserLoginInteractor(UserGatewayFactory userGatewayFactory, HomePageOutputBoundary outputBoundary) {
+    public UserLoginInteractor(UserGatewayFactory userGatewayFactory, UserOutputBoundary outputBoundary) {
         this.userGatewayFactory = userGatewayFactory;
         this.outputBoundary = outputBoundary;
     }
 
     @Override
-    public HomePageResponseModel login(UserLoginRequestModel requestModel) {
-        // get input data
-        int inputUserId = requestModel.getUserId();
-        String inputPassword = requestModel.getPassword();
-
-        // use user gateway factory to retrieve the correct type of repo
-        UserGateway<? extends User> userGateway;
-        try {
-            userGateway = userGatewayFactory.createUserGateway(inputUserId);
-        } catch (ApplicationException e) {
+    public UserResponseModel login(UserLoginRequestModel requestModel) {
+        int userId = requestModel.getUserId();
+        User user = fetchUser(userId);
+        if (user == null) {
             return outputBoundary.prepareFail("User ID does not exist");
         }
 
-        // handle login logic
-        if (!userGateway.existsById(inputUserId)) {
-            return outputBoundary.prepareFail("User ID does not exist");
-        }
-        User filedUser = userGateway.get(inputUserId);
-        String filedPassword = filedUser.getPassword();
-        if (!inputPassword.equals(filedPassword)) {
+        if (!validatePassword(user, requestModel.getPassword())) {
             return outputBoundary.prepareFail("Password is incorrect");
         }
-
-        // construct response model
-        String userType;
-        User user = userGateway.get(inputUserId);
-        if (user.isClient()){
-            userType = "Client";
-        } else{
-            userType = "Attorney";
-        }
-        HomePageResponseModel accountResponseModel = new HomePageResponseModel(inputUserId,
-                userGateway.get(inputUserId).getUserName(), userType);
-        return outputBoundary.prepareSuccess(accountResponseModel);
+        UserResponseModel responseModel = constructResponseModel(user);
+        setUserSession(responseModel);
+        return outputBoundary.prepareSuccess(responseModel);
     }
+
+    private User fetchUser(int userId) {
+        try {
+            UserGateway<? extends User> userGateway = userGatewayFactory.createUserGateway(userId);
+            if (userGateway.existsById(userId)) {
+                return userGateway.get(userId);
+            }
+        } catch (ApplicationException e) {
+            return null;
+        }
+        return null;
+    }
+
+    private void setUserSession(UserResponseModel response) {
+        UserSession userSession = new UserSession(response);
+        SessionManager.setSession(userSession);
+    }
+
+    private boolean validatePassword(User user, String inputPassword) {
+        return user.getPassword().equals(inputPassword);
+    }
+
+    private UserResponseModel constructResponseModel(User user) {
+        return new UserResponseModel(user.getUserId(), user.getUserName(), user.getUserType());
+    }
+
 
 
 }

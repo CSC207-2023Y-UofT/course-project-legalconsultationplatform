@@ -3,7 +3,6 @@ package controllertesting;
 import adapter.controller.UserLoginControl;
 import businessrule.inputboundary.UserLoginInputBoundary;
 import businessrule.requestmodel.UserLoginRequestModel;
-import businessrule.responsemodel.HomePageResponseModel;
 
 import org.junit.jupiter.api.Test;
 

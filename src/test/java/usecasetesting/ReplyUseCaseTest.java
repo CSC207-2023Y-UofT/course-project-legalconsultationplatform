@@ -3,9 +3,7 @@ package usecasetesting;
 import adapter.controller.ControlContainer;
 import businessrule.gateway.*;
 import businessrule.inputboundary.PostInputBoundary;
-import businessrule.outputboundary.HomePageOutputBoundary;
 import businessrule.requestmodel.PostRequestModel;
-import businessrule.responsemodel.HomePageResponseModel;
 import businessrule.usecase.ReplyInteractor;
 import driver.database.*;
 

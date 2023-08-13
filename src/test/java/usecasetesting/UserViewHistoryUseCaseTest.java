@@ -7,7 +7,6 @@ import businessrule.gateway.QuestionGateway;
 import businessrule.gateway.UserGatewayFactory;
 import businessrule.inputboundary.ViewInputBoundary;
 import businessrule.outputboundary.ViewOutputBoundary;
-import businessrule.requestmodel.ViewRequestModel;
 import businessrule.responsemodel.ViewResponseModel;
 import businessrule.usecase.util.QuestionDisplayFormatter;
 import businessrule.usecase.ViewQuestionInteractor;

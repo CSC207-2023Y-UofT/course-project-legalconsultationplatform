@@ -4,12 +4,10 @@ public class RateRequestModel {
 
     private final int rating;
     private final int answerId;
-    private final int userId;
 
-    public RateRequestModel(int rating, int answerId, int userId) {
+    public RateRequestModel(int rating, int answerId) {
         this.rating = rating;
         this.answerId = answerId;
-        this.userId = userId;
     }
 
     public int getRating() {
@@ -18,9 +16,5 @@ public class RateRequestModel {
 
     public int getAnswerId() {
         return answerId;
-    }
-
-    public int getUserId() {
-        return userId;
     }
 }

@@ -2,7 +2,9 @@ package adapter.presenter;
 
 import adapter.controller.ControlContainer;
 import businessrule.outputboundary.TheQuestionOutputBoundary;
+import businessrule.outputboundary.UserOutputBoundary;
 import businessrule.responsemodel.TheQuestionResponseModel;
+import businessrule.responsemodel.UserResponseModel;
 import businessrule.usecase.util.PostDisplayFormatter;
 import entity.ApplicationException;
 import driver.screen.*;
@@ -28,12 +30,13 @@ public class TheQuestionResponseFormatter implements TheQuestionOutputBoundary {
     }
 
     @Override
-    public TheQuestionResponseModel prepareFail(String msg) {
+    public UserResponseModel prepareFail(String msg) {
         throw new ApplicationException(msg);
     }
 
     @Override
-    public TheQuestionResponseModel prepareSuccess(TheQuestionResponseModel response) {
+    public UserResponseModel prepareSuccess(UserResponseModel responseModel) {
+        TheQuestionResponseModel response = (TheQuestionResponseModel) responseModel;
         int userId = response.getUserId();
         String userName = response.getUserName();
         int questionId = response.getQuestionId();

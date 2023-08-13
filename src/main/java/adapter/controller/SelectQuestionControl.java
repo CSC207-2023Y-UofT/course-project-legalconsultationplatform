@@ -1,8 +1,8 @@
 package adapter.controller;
 
-import businessrule.responsemodel.TheQuestionResponseModel;
 import businessrule.inputboundary.SelectInputBoundary;
 import businessrule.requestmodel.SelectRequestModel;
+import businessrule.responsemodel.UserResponseModel;
 
 public class SelectQuestionControl {
     private final SelectInputBoundary selectInputBoundary;
@@ -10,8 +10,8 @@ public class SelectQuestionControl {
     public SelectQuestionControl(SelectInputBoundary selectInputBoundary) {
         this.selectInputBoundary = selectInputBoundary;
     }
-    public TheQuestionResponseModel selectQuestion(int questionId, int userId) {
-        SelectRequestModel selectRequestModel =  new SelectRequestModel(questionId, userId);
+    public UserResponseModel selectQuestion(int questionId) {
+        SelectRequestModel selectRequestModel =  new SelectRequestModel(questionId);
         return selectInputBoundary.selectQuestion(selectRequestModel);
     }
 }

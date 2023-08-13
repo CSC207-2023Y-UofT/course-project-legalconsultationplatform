@@ -4,10 +4,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import businessrule.requestmodel.RegistrationData;
 import driver.database.AttorneyRepository;
 
-import javax.persistence.ElementCollection;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.List;
@@ -68,9 +65,11 @@ public class Attorney extends UserImp {
     public void setProfessionals(Set<String> professionals) {this.professionals = professionals;}
 
     @Override
-    public boolean isClient() {
-        return false;
+    @Transient
+    public String getUserType() {
+        return "Attorney";
     }
+
 
     @Override
     public boolean isQuestionCloseable(Question question){return false;}

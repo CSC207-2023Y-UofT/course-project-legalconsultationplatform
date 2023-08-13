@@ -5,9 +5,7 @@ import adapter.controller.ControlContainer;
 import businessrule.gateway.*;
 
 import businessrule.inputboundary.RateInputBoundary;
-import businessrule.outputboundary.HomePageOutputBoundary;
 import businessrule.requestmodel.RateRequestModel;
-import businessrule.responsemodel.HomePageResponseModel;
 import businessrule.usecase.RateInteractor;
 
 import driver.database.*;

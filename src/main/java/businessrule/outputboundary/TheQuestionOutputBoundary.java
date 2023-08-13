@@ -1,10 +1,10 @@
 package businessrule.outputboundary;
 
 import adapter.controller.ControlContainer;
-import businessrule.responsemodel.TheQuestionResponseModel;
+import businessrule.responsemodel.UserResponseModel;
 
 public interface TheQuestionOutputBoundary {
     void setControlContainer(ControlContainer controlContainer);
-    TheQuestionResponseModel prepareFail(String msg);
-    TheQuestionResponseModel prepareSuccess(TheQuestionResponseModel response);
+    UserResponseModel prepareFail(String msg);
+    UserResponseModel prepareSuccess(UserResponseModel response);
 }

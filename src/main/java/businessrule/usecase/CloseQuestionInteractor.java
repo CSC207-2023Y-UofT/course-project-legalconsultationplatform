@@ -1,48 +1,44 @@
 package businessrule.usecase;
 
+import businessrule.SessionManager;
+import businessrule.UserSession;
+import businessrule.gateway.ClientGateway;
 import businessrule.inputboundary.CloseInputBoundary;
-import businessrule.outputboundary.HomePageOutputBoundary;
+import businessrule.outputboundary.UserOutputBoundary;
 import businessrule.requestmodel.CloseRequestModel;
-import businessrule.responsemodel.HomePageResponseModel;
-import businessrule.responsemodel.TheQuestionResponseModel;
+import businessrule.responsemodel.UserResponseModel;
+import entity.Client;
 import entity.Question;
 import businessrule.gateway.QuestionGateway;
-import entity.User;
-import businessrule.gateway.UserGateway;
-import businessrule.gateway.UserGatewayFactory;
-
-import java.time.LocalDate;
 
 public class CloseQuestionInteractor implements CloseInputBoundary {
     final QuestionGateway questionGateway;
-    final HomePageOutputBoundary homePageOutputBoundary;
-    final UserGatewayFactory userGatewayFactory;
+    final UserOutputBoundary outputBoundary;
+    final ClientGateway clientGateway;
 
-    public CloseQuestionInteractor(QuestionGateway questionGateway, HomePageOutputBoundary homePageOutputBoundary, UserGatewayFactory userGatewayFactory) {
+    public CloseQuestionInteractor(QuestionGateway questionGateway, UserOutputBoundary outputBoundary, ClientGateway clientGateway) {
         this.questionGateway = questionGateway;
-        this.homePageOutputBoundary = homePageOutputBoundary;
-        this.userGatewayFactory = userGatewayFactory;
+        this.outputBoundary = outputBoundary;
+        this.clientGateway = clientGateway;
     }
 
     @Override
-    public HomePageResponseModel closeQuestion(CloseRequestModel closeRequestModel) {
+    public UserResponseModel closeQuestion(CloseRequestModel closeRequestModel) {
         // get input data
-        int userId = closeRequestModel.getUserId();;
+        UserSession session = SessionManager.getSession();
+        UserResponseModel response = session.getUserResponseModel();
         int questionId = closeRequestModel.getQuestionId();
-        UserGateway<? extends User> userGateway = userGatewayFactory.createUserGateway(userId);
-        User user = userGateway.get(userId);
+        Client client = clientGateway.get(response.getUserId());
         Question question = questionGateway.get(questionId);
 
 
         // handle close logic and prepare response model
-        boolean isQuestionCloseable = user.isQuestionCloseable(question);
-        if(isQuestionCloseable){
+        if(question.isTaken()){
             questionGateway.updateIsClose(questionId, true);
-            HomePageResponseModel homePageResponseModel = new HomePageResponseModel(userId, user.getUserName(), "Client");
-            return homePageOutputBoundary.prepareSuccess(homePageResponseModel);
+            return outputBoundary.prepareSuccess(response);
         }
         else{
-            return homePageOutputBoundary.prepareFail("You cannot close this question!");
+            return outputBoundary.prepareFail("You can only close this question once it was taken by attorney.");
         }
     }
 }

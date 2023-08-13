@@ -2,8 +2,8 @@ package businessrule.usecase;
 
 
 import businessrule.gateway.ClientGateway;
-import businessrule.outputboundary.RegisterOutputBoundary;
-import businessrule.responsemodel.RegisterResponseModel;
+import businessrule.outputboundary.BaseOutputBoundary;
+import businessrule.responsemodel.BaseResponseModel;
 import entity.ApplicationException;
 import entity.Client;
 import entity.factory.ClientFactory;
@@ -12,12 +12,12 @@ import businessrule.requestmodel.RegistrationData;
 
 public class ClientRegisterInteractor extends UserRegisterInteractor<ClientGateway, ClientFactory, Client> {
 
-    public ClientRegisterInteractor(ClientGateway clientGateway, ClientFactory clientFactory, RegisterOutputBoundary outputBoundary) {
-        super(clientGateway, clientFactory, outputBoundary);
+    public ClientRegisterInteractor(ClientGateway userGateway, ClientFactory userFactory, BaseOutputBoundary outputBoundary) {
+        super(userGateway, userFactory, outputBoundary);
     }
 
     @Override
-    public RegisterResponseModel create(RegistrationData requestModel) {
+    public BaseResponseModel create(RegistrationData requestModel) {
         try {checkCredential(requestModel);}
         catch (ApplicationException e) {
             return outputBoundary.prepareFail(e.getMessage());

@@ -3,7 +3,6 @@ package controllertesting;
 import adapter.controller.CloseQuestionControl;
 import businessrule.inputboundary.CloseInputBoundary;
 import businessrule.requestmodel.CloseRequestModel;
-import businessrule.responsemodel.HomePageResponseModel;
 
 import org.junit.jupiter.api.Test;
 

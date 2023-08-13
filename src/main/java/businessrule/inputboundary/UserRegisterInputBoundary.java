@@ -1,8 +1,9 @@
 package businessrule.inputboundary;
 
-import businessrule.responsemodel.RegisterResponseModel;
 import businessrule.requestmodel.RegistrationData;
+import businessrule.responsemodel.BaseResponseModel;
+import businessrule.responsemodel.UserResponseModel;
 
 public interface UserRegisterInputBoundary {
-    RegisterResponseModel create(RegistrationData requestModel);
+    BaseResponseModel create(RegistrationData requestModel);
 }

@@ -4,16 +4,11 @@ import adapter.controller.ControlContainer;
 import businessrule.gateway.ClientGateway;
 import businessrule.gateway.UserGatewayFactory;
 import businessrule.inputboundary.UserLoginInputBoundary;
-import businessrule.outputboundary.HomePageOutputBoundary;
 import businessrule.requestmodel.UserLoginRequestModel;
-import businessrule.responsemodel.HomePageResponseModel;
 import businessrule.usecase.UserLoginInteractor;
 import driver.database.*;
 import entity.Client;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 
 public class UserLoginUseCaseTest {

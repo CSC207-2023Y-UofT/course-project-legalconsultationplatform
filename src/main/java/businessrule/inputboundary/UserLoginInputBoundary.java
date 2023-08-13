@@ -1,8 +1,8 @@
 package businessrule.inputboundary;
 
 import businessrule.requestmodel.UserLoginRequestModel;
-import businessrule.responsemodel.HomePageResponseModel;
+import businessrule.responsemodel.UserResponseModel;
 
 public interface UserLoginInputBoundary {
-    HomePageResponseModel login(UserLoginRequestModel requestModel);
+    UserResponseModel login(UserLoginRequestModel requestModel);
 }

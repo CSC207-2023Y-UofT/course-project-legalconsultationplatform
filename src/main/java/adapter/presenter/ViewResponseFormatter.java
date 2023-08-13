@@ -2,11 +2,11 @@ package adapter.presenter;
 
 import adapter.controller.ControlContainer;
 import businessrule.outputboundary.ViewOutputBoundary;
+import businessrule.responsemodel.UserResponseModel;
 import businessrule.responsemodel.ViewResponseModel;
 import businessrule.usecase.util.QuestionDisplayFormatter;
 import entity.ApplicationException;
 import driver.screen.QuestionListUI;
-
 import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
@@ -31,7 +31,8 @@ public class ViewResponseFormatter implements ViewOutputBoundary {
     }
 
     @Override
-    public ViewResponseModel prepareSuccess(ViewResponseModel response) {
+    public UserResponseModel prepareSuccess(UserResponseModel responseModel) {
+        ViewResponseModel response = (ViewResponseModel) responseModel;
         int userId = response.getUserId();
         String userName = response.getUserName();
         Map<Integer, QuestionDisplayFormatter> questionMap = response.getQuestionMap();

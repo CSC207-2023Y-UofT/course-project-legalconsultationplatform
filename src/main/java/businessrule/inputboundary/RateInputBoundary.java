@@ -1,10 +1,10 @@
 package businessrule.inputboundary;
 
 import businessrule.requestmodel.RateRequestModel;
-import businessrule.responsemodel.HomePageResponseModel;
+import businessrule.responsemodel.UserResponseModel;
 
 public interface RateInputBoundary {
 
-    HomePageResponseModel rateAnswer(RateRequestModel rateRequestModel);
+    UserResponseModel rateAnswer(RateRequestModel rateRequestModel);
 
 }

@@ -3,7 +3,6 @@ package controllertesting;
 import adapter.controller.PostControl;
 import businessrule.inputboundary.PostInputBoundary;
 import businessrule.requestmodel.PostRequestModel;
-import businessrule.responsemodel.HomePageResponseModel;
 
 import org.junit.jupiter.api.Test;
 

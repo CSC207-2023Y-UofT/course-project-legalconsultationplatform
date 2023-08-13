@@ -1,16 +1,21 @@
 package businessrule;
 
+import businessrule.responsemodel.UserResponseModel;
 import driver.screen.BaseUI;
 import entity.User;
 
 public class UserSession {
-    private final int userId;
+    private final UserResponseModel userResponseModel;
 
-    public UserSession(int userId) {this.userId = userId;}
-
-    public BaseUI getUI(UIFactory.UIType uiType) {
-        return UIFactory.createUI(uiType);
+    public UserSession(UserResponseModel userResponseModel) {
+        this.userResponseModel = userResponseModel;
     }
 
-    public int getUserId() {return userId;}
+//    public BaseUI getUI(UIFactory.UIType uiType) {
+//        return UIFactory.createUI(uiType);
+//    }
+
+    public UserResponseModel getUserResponseModel() {
+        return userResponseModel;
+    }
 }

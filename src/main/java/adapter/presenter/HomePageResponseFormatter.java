@@ -1,14 +1,14 @@
 package adapter.presenter;
 import adapter.controller.ControlContainer;
-import businessrule.outputboundary.HomePageOutputBoundary;
-import businessrule.responsemodel.HomePageResponseModel;
+import businessrule.outputboundary.UserOutputBoundary;
+import businessrule.responsemodel.UserResponseModel;
 import entity.ApplicationException;
 import driver.screen.AttorneyHomePageUI;
 import driver.screen.ClientHomePageUI;
 import javax.swing.*;
 import java.awt.*;
 
-public class HomePageResponseFormatter implements HomePageOutputBoundary {
+public class HomePageResponseFormatter implements UserOutputBoundary {
     CardLayout cardLayout;
     JPanel screens;
     ControlContainer controlContainer;
@@ -24,12 +24,12 @@ public class HomePageResponseFormatter implements HomePageOutputBoundary {
     }
 
     @Override
-    public HomePageResponseModel prepareFail(String msg) {
+    public UserResponseModel prepareFail(String msg) {
         throw new ApplicationException(msg);
     }
 
     @Override
-    public HomePageResponseModel prepareSuccess(HomePageResponseModel response) {
+    public UserResponseModel prepareSuccess(UserResponseModel response) {
         int userId = response.getUserId();
         String userName = response.getUserName();
         String userType = response.getUserType();
