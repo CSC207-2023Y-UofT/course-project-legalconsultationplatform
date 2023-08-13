@@ -14,7 +14,7 @@ import java.util.List;
 import static driver.screen.UIDrawer.*;
 import static driver.screen.UIDesign.*;
 
-public class RegisterUI extends BaseUI implements ActionListener {
+public class RegisterUI extends BaseUI{
     UIManager UIManager;
 
     JTextField userName = new JTextField(15);

@@ -54,17 +54,17 @@ public class AttorneyHomePageUI extends HomePageUI implements ActionListener {
         switch (actionCommand) {
             case BROWSE_AVAILABLE_QUESTIONS_BUTTON_NAME:
                 ViewQuestionControl browseQuestionControl = controlContainer.getBrowseQuestionControl();
-                browseQuestionControl.viewQuestion(userId);
+                browseQuestionControl.viewQuestion();
                 break;
 
             case VIEW_QUESTION_HISTORY_BUTTON_NAME:
                 ViewQuestionControl viewQuestionControl = controlContainer.getViewQuestionControl();
-                viewQuestionControl.viewQuestion(userId);
+                viewQuestionControl.viewQuestion();
                 break;
 
             case RECOMMENDED_QUESTIONS_BUTTON_NAME:
                 ViewQuestionControl recommendationControl = controlContainer.getRecommendationControl();
-                recommendationControl.viewQuestion(userId);
+                recommendationControl.viewQuestion();
                 break;
 
             case LOG_OUT_BUTTON_NAME:

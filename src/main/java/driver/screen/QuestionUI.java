@@ -1,13 +1,12 @@
 package driver.screen;
-
-import adapter.controller.ControlContainer;
 import businessrule.usecase.util.PostDisplayFormatter;
-import entity.Post;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.ActionEvent;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -16,7 +15,7 @@ import static driver.screen.UIDrawer.*;
 import static java.awt.Color.white;
 
 
-public abstract class QuestionUI extends UserUI{
+public class QuestionUI extends UserUI{
     protected String userName;
     protected int userId;
     protected JPanel helloMessage;
@@ -26,11 +25,9 @@ public abstract class QuestionUI extends UserUI{
     JPanel previousDiscussions;
     JScrollPane postScrollPane;
     JPanel topPanel;
-    Map<Integer, PostDisplayFormatter> postMap;
+    JPanel backAndHomepage;
     static final String BACK_BUTTON_NAME = "Back";
     static final String HOME_PAGE_BUTTON_NAME = "Home Page";
-    static final String CLIENT_USER_TYPE = "Client";
-    static final String ATTORNEY_USER_TYPE = "Attorney";
     public QuestionUI(String userName, int userId, UIManager UIManager, String title,
                       String questionType, LocalDate deadline, Map<Integer, PostDisplayFormatter> postMap) {
         super(userName, userId, UIManager);
@@ -62,12 +59,7 @@ public abstract class QuestionUI extends UserUI{
             //read all variables from displayFormatter
             String name = post.getName();
             String postText = post.getPostText();
-            String userType;
-            if (post.isClient()) {
-                userType = CLIENT_USER_TYPE;
-            } else {
-                userType = ATTORNEY_USER_TYPE;
-            }
+            String userType = post.getUserType();
             String postDate = post.getCreateAt().format(formatter);
             //lines
             String idLine = name + "(" + userType + ")";
@@ -83,6 +75,8 @@ public abstract class QuestionUI extends UserUI{
         setSizeInLayout(postScrollPane, new Dimension(350, 200));
         postScrollPane.setOpaque(false);
 
+
+        //Set up topPanel
         JPanel spacer = addSpacer(20);
 
         topPanel.add(helloMessage);
@@ -90,5 +84,23 @@ public abstract class QuestionUI extends UserUI{
         topPanel.add(spacer);
         topPanel.add(previousDiscussions);
         topPanel.add(postScrollPane);
+
+        //Set up back and homepage buttons
+        List<String> buttonList = new ArrayList<>();
+        buttonList.add(BACK_BUTTON_NAME);
+        buttonList.add(HOME_PAGE_BUTTON_NAME);
+        backAndHomepage = setButtonPanel(buttonList, new Dimension(150, 50), 20, this);
+    }
+
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        String actionCommand = e.getActionCommand();
+        CardLayout cardLayout = UIManager.getCardLayout();
+        JPanel screens = UIManager.getScreens();
+        if (HOME_PAGE_BUTTON_NAME.equals(actionCommand)) {
+            cardLayout.show(screens, "Home Page");
+        } else if (BACK_BUTTON_NAME.equals(actionCommand)){
+            cardLayout.show(screens, "Question List");
+        }
     }
 }

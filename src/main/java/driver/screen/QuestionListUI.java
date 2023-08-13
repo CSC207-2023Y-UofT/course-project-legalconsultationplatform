@@ -3,7 +3,6 @@ import adapter.controller.ControlContainer;
 import adapter.controller.SelectQuestionControl;
 import businessrule.usecase.util.QuestionDisplayFormatter;
 
-import javax.print.attribute.standard.JobOriginatingUserName;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -59,7 +58,7 @@ public class QuestionListUI extends UserUI implements ActionListener {
                     System.out.println("Question selected");
                     ControlContainer controlContainer = UIManager.getControlContainer();
                     SelectQuestionControl selectQuestionControl = controlContainer.getSelectQuestionControl();
-                    selectQuestionControl.selectQuestion(questionId, userId);
+                    selectQuestionControl.selectQuestion(questionId);
                 }
             });
             questionScrollPanel.add(questionButton);
