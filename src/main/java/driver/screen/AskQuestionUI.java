@@ -19,11 +19,10 @@ import com.toedter.calendar.JDateChooser;
 import static driver.screen.UIDesign.buttonSize;
 import static javax.swing.BoxLayout.Y_AXIS;
 
-
 /**
- *
- * @author joseph
+ * This class represents the user interface for asking a new question.
  */
+
 public class AskQuestionUI extends JPanel implements ActionListener{
     ControlContainer controlContainer;
     CardLayout cardLayout;

@@ -10,12 +10,28 @@ import entity.factory.ClientFactory;
 import businessrule.usecase.util.CredentialChecker;
 import businessrule.requestmodel.RegistrationData;
 
+/**
+ * This class represents interactor responsible for client registration use case.
+ */
 public class ClientRegisterInteractor extends UserRegisterInteractor<ClientGateway, ClientFactory, Client> {
 
+    /**
+     * Constructs a ClientRegisterInteractor.
+     *
+     * @param clientGateway   The gateway for client-related operations.
+     * @param clientFactory   The factory for creating client entities.
+     * @param outputBoundary The output boundary for the registration process.
+     */
     public ClientRegisterInteractor(ClientGateway clientGateway, ClientFactory clientFactory, RegisterOutputBoundary outputBoundary) {
         super(clientGateway, clientFactory, outputBoundary);
     }
 
+    /**
+     * Create a new client registration based on the provided registration data.
+     *
+     * @param requestModel The registration data for the client.
+     * @return The response model indicating the result of the registration process.
+     */
     @Override
     public RegisterResponseModel create(RegistrationData requestModel) {
         try {checkCredential(requestModel);}
@@ -27,6 +43,12 @@ public class ClientRegisterInteractor extends UserRegisterInteractor<ClientGatew
         return outputBoundary.prepareSuccess(message);
     }
 
+    /**
+     * Check the credentials and validate the input data for client registration.
+     *
+     * @param requestModel The registration data for the client.
+     * @throws ApplicationException If there are issues with the provided credentials or input data.
+     */
     private void checkCredential(RegistrationData requestModel) throws ApplicationException{
         // prepare input data
         String inputUserName = requestModel.userName;

@@ -18,9 +18,7 @@ import java.util.Objects;
 import static driver.screen.UIDesign.*;
 
 /**
- * TheQuestionUI class represents the user interface for a specific question.
- * It displays information about the question, posts, and provides interaction
- * options such as posting replies, closing the question, and rating it.
+ * This class represents the user interface for a specific question.
  */
 public class TheQuestionUI extends JPanel implements ActionListener {
     ControlContainer controlContainer;
