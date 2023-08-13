@@ -21,9 +21,11 @@ public abstract class QuestionUI extends UserUI{
     protected int userId;
     protected JPanel helloMessage;
     protected UIManager UIManager;
+    int questionId;
     JPanel questionTitle;
     JPanel previousDiscussions;
     JScrollPane postScrollPane;
+    JPanel topPanel;
     Map<Integer, PostDisplayFormatter> postMap;
     static final String BACK_BUTTON_NAME = "Back";
     static final String HOME_PAGE_BUTTON_NAME = "Home Page";
@@ -46,8 +48,6 @@ public abstract class QuestionUI extends UserUI{
         questionTitle.add(deadlineLine);
         setSizeInLayout(questionTitle, new Dimension(360, 50));
         questionTitle.setOpaque(false);
-
-
 
         setSizeInLayout(previousDiscussions, new Dimension(350, 30));
         JLabel label = new JLabel("Previous discussions");
@@ -82,5 +82,13 @@ public abstract class QuestionUI extends UserUI{
         postScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
         setSizeInLayout(postScrollPane, new Dimension(350, 200));
         postScrollPane.setOpaque(false);
+
+        JPanel spacer = addSpacer(20);
+
+        topPanel.add(helloMessage);
+        topPanel.add(questionTitle);
+        topPanel.add(spacer);
+        topPanel.add(previousDiscussions);
+        topPanel.add(postScrollPane);
     }
 }
