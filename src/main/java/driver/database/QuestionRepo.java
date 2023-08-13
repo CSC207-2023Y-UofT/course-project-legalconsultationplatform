@@ -172,9 +172,4 @@ public class QuestionRepo extends GenericRepository<Question> implements Questio
     public Question get(int id) {
         return (Question) super.get(id);
     }
-
-    public static void main(String[] args) {
-        QuestionGateway questionGateway = new QuestionRepo();
-        System.out.println(questionGateway.getNotTakenQuestion());
-    }
 }
