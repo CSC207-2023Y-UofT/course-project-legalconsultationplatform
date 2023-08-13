@@ -49,7 +49,7 @@ public class BrowseQuestionUseCaseTest {
         @Override
         public UserResponseModel prepareSuccess(UserResponseModel response) {
             ViewResponseModel responseModel = (ViewResponseModel) response;
-            assertEquals(0, responseModel.getQuestionMap(), "The Question Map is not correct.");
+            assertEquals(0, responseModel.getQuestionMap().size(), "The Question Map is not correct.");
             return null;
         }
 
