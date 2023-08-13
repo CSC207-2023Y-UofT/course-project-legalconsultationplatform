@@ -6,8 +6,14 @@ import entity.factory.ClientFactory;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class contains unit tests for the ClientFactory class.
+ */
 public class ClientFactoryTest {
 
+    /**
+     * Test the create method of ClientFactory.
+     */
     @Test
     public void testCreate() {
         ClientFactory factory = new ClientFactory();

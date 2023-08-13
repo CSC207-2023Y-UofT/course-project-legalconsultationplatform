@@ -18,6 +18,9 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class contains unit tests for the AttorneyRepository class.
+ */
 public class AttorneyRepositoryTest {
 
     //Attorney
@@ -32,6 +35,9 @@ public class AttorneyRepositoryTest {
     final static int ASKED_BY_CLIENT1 = 20;
     final static int ASKED_BY_CLIENT2 = 30;
 
+    /**
+     * Set up the test environment by initializing the AttorneyRepository instance.
+     */
     @BeforeAll
     public static void setUp() {
         //Attorney
@@ -94,6 +100,9 @@ public class AttorneyRepositoryTest {
         qRepo.save(q2);
     }
 
+    /**
+     * Test whether an attorney ID exists in the repository.
+     */
     @Test
     public void testExistsById(){
         AttorneyRepository repo = new AttorneyRepository();
@@ -103,6 +112,9 @@ public class AttorneyRepositoryTest {
         assertFalse(repo.existsById(75), "The id exists!");
     }
 
+    /**
+     * Test whether an attorney with a given username exists in the repository.
+     */
     @Test
     public void testExistsByName() {
         AttorneyRepository repo = new AttorneyRepository();
@@ -112,6 +124,9 @@ public class AttorneyRepositoryTest {
         assertFalse(repo.existsByName("John"), "The username exists!");
     }
 
+    /**
+     * Test updating an attorney's question list.
+     */
     @Test
     public void testUpdateQuestionList() {
         AttorneyRepository repo = new AttorneyRepository();
@@ -124,6 +139,9 @@ public class AttorneyRepositoryTest {
         assert expectedList1.equals(repo.get(ATTORNEY_ID).getQuestionsList());
     }
 
+    /**
+     * Delete all data in AttorneyRepository, ClientRepository and QuestionRepo.
+     */
     @AfterAll
     public static void tearDown() {
         AttorneyRepository repo = new AttorneyRepository();
@@ -134,6 +152,9 @@ public class AttorneyRepositoryTest {
         qRepo.deleteAll();
     }
 
+    /**
+     * Test getting an attorney from the repository.
+     */
     @Test
     public void testGetUser() {
         String attorneyUsername = "yao";
@@ -158,6 +179,9 @@ public class AttorneyRepositoryTest {
         assertEquals(a, repo.get(ATTORNEY_ID), "That is not the correct client!");
     }
 
+    /**
+     * Test adding an attorney to the repository.
+     */
     @Test
     public void testAddUser() {
         int attorneyId = 50;
@@ -183,6 +207,9 @@ public class AttorneyRepositoryTest {
         assertTrue(repo.existsById(attorneyId), "The attorney is not added!");
     }
 
+    /**
+     * Test deleting an attorney in the repository.
+     */
     @Test
     public void testDeleteUser() {
         int attorneyId = 50;
@@ -213,6 +240,9 @@ public class AttorneyRepositoryTest {
         repo.save(a);
     }
 
+    /**
+     * Test deleting all attorneys in the repository.
+     */
     @Test
     public void testDeleteAllUser() {
         int attorneyId = 50;

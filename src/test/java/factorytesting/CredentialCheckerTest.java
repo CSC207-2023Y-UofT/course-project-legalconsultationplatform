@@ -6,15 +6,24 @@ import businessrule.usecase.util.CredentialChecker;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+/**
+ * This class contains unit tests for CredentialChecker class.
+ */
 class CredentialCheckerTest {
 
     private CredentialChecker checker;
 
+    /**
+     * Set up the CredentialChecker instance before each test.
+     */
     @BeforeEach
     void setUpCredentialChecker() {
         checker = new CredentialChecker();
     }
 
+    /**
+     * Test the checkPostalCode method of CredentialChecker.
+     */
     @Test
     void testCheckPostalCode() {
         assertEquals(true, checker.checkPostalCode("12345"), "Postal code validation failed.");
@@ -23,7 +32,9 @@ class CredentialCheckerTest {
         assertEquals(false, checker.checkPostalCode(""), "Empty postal code passed validation.");
     }
 
-
+    /**
+     * Test the checkEmail method of CredentialChecker.
+     */
     @Test
     void testCheckEmail() {
         assertTrue(checker.checkEmail("test@example.com"), "Expected valid email to pass validation.");
@@ -33,7 +44,9 @@ class CredentialCheckerTest {
         assertFalse(checker.checkEmail("   "), "Expected email with only spaces to fail validation.");
     }
 
-
+    /**
+     * Test the checkAge method of CredentialChecker.
+     */
     @Test
     void testCheckAge() {
         assertEquals(true, checker.checkAge(50), "Age validation failed.");
