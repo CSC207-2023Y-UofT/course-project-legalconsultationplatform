@@ -10,136 +10,119 @@ import java.time.Instant;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.time.ZonedDateTime;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import javax.swing.JPanel;
 
 import com.toedter.calendar.JDateChooser;
 
-import static javax.swing.BoxLayout.Y_AXIS;
+import static driver.screen.UIDesign.*;
+import static driver.screen.UIDrawer.*;
 
 
 /**
  *
  * @author joseph
  */
-public class AskQuestionUI extends JPanel implements ActionListener {
+public class AskQuestionUI extends UserUI implements ActionListener {
+
+    protected String userName;
+    protected int userId;
+    protected JPanel helloMessage;
+    protected UIManager UIManager;
+    JComboBox<String> questionType = new JComboBox<>(QUESTION_TYPE_LIST);
+    JTextField titleForQuestion = new JTextField(15);
+    JDateChooser deadlineChooser = new JDateChooser();
     private static final String TITLE = "New Question";
-    private static final int DEFAULT_WIDTH = 360;
-    private static final int DEFAULT_HEIGHT = 600;
-    private static final int DEFAULT_SPACING = 50;
     private static final String[] QUESTION_TYPE_LIST = {
             "Family and Children", "Individual Rights",
             "Consumer Financial Questions", "Housing and Homelessness",
             "Income Maintenance", "Health and Disability",
             "Work, Employment and Unemployment", "Juvenile", "Education", "Other"
     };
-
-    private ControlContainer controlContainer;
-    private CardLayout cardLayout;
-    private JPanel screens;
-    private int userId;
-    private String userName;
-    String[] questionTypeList = {"Family and Children", "Individual Rights",
-            "Consumer Financial Questions", "Housing and Homelessness",
-            "Income Maintenance", "Health and Disability",
-            "Work, Employment and Unemployment", "Juvenile", "Education", "Other"};
-    JComboBox<String> questionType = new JComboBox<>(questionTypeList);
-    JTextField titleForQuestion = new JTextField(15);
-    JDateChooser deadlineChooser = new JDateChooser();
+    private static final String QUESTION_TYPE_PROMPT = "Select your question type";
+    private static final String QUESTION_TITLE_PROMPT = "Summarize your question in one sentence";
+    private static final String DEADLINE_PROMPT = "What is your question's legal deadline?";
+    private static final String SUBMIT_BUTTON_NAME = "Submit";
+    private static final String CANCEL_BUTTON_NAME = "Cancel";
 
     /**
      * Creates new form AskQuestion
      */
-    public AskQuestionUI(ControlContainer controlContainer, CardLayout cardLayout,
-                         JPanel screens, int userId, String userName) {
+    public AskQuestionUI(String userName, int userId, UIManager UIManager) {
+        super(userName, userId, UIManager);
 
-        this.controlContainer = controlContainer;
-        this.cardLayout = cardLayout;
-        this.screens = screens;
-        this.userId = userId;
-        this.userName = userName;
 
-        setSize(360, 600);
-        setBackground(UIDesign.lightGreenColor);
-
-        //UserName and userId
-        JPanel helloMessage = UIDesign.helloMessageConstructor(userName, userId);
-
-        JPanel spacer = UIDesign.addSpacer(50);
-        JPanel spacer2 = UIDesign.addSpacer(50);
+        //Spacer
+        JPanel spacer = addSpacer(30);
+        JPanel spacer2 = addSpacer(20);
 
         //Title
-        JLabel title = new JLabel("New Question");
+        JLabel title = new JLabel(TITLE);
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         UIDesign.setTitleFont(title);
 
         //Question type and title
-        DropDownPanel questionTypeDropDown = new DropDownPanel(new JLabel("Select question type"), questionType);
-        LabelTextPanel titleInfo = new LabelTextPanel(new JLabel("What is your question title?"), titleForQuestion);
-        DateChooserPanel legalDeadlineInfo = new DateChooserPanel(new JLabel("Select your question's legal deadline"), deadlineChooser);
 
-        JPanel buttons = new JPanel();
-        buttons.setBackground(UIDesign.lightGreenColor);
-        JButton buttonToSubmit = new JButton("Submit");
-        JButton returnButton = new JButton("Home Page");
-        UIDesign.setButton(buttonToSubmit);
-        UIDesign.setButton(returnButton);
-        buttons.add(buttonToSubmit);
-        buttons.add(returnButton);
+        JPanel inputPanel = new JPanel();
+        setSizeInLayout(inputPanel, new Dimension(360, 150));
+        JPanel questionTypePanel = dropDownPanelDrawer(new JLabel(QUESTION_TYPE_PROMPT), questionType);
+        JPanel questionTitlePanel = labelTextPanelDrawer(new JLabel(QUESTION_TITLE_PROMPT), titleForQuestion);
+        JPanel legalDeadlinePanel = datePanelDrawer(new JLabel(DEADLINE_PROMPT), deadlineChooser);
+        inputPanel.add(questionTypePanel);
+        inputPanel.add(spacer2);
+        inputPanel.add(questionTitlePanel);
+        inputPanel.add(spacer2);
+        inputPanel.add(legalDeadlinePanel);
+        inputPanel.add(spacer2);
 
-        buttonToSubmit.addActionListener(this);
-        returnButton.addActionListener(this);
+        //Buttons
+        List<String> buttonList = new ArrayList<>();
+        buttonList.add(SUBMIT_BUTTON_NAME);
+        buttonList.add(CANCEL_BUTTON_NAME);
+        JPanel buttons = setButtonPanel(buttonList, new Dimension(150, 50), 20, this);
 
-        JPanel restPanel = new JPanel();
-        restPanel.setBackground(UIDesign.lightGreenColor);
-        restPanel.setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = GridBagConstraints.RELATIVE;
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.insets = new Insets(5, 5, 5, 5); // Padding around each component
-
-        restPanel.add(questionTypeDropDown, gbc);
-        restPanel.add(titleInfo, gbc);
-        restPanel.add(legalDeadlineInfo, gbc);
-        restPanel.add(buttons, gbc);
-
-        this.add(helloMessage);
-        this.add(spacer);
-        this.add(title);
-        this.add(spacer2);
-        this.add(restPanel);
-
-    }
-
-    public void initializeUI() {
+        add(helloMessage);
+        add(spacer);
+        add(title);
+        add(spacer2);
+        add(inputPanel);
+        add(spacer);
+        add(buttons);
 
     }
 
     @Override
     public void actionPerformed(ActionEvent evt) {
         String actionCommand = evt.getActionCommand();
-        if ("Submit".equals(actionCommand)) {
-            System.out.println("Click" + evt.getActionCommand());
-            QuestionControl questionControl = controlContainer.getQuestionControl();
-            Date deadlineDate = deadlineChooser.getDate();
-            LocalDate deadlinelocalDate = null;
-            if (deadlineDate != null) {
-                Instant instant = deadlineDate.toInstant();
-                ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
-                deadlinelocalDate = zonedDateTime.toLocalDate();
-            }
-            try {
-                questionControl.createQuestion((String) questionType.getSelectedItem(),
-                        titleForQuestion.getText(), LocalDate.now(), userId, deadlinelocalDate);
-            } catch (Exception e) {
-                JOptionPane.showMessageDialog(this, e.getMessage());
-            }
-        } else if ("Home Page".equals(actionCommand)) {
-            ClientHomePageUI homePageUI = new ClientHomePageUI(controlContainer, cardLayout, screens,
-                    userId, userName);
-            screens.add(homePageUI, "HomePage");
-            cardLayout.show(screens, "HomePage");
+        ControlContainer controlContainer = UIManager.getControlContainer();
+        JPanel screens = UIManager.getScreens();
+        CardLayout cardLayout = UIManager.getCardLayout();
+        switch (actionCommand) {
+            case SUBMIT_BUTTON_NAME:
+                System.out.println("Click" + evt.getActionCommand());
+                QuestionControl questionControl = controlContainer.getQuestionControl();
+                Date deadlineDate = deadlineChooser.getDate();
+                LocalDate deadlinelocalDate = null;
+                if (deadlineDate != null) {
+                    Instant instant = deadlineDate.toInstant();
+                    ZonedDateTime zonedDateTime = instant.atZone(ZoneId.systemDefault());
+                    deadlinelocalDate = zonedDateTime.toLocalDate();
+                }
+                try {
+                    questionControl.createQuestion((String) questionType.getSelectedItem(),
+                            titleForQuestion.getText(), LocalDate.now(), userId, deadlinelocalDate);
+                } catch (Exception e) {
+                    JOptionPane.showMessageDialog(this, e.getMessage());
+                }
+                break;
+
+            case CANCEL_BUTTON_NAME:
+                ClientHomePageUI homePageUI = new ClientHomePageUI(userName, userId, UIManager);
+                screens.add(homePageUI, "HomePage");
+                cardLayout.show(screens, "HomePage");
+                break;
         }
     }
 }

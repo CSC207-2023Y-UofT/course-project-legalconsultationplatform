@@ -1,18 +1,19 @@
 package driver.screen;
 
-import adapter.controller.ControlContainer;
+import javax.swing.*;
+import static driver.screen.UIDesign.*;
+import static driver.screen.UIDrawer.*;
 
 public abstract class UserUI extends BaseUI{
     protected String userName;
     protected int userId;
-    protected String userType;
-    protected String helloMessage;
-    protected ControlContainer controlContainer;
+    protected JPanel helloMessage;
+    protected UIManager UIManager;
 
-    public UserUI(String userName, int userId, ControlContainer controlContainer) {
+    public UserUI(String userName, int userId, UIManager UIManager) {
+        super(UIManager);
         this.userName = userName;
         this.userId = userId;
-        this.helloMessage = "Hello, " + userName + "(" + userId + ")";
-        this.controlContainer = controlContainer;
+        this.helloMessage = helloMessageConstructor(userName, userId);
     }
 }

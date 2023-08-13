@@ -6,6 +6,7 @@ import businessrule.outputboundary.*;
 import businessrule.usecase.*;
 import driver.database.*;
 import driver.screen.UIDesign;
+import driver.screen.UIManager;
 import driver.screen.WelcomeUI;
 import entity.Attorney;
 import entity.factory.ClientFactory;
@@ -108,6 +109,8 @@ public class Main {
     viewOutputBoundary.setControlContainer(controlContainer);
     System.out.println("System - finished set up control container");
 
+    //Create the UITool for all UI pages
+        UIManager UIManager = new UIManager(controlContainer, screens, cardlayout);
     //Initiate the UI
     WelcomeUI welcomeUI = new WelcomeUI(controlContainer, cardlayout, screens);
     screens.add(welcomeUI, "Welcome");

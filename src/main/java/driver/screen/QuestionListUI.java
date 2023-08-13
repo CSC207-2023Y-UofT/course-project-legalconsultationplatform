@@ -1,9 +1,9 @@
 package driver.screen;
-
 import adapter.controller.ControlContainer;
 import adapter.controller.SelectQuestionControl;
 import businessrule.usecase.util.QuestionDisplayFormatter;
 
+import javax.print.attribute.standard.JobOriginatingUserName;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -12,33 +12,30 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
-public class QuestionListUI extends JPanel implements ActionListener {
-    ControlContainer controlContainer;
-    CardLayout cardLayout;
-    JPanel screens;
-    int userId;
-    String userName;
-    Map<Integer, QuestionDisplayFormatter> questionMap;
+import static driver.screen.UIDesign.*;
+import static driver.screen.UIDrawer.*;
 
-    public QuestionListUI(ControlContainer controlContainer, CardLayout cardLayout,
-                          JPanel screens, int userId, String userName,
+public class QuestionListUI extends UserUI implements ActionListener {
+    protected String userName;
+    protected int userId;
+    protected JPanel helloMessage;
+    protected UIManager UIManager;
+    Map<Integer, QuestionDisplayFormatter> questionMap;
+    static final String HOME_PAGE_BUTTON_NAME = "Home Page";
+
+    public QuestionListUI(String userName, int userId, UIManager UIManager,
                           Map<Integer, QuestionDisplayFormatter> questionMap) {
-        this.controlContainer = controlContainer;
-        this.cardLayout = cardLayout;
-        this.screens = screens;
-        this.userId = userId;
-        this.userName = userName;
+        super(userName, userId, UIManager);
         this.questionMap = questionMap;
 
-        JPanel spacer = UIDesign.addSpacer(10);
-        JPanel bottomSpacer = UIDesign.addSpacer(20);
-        //UserName and UserId
-        JPanel helloMessage = UIDesign.helloMessageConstructor(userName, userId);
+        //spacer
+
+        JPanel spacer = addSpacer(10);
 
         //The scrollable question buttons
         JPanel questionScrollPanel = new JPanel();
         UIDesign.setSizeInLayout(questionScrollPanel, new Dimension(350, 450));
-        questionScrollPanel.setBackground(UIDesign.lightGreenColor);
+        questionScrollPanel.setOpaque(false);
         questionScrollPanel.setLayout(new BoxLayout(questionScrollPanel, BoxLayout.Y_AXIS));
         for (Integer questionId : questionMap.keySet()) {
             //read all variables from displayFormatter
@@ -51,7 +48,7 @@ public class QuestionListUI extends JPanel implements ActionListener {
             String deadline = deadlineDate.format(formatter);
             String deadlineLine = "Legal deadline: " + deadline;
             //Format them all into a textArea
-            JPanel questionPanel = UIDesign.singleQuestionDrawer(title, type, deadlineLine);
+            JPanel questionPanel = singleQuestionDrawer(title, type, deadlineLine);
 
             JButton questionButton = new JButton();
             UIDesign.setSizeInLayout(questionButton, new Dimension(340, 60));
@@ -60,6 +57,7 @@ public class QuestionListUI extends JPanel implements ActionListener {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("Question selected");
+                    ControlContainer controlContainer = UIManager.getControlContainer();
                     SelectQuestionControl selectQuestionControl = controlContainer.getSelectQuestionControl();
                     selectQuestionControl.selectQuestion(questionId, userId);
                 }
@@ -74,31 +72,31 @@ public class QuestionListUI extends JPanel implements ActionListener {
         questionScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         //Home page button
-        JButton homePage = new JButton("Home Page");
-        UIDesign.setGeneralButton(homePage);
+        JButton homePage = new JButton(HOME_PAGE_BUTTON_NAME);
+        setButton(homePage, new Dimension(150, 50));
         homePage.setAlignmentX(CENTER_ALIGNMENT);
         homePage.addActionListener(this);
 
         //Add everything in the panel
-        setBackground(UIDesign.lightGreenColor);
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
         add(spacer);
         add(helloMessage);
+        add(spacer)
         add(questionScrollPane);
-        add(bottomSpacer);
+        add(spacer);
         add(homePage);
     }
     @Override
     public void actionPerformed(ActionEvent e) {
+        ControlContainer controlContainer = UIManager.getControlContainer();
+        JPanel screens = UIManager.getScreens();
+        CardLayout cardLayout = UIManager.getCardLayout();
         String stringId = Integer.toString(userId);
         if (stringId.startsWith("2")) {
-            ClientHomePageUI clientUI = new ClientHomePageUI(controlContainer, cardLayout,
-                    screens, userId, userName);
+            ClientHomePageUI clientUI = new ClientHomePageUI(userName, userId, UIManager);
             screens.add(clientUI, "ClientHomePage");
             cardLayout.show(screens, "ClientHomePage");
         } else {
-            AttorneyHomePageUI attorneyUI = new AttorneyHomePageUI(controlContainer, cardLayout,
-                    screens, userId, userName);
+            AttorneyHomePageUI attorneyUI = new AttorneyHomePageUI(userName, userId, UIManager);
             screens.add(attorneyUI, "AttorneyHomePage");
             cardLayout.show(screens, "AttorneyHomePage");
         }

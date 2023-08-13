@@ -10,70 +10,56 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
-import static driver.screen.UIDesign.lightGreenColor;
+import static driver.screen.UIDesign.*;
+import static driver.screen.UIDrawer.*;
 
-public class TheQuestionCloseUI extends JPanel implements ActionListener {
-    ControlContainer controlContainer;
-    CardLayout cardLayout;
-    JPanel screens;
-    int userId;
-    String userName;
-    int questionId;
-    String title;
-    String type;
-    LocalDate deadline;
+public class TheQuestionCloseUI extends QuestionUI implements ActionListener {
+    protected String userName;
+    protected int userId;
+    protected JPanel helloMessage;
+    protected UIManager UIManager;
+    JPanel questionTitle;
+    JPanel previousDiscussions;
+    JScrollPane postScrollPane;
     Map<Integer, PostDisplayFormatter> postMap;
 
-    public TheQuestionCloseUI(ControlContainer controlContainer, CardLayout cardLayout,
-                              JPanel screens, int userId, String userName, int questionId, String title,
-                              String type, LocalDate deadline, Map<Integer, PostDisplayFormatter> postMap) {
-        this.controlContainer = controlContainer;
-        this.cardLayout = cardLayout;
-        this.screens = screens;
-        this.userId = userId;
-        this.userName = userName;
-        this.questionId = questionId;
-        this.title = title;
-        this.type = type;
-        this.deadline = deadline;
-        this.postMap = postMap;
+    public TheQuestionCloseUI(String userName, int userId, UIManager UIManager, String title,
+                              String questionType, LocalDate deadline, Map<Integer, PostDisplayFormatter> postMap) {
+        super(userName, userId, UIManager, title, questionType, deadline, postMap);
 
-        //Top half of the panel
-        JPanel topPanel = new TheQuestionTopPanel(userId, userName, questionId, title, type, deadline, postMap);
+        //spacers
+        JPanel spacer = addSpacer(30);
+        JPanel spacer2 = addSpacer(20);
 
-        JPanel spacer = UIDesign.addSpacer(30);
-        JPanel bottomSpacer = UIDesign.addSpacer(20);
-
-        JButton questionList = new JButton("Questions");
-        UIDesign.setGeneralButton(questionList);
-        questionList.setAlignmentX(CENTER_ALIGNMENT);
-        questionList.addActionListener(this);
-
-        JButton homePage = new JButton("Home Page");
-        UIDesign.setGeneralButton(homePage);
-        homePage.setAlignmentX(CENTER_ALIGNMENT);
-        homePage.addActionListener(this);
+        //Buttons
+        List<String> buttonList = new ArrayList<>();
+        buttonList.add(BACK_BUTTON_NAME);
+        buttonList.add(HOME_PAGE_BUTTON_NAME);
+        JPanel buttons = setButtonPanel(buttonList, new Dimension(150, 50), 20, this);
 
         //Add everything together
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        setBackground(lightGreenColor);
-        add(topPanel);
+        add(helloMessage);
+        add(spacer2);
+        add(questionTitle);
+        add(spacer2);
+        add(previousDiscussions);
+        add(postScrollPane);
         add(spacer);
-        add(questionList);
-        add(bottomSpacer);
-        add(homePage);
-
+        add(buttons);
     }
 
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
-        if ("Home Page".equals(actionCommand)) {
-            ClientHomePageUI homePageUI = new ClientHomePageUI(controlContainer, cardLayout,
-                    screens, userId, userName);
-            screens.add(homePageUI, "Home Page");
+        CardLayout cardLayout = UIManager.getCardLayout();
+        JPanel screens = UIManager.getScreens();
+        if (HOME_PAGE_BUTTON_NAME.equals(actionCommand)) {
             cardLayout.show(screens, "Home Page");
+        } else if (BACK_BUTTON_NAME.equals(actionCommand)){
+            cardLayout.show(screens, "Question List");
         }
     }
 }
