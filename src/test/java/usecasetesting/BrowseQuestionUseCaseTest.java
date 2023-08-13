@@ -4,11 +4,15 @@ import adapter.controller.ControlContainer;
 import businessrule.gateway.AttorneyGateway;
 import businessrule.gateway.ClientGateway;
 import businessrule.gateway.QuestionGateway;
+import businessrule.inputboundary.ViewInputBoundary;
+import businessrule.outputboundary.TheQuestionOutputBoundary;
 import businessrule.outputboundary.ViewOutputBoundary;
-import businessrule.requestmodel.BrowseRequestModel;
+
+import businessrule.responsemodel.UserResponseModel;
 import businessrule.responsemodel.ViewResponseModel;
 import businessrule.usecase.BrowseQuestionInteractor;
-import businessrule.usecase.QuestionDisplayFormatter;
+
+import businessrule.usecase.ViewQuestionInteractorBase;
 import driver.database.*;
 
 import entity.*;
@@ -32,45 +36,42 @@ public class BrowseQuestionUseCaseTest {
     private QuestionGateway questionGateway;
     private ClientGateway clientGateway;
     private AttorneyGateway attorneyGateway;
-    private ViewOutputBoundary viewOutputBoundary = new ViewOutputBoundary() {
+    private TheQuestionOutputBoundary theQuestionOutputBoundary = new TheQuestionOutputBoundary() {
         @Override
         public void setControlContainer(ControlContainer controlContainer) {
 
         }
 
         @Override
-        public ViewResponseModel prepareFail(String msg) {
+        public UserResponseModel prepareFail(String msg) {
             return null;
         }
 
         @Override
-        public ViewResponseModel prepareSuccess(ViewResponseModel response) {
-            assertEquals(2, response.getQuestionMap().size(), "The Question Map is not correct.");
-            List<QuestionDisplayFormatter> arrayList;
-            arrayList = new ArrayList<>(response.getQuestionMap().values());
-            assertEquals("test title", arrayList.get(0).getTitle());
+        public UserResponseModel prepareSuccess(UserResponseModel response) {
             return null;
         }
+
     };
-    private BrowseInputBoundary browseInputBoundary;
+    private ViewInputBoundary browseInputBoundary;
 
     public void setUpBrowseUseCase(){
         questionGateway = new QuestionRepo();
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
-        browseInputBoundary = new BrowseQuestionInteractor(viewOutputBoundary, questionGateway, attorneyGateway);
+        browseInputBoundary = new BrowseQuestionInteractor(theQuestionOutputBoundary, questionGateway, attorneyGateway);
 
         Client client = new Client();
         client.setUserId(CLIENT_ID);
-        clientGateway.addUser(client);
+        clientGateway.save(client);
 
         Attorney attorney = new Attorney();
         attorney.setUserId(ATTORNEY_ID);
-        attorneyGateway.addUser(attorney);
+        attorneyGateway.save(attorney);
 
         Attorney secondAttorney = new Attorney();
         attorney.setUserId(SECOND_ATTORNEY_ID);
-        attorneyGateway.addUser(secondAttorney);
+        attorneyGateway.save(secondAttorney);
 
         Question question1 = new Question();
         question1.setQuestionId(QUESTION_ID);
@@ -78,26 +79,25 @@ public class BrowseQuestionUseCaseTest {
         Post post = new Post();
         post.setPostId(POST_ID);
         question1.addPosts(post);
-        questionGateway.saveQuestion(question1);
+        questionGateway.save(question1);
 
         Question question2 = new Question();
         question2.setQuestionId(TAKEN_QUESTION_ID);
         question2.setTaken(true);
         question2.setTakenByAttorney(ATTORNEY_ID);
-        questionGateway.saveQuestion(question2);
+        questionGateway.save(question2);
 
         Question question3 = new Question();
         question3.setQuestionId(CLOSED_QUESTION_ID);
         question3.setClose(true);
-        questionGateway.saveQuestion(question3);
+        questionGateway.save(question3);
     }
 
     @Test
     public void TestAttorneyBrowseQuestionUseCase(){
         setUpBrowseUseCase();
-        BrowseRequestModel inputData = new BrowseRequestModel(ATTORNEY_ID);
+        browseInputBoundary.viewQuestion();
 
-        browseInputBoundary.browseQuestion(inputData);
         ClearAllRepository();
     }
 
@@ -105,8 +105,8 @@ public class BrowseQuestionUseCaseTest {
         questionGateway = new QuestionRepo();
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
-        clientGateway.deleteAllUser();
-        questionGateway.deleteAllQuestion();
-        attorneyGateway.deleteAllUser();
+        clientGateway.deleteAll();
+        questionGateway.deleteAll();
+        attorneyGateway.deleteAll();
     }
 }

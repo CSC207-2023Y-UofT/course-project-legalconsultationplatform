@@ -10,8 +10,8 @@ public class CloseQuestionControl {
     public CloseQuestionControl(CloseInputBoundary closeInputBoundary) {
         this.closeInputBoundary = closeInputBoundary;
     }
-    public UserResponseModel closeQuestion(int questionId, int userId){
-        CloseRequestModel closeRequestModel = new CloseRequestModel(questionId, userId);
+    public UserResponseModel closeQuestion(int questionId){
+        CloseRequestModel closeRequestModel = new CloseRequestModel(questionId);
         return closeInputBoundary.closeQuestion(closeRequestModel);
     }
 }

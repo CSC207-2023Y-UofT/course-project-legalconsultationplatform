@@ -31,11 +31,11 @@ public class PostMapConstructor {
             int postId = post.getPostId();
             UserGateway userGateway = userGatewayFactory.createUserGateway(post.getBelongsTo());
             User user = userGateway.get(post.getBelongsTo());
-            boolean isClient = user.isClient();
+            String userType = user.getUserType();
             String name = user.getUserName();
             String postText = post.getPostText();
             LocalDate createAt = post.getCreateAt();
-            PostDisplayFormatter postDisplayFormatter = new PostDisplayFormatter(postText, isClient, name, createAt);
+            PostDisplayFormatter postDisplayFormatter = new PostDisplayFormatter(postText, userType, name, createAt);
             // put every data needed to the post map
             postMap.put(postId, postDisplayFormatter);
         }

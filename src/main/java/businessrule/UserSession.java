@@ -1,8 +1,8 @@
 package businessrule;
 
 import businessrule.responsemodel.UserResponseModel;
-import driver.screen.BaseUI;
-import entity.User;
+//import driver.screen.BaseUI;
+//import entity.User;
 
 public class UserSession {
     private final UserResponseModel userResponseModel;

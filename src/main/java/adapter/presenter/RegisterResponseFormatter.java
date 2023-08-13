@@ -4,7 +4,7 @@ import adapter.controller.ControlContainer;
 import businessrule.outputboundary.BaseOutputBoundary;
 import businessrule.responsemodel.BaseResponseModel;
 import entity.ApplicationException;
-import driver.screen.WelcomeUI;
+//import driver.screen.WelcomeUI;
 import javax.swing.*;
 import java.awt.*;
 
@@ -28,8 +28,8 @@ public class RegisterResponseFormatter implements BaseOutputBoundary {
     }
     @Override
     public BaseResponseModel prepareSuccess(String msg) {
-        WelcomeUI welcomeUI = new WelcomeUI(controlContainer, cardLayout, screens);
-        screens.add(welcomeUI, "Welcome");
+//        WelcomeUI welcomeUI = new WelcomeUI(controlContainer, cardLayout, screens);
+//        screens.add(welcomeUI, "Welcome");
         cardLayout.show(screens, "Welcome");
         JOptionPane.showMessageDialog(null, msg);
         return new BaseResponseModel();

@@ -4,6 +4,7 @@ import adapter.controller.PostControl;
 import businessrule.inputboundary.PostInputBoundary;
 import businessrule.requestmodel.PostRequestModel;
 
+import businessrule.responsemodel.UserResponseModel;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -16,11 +17,11 @@ public class PostControlTest {
     private static int QUESTION_ID = 333333333;
     private static String POST_TEXT = "Sample Post Text";
 
-    private static HomePageResponseModel expectedResponse;
+    private static UserResponseModel expectedResponse;
 
     public void setUpPostControl() {
         // Arrange
-        expectedResponse = new HomePageResponseModel(USER_ID, USER_NAME, USER_TYPE);
+        expectedResponse = new UserResponseModel(USER_ID, USER_NAME, USER_TYPE);
     }
 
     @Test
@@ -33,7 +34,7 @@ public class PostControlTest {
         PostControl control = new PostControl(mockInputBoundary);
 
         // Act
-        HomePageResponseModel actualResponse = control.createPost(QUESTION_ID, USER_ID, POST_TEXT);
+        UserResponseModel actualResponse = control.createPost(QUESTION_ID, POST_TEXT);
 
         // Assert
         assertEquals(expectedResponse, actualResponse);

@@ -2,8 +2,10 @@ package controllertesting;
 
 import adapter.controller.CloseQuestionControl;
 import businessrule.inputboundary.CloseInputBoundary;
+import businessrule.outputboundary.UserOutputBoundary;
 import businessrule.requestmodel.CloseRequestModel;
 
+import businessrule.responsemodel.UserResponseModel;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -12,11 +14,12 @@ import static org.mockito.Mockito.*;
 public class CloseQuestionControlTest {
     private static int QUESTION_ID = 333333333;
     private static int USER_ID = 11234567;
-    private static HomePageResponseModel expectedResponse;
+    final static String USER_USERNAME = "test client";
+    private static UserResponseModel expectedResponse;
 
     public void setUpCloseQuestionControl() {
         // Arrange
-        expectedResponse = new HomePageResponseModel(USER_ID, "SampleUser", "SampleType"); // Assuming suitable constructor
+        expectedResponse = new UserResponseModel(USER_ID, "SampleUser", "SampleType"); // Assuming suitable constructor
     }
 
     @Test
@@ -29,7 +32,7 @@ public class CloseQuestionControlTest {
         CloseQuestionControl control = new CloseQuestionControl(mockInputBoundary);
 
         // Act
-        HomePageResponseModel actualResponse = control.closeQuestion(QUESTION_ID, USER_ID);
+        UserResponseModel actualResponse = control.closeQuestion(QUESTION_ID);
 
         // Assert
         assertEquals(expectedResponse, actualResponse);

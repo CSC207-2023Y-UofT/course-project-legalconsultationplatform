@@ -6,7 +6,7 @@ import businessrule.responsemodel.UserResponseModel;
 import businessrule.responsemodel.ViewResponseModel;
 import businessrule.usecase.util.QuestionDisplayFormatter;
 import entity.ApplicationException;
-import driver.screen.QuestionListUI;
+//import driver.screen.QuestionListUI;
 import javax.swing.*;
 import java.awt.*;
 import java.util.Map;
@@ -36,10 +36,10 @@ public class ViewResponseFormatter implements ViewOutputBoundary {
         int userId = response.getUserId();
         String userName = response.getUserName();
         Map<Integer, QuestionDisplayFormatter> questionMap = response.getQuestionMap();
-        QuestionListUI questionListUI = new QuestionListUI(controlContainer, cardLayout, screens, userId, userName, questionMap);
-        screens.add(questionListUI, "browseQuestion");
-        cardLayout.show(screens, "browseQuestion");
-        System.out.println("Available questions showed");
+//        QuestionListUI questionListUI = new QuestionListUI(controlContainer, cardLayout, screens, userId, userName, questionMap);
+//        screens.add(questionListUI, "browseQuestion");
+//        cardLayout.show(screens, "browseQuestion");
+//        System.out.println("Available questions showed");
         return response;
     }
 }
