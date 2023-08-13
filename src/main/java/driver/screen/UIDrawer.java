@@ -100,6 +100,7 @@ public class UIDrawer {
         result.add(label);
         result.add(dateChooser);
         result.setOpaque(false);
+        return result;
     }
 
     //Drawer for the question list page

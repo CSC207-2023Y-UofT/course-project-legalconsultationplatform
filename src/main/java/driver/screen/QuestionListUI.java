@@ -80,7 +80,7 @@ public class QuestionListUI extends UserUI implements ActionListener {
         //Add everything in the panel
         add(spacer);
         add(helloMessage);
-        add(spacer)
+        add(spacer);
         add(questionScrollPane);
         add(spacer);
         add(homePage);

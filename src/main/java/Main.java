@@ -112,7 +112,7 @@ public class Main {
     //Create the UITool for all UI pages
         UIManager UIManager = new UIManager(controlContainer, screens, cardlayout);
     //Initiate the UI
-    WelcomeUI welcomeUI = new WelcomeUI(controlContainer, cardlayout, screens);
+    WelcomeUI welcomeUI = new WelcomeUI(UIManager);
     screens.add(welcomeUI, "Welcome");
     cardlayout.show(screens, "Welcome");
     application.setVisible(true);
