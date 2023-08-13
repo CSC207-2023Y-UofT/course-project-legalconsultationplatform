@@ -46,10 +46,6 @@ public class UserLoginInteractor implements UserLoginInputBoundary{
             return outputBoundary.prepareFail("Password is incorrect");
         }
 
-        // start new session
-        UserSession userSession = new UserSession(filedUser);
-        SessionManager.setSession(filedUser.getUserId(), userSession);
-
         // construct response model
         String userType;
         User user = userGateway.get(inputUserId);

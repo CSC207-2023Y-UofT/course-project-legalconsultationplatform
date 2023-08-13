@@ -4,13 +4,13 @@ import driver.screen.BaseUI;
 import entity.User;
 
 public class UserSession {
-    private User user;
+    private final int userId;
 
-    public UserSession(User user) {
-        this.user = user;
-    }
+    public UserSession(int userId) {this.userId = userId;}
 
     public BaseUI getUI(UIFactory.UIType uiType) {
         return UIFactory.createUI(uiType);
     }
+
+    public int getUserId() {return userId;}
 }
