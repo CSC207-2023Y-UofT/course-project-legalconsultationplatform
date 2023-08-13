@@ -17,7 +17,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 ;
-
+/**
+ * This class contains unit tests for the BrowseQuestionUseCase class.
+ */
 public class BrowseQuestionUseCaseTest {
     final static int CLIENT_ID = 21345678;
     final static int ATTORNEY_ID = 11345678;
@@ -48,6 +50,9 @@ public class BrowseQuestionUseCaseTest {
     };
     private ViewInputBoundary viewInputBoundary;
 
+    /**
+     * Set up the test environment by initializing the BrowseQuestionUseCase instance.
+     */
     public void setUpBrowseUseCase(){
         questionGateway = new QuestionRepo();
         clientGateway = new ClientRepository();
@@ -80,6 +85,9 @@ public class BrowseQuestionUseCaseTest {
 
     }
 
+    /**
+     * Test the AttorneyBrowseQuestionUseCase when the question is created successfully.
+     */
     @Test
     public void TestAttorneyBrowseQuestionUseCase(){
         setUpBrowseUseCase();
@@ -89,6 +97,9 @@ public class BrowseQuestionUseCaseTest {
         ClearAllRepository();
     }
 
+    /**
+     * Delete all data in questionGateway, clientGateway and attorneyGateway.
+     */
     public void ClearAllRepository(){
         questionGateway = new QuestionRepo();
         clientGateway = new ClientRepository();

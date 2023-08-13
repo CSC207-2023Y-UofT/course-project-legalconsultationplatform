@@ -24,6 +24,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class contains test cases for the ViewHistoryUseCase.
+ */
 public class UserViewHistoryUseCaseTest {
     final static int CLIENT_ID = 21345678;
     final static int ATTORNEY_ID = 11345678;
@@ -35,6 +38,9 @@ public class UserViewHistoryUseCaseTest {
     private ViewOutputBoundary viewOutputBoundary;
     private ViewInputBoundary viewInputBoundary;
 
+    /**
+     * Set up the test environment by initializing the ViewQuestionUseCase instance.
+     */
     public void setUpViewQuestionUseCase(){
         userGatewayFactory = new UserGatewayFactory();
         questionGateway = new QuestionRepo();
@@ -80,6 +86,9 @@ public class UserViewHistoryUseCaseTest {
         attorneyGateway.save(attorney);
     }
 
+    /**
+     * Test the client's view question use case.
+     */
     @Test
     public void TestClientViewUseCase(){
         setUpViewQuestionUseCase();
@@ -89,6 +98,9 @@ public class UserViewHistoryUseCaseTest {
         ClearAllRepository();
     }
 
+    /**
+     * Test the attorney's view question use case.
+     */
     @Test
     public void TestAttorneyViewUseCase(){
         setUpViewQuestionUseCase();
@@ -98,6 +110,9 @@ public class UserViewHistoryUseCaseTest {
         ClearAllRepository();
     }
 
+    /**
+     * Delete all data in clientGateway, questionGateway, attorneyGateway.
+     */
     public void ClearAllRepository(){
         questionGateway = new QuestionRepo();
         clientGateway = new ClientRepository();

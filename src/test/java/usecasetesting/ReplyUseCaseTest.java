@@ -16,6 +16,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
 ;
+/**
+ * This class contains test cases for the ReplyUseCase.
+ */
 
 public class ReplyUseCaseTest {
     final static int CLIENT_ID = 21345678;
@@ -31,6 +34,10 @@ public class ReplyUseCaseTest {
     private AttorneyGateway attorneyGateway;
     private HomePageOutputBoundary homePageOutputBoundary;
     private PostInputBoundary postInputBoundary;
+
+    /**
+     * Set up the test environment by initializing the ReplyUseCase instance.
+     */
     public void setUpReplyUseCase(){
 
         questionGateway = new QuestionRepo();
@@ -82,6 +89,9 @@ public class ReplyUseCaseTest {
         attorneyGateway.save(secondAttorney);
     }
 
+    /**
+     * Test client's reply to a question.
+     */
     @Test
     public void testClientReply(){
         setUpReplyUseCase();
@@ -94,6 +104,9 @@ public class ReplyUseCaseTest {
         ClearAllRepository();
     }
 
+    /**
+     * Test attorney's first reply to a question.
+     */
     @Test
     public void testAttorneyFirstReply(){
         setUpReplyUseCase();
@@ -111,6 +124,9 @@ public class ReplyUseCaseTest {
         assertEquals(attorneyQuestion.isTaken(), true);
         ClearAllRepository();
     }
+    /**
+     * Test attorney's follow-up reply to a question.
+     */
     @Test
     public void testAttorneyFollowUp(){
         setUpReplyUseCase();
@@ -143,6 +159,9 @@ public class ReplyUseCaseTest {
         ClearAllRepository();
     }
 
+    /**
+     * Test failure to reply to a closed question.
+     */
     @Test
     public void testAttorneyFailToReplyQuestionTakenByOther(){
         setUpReplyUseCase();
@@ -160,6 +179,9 @@ public class ReplyUseCaseTest {
         ClearAllRepository();
     }
 
+    /**
+     * Delete all data in clientGateway, questionGateway, attorneyGateway, postGateway.
+     */
     public void ClearAllRepository(){
         questionGateway = new QuestionRepo();
         clientGateway = new ClientRepository();

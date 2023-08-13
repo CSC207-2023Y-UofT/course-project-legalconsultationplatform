@@ -13,7 +13,9 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.Assert.fail;
 ;
-
+/**
+ * This class contains unit tests for the ClientRegisterUseCase class.
+ */
 public class ClientRegisterUseCaseTest {
     final static String PASSWORD = "abcdefghi";
     final static int USER_ID = 11234567;
@@ -33,6 +35,10 @@ public class ClientRegisterUseCaseTest {
     private ClientGateway clientGateway;
     private RegisterOutputBoundary registerOutputBoundary;
     private UserRegisterInputBoundary clientRegisterInputBoundary;
+
+    /**
+     * Set up the test environment by initializing the ClientRegisterUseCase instance.
+     */
     public void setUpClientRegisterUseCase(){
         clientGateway = new ClientRepository();
         clientFactory = new ClientFactory();
@@ -59,6 +65,10 @@ public class ClientRegisterUseCaseTest {
         clientRegisterInputBoundary = new ClientRegisterInteractor(clientGateway, clientFactory, registerOutputBoundary);
 
     }
+
+    /**
+     * Test the successful registration scenario.
+     */
     @Test
     public void TestSuccessfulRegistration(){
         setUpClientRegisterUseCase();
@@ -69,6 +79,9 @@ public class ClientRegisterUseCaseTest {
         ClearAllRepository();
     }
 
+    /**
+     * Test the registration failure scenario due to an existing user.
+     */
     @Test
     public void TestRegistrationFailByAlreadyExists(){
         setUpClientRegisterUseCase();
@@ -80,6 +93,9 @@ public class ClientRegisterUseCaseTest {
         ClearAllRepository();
     }
 
+    /**
+     * Test registration failure due to password not matching.
+     */
     @Test
     public void TestRegistrationFailByPasswordDoesNotMatch(){
         setUpClientRegisterUseCase();
@@ -88,6 +104,10 @@ public class ClientRegisterUseCaseTest {
         clientRegisterInputBoundary.create(inputData);
         ClearAllRepository();
     }
+
+    /**
+     * Test registration failure due to password length being too small.
+     */
     @Test
     public void TestRegistrationFailByPasswordLengthTooSmall(){
         setUpClientRegisterUseCase();
@@ -98,6 +118,9 @@ public class ClientRegisterUseCaseTest {
         ClearAllRepository();
     }
 
+    /**
+     * Test registration failure due to invalid email format.
+     */
     @Test
     public void TestRegistrationFailByInvalidEmail(){
         setUpClientRegisterUseCase();
@@ -108,6 +131,9 @@ public class ClientRegisterUseCaseTest {
         ClearAllRepository();
     }
 
+    /**
+     * Test registration failure due to invalid age.
+     */
     @Test
     public void TestRegistrationFailByInvalidAge(){
         setUpClientRegisterUseCase();
@@ -118,6 +144,9 @@ public class ClientRegisterUseCaseTest {
         ClearAllRepository();
     }
 
+    /**
+     * Test registration failure due to invalid postal code.
+     */
     @Test
     public void TestRegistrationFailByInvalidPostalCode(){
         setUpClientRegisterUseCase();
@@ -128,6 +157,9 @@ public class ClientRegisterUseCaseTest {
         ClearAllRepository();
     }
 
+    /**
+     * Delete all data in clientGateway.
+     */
     public void ClearAllRepository(){
         clientGateway = new ClientRepository();
         clientGateway.deleteAll();;

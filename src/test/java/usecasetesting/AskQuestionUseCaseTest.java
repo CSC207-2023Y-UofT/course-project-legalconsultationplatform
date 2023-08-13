@@ -19,6 +19,9 @@ import java.time.LocalDate;
 
 import static org.junit.jupiter.api.Assertions.*;
 ;
+/**
+ * This class contains unit tests for the AskQuestionUseCase class.
+ */
 
 public class AskQuestionUseCaseTest {
     final static int CLIENT_ID = 21345678;
@@ -31,6 +34,9 @@ public class AskQuestionUseCaseTest {
     private TheQuestionOutputBoundary theQuestionOutputBoundary;
     private QuestionInputBoundary questionInputBoundary;
 
+    /**
+     * Set up the test environment by initializing the AskQuestionUseCase instance.
+     */
     public void setUpAskQuestionUseCase(){
         questionGateway = new QuestionRepo();
         questionFactory = new QuestionFactory();
@@ -70,8 +76,11 @@ public class AskQuestionUseCaseTest {
         attorneyGateway.save(secondAttorney);
     }
 
+    /**
+     * Test the AskQuestionUseCase when the question is created successfully.
+     */
     @Test
-    public void TestAskQuestionPassed(){
+    public void testAskQuestionPassed(){
         setUpAskQuestionUseCase();
 
         QuestionRequestModel inputData = new QuestionRequestModel("fraud", "Test title", LocalDate.now(), CLIENT_ID, LocalDate.now());
@@ -80,11 +89,14 @@ public class AskQuestionUseCaseTest {
 
         User user = clientGateway.get(CLIENT_ID);
         assertEquals(1, user.getQuestionsList().size(), "The ask question use case failed.");
-        ClearAllRepository();
+        clearAllRepository();
     }
 
+    /**
+     * Test the AskQuestionUseCase when the question creation fails due to an empty category.
+     */
     @Test
-    public void TestAskQuestionFailByEmptyCategory(){
+    public void testAskQuestionFailByEmptyCategory(){
         setUpAskQuestionUseCase();
 
         QuestionRequestModel inputData = new QuestionRequestModel(null, "Test title", LocalDate.now(), CLIENT_ID, LocalDate.now());
@@ -93,10 +105,13 @@ public class AskQuestionUseCaseTest {
 
         User user = clientGateway.get(CLIENT_ID);
         assertEquals(0, user.getQuestionsList().size(), "The ask question use case failed.");
-        ClearAllRepository();
+        clearAllRepository();
     }
 
-    public void ClearAllRepository(){
+    /**
+     * Delete all data in questionGateway, clientGateway and attorneyGateway.
+     */
+    public void clearAllRepository(){
         questionGateway = new QuestionRepo();
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
