@@ -6,6 +6,7 @@ import businessrule.requestmodel.PostRequestModel;
 import businessrule.responsemodel.HomePageResponseModel;
 import businessrule.gateway.PostGateway;
 import businessrule.gateway.QuestionGateway;
+import businessrule.usecase.util.EmailNotificationSender;
 import businessrule.usecase.util.RandomNumberGenerator;
 import businessrule.gateway.UserGateway;
 import businessrule.gateway.UserGatewayFactory;
@@ -63,10 +64,22 @@ public class ReplyInteractor implements PostInputBoundary {
                         UserGateway attorneyGateway = userGatewayFactory.createUserGateway(question.getTakenByAttorney());
                         User attorney = attorneyGateway.get(question.getTakenByAttorney());
                         // Send email notification to the attorney
+                        String title = "New Reply to Your Answer";
                         String attorneyEmail = attorney.getEmail();
-                        String title = "New reply to your answer";
-                        String content = "The title of the question you inquired about is: " + question.getTitle() + ". If you wish to view the details, please log in to the platform, click on 'View Question', and select the relevant question. Your attention to this matter is greatly appreciated.";
-                        EmailNotificationSender.sendEmail(attorneyEmail, title, content);
+                        String attorneyName = attorney.getUserName();
+                        String questionType = question.getType();
+                        String questionTitle = question.getTitle();
+                        String platformName = "Legal Consultation Platform+";
+
+                        String emailContent = "Dear " + attorneyName + ",\n\n" +
+                                "We hope this message finds you well. We're reaching out to inform you that there has been a follow-up to your response regarding the " + questionType +
+                                " query titled \"" + questionTitle + "\".\n\n" +
+                                "We kindly request you to log in to your attorney dashboard on " + platformName + " to address the additional questions or clarifications sought by the client.\n\n" +
+                                "Your expertise and timely response are highly valued by both our team and the clients we serve.\n\n" +
+                                "Warm regards,\n\n" +
+                                "Team, " + platformName + "\n";
+
+                        EmailNotificationSender.sendEmail(attorneyEmail, title, emailContent);
                     } catch (Exception e){
                         e.printStackTrace();
                     }
@@ -76,11 +89,25 @@ public class ReplyInteractor implements PostInputBoundary {
                 try {
                     UserGateway clientGateway = userGatewayFactory.createUserGateway(userId);
                     User client = clientGateway.get(question.getTakenByAttorney());
-                    // Send email notification to the attorney
+                    // Send email notification to the client
                     String clientEmail = client.getEmail();
                     String title = "New Reply to Your Question";
-                    String content = "A new reply has been posted to your question. Please check our platform for details.";
-                    EmailNotificationSender.sendEmail(clientEmail, title, content);
+                    String clientName = client.getUserName();
+                    String questionType = question.getType();
+                    String questionTitle = question.getTitle();
+                    String platformName = "Legal Consultation Platform+";
+
+                    String emailContent = "Dear " + clientName + ",\n\n" +
+                            "I hope this message finds you well. We are pleased to inform you that we have addressed your recent " + questionType +
+                            " query titled \"" + questionTitle + "\".\n\n" +
+                            "To view the detailed response, please log in to your personal account and click on the \"Question & Response History\" button. " +
+                            "There, you'll find the mentioned query and our corresponding reply.\n\n" +
+                            "Should you have any follow-up questions or require further clarification, please don't hesitate to reach out. " +
+                            "Your satisfaction and understanding are of utmost importance to us.\n\n" +
+                            "Warm regards,\n\n" +
+                            "Team, " + platformName + "\n";
+
+                    EmailNotificationSender.sendEmail(clientEmail, title, emailContent);
                 } catch (Exception e){
                     e.printStackTrace();
                 }

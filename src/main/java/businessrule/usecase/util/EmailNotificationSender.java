@@ -1,4 +1,4 @@
-package businessrule.usecase;
+package businessrule.usecase.util;
 
 import javax.mail.Message;
 import javax.mail.Session;
