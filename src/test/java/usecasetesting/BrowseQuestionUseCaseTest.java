@@ -96,6 +96,7 @@ public class BrowseQuestionUseCaseTest {
     @Test
     public void TestAttorneyBrowseQuestionUseCase(){
         setUpBrowseUseCase();
+
         browseInputBoundary.viewQuestion();
 
         ClearAllRepository();
