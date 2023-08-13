@@ -116,14 +116,14 @@ class AttorneyTest {
     }
 
     @Test
-    void testIsClient() {
+    void testUserType() {
         RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
                 expectedPostalCode);
         AttorneyFactory attorneyFactory = new AttorneyFactory();
         Attorney attorney  = attorneyFactory.createUser(registrationData);
-        boolean expected = false;
-        boolean actual = attorney.isClient();
-        assertEquals(expected, actual, "The isClient method of an Attorney should always return false.");
+        String expected = "Attorney";
+        String actual = attorney.getUserType();
+        assertEquals(expected, actual);
     }
     @Test
     void testSelectableIfClosed() {

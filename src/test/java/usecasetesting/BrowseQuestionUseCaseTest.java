@@ -27,6 +27,7 @@ public class BrowseQuestionUseCaseTest {
     final static String CLIENT_USERNAME = "test client";
     final static int ATTORNEY_ID = 11345678;
     final static String ATTORNEY_USERNAME = "test attorney";
+    final static String ATTORNEY_TYPE = "Attorney";
     final static int SECOND_ATTORNEY_ID = 12222222;
     final static int QUESTION_ID = 323456789;
     final static int TAKEN_QUESTION_ID = 333333333;
@@ -41,7 +42,7 @@ public class BrowseQuestionUseCaseTest {
         }
 
         @Override
-        public ViewResponseModel prepareFail(String msg) {
+        public UserResponseModel prepareFail(String msg) {
             return null;
         }
 
@@ -85,15 +86,14 @@ public class BrowseQuestionUseCaseTest {
         client.addQuestion(question2);
         clientGateway.save(client);
 
+        UserResponseModel userResponseModel = new UserResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, ATTORNEY_TYPE);
+        UserSession session = new UserSession(userResponseModel);
+        SessionManager.setSession(session);
     }
 
     @Test
     public void TestAttorneyBrowseQuestionUseCase(){
         setUpBrowseUseCase();
-        UserResponseModel userResponseModel = new UserResponseModel(CLIENT_ID, CLIENT_USERNAME, "client");
-        UserSession session = new UserSession(userResponseModel);
-        SessionManager.setSession(session);
-
         viewInputBoundary.viewQuestion();
         ClearAllRepository();
     }

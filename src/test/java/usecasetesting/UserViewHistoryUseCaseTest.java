@@ -20,7 +20,6 @@ import entity.Attorney;
 import entity.Client;
 import entity.Question;
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -29,7 +28,10 @@ import static org.junit.jupiter.api.Assertions.*;
 public class UserViewHistoryUseCaseTest {
     final static int CLIENT_ID = 21345678;
     final static String CLIENT_USERNAME = "test client";
+    final static String CLIENT_TYPE = "Client";
     final static int ATTORNEY_ID = 11345678;
+    final static String ATTORNEY_USERNAME = "test attorney";
+    final static String ATTORNEY_TYPE = "Attorney";
     final static int QUESTION_ID = 323456789;
     private QuestionGateway questionGateway;
     private ClientGateway clientGateway;
@@ -51,7 +53,7 @@ public class UserViewHistoryUseCaseTest {
             }
 
             @Override
-            public ViewResponseModel prepareFail(String msg) {
+            public UserResponseModel prepareFail(String msg) {
                 return null;
             }
 
@@ -87,20 +89,22 @@ public class UserViewHistoryUseCaseTest {
     @Test
     public void TestClientViewUseCase(){
         setUpViewQuestionUseCase();
-        UserResponseModel userResponseModel = new UserResponseModel(CLIENT_ID, CLIENT_USERNAME, "client");
+        UserResponseModel userResponseModel = new UserResponseModel(CLIENT_ID, CLIENT_USERNAME, CLIENT_TYPE);
         UserSession session = new UserSession(userResponseModel);
         SessionManager.setSession(session);
 
-        viewInputBoundary.viewQuestion(CLIENT_ID);
+        viewInputBoundary.viewQuestion();
         ClearAllRepository();
     }
 
     @Test
     public void TestAttorneyViewUseCase(){
         setUpViewQuestionUseCase();
-        ViewRequestModel inputData = new ViewRequestModel(ATTORNEY_ID);
+        UserResponseModel userResponseModel = new UserResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, ATTORNEY_TYPE);
+        UserSession session = new UserSession(userResponseModel);
+        SessionManager.setSession(session);
 
-        viewInputBoundary.viewQuestion(inputData);
+        viewInputBoundary.viewQuestion();
         ClearAllRepository();
     }
 

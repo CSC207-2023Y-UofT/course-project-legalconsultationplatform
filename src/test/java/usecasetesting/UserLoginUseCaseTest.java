@@ -13,7 +13,6 @@ import businessrule.responsemodel.UserResponseModel;
 import businessrule.usecase.UserLoginInteractor;
 import driver.database.*;
 import entity.Client;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;

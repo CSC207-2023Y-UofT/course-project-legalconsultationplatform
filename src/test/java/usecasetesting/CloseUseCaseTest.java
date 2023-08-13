@@ -23,6 +23,7 @@ import static org.junit.jupiter.api.Assertions.*;
 public class CloseUseCaseTest {
     final static int CLIENT_ID = 21345678;
     final static String CLIENT_USERNAME = "test client";
+    final static String CLIENT_TYPE = "Client";
     final static int ATTORNEY_ID = 11345678;
     final static int SECOND_ATTORNEY_ID = 12222222;
     final static int QUESTION_ID = 323456789;
@@ -87,28 +88,25 @@ public class CloseUseCaseTest {
         question.setTakenByAttorney(ATTORNEY_ID);
         question.setTaken(true);
         questionGateway.save(question);
+
+        UserResponseModel userResponseModel = new UserResponseModel(CLIENT_ID, CLIENT_USERNAME, CLIENT_TYPE);
+        UserSession session = new UserSession(userResponseModel);
+        SessionManager.setSession(session);
     }
     @Test
     public void TestClientCloseableQuestion(){
         setUpCloseUseCase();
 
-        UserResponseModel userResponseModel = new UserResponseModel(CLIENT_ID, CLIENT_USERNAME, "client");
-        UserSession session = new UserSession(userResponseModel);
-        SessionManager.setSession(session);
-
         CloseRequestModel inputData = new CloseRequestModel(QUESTION_ID);
 
         closeInputBoundary.closeQuestion(inputData);
         Question question = questionGateway.get(QUESTION_ID);
-        assertEquals(question.isClose(), true);
+        assertTrue(question.isClose());
         ClearAllRepository();
     }
     @Test
     public void TestClientUnclosableQuestion(){
         setUpCloseUseCase();
-        UserResponseModel userResponseModel = new UserResponseModel(CLIENT_ID, CLIENT_USERNAME, "client");
-        UserSession session = new UserSession(userResponseModel);
-        SessionManager.setSession(session);
 
         CloseRequestModel inputData = new CloseRequestModel(CLOSED_QUESTION_ID);
 

@@ -25,8 +25,10 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ReplyUseCaseTest {
     final static int CLIENT_ID = 21345678;
     final static String CLIENT_USERNAME = "test client";
+    final static String CLIENT_TYPE = "Client";
     final static int ATTORNEY_ID = 11345678;
     final static String ATTORNEY_USERNAME = "test attorney";
+    final static String ATTORNEY_TYPE = "Attorney";
     final static int SECOND_ATTORNEY_ID = 12222222;
     final static int QUESTION_ID = 323456789;
     final static int CLOSED_QUESTION_ID = 333333333;
@@ -52,7 +54,7 @@ public class ReplyUseCaseTest {
             }
 
             @Override
-            public TheQuestionResponseModel prepareFail(String msg) {
+            public UserResponseModel prepareFail(String msg) {
                 assertEquals("You cannot reply to this question", msg);
                 return null;
             }
@@ -75,13 +77,13 @@ public class ReplyUseCaseTest {
 
         Client client = new Client();
         client.setUserId(CLIENT_ID);
-        client.setEmail("josephpc0612@gmail.com");
+        client.setEmail("josephpc061@gmail.com");
         client.addQuestion(question);
         clientGateway.save(client);
 
         Attorney attorney = new Attorney();
         attorney.setUserId(ATTORNEY_ID);
-        attorney.setEmail("josephpc0612@gmail.com");
+        attorney.setEmail("josephpc061@gmail.com");
         attorneyGateway.save(attorney);
 
         Attorney secondAttorney = new Attorney();
@@ -92,7 +94,7 @@ public class ReplyUseCaseTest {
     @Test
     public void testClientReply(){
         setUpReplyUseCase();
-        UserResponseModel userResponseModel = new UserResponseModel(CLIENT_ID, CLIENT_USERNAME, "client");
+        UserResponseModel userResponseModel = new UserResponseModel(CLIENT_ID, CLIENT_USERNAME, CLIENT_TYPE);
         UserSession session = new UserSession(userResponseModel);
         SessionManager.setSession(session);
         PostRequestModel inputData1 = new PostRequestModel(QUESTION_ID, "Test text");
@@ -108,7 +110,7 @@ public class ReplyUseCaseTest {
     public void testAttorneyFirstReply(){
         setUpReplyUseCase();
 
-        UserResponseModel userResponseModel = new UserResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, "attorney");
+        UserResponseModel userResponseModel = new UserResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, ATTORNEY_TYPE);
         UserSession session = new UserSession(userResponseModel);
         SessionManager.setSession(session);
 
@@ -122,13 +124,13 @@ public class ReplyUseCaseTest {
         Question attorneyQuestion = user.getQuestionsList().get(0);
         assertEquals(attorneyQuestion.getQuestionId(), QUESTION_ID);
         assertEquals(attorneyQuestion.getTakenByAttorney(), ATTORNEY_ID);
-        assertEquals(attorneyQuestion.isTaken(), true);
+        assertTrue(attorneyQuestion.isTaken());
         ClearAllRepository();
     }
     @Test
     public void testAttorneyFollowUp(){
         setUpReplyUseCase();
-        UserResponseModel userResponseModel = new UserResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, "attorney");
+        UserResponseModel userResponseModel = new UserResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, ATTORNEY_TYPE);
         UserSession session = new UserSession(userResponseModel);
         SessionManager.setSession(session);
         PostRequestModel inputData = new PostRequestModel(QUESTION_ID, "Test text");
@@ -138,7 +140,7 @@ public class ReplyUseCaseTest {
         Question attorneyquestion = user.getQuestionsList().get(0);
         assertEquals(attorneyquestion.getQuestionId(), QUESTION_ID);
         assertEquals(attorneyquestion.getTakenByAttorney(), ATTORNEY_ID);
-        assertEquals(attorneyquestion.isTaken(), true);
+        assertTrue(attorneyquestion.isTaken());
 
         PostRequestModel inputData2 = new PostRequestModel(QUESTION_ID, "Test text2");
         postInputBoundary.createPost(inputData2);
@@ -148,14 +150,14 @@ public class ReplyUseCaseTest {
         assertEquals(post2.getPostText(), "Test text2");
         assertEquals(attorneyquestion.getQuestionId(), QUESTION_ID);
         assertEquals(attorneyquestion.getTakenByAttorney(), ATTORNEY_ID);
-        assertEquals(attorneyquestion.isTaken(), true);
+        assertTrue(attorneyquestion.isTaken());
         ClearAllRepository();
 
     }
     @Test
     public void testFailToReplyQuestionClosed(){
         setUpReplyUseCase();
-        UserResponseModel userResponseModel = new UserResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, "attorney");
+        UserResponseModel userResponseModel = new UserResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, ATTORNEY_TYPE);
         UserSession session = new UserSession(userResponseModel);
         SessionManager.setSession(session);
         PostRequestModel inputData = new PostRequestModel(CLOSED_QUESTION_ID, "Test text");
@@ -166,7 +168,7 @@ public class ReplyUseCaseTest {
     @Test
     public void testAttorneyFailToReplyQuestionTakenByOther(){
         setUpReplyUseCase();
-        UserResponseModel userResponseModel = new UserResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, "attorney");
+        UserResponseModel userResponseModel = new UserResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, ATTORNEY_TYPE);
         UserSession session = new UserSession(userResponseModel);
         SessionManager.setSession(session);
         PostRequestModel inputData = new PostRequestModel(QUESTION_ID, "Test text");
@@ -182,7 +184,7 @@ public class ReplyUseCaseTest {
         Question attorneyquestion = user.getQuestionsList().get(0);
         assertEquals(attorneyquestion.getQuestionId(), QUESTION_ID);
         assertEquals(attorneyquestion.getTakenByAttorney(), ATTORNEY_ID);
-        assertEquals(attorneyquestion.isTaken(), true);
+        assertTrue(attorneyquestion.isTaken());
         ClearAllRepository();
     }
 

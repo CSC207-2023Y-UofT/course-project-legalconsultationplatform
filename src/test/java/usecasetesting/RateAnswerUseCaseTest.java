@@ -28,6 +28,7 @@ public class RateAnswerUseCaseTest {
 
     final static int CLIENT_ID = 21345678;
     final static String CLIENT_USERNAME = "test client";
+    final static String CLIENT_TYPE = "Client";
     final static int ATTORNEY_ID = 11345678;
     final static int SECOND_ATTORNEY_ID = 12222222;
     final static int QUESTION_ID = 323456789;
@@ -91,19 +92,20 @@ public class RateAnswerUseCaseTest {
 
         Attorney attorney = new Attorney();
         attorney.setUserId(ATTORNEY_ID);
-        attorney.setEmail("josephpc0612@gmail.com");
+        attorney.setEmail("josephpc061@gmail.com");
         attorneyGateway.save(attorney);
 
         question.setTakenByAttorney(ATTORNEY_ID);
         question.setTaken(true);
         questionGateway.save(question);
+
+        UserResponseModel userResponseModel = new UserResponseModel(CLIENT_ID, CLIENT_USERNAME, CLIENT_TYPE);
+        UserSession session = new UserSession(userResponseModel);
+        SessionManager.setSession(session);
     }
     @Test
     public void TestClientRateClosedQuestion(){
         setUpRateAnswerUseCase();
-        UserResponseModel userResponseModel = new UserResponseModel(CLIENT_ID, CLIENT_USERNAME, "client");
-        UserSession session = new UserSession(userResponseModel);
-        SessionManager.setSession(session);
 
         RateRequestModel inputData = new RateRequestModel(10, CLOSED_QUESTION_ID);
         rateInputBoundary.rateAnswer(inputData);
@@ -113,9 +115,7 @@ public class RateAnswerUseCaseTest {
     @Test
     public void TestClientRateUnClosedQuestion(){
         setUpRateAnswerUseCase();
-        UserResponseModel userResponseModel = new UserResponseModel(CLIENT_ID, CLIENT_USERNAME, "client");
-        UserSession session = new UserSession(userResponseModel);
-        SessionManager.setSession(session);
+
         RateRequestModel inputData = new RateRequestModel(10, QUESTION_ID);
         rateInputBoundary.rateAnswer(inputData);
         ClearAllRepository();
