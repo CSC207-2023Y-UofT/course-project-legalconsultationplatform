@@ -22,15 +22,15 @@ public class RateInteractor implements RateInputBoundary {
     private final ClientGateway clientGateway;
     private final AttorneyGateway attorneyGateway;
 
-    public RateInteractor(QuestionGateway questionGateway, HomePageOutputBoundary homePageOutputBoundary, ClientGateway clientGateway, AttorneyGateway attorneyGateway) {
     /**
      * Constructor for RateInteractor.
      *
      * @param questionGateway The gateway for managing question entities.
      * @param homePageOutputBoundary The output boundary for preparing home page response models.
      * @param clientGateway The gateway for managing client entities.
+     * @param attorneyGateway The gateway for managing attorney entities
      */
-    public RateInteractor(QuestionGateway questionGateway, HomePageOutputBoundary homePageOutputBoundary, ClientGateway clientGateway) {
+    public RateInteractor(QuestionGateway questionGateway, HomePageOutputBoundary homePageOutputBoundary, ClientGateway clientGateway, AttorneyGateway attorneyGateway) {
         this.questionGateway = questionGateway;
         this.homePageOutputBoundary = homePageOutputBoundary;
         this.clientGateway = clientGateway;
