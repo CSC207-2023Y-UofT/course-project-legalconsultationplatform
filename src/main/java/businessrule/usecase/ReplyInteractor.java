@@ -64,8 +64,8 @@ public class ReplyInteractor implements PostInputBoundary {
                         User attorney = attorneyGateway.get(question.getTakenByAttorney());
                         // Send email notification to the attorney
                         String attorneyEmail = attorney.getEmail();
-                        String title = "Please reply to the client";
-                        String content = "A new reply has been posted to your taken question. Please check our platform for details.";
+                        String title = "New reply to your answer";
+                        String content = "The title of the question you inquired about is: " + question.getTitle() + ". If you wish to view the details, please log in to the platform, click on 'View Question', and select the relevant question. Your attention to this matter is greatly appreciated.";
                         EmailNotificationSender.sendEmail(attorneyEmail, title, content);
                     } catch (Exception e){
                         e.printStackTrace();
