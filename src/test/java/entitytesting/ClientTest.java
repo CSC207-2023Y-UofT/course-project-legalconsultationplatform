@@ -1,7 +1,9 @@
 package entitytesting;
 
+import businessrule.requestmodel.RegistrationData;
 import entity.Client;
 import entity.Question;
+import entity.factory.ClientFactory;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
@@ -11,26 +13,29 @@ import static org.junit.jupiter.api.Assertions.*;
 
 class ClientTest {
 
+    int expectedUserId = 1000000;
+    String expectedName = "Xingfu Wu";
+    String expectedEmail = "xingfu.wu@mail.utoronto.ca";
+    String expectedPassword = "password";
+    String expectedPassword2 = "password";
+    String expectedStateAbb = "CA";
+    String expectedPostalCode = "12345";
+    String expectedEthnicity = "Asian";
+    int expectedAge = 30;
+    String expectedGender = "Male";
+    String expectedMaritalStatus = "Single";
+    int expectedNumberOfHousehold = 1;
+    float expectedAnnualIncome = 60000.0f;
+
     @Test
     void testConstructorAndGetter() {
-        // expected values
-        int expectedUserId = 1000000;
-        String expectedName = "Xingfu Wu";
-        String expectedEmail = "xingfu.wu@mail.utoronto.ca";
-        String expectedPassword = "password";
-        String expectedStateAbb = "CA";
-        String expectedPostalCode = "12345";
-        String expectedEthnicity = "Asian";
-        int expectedAge = 30;
-        String expectedGender = "Male";
-        String expectedMaritalStatus = "Single";
-        int expectedNumberOfHousehold = 1;
-        float expectedAnnualIncome = 60000.0f;
-
         // constructor
-        Client client = new Client(expectedUserId, expectedName, expectedEmail, expectedPassword, expectedStateAbb,
+        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
                 expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
                 expectedNumberOfHousehold, expectedAnnualIncome);
+        ClientFactory clientFactory = new ClientFactory();
+        Client client = clientFactory.createUser(registrationData);
+        client.setUserId(expectedUserId);
 
         // assertions
         assertEquals(expectedUserId, client.getUserId(), "UserId is wrong.");
@@ -46,25 +51,11 @@ class ClientTest {
         assertEquals(expectedNumberOfHousehold, client.getNumberOfHousehold(), "Number of household is incorrect.");
         assertEquals(expectedAnnualIncome, client.getAnnualIncome(), "Annual income is incorrect.");
         assertTrue(client.getQuestionsList().isEmpty(), "Questions list should be empty initially.");
-        assertTrue(client.isClient(), "isClient should be true for Client.");
+        assertEquals("Client", client.getUserType(), "isClient should be true for Client.");
     }
 
     @Test
     void testSetters() {
-        // expected values
-        int expectedUserId = 1000000;
-        String expectedName = "Xingfu Wu";
-        String expectedEmail = "xingfu.wu@mail.utoronto.ca";
-        String expectedPassword = "password";
-        String expectedStateAbb = "CA";
-        String expectedPostalCode = "12345";
-        String expectedEthnicity = "Asian";
-        int expectedAge = 30;
-        String expectedGender = "Male";
-        String expectedMaritalStatus = "Single";
-        int expectedNumberOfHousehold = 1;
-        float expectedAnnualIncome = 60000.0f;
-
         // no-arg constructor
         Client client = new Client();
 
@@ -99,123 +90,158 @@ class ClientTest {
 
     @Test
     void testClientIsQuestionCloseableSucceed() {
-        Client client = new Client(1000000, "Xingfu Wu", "xingfu.wu@mail.utoronto.ca", "password", "CA", "abcdefghi",
-                "Asian", 30, "Male", "Single", 1, 60000.0f);
+        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
+                expectedNumberOfHousehold, expectedAnnualIncome);
+        ClientFactory clientFactory = new ClientFactory();
+        Client client = clientFactory.createUser(registrationData);
 
         Question question = new Question();
 
-        assertEquals(true, client.isQuestionCloseable(question));
-
+        assertTrue(client.isQuestionCloseable(question));
     }
 
     @Test
     void testClientIsQuestionCloseableFail() {
-        Client client = new Client(1000000, "Xingfu Wu", "xingfu.wu@mail.utoronto.ca", "password", "CA", "abcdefghi",
-                "Asian", 30, "Male", "Single", 1, 60000.0f);
+        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
+                expectedNumberOfHousehold, expectedAnnualIncome);
+        ClientFactory clientFactory = new ClientFactory();
+        Client client = clientFactory.createUser(registrationData);
 
         Question question = new Question();
         question.setClose(true);
 
-        assertEquals(false, client.isQuestionCloseable(question));
-
+        assertFalse(client.isQuestionCloseable(question));
     }
 
     @Test
     void testClientIsQuestionSelectable() {
-        Client client = new Client(1000000, "Xingfu Wu", "xingfu.wu@mail.utoronto.ca", "password", "CA", "abcdefghi",
-                "Asian", 30, "Male", "Single", 1, 60000.0f);
-
+        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
+                expectedNumberOfHousehold, expectedAnnualIncome);
+        ClientFactory clientFactory = new ClientFactory();
+        Client client = clientFactory.createUser(registrationData);
         Question question = new Question();
 
-        assertEquals(true, client.isQuestionSelectable(question));
+        assertTrue(client.isQuestionSelectable(question));
 
     }
 
     @Test
     void testClientIsQuestionReplyableSucceed() {
-        Client client = new Client(1000000, "Xingfu Wu", "xingfu.wu@mail.utoronto.ca", "password", "CA", "abcdefghi",
-                "Asian", 30, "Male", "Single", 1, 60000.0f);
+        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
+                expectedNumberOfHousehold, expectedAnnualIncome);
+        ClientFactory clientFactory = new ClientFactory();
+        Client client = clientFactory.createUser(registrationData);
 
         Question question = new Question();
         question.setClose(false);
 
-        assertEquals(true, client.isQuestionReplyable(question));
+        assertTrue(client.isQuestionReplyable(question));
 
     }
 
     @Test
     void testClientIsQuestionReplyableFail() {
-        Client client = new Client(1000000, "Xingfu Wu", "xingfu.wu@mail.utoronto.ca", "password", "CA", "abcdefghi",
-                "Asian", 30, "Male", "Single", 1, 60000.0f);
-
+        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
+                expectedNumberOfHousehold, expectedAnnualIncome);
+        ClientFactory clientFactory = new ClientFactory();
+        Client client = clientFactory.createUser(registrationData);
         Question question = new Question();
         question.setClose(true);
 
-        assertEquals(false, client.isQuestionReplyable(question));
+        assertFalse(client.isQuestionReplyable(question));
 
     }
 
     @Test
     void testAddQuestion() {
-        Client client = new Client(1000000, "Xingfu Wu", "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
-                "Asian", 30, "Male", "Single", 1, 60000.0f);
+        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
+                expectedNumberOfHousehold, expectedAnnualIncome);
+        ClientFactory clientFactory = new ClientFactory();
+        Client client = clientFactory.createUser(registrationData);
 
         Question question = new Question(2000000, "fraud", "Fraud question", LocalDate.now(), 3000000, LocalDate.now());
         client.addQuestion(question);
 
         assertEquals(1, client.getQuestionsList().size(), "The size of the questions list is not correct");
-        assertEquals(true, client.getQuestionsList().contains(question), "The question is not added in the list.");
+        assertTrue(client.getQuestionsList().contains(question), "The question is not added in the list.");
     }
 
     @Test
     void testHashCodeSucceed() {
-        Client client1 = new Client(1000000, "Xingfu Wu", "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
-                "Asian", 30, "Male", "Single", 1, 60000.0f);
+        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
+                expectedNumberOfHousehold, expectedAnnualIncome);
+        ClientFactory clientFactory = new ClientFactory();
+        Client client = clientFactory.createUser(registrationData);
+        client.setUserId(expectedUserId);
 
-        assertEquals(client1.hashCode(), Objects.hashCode(1000000), "The hashcode is wrong");
+        assertEquals(client.hashCode(), Objects.hashCode(1000000), "The hashcode is wrong");
     }
 
     @Test
     void testHashCodeFail() {
-        Client client1 = new Client(1000000, "Xingfu Wu", "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
-                "Asian", 30, "Male", "Single", 1, 60000.0f);
+        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
+                expectedNumberOfHousehold, expectedAnnualIncome);
+        ClientFactory clientFactory = new ClientFactory();
+        Client client = clientFactory.createUser(registrationData);
 
-        assertEquals(false, client1.hashCode() ==  Objects.hashCode(100000), "The hashcode is wrong");
+        assertNotEquals(client.hashCode(), Objects.hashCode(100000), "The hashcode is wrong");
     }
 
     @Test
     void testEqualsSucceed() {
-        Client client1 = new Client(1000000, "Xingfu Wu", "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
-                "Asian", 30, "Male", "Single", 1, 60000.0f);
+        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
+                expectedNumberOfHousehold, expectedAnnualIncome);
+        ClientFactory clientFactory = new ClientFactory();
+        Client client = clientFactory.createUser(registrationData);
 
-        assertEquals(true, client1.equals(client1), "The equal method is wrong");
+        assertEquals(client, client, "The equal method is wrong");
     }
 
     @Test
     void testEqualsFailByNotClient() {
-        Client client1 = new Client(1000000, "Xingfu Wu", "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
-                "Asian", 30, "Male", "Single", 1, 60000.0f);
+        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
+                expectedNumberOfHousehold, expectedAnnualIncome);
+        ClientFactory clientFactory = new ClientFactory();
+        Client client = clientFactory.createUser(registrationData);
         Question question = new Question();
 
-        assertEquals(false, client1.equals(question), "The equal method is wrong");
+        assertEquals(false, client.equals(question), "The equal method is wrong");
     }
 
     @Test
     void testEqualsFailByNotEqual() {
-        Client client1 = new Client(1000000, "Xingfu Wu", "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
-                "Asian", 30, "Male", "Single", 1, 60000.0f);
-        Client client2 = new Client(1000001, "Xingfu Wu", "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
-                "Asian", 30, "Male", "Single", 1, 60000.0f);
+        RegistrationData registrationData1 = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
+                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData registrationData2 = new RegistrationData("joseph", expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
+                expectedNumberOfHousehold, expectedAnnualIncome);
+        ClientFactory clientFactory = new ClientFactory();
+        Client client1 = clientFactory.createUser(registrationData1);
+        client1.setUserId(1);
+        Client client2 = clientFactory.createUser(registrationData2);
+        client2.setUserId(expectedUserId);
 
-        assertEquals(false, client1.equals(client2), "The equal method is wrong");
+        assertNotEquals(client1, client2, "The equal method is wrong");
     }
 
     @Test
     void testToStringSucceed() {
-        String expectedName = "Xingfu Wu";
-
-        Client client = new Client(1000000, expectedName, "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
-                "Asian", 30, "Male", "Single", 1, 60000.0f);
+        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
+                expectedNumberOfHousehold, expectedAnnualIncome);
+        ClientFactory clientFactory = new ClientFactory();
+        Client client = clientFactory.createUser(registrationData);
 
         String expectedToString = String.format("[Client]: %s", expectedName);
         assertEquals(expectedToString, client.toString(), "The toString method is wrong");
@@ -223,36 +249,38 @@ class ClientTest {
 
     @Test
     void testToStringFail() {
-        String expectedName = "Xingfu Wu";
-
-        Client client = new Client(1000000, expectedName, "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
-                "Asian", 30, "Male", "Single", 1, 60000.0f);
+        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
+                expectedNumberOfHousehold, expectedAnnualIncome);
+        ClientFactory clientFactory = new ClientFactory();
+        Client client = clientFactory.createUser(registrationData);
 
         String expectedToString = String.format("[Attorney]: %s", expectedName);
-        assertEquals(false, expectedToString == client.toString(), "The toString method is wrong");
+        assertNotSame(expectedToString, client.toString(), "The toString method is wrong");
     }
 
     @Test
     void testIsQuestionRateableSucceed() {
-        String expectedName = "Xingfu Wu";
-
-        Client client = new Client(1000000, expectedName, "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
-                "Asian", 30, "Male", "Single", 1, 60000.0f);
-
+        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
+                expectedNumberOfHousehold, expectedAnnualIncome);
+        ClientFactory clientFactory = new ClientFactory();
+        Client client = clientFactory.createUser(registrationData);
         Question question = new Question();
         question.setClose(true);
-        assertEquals(true, client.isQuestionRateable(question), "IsQuestionRateable is wrong.");
+        assertTrue(client.isQuestionRateable(question), "IsQuestionRateable is wrong.");
     }
 
     @Test
     void testIsQuestionRateableFail() {
-        String expectedName = "Xingfu Wu";
-
-        Client client = new Client(1000000, expectedName, "xingfu.wu@mail.utoronto.ca", "password", "CA", "12345",
-                "Asian", 30, "Male", "Single", 1, 60000.0f);
+        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
+                expectedNumberOfHousehold, expectedAnnualIncome);
+        ClientFactory clientFactory = new ClientFactory();
+        Client client = clientFactory.createUser(registrationData);;
 
         Question question = new Question();
         question.setClose(false);
-        assertEquals(false, client.isQuestionRateable(question), "IsQuestionRateable is wrong.");
+        assertFalse(client.isQuestionRateable(question), "IsQuestionRateable is wrong.");
     }
 }

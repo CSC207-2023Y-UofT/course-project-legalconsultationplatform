@@ -1,4 +1,4 @@
 package businessrule.responsemodel;
 
-public class RegisterResponseModel {
+public class BaseResponseModel {
 }

@@ -2,10 +2,11 @@ package adapter.presenter;
 
 import adapter.controller.ControlContainer;
 import businessrule.outputboundary.TheQuestionOutputBoundary;
+import businessrule.outputboundary.UserOutputBoundary;
 import businessrule.responsemodel.TheQuestionResponseModel;
+import businessrule.responsemodel.UserResponseModel;
 import businessrule.usecase.util.PostDisplayFormatter;
-import businessrule.usecase.util.QuestionDisplayFormatter;
-import driver.screen.*;
+import entity.ApplicationException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,12 +29,13 @@ public class TheQuestionResponseFormatter implements TheQuestionOutputBoundary {
     }
 
     @Override
-    public TheQuestionResponseModel prepareFail(String msg) {
+    public UserResponseModel prepareFail(String msg) {
         throw new ApplicationException(msg);
     }
 
     @Override
-    public TheQuestionResponseModel prepareSuccess(TheQuestionResponseModel response) {
+    public UserResponseModel prepareSuccess(UserResponseModel responseModel) {
+        TheQuestionResponseModel response = (TheQuestionResponseModel) responseModel;
         int userId = response.getUserId();
         String userName = response.getUserName();
         int questionId = response.getQuestionId();
@@ -44,17 +46,17 @@ public class TheQuestionResponseFormatter implements TheQuestionOutputBoundary {
         boolean isClose = response.isClose();
 
 
-        if (isClose) {
-            TheQuestionCloseUI plainQuestionUI = new TheQuestionCloseUI(controlContainer, cardLayout, screens, userId,
-                    userName, questionId, title, type, deadline, postMap);
-            screens.add(plainQuestionUI, "ClosedQuestion");
-            cardLayout.show(screens, "ClosedQuestion");
-        } else {
-            TheQuestionOpenUI openUI = new TheQuestionOpenUI(controlContainer, cardLayout, screens, userId, userName,
-                    questionId, title, type, deadline, postMap);
-            screens.add(openUI, "Open");
-            cardLayout.show(screens, "Open");
-        }
+//        if (isClose) {
+//            TheQuestionCloseUI plainQuestionUI = new TheQuestionCloseUI(controlContainer, cardLayout, screens, userId,
+//                    userName, questionId, title, type, deadline, postMap);
+//            screens.add(plainQuestionUI, "ClosedQuestion");
+//            cardLayout.show(screens, "ClosedQuestion");
+//        } else {
+//            TheQuestionOpenUI openUI = new TheQuestionOpenUI(controlContainer, cardLayout, screens, userId, userName,
+//                    questionId, title, type, deadline, postMap);
+//            screens.add(openUI, "Open");
+//            cardLayout.show(screens, "Open");
+//        }
         return response;
     }
 }

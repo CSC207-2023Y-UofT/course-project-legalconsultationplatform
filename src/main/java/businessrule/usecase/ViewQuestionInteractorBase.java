@@ -1,10 +1,15 @@
 package businessrule.usecase;
 
+import businessrule.SessionManager;
+import businessrule.UserSession;
 import businessrule.gateway.QuestionGateway;
 import businessrule.inputboundary.ViewInputBoundary;
+import businessrule.outputboundary.TheQuestionOutputBoundary;
+import businessrule.outputboundary.UserOutputBoundary;
 import businessrule.outputboundary.ViewOutputBoundary;
-import businessrule.requestmodel.ViewRequestModel;
+import businessrule.responsemodel.UserResponseModel;
 import businessrule.responsemodel.ViewResponseModel;
+import businessrule.usecase.util.BuilderService;
 import businessrule.usecase.util.QuestionDisplayFormatter;
 import businessrule.usecase.util.QuestionMapConstructor;
 import entity.Question;
@@ -14,24 +19,30 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class ViewQuestionInteractorBase implements ViewInputBoundary {
-    protected final ViewOutputBoundary viewOutputBoundary;
+    protected final ViewOutputBoundary outputBoundary;
     protected final QuestionGateway questionGateway;
 
-    public ViewQuestionInteractorBase(ViewOutputBoundary viewOutputBoundary, QuestionGateway questionGateway) {
-        this.viewOutputBoundary = viewOutputBoundary;
+    public ViewQuestionInteractorBase(ViewOutputBoundary outputBoundary, QuestionGateway questionGateway) {
+        this.outputBoundary = outputBoundary;
         this.questionGateway = questionGateway;
     }
 
     @Override
-    public ViewResponseModel viewQuestion(ViewRequestModel viewRequestModel) {
-        List<Question> questionList = fetchQuestions(viewRequestModel);
-        User user = fetchUser(viewRequestModel);
+    public UserResponseModel viewQuestion() {
+        // get input
+        UserSession session = SessionManager.getSession();
+        UserResponseModel response = session.getUserResponseModel();
+        int userId = response.getUserId();
+
+        // strategy
+        List<Question> questionList = fetchQuestions(userId);
+        User user = fetchUser(userId);
+
         QuestionMapConstructor questionMapConstructor = new QuestionMapConstructor();
         Map<Integer, QuestionDisplayFormatter> questionMap = questionMapConstructor.constructQuestionMap(questionList);
-        ViewResponseModel viewResponseModel = new ViewResponseModel(user.getUserId(), user.getUserName(), questionMap);
-        return viewOutputBoundary.prepareSuccess(viewResponseModel);
+        return outputBoundary.prepareSuccess(BuilderService.getInstance().constructViewResponse(response, questionMap));
     }
 
-    protected abstract List<Question> fetchQuestions(ViewRequestModel viewRequestModel);
-    protected abstract User fetchUser(ViewRequestModel viewRequestModel);
+    protected abstract List<Question> fetchQuestions(int userId);
+    protected abstract User fetchUser(int userId);
 }

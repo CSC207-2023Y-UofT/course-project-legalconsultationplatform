@@ -1,6 +1,8 @@
 package usecasetesting;
 
 import adapter.controller.ControlContainer;
+import businessrule.SessionManager;
+import businessrule.UserSession;
 import businessrule.gateway.AttorneyGateway;
 import businessrule.gateway.ClientGateway;
 import businessrule.gateway.QuestionGateway;
@@ -8,6 +10,7 @@ import businessrule.inputboundary.QuestionInputBoundary;
 import businessrule.outputboundary.TheQuestionOutputBoundary;
 import businessrule.requestmodel.QuestionRequestModel;
 import businessrule.responsemodel.TheQuestionResponseModel;
+import businessrule.responsemodel.UserResponseModel;
 import businessrule.usecase.AskQuestionInteractor;
 
 import driver.database.*;
@@ -22,6 +25,8 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class AskQuestionUseCaseTest {
     final static int CLIENT_ID = 21345678;
+    final static String CLIENT_USERNAME = "test client";
+    final static String CLIENT_TYPE = "Client";
     final static int ATTORNEY_ID = 11345678;
     final static int SECOND_ATTORNEY_ID = 12222222;
     private QuestionGateway questionGateway;
@@ -43,16 +48,18 @@ public class AskQuestionUseCaseTest {
             }
 
             @Override
-            public TheQuestionResponseModel prepareFail(String msg) {
+            public UserResponseModel prepareFail(String msg) {
                 assertEquals("Please specify your question type.", msg);
                 return null;
             }
 
             @Override
-            public TheQuestionResponseModel prepareSuccess(TheQuestionResponseModel response) {
-                assertEquals(0, response.getPostMap().size(), "PostMap is not correct");
+            public UserResponseModel prepareSuccess(UserResponseModel response) {
+                TheQuestionResponseModel responseModel = (TheQuestionResponseModel) response;
+                assertEquals(0, responseModel.getPostMap().size(), "PostMap is not correct");
                 return null;
             }
+
         };
 
         questionInputBoundary = new AskQuestionInteractor(questionGateway, theQuestionOutputBoundary, questionFactory, clientGateway);
@@ -68,13 +75,17 @@ public class AskQuestionUseCaseTest {
         Attorney secondAttorney = new Attorney();
         attorney.setUserId(SECOND_ATTORNEY_ID);
         attorneyGateway.save(secondAttorney);
+
+        UserResponseModel userResponseModel = new UserResponseModel(CLIENT_ID, CLIENT_USERNAME, CLIENT_TYPE);
+        UserSession session = new UserSession(userResponseModel);
+        SessionManager.setSession(session);
     }
 
     @Test
     public void TestAskQuestionPassed(){
         setUpAskQuestionUseCase();
 
-        QuestionRequestModel inputData = new QuestionRequestModel("fraud", "Test title", LocalDate.now(), CLIENT_ID, LocalDate.now());
+        QuestionRequestModel inputData = new QuestionRequestModel("fraud", "Test title", LocalDate.now(), LocalDate.now());
 
         questionInputBoundary.createQuestion(inputData);
 
@@ -87,7 +98,7 @@ public class AskQuestionUseCaseTest {
     public void TestAskQuestionFailByEmptyCategory(){
         setUpAskQuestionUseCase();
 
-        QuestionRequestModel inputData = new QuestionRequestModel(null, "Test title", LocalDate.now(), CLIENT_ID, LocalDate.now());
+        QuestionRequestModel inputData = new QuestionRequestModel(null, "Test title", LocalDate.now(), LocalDate.now());
 
         questionInputBoundary.createQuestion(inputData);
 

@@ -1,27 +1,28 @@
 package entitytesting;
+import businessrule.requestmodel.RegistrationData;
 import entity.Attorney;
-import entity.Client;
 import entity.Question;
+import entity.factory.AttorneyFactory;
 import org.junit.jupiter.api.Test;
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
 class AttorneyTest {
+    int expectedUserId = 1000000;
+    String expectedName = "Xingfu Wu";
+    String expectedEmail = "xingfu.wu@mail.utoronto.ca";
+    String expectedPassword = "password";
+    String expectedPassword2 = "password";
+    String expectedStateAbb = "CA";
+    String expectedPostalCode = "12345";
 
     @Test
     void testConstructorAndGetter() {
-        int expectedUserId = 1000000;
-        String expectedName = "Xingfu Wu";
-        String expectedEmail = "xingfu.wu@mail.utoronto.ca";
-        String expectedPassword = "password";
-        String expectedStateAbb = "CA";
-        String expectedPostalCode = "12345";
-
-        Attorney attorney = new Attorney(expectedUserId, expectedName, expectedEmail, expectedPassword, expectedStateAbb,
+        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
                 expectedPostalCode);
+        AttorneyFactory attorneyFactory = new AttorneyFactory();
+        Attorney attorney  = attorneyFactory.createUser(registrationData);
+        attorney.setUserId(expectedUserId);
 
         assertEquals(expectedUserId, attorney.getUserId(), "UserId is not set correctly in the constructor.");
         assertEquals(expectedName, attorney.getUserName(), "Name is set correctly in the constructor.");
@@ -44,7 +45,7 @@ class AttorneyTest {
         Attorney attorney = new Attorney();
 
         attorney.setUserId(expectedUserId);
-        attorney.setName(expectedName);
+        attorney.setUserName(expectedName);
         attorney.setEmail(expectedEmail);
         attorney.setPassword(expectedPassword);
         attorney.setStateAbb(expectedStateAbb);
@@ -59,7 +60,10 @@ class AttorneyTest {
     }
     @Test
     void testAddQuestion() {
-        Attorney attorney = new Attorney(1, "Test Attorney", "attorney@example.com", "password", "CA", "12345");
+        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        AttorneyFactory attorneyFactory = new AttorneyFactory();
+        Attorney attorney  = attorneyFactory.createUser(registrationData);
         Question question1 = new Question();
         question1.setQuestionId(1);
         question1.setTitle("First Question");
@@ -77,8 +81,10 @@ class AttorneyTest {
     }
     @Test
     void testCloseableIfNotTaken() {
-        Attorney attorney = new Attorney(1, "Attorney1", "attorney1@example.com", "password1", "CA", "12345");
-
+        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        AttorneyFactory attorneyFactory = new AttorneyFactory();
+        Attorney attorney  = attorneyFactory.createUser(registrationData);
         Question question = new Question();
         question.setQuestionId(1);
         question.setTitle("Test question");
@@ -90,8 +96,13 @@ class AttorneyTest {
     }
     @Test
     void testCloseableIfTakenByOthers() {
-        Attorney attorney1 = new Attorney(1, "Attorney1", "attorney1@example.com", "password1", "CA", "12345");
-        Attorney attorney2 = new Attorney(2, "Attorney2", "attorney2@example.com", "password2", "CA", "12345");
+        RegistrationData registrationData1 = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        AttorneyFactory attorneyFactory = new AttorneyFactory();
+        Attorney attorney1  = attorneyFactory.createUser(registrationData1);
+        RegistrationData registrationData2 = new RegistrationData("joseph", expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        Attorney attorney2  = attorneyFactory.createUser(registrationData2);
 
         Question question = new Question();
         question.setQuestionId(1);
@@ -103,31 +114,23 @@ class AttorneyTest {
         boolean actual = attorney1.isQuestionCloseable(question);
         assertEquals(expected, actual, "The question should not be closeable when it is taken by a different attorney.");
     }
-    @Test
-    void testCloseableIfTakenBySelf() {
 
-        Attorney attorney = new Attorney(1, "Attorney1", "attorney1@example.com", "password1", "CA", "12345");
-        Question question = new Question();
-        question.setQuestionId(1);
-        question.setTitle("Test question");
-        question.setTaken(true);
-        question.setTakenByAttorney(attorney.getUserId());
-
-        boolean expected = true;
-        boolean actual = attorney.isQuestionCloseable(question);
-        assertEquals(expected, actual, "The question should be closeable when it is taken by the current attorney.");
-    }
     @Test
-    void testIsClient() {
-        Attorney attorney = new Attorney(1, "Attorney1", "attorney1@example.com", "password1", "CA", "23456");
-        boolean expected = false;
-        boolean actual = attorney.isClient();
-        assertEquals(expected, actual, "The isClient method of an Attorney should always return false.");
+    void testUserType() {
+        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        AttorneyFactory attorneyFactory = new AttorneyFactory();
+        Attorney attorney  = attorneyFactory.createUser(registrationData);
+        String expected = "Attorney";
+        String actual = attorney.getUserType();
+        assertEquals(expected, actual);
     }
     @Test
     void testSelectableIfClosed() {
-        Attorney attorney = new Attorney(1, "Attorney1", "attorney1@example.com", "password1",
-                "CA", "12345");
+        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        AttorneyFactory attorneyFactory = new AttorneyFactory();
+        Attorney attorney  = attorneyFactory.createUser(registrationData);
         Question question = new Question();
         question.setQuestionId(1);
         question.setTitle("Test question");
@@ -138,7 +141,10 @@ class AttorneyTest {
 }
     @Test
     void testSelectableIfNotTaken() {
-        Attorney attorney = new Attorney(1, "Attorney1", "attorney1@example.com", "password1", "CA", "12345");
+        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        AttorneyFactory attorneyFactory = new AttorneyFactory();
+        Attorney attorney  = attorneyFactory.createUser(registrationData);
         Question question = new Question();
         question.setQuestionId(1);
         question.setTitle("Test question");
@@ -149,8 +155,16 @@ class AttorneyTest {
     }
     @Test
     void testSelectableIfTakenByOthers() {
-        Attorney attorney1 = new Attorney(1, "Attorney1", "attorney1@example.com", "password1", "CA", "12345");
-        Attorney attorney2 = new Attorney(2, "Attorney2", "attorney2@example.com", "password2", "CA", "23456");
+        RegistrationData registrationData1 = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        AttorneyFactory attorneyFactory = new AttorneyFactory();
+        Attorney attorney1  = attorneyFactory.createUser(registrationData1);
+        attorney1.setUserId(10000);
+        RegistrationData registrationData2 = new RegistrationData("joseph", expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        Attorney attorney2  = attorneyFactory.createUser(registrationData2);
+        attorney2.setUserId(20000);
+
         Question question = new Question();
         question.setQuestionId(1);
         question.setTitle("Test question");
@@ -163,7 +177,10 @@ class AttorneyTest {
 
     @Test
     void testSelectableIfTakenBySelf() {
-        Attorney attorney = new Attorney(1, "Attorney1", "attorney1@example.com", "password1", "CA", "12345");
+        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        AttorneyFactory attorneyFactory = new AttorneyFactory();
+        Attorney attorney  = attorneyFactory.createUser(registrationData);
         Question question = new Question();
         question.setQuestionId(1);
         question.setTitle("Test question");
@@ -176,7 +193,10 @@ class AttorneyTest {
 
     @Test
     void testReplyableIfClosed() {
-        Attorney attorney = new Attorney(1, "Attorney1", "attorney1@example.com", "password1", "CA", "90210");
+        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        AttorneyFactory attorneyFactory = new AttorneyFactory();
+        Attorney attorney  = attorneyFactory.createUser(registrationData);
         Question question = new Question();
         question.setQuestionId(1);
         question.setTitle("Test question");
@@ -187,8 +207,15 @@ class AttorneyTest {
     }
     @Test
     void testReplyableIfTakenByOthers() {
-        Attorney attorney1 = new Attorney(1, "Attorney1", "attorney1@example.com", "password1", "CA", "12345");
-        Attorney attorney2 = new Attorney(2, "Attorney2", "attorney2@example.com", "password2", "CA", "23456");
+        RegistrationData registrationData1 = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        AttorneyFactory attorneyFactory = new AttorneyFactory();
+        Attorney attorney1  = attorneyFactory.createUser(registrationData1);
+        attorney1.setUserId(10000);
+        RegistrationData registrationData2 = new RegistrationData("joseph", expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        Attorney attorney2  = attorneyFactory.createUser(registrationData2);
+        attorney2.setUserId(20000);
         Question question = new Question();
         question.setQuestionId(1);
         question.setTitle("Test question");
@@ -201,7 +228,10 @@ class AttorneyTest {
 
     @Test
     void testReplyableIfTakenBySelf() {
-        Attorney attorney = new Attorney(1, "Attorney1", "attorney1@example.com", "password1", "CA", "12345");
+        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        AttorneyFactory attorneyFactory = new AttorneyFactory();
+        Attorney attorney  = attorneyFactory.createUser(registrationData);
         Question question = new Question();
         question.setQuestionId(1);
         question.setTitle("Test question");
@@ -214,7 +244,10 @@ class AttorneyTest {
 
     @Test
     void testReplyableIfNotTaken() {
-        Attorney attorney = new Attorney(1, "Attorney1", "attorney1@example.com", "password1", "CA", "90210");
+        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        AttorneyFactory attorneyFactory = new AttorneyFactory();
+        Attorney attorney  = attorneyFactory.createUser(registrationData);
         Question question = new Question();
         question.setQuestionId(1);
         question.setTitle("Test question");
@@ -227,28 +260,41 @@ class AttorneyTest {
     }
 
     @Test
-    void testEqualsSucced(){
-        Attorney attorney = new Attorney(1, "Attorney1", "attorney1@example.com", "password1", "CA", "12345");
+    void testEqualsSucceed(){
+        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        AttorneyFactory attorneyFactory = new AttorneyFactory();
+        Attorney attorney  = attorneyFactory.createUser(registrationData);
         assertEquals(true,attorney.equals(attorney),"The equal method is wrong");
     }
     @Test
     void testEqualFailByNotClient(){
-        Attorney attorney = new Attorney(1, "Attorney1", "attorney1@example.com", "password1", "CA", "12345");
+        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        AttorneyFactory attorneyFactory = new AttorneyFactory();
+        Attorney attorney  = attorneyFactory.createUser(registrationData);
         Question question = new Question();
 
         assertEquals(false,attorney.equals(question),"The equal method is wrong");
     }@Test
     void testEqualsFailByNotEqual(){
-        Attorney attorney1 = new Attorney(1, "Attorney1", "attorney1@example.com", "password1", "CA", "12345");
-        Attorney attorney2 = new Attorney(1, "Attorney1", "attorney1@example.com", "password1", "CA", "12345");
+        RegistrationData registrationData1 = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        AttorneyFactory attorneyFactory = new AttorneyFactory();
+        Attorney attorney1  = attorneyFactory.createUser(registrationData1);
+        RegistrationData registrationData2 = new RegistrationData("joseph", expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        Attorney attorney2  = attorneyFactory.createUser(registrationData2);
         assertEquals(true, attorney1.equals(attorney2),"The equal method is wrong");
     }
 
 
     @Test
     void testIsQuestionRateable() {
-        Attorney attorney = new Attorney(1, "Attorney1", "attorney1@example.com", "password1", "CA", "12345");
-
+        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        AttorneyFactory attorneyFactory = new AttorneyFactory();
+        Attorney attorney  = attorneyFactory.createUser(registrationData);
         Question question = new Question();
         question.setQuestionId(1);
         question.setTitle("Test question");

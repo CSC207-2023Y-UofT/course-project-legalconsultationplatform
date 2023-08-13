@@ -2,12 +2,16 @@ package usecasetesting;
 
 
 import adapter.controller.ControlContainer;
+import businessrule.SessionManager;
+import businessrule.UserSession;
 import businessrule.gateway.*;
 
 import businessrule.inputboundary.RateInputBoundary;
-import businessrule.outputboundary.HomePageOutputBoundary;
+
+import businessrule.outputboundary.UserOutputBoundary;
 import businessrule.requestmodel.RateRequestModel;
-import businessrule.responsemodel.HomePageResponseModel;
+
+import businessrule.responsemodel.UserResponseModel;
 import businessrule.usecase.RateInteractor;
 
 import driver.database.*;
@@ -19,11 +23,12 @@ import org.junit.jupiter.api.Test;
 
 
 import static org.junit.jupiter.api.Assertions.*;
-;
 
 public class RateAnswerUseCaseTest {
 
     final static int CLIENT_ID = 21345678;
+    final static String CLIENT_USERNAME = "test client";
+    final static String CLIENT_TYPE = "Client";
     final static int ATTORNEY_ID = 11345678;
     final static int SECOND_ATTORNEY_ID = 12222222;
     final static int QUESTION_ID = 323456789;
@@ -34,7 +39,7 @@ public class RateAnswerUseCaseTest {
     private UserGatewayFactory userGatewayFactory;
     private ClientGateway clientGateway;
     private AttorneyGateway attorneyGateway;
-    private HomePageOutputBoundary homePageOutputBoundary;
+    private UserOutputBoundary userOutputBoundary;
     private RateInputBoundary rateInputBoundary;
 
     public void setUpRateAnswerUseCase(){
@@ -45,24 +50,28 @@ public class RateAnswerUseCaseTest {
         userGatewayFactory = new UserGatewayFactory();
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
-        homePageOutputBoundary = new HomePageOutputBoundary() {
+        clientGateway.deleteAll();
+        questionGateway.deleteAll();
+        attorneyGateway.deleteAll();
+        postGateway.deleteAll();
+        userOutputBoundary = new UserOutputBoundary() {
             @Override
             public void setControlContainer(ControlContainer controlContainer) {
 
             }
 
             @Override
-            public HomePageResponseModel prepareFail(String msg) {
+            public UserResponseModel prepareFail(String msg) {
                 assertEquals("You cannot rate this question!", msg);
                 return null;
             }
 
             @Override
-            public HomePageResponseModel prepareSuccess(HomePageResponseModel homePageResponseModel) {
+            public UserResponseModel prepareSuccess(UserResponseModel userResponseModel) {
                 return null;
             }
         };
-        rateInputBoundary = new RateInteractor(questionGateway, homePageOutputBoundary, clientGateway);
+        rateInputBoundary = new RateInteractor(questionGateway, userOutputBoundary,  clientGateway, attorneyGateway);
 
         Question question = new Question();
         question.setQuestionId(QUESTION_ID);
@@ -71,6 +80,8 @@ public class RateAnswerUseCaseTest {
         Question closedQuestion = new Question();
         closedQuestion.setQuestionId(CLOSED_QUESTION_ID);
         closedQuestion.setClose(true);
+        closedQuestion.setTakenByAttorney(ATTORNEY_ID);
+        closedQuestion.setTaken(true);
         questionGateway.save(closedQuestion);
 
         Client client = new Client();
@@ -81,20 +92,22 @@ public class RateAnswerUseCaseTest {
 
         Attorney attorney = new Attorney();
         attorney.setUserId(ATTORNEY_ID);
+        attorney.setEmail("josephpc061@gmail.com");
         attorneyGateway.save(attorney);
-
-        Attorney secondAttorney = new Attorney();
-        attorney.setUserId(SECOND_ATTORNEY_ID);
-        attorneyGateway.save(secondAttorney);
 
         question.setTakenByAttorney(ATTORNEY_ID);
         question.setTaken(true);
         questionGateway.save(question);
+
+        UserResponseModel userResponseModel = new UserResponseModel(CLIENT_ID, CLIENT_USERNAME, CLIENT_TYPE);
+        UserSession session = new UserSession(userResponseModel);
+        SessionManager.setSession(session);
     }
     @Test
     public void TestClientRateClosedQuestion(){
         setUpRateAnswerUseCase();
-        RateRequestModel inputData = new RateRequestModel(10, CLOSED_QUESTION_ID, CLIENT_ID);
+
+        RateRequestModel inputData = new RateRequestModel(10, CLOSED_QUESTION_ID);
         rateInputBoundary.rateAnswer(inputData);
         assertEquals(10, questionGateway.get(CLOSED_QUESTION_ID).getRating());
         ClearAllRepository();
@@ -102,7 +115,8 @@ public class RateAnswerUseCaseTest {
     @Test
     public void TestClientRateUnClosedQuestion(){
         setUpRateAnswerUseCase();
-        RateRequestModel inputData = new RateRequestModel(10, QUESTION_ID, CLIENT_ID);
+
+        RateRequestModel inputData = new RateRequestModel(10, QUESTION_ID);
         rateInputBoundary.rateAnswer(inputData);
         ClearAllRepository();
     }

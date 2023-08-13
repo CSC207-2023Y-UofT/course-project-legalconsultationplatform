@@ -3,7 +3,6 @@ package driver.database;
 import businessrule.gateway.UserGateway;
 import entity.Question;
 import entity.User;
-
 import javax.jdo.JDOHelper;
 import java.util.List;
 

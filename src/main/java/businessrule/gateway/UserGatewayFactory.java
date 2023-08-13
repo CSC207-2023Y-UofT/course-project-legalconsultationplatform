@@ -2,13 +2,14 @@ package businessrule.gateway;
 
 import driver.database.AttorneyRepository;
 import driver.database.ClientRepository;
-import driver.screen.ApplicationException;
+import entity.ApplicationException;
+import entity.User;
 
 public class UserGatewayFactory {
 
-    public UserGateway createUserGateway(int userId) {
+    public UserGateway<? extends User> createUserGateway(int userId) {
         try {
-            UserGateway userGateway;
+            UserGateway<? extends User> userGateway;
             if (isClient(userId)) {
                 userGateway = new ClientRepository();
             } else {

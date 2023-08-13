@@ -1,7 +1,10 @@
 package gatewaytesting;
 
+import businessrule.requestmodel.RegistrationData;
 import driver.database.*;
 import entity.Question;
+import entity.factory.AttorneyFactory;
+import entity.factory.ClientFactory;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -21,9 +24,6 @@ public class AttorneyRepositoryTest {
     final static int ATTORNEY_ID = 50;
     final static String ATTORNEY_USERNAME = "yao";
 
-    //Client
-    final static int CLIENT_ID = 100;
-
     //Question
     final static int QUESTION_ID = 15;
     final static int QUESTION_ID1 = 25;
@@ -36,12 +36,15 @@ public class AttorneyRepositoryTest {
     public static void setUp() {
         //Attorney
         String attorneyEmail = "yao.yao@gmail.com";
-        String attorneyPassword = "yao123";
+        String attorneyPassword = "yao123321";
+        String attorneyPassword2 = "yao123321";
         String attorneyState = "ON";
         String attorneyPostalCode = "M8MO1P";
 
-        Attorney a = new Attorney(ATTORNEY_ID, ATTORNEY_USERNAME, attorneyEmail, attorneyPassword,
-                attorneyState, attorneyPostalCode);
+        RegistrationData registrationData1 = new RegistrationData(ATTORNEY_USERNAME, attorneyEmail, attorneyPassword, attorneyPassword2, attorneyState, attorneyPostalCode);
+        AttorneyFactory attorneyFactory = new AttorneyFactory();
+        Attorney a = attorneyFactory.createUser(registrationData1);
+        a.setUserId(ATTORNEY_ID);
 
         AttorneyRepository repo = new AttorneyRepository();
 
@@ -51,7 +54,8 @@ public class AttorneyRepositoryTest {
         //Client
         String clientUsername = "bob";
         String clientEmail = "bob.bob@gmail.com";
-        String clientPassword = "bob123";
+        String clientPassword = "bob123321";
+        String clientPassword2 = "bob123321";
         String clientState = "ON";
         String clientPostalCode = "M1MA6A";
         String clientEthnicity = "asian";
@@ -61,9 +65,10 @@ public class AttorneyRepositoryTest {
         int clientNumHouseHold = 1;
         float clientAnnualIncome = 100;
 
-        Client c = new Client(CLIENT_ID, clientUsername, clientEmail, clientPassword, clientState, clientPostalCode,
-                clientEthnicity, clientAge, clientGender, clientMaritalStatus, clientNumHouseHold, clientAnnualIncome);
+        RegistrationData registrationData2 = new RegistrationData(clientUsername, clientEmail, clientPassword, clientPassword2, clientState, clientPostalCode, clientEthnicity, clientAge, clientGender, clientMaritalStatus, clientNumHouseHold, clientAnnualIncome);
 
+        ClientFactory clientFactory = new ClientFactory();
+        Client c  = clientFactory.createUser(registrationData2);
         ClientRepository cRepo = new ClientRepository();
 
         cRepo.deleteAll();
@@ -111,6 +116,7 @@ public class AttorneyRepositoryTest {
     public void testUpdateQuestionList() {
         AttorneyRepository repo = new AttorneyRepository();
         QuestionRepo qRepo = new QuestionRepo();
+
         //test updating list
         repo.updateQuestionList(ATTORNEY_ID, qRepo.get(QUESTION_ID));
         ArrayList<Question> expectedList1 = new ArrayList<>();
@@ -132,13 +138,16 @@ public class AttorneyRepositoryTest {
     public void testGetUser() {
         String attorneyUsername = "yao";
         String attorneyEmail = "yao.yao@gmail.com";
-        String attorneyPassword = "yao123";
+        String attorneyPassword = "yao123321";
+        String attorneyPassword2 = "yao123321";
         String attorneyState = "ON";
         String attorneyPostalCode = "M8MO1P";
 
         //constructors
-        Attorney a = new Attorney(ATTORNEY_ID, attorneyUsername, attorneyEmail, attorneyPassword,
-                attorneyState, attorneyPostalCode);
+        RegistrationData registrationData1 = new RegistrationData(attorneyUsername, attorneyEmail, attorneyPassword, attorneyPassword2, attorneyState, attorneyPostalCode);
+        AttorneyFactory attorneyFactory = new AttorneyFactory();
+        Attorney a = attorneyFactory.createUser(registrationData1);
+        a.setUserId(ATTORNEY_ID);
         AttorneyRepository repo = new AttorneyRepository();
 
         //set up
@@ -154,13 +163,16 @@ public class AttorneyRepositoryTest {
         int attorneyId = 50;
         String attorneyUsername = "yao";
         String attorneyEmail = "yao.yao@gmail.com";
-        String attorneyPassword = "yao123";
+        String attorneyPassword = "yao123321";
+        String attorneyPassword2 = "yao123321";
         String attorneyState = "ON";
         String attorneyPostalCode = "M8MO1P";
 
         //constructors
-        Attorney a = new Attorney(attorneyId, attorneyUsername, attorneyEmail, attorneyPassword,
-                attorneyState, attorneyPostalCode);
+        RegistrationData registrationData1 = new RegistrationData(attorneyUsername, attorneyEmail, attorneyPassword, attorneyPassword2, attorneyState, attorneyPostalCode);
+        AttorneyFactory attorneyFactory = new AttorneyFactory();
+        Attorney a = attorneyFactory.createUser(registrationData1);
+        a.setUserId(attorneyId);
         AttorneyRepository repo = new AttorneyRepository();
 
         //set up
@@ -176,13 +188,16 @@ public class AttorneyRepositoryTest {
         int attorneyId = 50;
         String attorneyUsername = "yao";
         String attorneyEmail = "yao.yao@gmail.com";
-        String attorneyPassword = "yao123";
+        String attorneyPassword = "yao123321";
+        String attorneyPassword2 = "yao123321";
         String attorneyState = "ON";
         String attorneyPostalCode = "M8MO1P";
 
         //constructors
-        Attorney a = new Attorney(attorneyId, attorneyUsername, attorneyEmail, attorneyPassword,
-                attorneyState, attorneyPostalCode);
+        RegistrationData registrationData1 = new RegistrationData(attorneyUsername, attorneyEmail, attorneyPassword, attorneyPassword2, attorneyState, attorneyPostalCode);
+        AttorneyFactory attorneyFactory = new AttorneyFactory();
+        Attorney a = attorneyFactory.createUser(registrationData1);
+        a.setUserId(attorneyId);
         AttorneyRepository repo = new AttorneyRepository();
 
         //set up
@@ -204,18 +219,28 @@ public class AttorneyRepositoryTest {
         int attorneyId2 = 55;
         String attorneyUsername = "yao";
         String attorneyEmail = "yao.yao@gmail.com";
-        String attorneyPassword = "yao123";
+        String attorneyPassword = "yao123321";
+        String attorneyPassword2 = "yao123321";
         String attorneyState = "ON";
         String attorneyPostalCode = "M8MO1P";
 
         //constructors
-        Attorney a = new Attorney(attorneyId, attorneyUsername, attorneyEmail, attorneyPassword,
-                attorneyState, attorneyPostalCode);
-        Attorney a1 = new Attorney(attorneyId2, attorneyUsername, attorneyEmail, attorneyPassword,
-                attorneyState, attorneyPostalCode);
-        Client c = new Client(100, "bob", "bob.bob@gmail.com", "bob123", "ON",
-                "M1MA6A", "asian", 20, "Male", "Single", 1,
-                100);
+        RegistrationData registrationData1 = new RegistrationData(attorneyUsername, attorneyEmail, attorneyPassword, attorneyPassword2, attorneyState, attorneyPostalCode);
+        AttorneyFactory attorneyFactory = new AttorneyFactory();
+        Attorney a = attorneyFactory.createUser(registrationData1);
+        a.setUserId(attorneyId);
+
+        RegistrationData registrationData2 = new RegistrationData("joseph", attorneyEmail, attorneyPassword, attorneyPassword2, attorneyState, attorneyPostalCode);
+        Attorney a1 = attorneyFactory.createUser(registrationData2);
+        a.setUserId(attorneyId2);
+
+        RegistrationData registrationData3 = new RegistrationData("bob", "bob.bob@gmail.com", "bob123321", "bob123321", "ON",
+                "M1MA6A", "asian", 20, "Male", "Single", 1, 1000.0f);
+
+        ClientFactory clientFactory = new ClientFactory();
+        Client c  = clientFactory.createUser(registrationData3);
+        c.setUserId(100);
+
         AttorneyRepository repo = new AttorneyRepository();
         ClientRepository clientRepo = new ClientRepository();
 

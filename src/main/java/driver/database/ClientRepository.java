@@ -1,7 +1,6 @@
 package driver.database;
 
 import businessrule.gateway.ClientGateway;
-import entity.Attorney;
 import entity.Client;
 
 public class ClientRepository extends UserRepository<Client> implements ClientGateway {

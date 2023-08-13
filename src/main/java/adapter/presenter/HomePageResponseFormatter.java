@@ -1,17 +1,13 @@
 package adapter.presenter;
 import adapter.controller.ControlContainer;
-import businessrule.outputboundary.HomePageOutputBoundary;
-import businessrule.responsemodel.HomePageResponseModel;
-import driver.screen.ApplicationException;
-import driver.screen.AttorneyHomePageUI;
-import driver.screen.ClientHomePageUI;
+import businessrule.outputboundary.UserOutputBoundary;
+import businessrule.responsemodel.UserResponseModel;
+import entity.ApplicationException;
 
 import javax.swing.*;
 import java.awt.*;
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
-public class HomePageResponseFormatter implements HomePageOutputBoundary {
+public class HomePageResponseFormatter implements UserOutputBoundary {
     CardLayout cardLayout;
     JPanel screens;
     ControlContainer controlContainer;
@@ -27,26 +23,26 @@ public class HomePageResponseFormatter implements HomePageOutputBoundary {
     }
 
     @Override
-    public HomePageResponseModel prepareFail(String msg) {
+    public UserResponseModel prepareFail(String msg) {
         throw new ApplicationException(msg);
     }
 
     @Override
-    public HomePageResponseModel prepareSuccess(HomePageResponseModel response) {
+    public UserResponseModel prepareSuccess(UserResponseModel response) {
         int userId = response.getUserId();
         String userName = response.getUserName();
         String userType = response.getUserType();
-        if (userType.equals("Attorney")) {
-            AttorneyHomePageUI AttorneyHomePage = new AttorneyHomePageUI(controlContainer, cardLayout, screens,
-                    userId, userName);
-            screens.add(AttorneyHomePage, "AttorneyHomePage");
-            cardLayout.show(screens, "AttorneyHomePage");
-        } else {
-            ClientHomePageUI clientHomePage = new ClientHomePageUI(controlContainer, cardLayout, screens,
-                    userId, userName);
-            screens.add(clientHomePage, "ClientHomePage");
-            cardLayout.show(screens, "ClientHomePage");
-        }
+//        if (userType.equals("Attorney")) {
+//            AttorneyHomePageUI AttorneyHomePage = new AttorneyHomePageUI(controlContainer, cardLayout, screens,
+//                    userId, userName);
+//            screens.add(AttorneyHomePage, "AttorneyHomePage");
+//            cardLayout.show(screens, "AttorneyHomePage");
+//        } else {
+//            ClientHomePageUI clientHomePage = new ClientHomePageUI(controlContainer, cardLayout, screens,
+//                    userId, userName);
+//            screens.add(clientHomePage, "ClientHomePage");
+//            cardLayout.show(screens, "ClientHomePage");
+//        }
         return response;
     }
 }

@@ -1,11 +1,11 @@
 package businessrule.responsemodel;
 
-public class HomePageResponseModel {
+public class UserResponseModel {
     private final int userId;
     private final String userName;
     private final String userType;
 
-    public HomePageResponseModel(int userId, String userName, String userType) {
+    public UserResponseModel(int userId, String userName, String userType) {
         this.userId = userId;
         this.userName = userName;
         this.userType = userType;
@@ -21,5 +21,13 @@ public class HomePageResponseModel {
 
     public String getUserType() {
         return userType;
+    }
+
+    public TheQuestionResponseModel.Builder toQuestionResponseBuilder() {
+        return new TheQuestionResponseModel.Builder(this);
+    }
+
+    public ViewResponseModel.Builder toViewResponseBuilder() {
+        return new ViewResponseModel.Builder(this);
     }
 }

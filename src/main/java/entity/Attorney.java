@@ -1,99 +1,57 @@
 package entity;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
+import businessrule.requestmodel.RegistrationData;
+import driver.database.AttorneyRepository;
 
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.time.LocalDate;
+import java.util.HashSet;
 import java.util.List;
 import java.util.ArrayList;
-import java.util.Objects;
+import java.util.Set;
 
 @Entity
-public class Attorney implements User {
-    @Id
-    @JsonProperty(required = true)
-    private int userId;
-    private String name;
-    private String email;
-    private String password;
-    private String stateAbb;
-    @JsonProperty(required = true)
-    private String postalCode;
-    @OneToMany(targetEntity = Question.class, fetch = FetchType.EAGER)
-    @JsonProperty(required = true)
-    private List<Question> questionsList;
+public class Attorney extends UserImp {
     @OneToMany(targetEntity = Question.class, fetch = FetchType.EAGER)
     @JsonProperty(required = true)
     private List<Question> recommendations;
+    @ElementCollection(fetch = FetchType.EAGER)
+    private Set<String> professionals;
 
     public Attorney() {
-        questionsList = new ArrayList<Question>();
-        recommendations = new ArrayList<Question>();
+        super();
+        recommendations = new ArrayList<>();
+        professionals = new HashSet<>();
     }
 
-    public Attorney(int userId, String name, String email, String password, String stateAbb, String postalCode) {
-        this.userId = userId;
-        this.name = name;
-        this.email = email;
-        this.password = password;
-        this.stateAbb = stateAbb;
-        this.postalCode = postalCode;
-        this.questionsList = new ArrayList<Question>();
-        this.recommendations = new ArrayList<Question>();
+    public Attorney(Builder builder) {
+        super(builder);
     }
+    public static class Builder extends UserImp.Builder<Builder> {
+        public Builder(RegistrationData data) {
+            super(data);
+        }
 
-    @Override
-    public int getUserId() {
-        return userId;
-    }
+        public Attorney.Builder professionals(Set<String> professionals) {
+            this.data.professionals = professionals;
+            return this;
+        }
+        @Override
+        protected Attorney.Builder self() {
+            return this;
+        }
 
-    @Override
-    public String getPassword() {return password;}
-
-    @Override
-    public String getUserName() {return name;}
-
-    @Override
-    public String getEmail() {return email;}
-
-    public String getStateAbb() {
-        return stateAbb;
-    }
-
-    public String getPostalCode() {
-        return postalCode;
-    }
-
-    @Override
-    public List<Question> getQuestionsList() {
-        return questionsList;
+        @Override
+        public Attorney build() {
+            return new Attorney(this);
+        }
     }
 
     public List<Question> getRecommendations() {return recommendations;}
 
-    public void setUserId(int userId) {this.userId = userId;}
-
-    public void setName(String name) {this.name = name;}
-
-    public void setEmail(String email) {this.email = email;}
-
-    public void setPassword(String password) {this.password = password;}
-
-    public void setStateAbb(String stateAbb) {this.stateAbb = stateAbb;}
-
-    public void setPostalCode(String postalCode) {this.postalCode = postalCode;}
     public void setRecommendations(ArrayList<Question> recommendations) {
         this.recommendations = recommendations;
-    }
-
-    @Override
-    public void addQuestion(Question question) {
-        if (! questionsList.contains(question)) {
-            questionsList.add(question);
-        }
     }
 
     public void addRecommendation(Question question){
@@ -102,21 +60,19 @@ public class Attorney implements User {
         }
     }
 
-    @Override
-    public boolean isQuestionCloseable(Question question){
-        boolean isTaken = question.isTaken();
-        int takenByAttorney = question.getTakenByAttorney();
-        if (! isTaken) {
-            return false;
-        } else {
-            return takenByAttorney == userId;
-        }
-    }
+    public Set<String> getProfessionals() {return professionals;}
+
+    public void setProfessionals(Set<String> professionals) {this.professionals = professionals;}
 
     @Override
-    public boolean isClient() {
-        return false;
+    @Transient
+    public String getUserType() {
+        return "Attorney";
     }
+
+
+    @Override
+    public boolean isQuestionCloseable(Question question){return false;}
 
     @Override
     public boolean isQuestionSelectable(Question question) {
@@ -145,7 +101,11 @@ public class Attorney implements User {
                 addQuestion(question);
                 return true;
             }
-        }
+        }return false;
+    }
+
+    @Override
+    public boolean isQuestionRateable(Question question) {
         return false;
     }
 
@@ -158,15 +118,7 @@ public class Attorney implements User {
     }
 
     @Override
-    public int hashCode() {return Objects.hashCode(userId);}
-
-    @Override
     public String toString() {
         return String.format("[Attorney]: %s", name);
-    }
-
-    @Override
-    public boolean isQuestionRateable(Question question) {
-        return false;
     }
 }
