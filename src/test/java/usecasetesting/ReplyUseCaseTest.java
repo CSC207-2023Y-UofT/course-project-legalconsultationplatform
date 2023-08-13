@@ -1,11 +1,16 @@
 package usecasetesting;
 
 import adapter.controller.ControlContainer;
+import businessrule.SessionManager;
+import businessrule.UserSession;
 import businessrule.gateway.*;
 import businessrule.inputboundary.PostInputBoundary;
-import businessrule.outputboundary.HomePageOutputBoundary;
+
+import businessrule.outputboundary.TheQuestionOutputBoundary;
 import businessrule.requestmodel.PostRequestModel;
-import businessrule.responsemodel.HomePageResponseModel;
+
+import businessrule.responsemodel.TheQuestionResponseModel;
+import businessrule.responsemodel.UserResponseModel;
 import businessrule.usecase.ReplyInteractor;
 import driver.database.*;
 
@@ -15,11 +20,13 @@ import entity.factory.PostFactory;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-;
+
 
 public class ReplyUseCaseTest {
     final static int CLIENT_ID = 21345678;
+    final static String CLIENT_USERNAME = "test client";
     final static int ATTORNEY_ID = 11345678;
+    final static String ATTORNEY_USERNAME = "test attorney";
     final static int SECOND_ATTORNEY_ID = 12222222;
     final static int QUESTION_ID = 323456789;
     final static int CLOSED_QUESTION_ID = 333333333;
@@ -29,7 +36,7 @@ public class ReplyUseCaseTest {
     private UserGatewayFactory userGatewayFactory;
     private ClientGateway clientGateway;
     private AttorneyGateway attorneyGateway;
-    private HomePageOutputBoundary homePageOutputBoundary;
+    private TheQuestionOutputBoundary theQuestionOutputBoundary;
     private PostInputBoundary postInputBoundary;
     public void setUpReplyUseCase(){
 
@@ -39,24 +46,24 @@ public class ReplyUseCaseTest {
         userGatewayFactory = new UserGatewayFactory();
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();;
-        homePageOutputBoundary = new HomePageOutputBoundary() {
+        theQuestionOutputBoundary = new TheQuestionOutputBoundary() {
             @Override
             public void setControlContainer(ControlContainer controlContainer) {
-
             }
 
             @Override
-            public HomePageResponseModel prepareFail(String msg) {
+            public TheQuestionResponseModel prepareFail(String msg) {
                 assertEquals("You cannot reply to this question", msg);
                 return null;
             }
 
             @Override
-            public HomePageResponseModel prepareSuccess(HomePageResponseModel homePageResponseModel) {
+            public UserResponseModel prepareSuccess(UserResponseModel response) {
                 return null;
             }
+
         };
-        postInputBoundary = new ReplyInteractor(questionGateway, postGateway, homePageOutputBoundary, postFactory, userGatewayFactory);
+        postInputBoundary = new ReplyInteractor(questionGateway, postGateway, theQuestionOutputBoundary, postFactory, userGatewayFactory);
 
         Question question = new Question();
         question.setQuestionId(QUESTION_ID);
@@ -85,7 +92,10 @@ public class ReplyUseCaseTest {
     @Test
     public void testClientReply(){
         setUpReplyUseCase();
-        PostRequestModel inputData1 = new PostRequestModel(QUESTION_ID, CLIENT_ID, "Test text");
+        UserResponseModel userResponseModel = new UserResponseModel(CLIENT_ID, CLIENT_USERNAME, "client");
+        UserSession session = new UserSession(userResponseModel);
+        SessionManager.setSession(session);
+        PostRequestModel inputData1 = new PostRequestModel(QUESTION_ID, "Test text");
         postInputBoundary.createPost(inputData1);
         Question question = questionGateway.get(QUESTION_ID);
         Post post1 = question.getPosts().get(0);
@@ -98,7 +108,11 @@ public class ReplyUseCaseTest {
     public void testAttorneyFirstReply(){
         setUpReplyUseCase();
 
-        PostRequestModel inputData2 = new PostRequestModel(QUESTION_ID, ATTORNEY_ID, "Test text");
+        UserResponseModel userResponseModel = new UserResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, "attorney");
+        UserSession session = new UserSession(userResponseModel);
+        SessionManager.setSession(session);
+
+        PostRequestModel inputData2 = new PostRequestModel(QUESTION_ID, "Test text");
         postInputBoundary.createPost(inputData2);
         Question question = questionGateway.get(QUESTION_ID);
         Post post2 = question.getPosts().get(0);
@@ -114,7 +128,10 @@ public class ReplyUseCaseTest {
     @Test
     public void testAttorneyFollowUp(){
         setUpReplyUseCase();
-        PostRequestModel inputData = new PostRequestModel(QUESTION_ID, ATTORNEY_ID, "Test text");
+        UserResponseModel userResponseModel = new UserResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, "attorney");
+        UserSession session = new UserSession(userResponseModel);
+        SessionManager.setSession(session);
+        PostRequestModel inputData = new PostRequestModel(QUESTION_ID, "Test text");
         postInputBoundary.createPost(inputData);
 
         User user = attorneyGateway.get(ATTORNEY_ID);
@@ -123,7 +140,7 @@ public class ReplyUseCaseTest {
         assertEquals(attorneyquestion.getTakenByAttorney(), ATTORNEY_ID);
         assertEquals(attorneyquestion.isTaken(), true);
 
-        PostRequestModel inputData2 = new PostRequestModel(QUESTION_ID, ATTORNEY_ID, "Test text2");
+        PostRequestModel inputData2 = new PostRequestModel(QUESTION_ID, "Test text2");
         postInputBoundary.createPost(inputData2);
         Question question = questionGateway.get(QUESTION_ID);
         Post post2 = question.getPosts().get(1);
@@ -138,7 +155,10 @@ public class ReplyUseCaseTest {
     @Test
     public void testFailToReplyQuestionClosed(){
         setUpReplyUseCase();
-        PostRequestModel inputData = new PostRequestModel(CLOSED_QUESTION_ID, ATTORNEY_ID, "Test text");
+        UserResponseModel userResponseModel = new UserResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, "attorney");
+        UserSession session = new UserSession(userResponseModel);
+        SessionManager.setSession(session);
+        PostRequestModel inputData = new PostRequestModel(CLOSED_QUESTION_ID, "Test text");
         postInputBoundary.createPost(inputData);
         ClearAllRepository();
     }
@@ -146,10 +166,16 @@ public class ReplyUseCaseTest {
     @Test
     public void testAttorneyFailToReplyQuestionTakenByOther(){
         setUpReplyUseCase();
-        PostRequestModel inputData = new PostRequestModel(QUESTION_ID, ATTORNEY_ID, "Test text");
+        UserResponseModel userResponseModel = new UserResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, "attorney");
+        UserSession session = new UserSession(userResponseModel);
+        SessionManager.setSession(session);
+        PostRequestModel inputData = new PostRequestModel(QUESTION_ID, "Test text");
         postInputBoundary.createPost(inputData);
 
-        PostRequestModel inputData2 = new PostRequestModel(QUESTION_ID, SECOND_ATTORNEY_ID, "Test text");
+        UserResponseModel userResponseModel2 = new UserResponseModel(SECOND_ATTORNEY_ID, ATTORNEY_USERNAME, "attorney");
+        UserSession session2 = new UserSession(userResponseModel2);
+        SessionManager.setSession(session2);
+        PostRequestModel inputData2 = new PostRequestModel(QUESTION_ID, "Test text");
         postInputBoundary.createPost(inputData2);
 
         User user = attorneyGateway.get(ATTORNEY_ID);

@@ -3,6 +3,7 @@ package businessrule.usecase;
 import businessrule.gateway.AttorneyGateway;
 import businessrule.outputboundary.TheQuestionOutputBoundary;
 import businessrule.gateway.QuestionGateway;
+import businessrule.outputboundary.ViewOutputBoundary;
 import entity.Question;
 import entity.User;
 import java.util.ArrayList;
@@ -13,7 +14,7 @@ import java.util.Set;
 public class BrowseQuestionInteractor extends ViewQuestionInteractorBase {
     final AttorneyGateway attorneyGateway;
 
-    public BrowseQuestionInteractor(TheQuestionOutputBoundary outputBoundary, QuestionGateway questionGateway, AttorneyGateway attorneyGateway) {
+    public BrowseQuestionInteractor(ViewOutputBoundary outputBoundary, QuestionGateway questionGateway, AttorneyGateway attorneyGateway) {
         super(outputBoundary, questionGateway);
         this.attorneyGateway = attorneyGateway;
     }

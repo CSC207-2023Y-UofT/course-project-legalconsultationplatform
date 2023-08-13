@@ -2,11 +2,13 @@ package usecasetesting;
 
 
 import adapter.controller.ControlContainer;
+import businessrule.SessionManager;
+import businessrule.UserSession;
 import businessrule.gateway.*;
 import businessrule.inputboundary.CloseInputBoundary;
-import businessrule.outputboundary.HomePageOutputBoundary;
+import businessrule.outputboundary.UserOutputBoundary;
 import businessrule.requestmodel.CloseRequestModel;
-import businessrule.responsemodel.HomePageResponseModel;
+import businessrule.responsemodel.UserResponseModel;
 import businessrule.usecase.CloseQuestionInteractor;
 import driver.database.*;
 import entity.Attorney;
@@ -16,10 +18,11 @@ import entity.Question;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
-;
+
 
 public class CloseUseCaseTest {
     final static int CLIENT_ID = 21345678;
+    final static String CLIENT_USERNAME = "test client";
     final static int ATTORNEY_ID = 11345678;
     final static int SECOND_ATTORNEY_ID = 12222222;
     final static int QUESTION_ID = 323456789;
@@ -30,7 +33,7 @@ public class CloseUseCaseTest {
     private UserGatewayFactory userGatewayFactory;
     private ClientGateway clientGateway;
     private AttorneyGateway attorneyGateway;
-    private HomePageOutputBoundary homePageOutputBoundary;
+    private UserOutputBoundary userOutputBoundary;
     private CloseInputBoundary closeInputBoundary;
 
     public void setUpCloseUseCase(){
@@ -41,24 +44,24 @@ public class CloseUseCaseTest {
         userGatewayFactory = new UserGatewayFactory();
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
-        homePageOutputBoundary = new HomePageOutputBoundary() {
+        userOutputBoundary = new UserOutputBoundary() {
             @Override
             public void setControlContainer(ControlContainer controlContainer) {
 
             }
 
             @Override
-            public HomePageResponseModel prepareFail(String msg) {
+            public UserResponseModel prepareFail(String msg) {
                 assertEquals("You cannot close this question!", msg);
                 return null;
             }
 
             @Override
-            public HomePageResponseModel prepareSuccess(HomePageResponseModel homePageResponseModel) {
+            public UserResponseModel prepareSuccess(UserResponseModel userResponseModel) {
                 return null;
             }
         };
-        closeInputBoundary = new CloseQuestionInteractor(questionGateway, homePageOutputBoundary, userGatewayFactory);
+        closeInputBoundary = new CloseQuestionInteractor(questionGateway, userOutputBoundary, clientGateway);
 
         Question question = new Question();
         question.setQuestionId(QUESTION_ID);
@@ -89,7 +92,11 @@ public class CloseUseCaseTest {
     public void TestClientCloseableQuestion(){
         setUpCloseUseCase();
 
-        CloseRequestModel inputData = new CloseRequestModel(QUESTION_ID, CLIENT_ID);
+        UserResponseModel userResponseModel = new UserResponseModel(CLIENT_ID, CLIENT_USERNAME, "client");
+        UserSession session = new UserSession(userResponseModel);
+        SessionManager.setSession(session);
+
+        CloseRequestModel inputData = new CloseRequestModel(QUESTION_ID);
 
         closeInputBoundary.closeQuestion(inputData);
         Question question = questionGateway.get(QUESTION_ID);
@@ -99,25 +106,11 @@ public class CloseUseCaseTest {
     @Test
     public void TestClientUnclosableQuestion(){
         setUpCloseUseCase();
-        CloseRequestModel inputData = new CloseRequestModel(CLOSED_QUESTION_ID, CLIENT_ID);
+        UserResponseModel userResponseModel = new UserResponseModel(CLIENT_ID, CLIENT_USERNAME, "client");
+        UserSession session = new UserSession(userResponseModel);
+        SessionManager.setSession(session);
 
-        closeInputBoundary.closeQuestion(inputData);
-        ClearAllRepository();
-    }
-
-    @Test
-    public void TestAttorneyClosedQuestion(){
-        setUpCloseUseCase();
-        CloseRequestModel inputData = new CloseRequestModel(CLOSED_QUESTION_ID, CLIENT_ID);
-
-        closeInputBoundary.closeQuestion(inputData);
-        ClearAllRepository();
-    }
-
-    @Test
-    public void TestAttorneyNonTakenQuestion(){
-        setUpCloseUseCase();
-        CloseRequestModel inputData = new CloseRequestModel(CLOSED_QUESTION_ID, CLIENT_ID);
+        CloseRequestModel inputData = new CloseRequestModel(CLOSED_QUESTION_ID);
 
         closeInputBoundary.closeQuestion(inputData);
         ClearAllRepository();

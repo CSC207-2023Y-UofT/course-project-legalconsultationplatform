@@ -5,6 +5,7 @@ import businessrule.gateway.QuestionGateway;
 import businessrule.gateway.UserGateway;
 import businessrule.gateway.UserGatewayFactory;
 import businessrule.outputboundary.TheQuestionOutputBoundary;
+import businessrule.outputboundary.ViewOutputBoundary;
 import entity.Question;
 import entity.User;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.List;
 public class ViewQuestionInteractor extends ViewQuestionInteractorBase{
     final UserGatewayFactory userGatewayFactory;
 
-    public ViewQuestionInteractor(TheQuestionOutputBoundary outputBoundary, QuestionGateway questionGateway, UserGatewayFactory userGatewayFactory) {
+    public ViewQuestionInteractor(ViewOutputBoundary outputBoundary, QuestionGateway questionGateway, UserGatewayFactory userGatewayFactory) {
         super(outputBoundary, questionGateway);
         this.userGatewayFactory = userGatewayFactory;
     }

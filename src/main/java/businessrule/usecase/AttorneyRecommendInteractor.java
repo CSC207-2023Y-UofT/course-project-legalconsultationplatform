@@ -4,6 +4,7 @@ import businessrule.gateway.AttorneyGateway;
 import businessrule.gateway.QuestionGateway;
 import businessrule.outputboundary.TheQuestionOutputBoundary;
 import businessrule.outputboundary.UserOutputBoundary;
+import businessrule.outputboundary.ViewOutputBoundary;
 import entity.Attorney;
 import entity.Question;
 import entity.User;
@@ -12,7 +13,7 @@ import java.util.List;
 public class AttorneyRecommendInteractor extends ViewQuestionInteractorBase {
     private  final AttorneyGateway attorneyGateway;
 
-    public AttorneyRecommendInteractor(TheQuestionOutputBoundary outputBoundary, QuestionGateway questionGateway, AttorneyGateway attorneyGateway) {
+    public AttorneyRecommendInteractor(ViewOutputBoundary outputBoundary, QuestionGateway questionGateway, AttorneyGateway attorneyGateway) {
         super(outputBoundary, questionGateway);
         this.attorneyGateway = attorneyGateway;
     }

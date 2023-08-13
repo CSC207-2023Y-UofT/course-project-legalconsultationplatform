@@ -6,6 +6,7 @@ import businessrule.gateway.QuestionGateway;
 import businessrule.inputboundary.ViewInputBoundary;
 import businessrule.outputboundary.TheQuestionOutputBoundary;
 import businessrule.outputboundary.UserOutputBoundary;
+import businessrule.outputboundary.ViewOutputBoundary;
 import businessrule.responsemodel.UserResponseModel;
 import businessrule.responsemodel.ViewResponseModel;
 import businessrule.usecase.util.BuilderService;
@@ -18,10 +19,10 @@ import java.util.List;
 import java.util.Map;
 
 public abstract class ViewQuestionInteractorBase implements ViewInputBoundary {
-    protected final TheQuestionOutputBoundary outputBoundary;
+    protected final ViewOutputBoundary outputBoundary;
     protected final QuestionGateway questionGateway;
 
-    public ViewQuestionInteractorBase(TheQuestionOutputBoundary outputBoundary, QuestionGateway questionGateway) {
+    public ViewQuestionInteractorBase(ViewOutputBoundary outputBoundary, QuestionGateway questionGateway) {
         this.outputBoundary = outputBoundary;
         this.questionGateway = questionGateway;
     }

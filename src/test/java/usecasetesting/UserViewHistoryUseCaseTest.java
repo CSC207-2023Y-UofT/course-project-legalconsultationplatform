@@ -1,13 +1,15 @@
 package usecasetesting;
 
 import adapter.controller.ControlContainer;
+import businessrule.SessionManager;
+import businessrule.UserSession;
 import businessrule.gateway.AttorneyGateway;
 import businessrule.gateway.ClientGateway;
 import businessrule.gateway.QuestionGateway;
 import businessrule.gateway.UserGatewayFactory;
 import businessrule.inputboundary.ViewInputBoundary;
 import businessrule.outputboundary.ViewOutputBoundary;
-import businessrule.requestmodel.ViewRequestModel;
+import businessrule.responsemodel.UserResponseModel;
 import businessrule.responsemodel.ViewResponseModel;
 import businessrule.usecase.util.QuestionDisplayFormatter;
 import businessrule.usecase.ViewQuestionInteractor;
@@ -26,6 +28,7 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class UserViewHistoryUseCaseTest {
     final static int CLIENT_ID = 21345678;
+    final static String CLIENT_USERNAME = "test client";
     final static int ATTORNEY_ID = 11345678;
     final static int QUESTION_ID = 323456789;
     private QuestionGateway questionGateway;
@@ -53,16 +56,17 @@ public class UserViewHistoryUseCaseTest {
             }
 
             @Override
-            public ViewResponseModel prepareSuccess(ViewResponseModel response) {
-                assertEquals(1, response.getQuestionMap().size(), "The Question Map is not correct.");
+            public UserResponseModel prepareSuccess(UserResponseModel response) {
+                ViewResponseModel responseModel = (ViewResponseModel) response;
+                assertEquals(1, responseModel.getQuestionMap().size(), "The Question Map is not correct.");
                 List<QuestionDisplayFormatter> arrayList;
-                arrayList = new ArrayList<>(response.getQuestionMap().values());
+                arrayList = new ArrayList<>(responseModel.getQuestionMap().values());
                 assertEquals("test title", arrayList.get(0).getTitle());
                 return null;
             }
         };
 
-        viewInputBoundary = new ViewQuestionInteractor(questionGateway, viewOutputBoundary, userGatewayFactory);
+        viewInputBoundary = new ViewQuestionInteractor( viewOutputBoundary, questionGateway, userGatewayFactory);
 
         Question question = new Question();
         question.setQuestionId(QUESTION_ID);
@@ -83,9 +87,11 @@ public class UserViewHistoryUseCaseTest {
     @Test
     public void TestClientViewUseCase(){
         setUpViewQuestionUseCase();
-        ViewRequestModel inputData = new ViewRequestModel(CLIENT_ID);
+        UserResponseModel userResponseModel = new UserResponseModel(CLIENT_ID, CLIENT_USERNAME, "client");
+        UserSession session = new UserSession(userResponseModel);
+        SessionManager.setSession(session);
 
-        viewInputBoundary.viewQuestion(inputData);
+        viewInputBoundary.viewQuestion(CLIENT_ID);
         ClearAllRepository();
     }
 

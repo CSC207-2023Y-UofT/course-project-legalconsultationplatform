@@ -1,11 +1,14 @@
 package usecasetesting;
 
 import adapter.controller.ControlContainer;
+import businessrule.SessionManager;
+import businessrule.UserSession;
 import businessrule.gateway.*;
 import businessrule.inputboundary.SelectInputBoundary;
 import businessrule.outputboundary.TheQuestionOutputBoundary;
 import businessrule.requestmodel.SelectRequestModel;
 import businessrule.responsemodel.TheQuestionResponseModel;
+import businessrule.responsemodel.UserResponseModel;
 import businessrule.usecase.util.PostDisplayFormatter;
 import businessrule.usecase.SelectQuestionInteractor;
 import driver.database.*;
@@ -17,13 +20,14 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.Assert.fail;
 import static org.junit.jupiter.api.Assertions.*;
-;
+
 
 public class SelectQuestionUseCaseTest {
     final static int CLIENT_ID = 21345678;
+    final static String CLIENT_USERNAME = "test client";
     final static int ATTORNEY_ID = 11345678;
+    final static String ATTORNEY_USERNAME = "test attorney";
     final static int SECOND_ATTORNEY_ID = 12222222;
     final static int QUESTION_ID = 323456789;
     final static int TAKEN_QUESTION_ID = 333333333;
@@ -56,13 +60,15 @@ public class SelectQuestionUseCaseTest {
             }
 
             @Override
-            public TheQuestionResponseModel prepareSuccess(TheQuestionResponseModel response) {
-                assertEquals(2, response.getPostMap().size(), "The post map is not correct.");
+            public UserResponseModel prepareSuccess(UserResponseModel response) {
+                TheQuestionResponseModel responseModel = (TheQuestionResponseModel) response;
+                assertEquals(2, responseModel.getPostMap().size(), "The post map is not correct.");
                 List<PostDisplayFormatter> arrayList;
-                arrayList = new ArrayList<>(response.getPostMap().values());
+                arrayList = new ArrayList<>(responseModel.getPostMap().values());
                 assertEquals("test text", arrayList.get(0).getPostText());
                 return null;
             }
+
         };
         selectInputBoundary = new SelectQuestionInteractor(questionGateway, theQuestionOutputBoundary, userGatewayFactory);
 
@@ -114,7 +120,10 @@ public class SelectQuestionUseCaseTest {
     public void TestClientSelectQuestionUseCase(){
         setUpSelectUseCase();
 
-        SelectRequestModel inputData = new SelectRequestModel(QUESTION_ID, CLIENT_ID);
+        UserResponseModel userResponseModel = new UserResponseModel(CLIENT_ID, CLIENT_USERNAME, "client");
+        UserSession session = new UserSession(userResponseModel);
+        SessionManager.setSession(session);
+        SelectRequestModel inputData = new SelectRequestModel(QUESTION_ID);
 
         selectInputBoundary.selectQuestion(inputData);
         ClearAllRepository();
@@ -123,7 +132,10 @@ public class SelectQuestionUseCaseTest {
     @Test
     public void TestAttorneySelectNonTakenQuestionUseCase(){
         setUpSelectUseCase();
-        SelectRequestModel inputData = new SelectRequestModel(QUESTION_ID, ATTORNEY_ID);
+        UserResponseModel userResponseModel = new UserResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, "attorney");
+        UserSession session = new UserSession(userResponseModel);
+        SessionManager.setSession(session);
+        SelectRequestModel inputData = new SelectRequestModel(QUESTION_ID);
 
         selectInputBoundary.selectQuestion(inputData);
         ClearAllRepository();
@@ -132,7 +144,10 @@ public class SelectQuestionUseCaseTest {
     @Test
     public void TestAttorneySelectQuestionTakenByHimselfUseCase(){
         setUpSelectUseCase();
-        SelectRequestModel inputData = new SelectRequestModel(TAKEN_QUESTION_ID, ATTORNEY_ID);
+        UserResponseModel userResponseModel = new UserResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, "attorney");
+        UserSession session = new UserSession(userResponseModel);
+        SessionManager.setSession(session);
+        SelectRequestModel inputData = new SelectRequestModel(TAKEN_QUESTION_ID);
 
         selectInputBoundary.selectQuestion(inputData);
         ClearAllRepository();
@@ -141,7 +156,10 @@ public class SelectQuestionUseCaseTest {
     @Test
     public void TestAttorneySelectQuestionFailByClosedQuestion(){
         setUpSelectUseCase();
-        SelectRequestModel inputData = new SelectRequestModel(CLOSED_QUESTION_ID, ATTORNEY_ID);
+        UserResponseModel userResponseModel = new UserResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, "attorney");
+        UserSession session = new UserSession(userResponseModel);
+        SessionManager.setSession(session);
+        SelectRequestModel inputData = new SelectRequestModel(CLOSED_QUESTION_ID);
 
         selectInputBoundary.selectQuestion(inputData);
         ClearAllRepository();
@@ -150,7 +168,10 @@ public class SelectQuestionUseCaseTest {
     @Test
     public void TestAttorneySelectQuestionFailByTakenByOther(){
         setUpSelectUseCase();
-        SelectRequestModel inputData = new SelectRequestModel(TAKEN_QUESTION_ID, SECOND_ATTORNEY_ID);
+        UserResponseModel userResponseModel = new UserResponseModel(SECOND_ATTORNEY_ID, ATTORNEY_USERNAME, "attorney");
+        UserSession session = new UserSession(userResponseModel);
+        SessionManager.setSession(session);
+        SelectRequestModel inputData = new SelectRequestModel(TAKEN_QUESTION_ID);
 
         selectInputBoundary.selectQuestion(inputData);
         ClearAllRepository();
