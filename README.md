@@ -100,6 +100,33 @@ The question viewing mechanism in our system showcases the strategy design patte
 #### 5. Hybrid MVP and MVC Design Pattern
 Our software adopts a hybrid Model-View-Controller (MVC) and Model-View-Presenter (MVP) design approach. While the Model, represented by interactors, manages data and business logic, the View remains a passive display component. The Controller processes user inputs, and in a nuanced departure from traditional patterns, the Presenter is dedicated to output formatting and display. This blend of MVC and MVP principles enhances modularity, isolates UI changes from business logic, and optimizes testability.
 
+---
+## Database Specification
+[*In Deevelopment*]
+
+---
+## Matching System Specification
+
+Our system is designed to enhance attorney-client interactions by intelligently pairing attorneys with relevant questions.
+Attorneys are matched with up to five unanswered questions weekly, ensuring consistent engagement and timely responses.
+
+### System Design
+
+The attorney-question relationship is visualized as a bipartite graph. Each edge symbolizes potential interactions between attorneys and clients, with distinct weights denoting the relevance of the match.
+To find the optimal pairings, we employ the Hungarian algorithm, maximizing the cumulative edge weights.
+
+### Weight Calculation
+
+The weight for a match between client i, question j, and attorney k is computed as:
+
+![CodeCogsEqn.svg](..%2F..%2FCodeCogsEqn.svg)
+
+
+### Predictive Modeling
+
+The probability of client satisfaction is derived from a Random Forest classifier. This model is trained on a rich dataset that incorporates client demographics, question language attributes, and various attorney attributes.
+
+
 
 ---
 
@@ -123,10 +150,6 @@ Xingfu oversees the testing of higher-level entities in the platform, ensuring o
 ### River Qi - Back-End Developer
 River Qi, as a Back-End Developer, spearheads the 'View Question' feature of our platform. His efforts have been instrumental in ensuring that our users can easily access and navigate their queries.
 
-
----
-## Matching System Specification
-[*In Development*]
 
 ---
 ## Future Enhancements
