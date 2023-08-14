@@ -77,7 +77,6 @@ public class RatePanel extends JPanel implements ActionListener {
         } else {
             updateRate = 0;
         }
-        System.out.println(updateRate);
         rateControl.rateAnswer(updateRate, questionId);
         javax.swing.SwingUtilities.getWindowAncestor(RatePanel.this).dispose();
     }

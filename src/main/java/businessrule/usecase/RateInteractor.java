@@ -32,7 +32,6 @@ public class RateInteractor implements RateInputBoundary {
     public UserResponseModel rateAnswer(RateRequestModel rateRequestModel) {
         // get input
         int rating = rateRequestModel.getRating();
-        System.out.println("rate in usecase is " + rating);
         int answerId = rateRequestModel.getAnswerId();
         UserSession session = SessionManager.getSession();
         UserResponseModel response = session.getUserResponseModel();
@@ -44,7 +43,6 @@ public class RateInteractor implements RateInputBoundary {
             questionGateway.updateRating(answerId, rating);
             answer.setRating(rating);
             Attorney attorney = attorneyGateway.get(answer.getTakenByAttorney());
-            System.out.println(questionGateway.get(answerId).getRating());
 
             // Send email notification to the attorney
             sendEmail(attorney, answer);
