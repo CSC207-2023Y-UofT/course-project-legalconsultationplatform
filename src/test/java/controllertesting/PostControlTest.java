@@ -7,24 +7,18 @@ import businessrule.inputboundary.PostInputBoundary;
 import businessrule.requestmodel.PostRequestModel;
 import businessrule.responsemodel.TheQuestionResponseModel;
 import businessrule.responsemodel.UserResponseModel;
-import businessrule.usecase.util.PostDisplayFormatter;
 import org.junit.jupiter.api.Test;
-
-import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class PostControlTest {
-    private static int USER_ID = 11234567;
-    private static String USER_NAME = "SampleUser";
-    private static String USER_TYPE = "SampleType";
-    private static int QUESTION_ID = 333333333;
-    private static String QUESTION_TITLE = "Sample title";
-    private static String QUESTION_TYPE = "sample quesiton type";
-    private static String POST_TEXT = "Sample Post Text";
+    private static final int USER_ID = 11234567;
+    private static final String USER_NAME = "SampleUser";
+    private static final String USER_TYPE = "SampleType";
+    private static final int QUESTION_ID = 333333333;
+    private static final String QUESTION_TITLE = "Sample title";
+    private static final String QUESTION_TYPE = "sample question type";
+    private static final String POST_TEXT = "Sample Post Text";
 
     private static TheQuestionResponseModel expectedResponse;
 

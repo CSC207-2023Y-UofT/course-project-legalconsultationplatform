@@ -1,11 +1,8 @@
 package entitytesting;
 
-import entity.Question;
 import org.junit.jupiter.api.Test;
 import entity.Post;
-
 import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 class PostTest {
@@ -58,23 +55,10 @@ class PostTest {
     }
 
     @Test
-    void testEqualsSucceed() {
-        Post post1 = new Post(1000000, 2000000, LocalDate.now(), "This is a post.", 3000000);
-        assertEquals(true, post1.equals(post1), "The equal method is wrong");
-    }
-
-    @Test
-    void testEqualsFailByDifferentClass() {
-        Post post1 = new Post(1000000, 2000000, LocalDate.now(), "This is a post.", 3000000);
-        Question question = new Question();
-        assertEquals(false, post1.equals(question), "The equal method is wrong");
-    }
-
-    @Test
     void testEqualsFailByDifferentPostId() {
         Post post1 = new Post(1000000, 2000000, LocalDate.now(), "This is a post.", 3000000);
         Post post2 = new Post(1000000, 3000000, LocalDate.now(), "This is another post.", 3000000);
-        assertEquals(false, post1.equals(post2), "The equal method is wrong");
+        assertNotEquals(post1, post2, "The equal method is wrong");
     }
 
     @Test

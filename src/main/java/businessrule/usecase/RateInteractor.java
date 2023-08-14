@@ -62,7 +62,7 @@ public class RateInteractor implements RateInputBoundary {
             String questionType = answer.getType();
             String questionTitle = answer.getTitle();
             String platformName = "Legal Consultation Platform+";
-            String stringRating = (answer.getRating() == 0) ? "Unsatisfied" : "Satisfied";
+            String stringRating = (answer.getRating() == 0) ? "Not satisfied" : "Satisfied";
 
             String emailContent = "Dear " + attorneyName + ",\n\n" +
                     "We hope you're doing well. We wanted to inform you that your response to the " + questionType +

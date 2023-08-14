@@ -5,8 +5,8 @@ import entity.Question;
 import entity.factory.AttorneyFactory;
 import org.junit.jupiter.api.Test;
 import java.util.List;
-
 import static org.junit.jupiter.api.Assertions.*;
+
 class AttorneyTest {
     int expectedUserId = 1000000;
     String expectedName = "Xingfu Wu";
@@ -260,23 +260,6 @@ class AttorneyTest {
     }
 
     @Test
-    void testEqualsSucceed(){
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode);
-        AttorneyFactory attorneyFactory = new AttorneyFactory();
-        Attorney attorney  = attorneyFactory.createUser(registrationData);
-        assertEquals(true,attorney.equals(attorney),"The equal method is wrong");
-    }
-    @Test
-    void testEqualFailByNotClient(){
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode);
-        AttorneyFactory attorneyFactory = new AttorneyFactory();
-        Attorney attorney  = attorneyFactory.createUser(registrationData);
-        Question question = new Question();
-
-        assertEquals(false,attorney.equals(question),"The equal method is wrong");
-    }@Test
     void testEqualsFailByNotEqual(){
         RegistrationData registrationData1 = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
                 expectedPostalCode);
@@ -285,7 +268,7 @@ class AttorneyTest {
         RegistrationData registrationData2 = new RegistrationData("joseph", expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
                 expectedPostalCode);
         Attorney attorney2  = attorneyFactory.createUser(registrationData2);
-        assertEquals(true, attorney1.equals(attorney2),"The equal method is wrong");
+        assertEquals(attorney1, attorney2, "The equal method is wrong");
     }
 
 

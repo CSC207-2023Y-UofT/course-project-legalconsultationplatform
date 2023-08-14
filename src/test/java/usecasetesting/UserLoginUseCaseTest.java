@@ -1,36 +1,30 @@
 package usecasetesting;
 
-import adapter.controller.ControlContainer;
 import businessrule.SessionManager;
 import businessrule.gateway.ClientGateway;
 import businessrule.gateway.UserGatewayFactory;
 import businessrule.inputboundary.UserLoginInputBoundary;
-
 import businessrule.outputboundary.UserOutputBoundary;
 import businessrule.requestmodel.UserLoginRequestModel;
-
 import businessrule.responsemodel.UserResponseModel;
 import businessrule.usecase.UserLoginInteractor;
 import driver.database.*;
 import entity.Client;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 
 public class UserLoginUseCaseTest {
     final static int CLIENT_ID = 21345678;
     final static String PASSWORD = "abcdefg";
-    private UserGatewayFactory userGatewayFactory;
     private ClientGateway clientGateway;
-    private UserOutputBoundary userOutputBoundary;
     private UserLoginInputBoundary userLoginInputBoundary;
 
     public void setUpUserLoginUseCase(){
-        userGatewayFactory = new UserGatewayFactory();
+        UserGatewayFactory userGatewayFactory = new UserGatewayFactory();
         clientGateway = new ClientRepository();
 
-        userOutputBoundary = new UserOutputBoundary() {
+        UserOutputBoundary userOutputBoundary = new UserOutputBoundary() {
 
             @Override
             public UserResponseModel prepareFail(String msg) {

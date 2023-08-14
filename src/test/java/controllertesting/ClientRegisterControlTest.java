@@ -11,18 +11,18 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 public class ClientRegisterControlTest {
-    private static String USER_NAME = "SampleUser";
-    private static String EMAIL = "sample@example.com";
-    private static String PASSWORD1 = "test password";
-    private static String PASSWORD2 = "test password";
-    private static String STATE_ABB = "CA";
-    private static String POSTAL_CODE = "90001";
-    private static String ETHNICITY = "SampleEthnicity";
-    private static int AGE = 25;
-    private static String GENDER = "Male";
-    private static String MARITAL_STATUS = "Single";
-    private static int NUMBER_OF_HOUSEHOLD = 3;
-    private static float ANNUAL_INCOME = 60000.0f;
+    private static final String USER_NAME = "SampleUser";
+    private static final String EMAIL = "sample@example.com";
+    private static final String PASSWORD1 = "test password";
+    private static final String PASSWORD2 = "test password";
+    private static final String STATE_ABB = "CA";
+    private static final String POSTAL_CODE = "90001";
+    private static final String ETHNICITY = "SampleEthnicity";
+    private static final int AGE = 25;
+    private static final String GENDER = "Male";
+    private static final String MARITAL_STATUS = "Single";
+    private static final int NUMBER_OF_HOUSEHOLD = 3;
+    private static final float ANNUAL_INCOME = 60000.0f;
 
     private static BaseResponseModel expectedResponse;
 

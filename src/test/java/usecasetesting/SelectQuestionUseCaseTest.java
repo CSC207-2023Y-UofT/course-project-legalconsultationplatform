@@ -1,6 +1,6 @@
 package usecasetesting;
 
-import adapter.controller.ControlContainer;
+
 import businessrule.SessionManager;
 import businessrule.UserSession;
 import businessrule.gateway.*;
@@ -12,11 +12,8 @@ import businessrule.responsemodel.UserResponseModel;
 import businessrule.usecase.util.PostDisplayFormatter;
 import businessrule.usecase.SelectQuestionInteractor;
 import driver.database.*;
-
 import entity.*;
-
 import org.junit.jupiter.api.Test;
-
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,18 +36,16 @@ public class SelectQuestionUseCaseTest {
     private QuestionGateway questionGateway;
     private PostGateway postGateway;
     private ClientGateway clientGateway;
-    private UserGatewayFactory userGatewayFactory;
     private AttorneyGateway attorneyGateway;
-    private TheQuestionOutputBoundary theQuestionOutputBoundary;
     private SelectInputBoundary selectInputBoundary;
 
     public void setUpSelectUseCase(){
         questionGateway = new QuestionRepo();
-        userGatewayFactory = new UserGatewayFactory();
+        UserGatewayFactory userGatewayFactory = new UserGatewayFactory();
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
         postGateway = new PostRepo();
-        theQuestionOutputBoundary = new TheQuestionOutputBoundary() {
+        TheQuestionOutputBoundary theQuestionOutputBoundary = new TheQuestionOutputBoundary() {
 
             @Override
             public TheQuestionResponseModel prepareFail(String msg) {

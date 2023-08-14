@@ -17,10 +17,10 @@ class CredentialCheckerTest {
 
     @Test
     void testCheckPostalCode() {
-        assertEquals(true, checker.checkPostalCode("12345"), "Postal code validation failed.");
-        assertEquals(false, checker.checkPostalCode("1234a"), "Invalid postal code passed validation.");
-        assertEquals(false, checker.checkPostalCode("123456"), "Invalid postal code passed validation.");
-        assertEquals(false, checker.checkPostalCode(""), "Empty postal code passed validation.");
+        assertTrue(checker.checkPostalCode("12345"), "Postal code validation failed.");
+        assertFalse(checker.checkPostalCode("1234a"), "Invalid postal code passed validation.");
+        assertFalse(checker.checkPostalCode("123456"), "Invalid postal code passed validation.");
+        assertFalse(checker.checkPostalCode(""), "Empty postal code passed validation.");
     }
 
 
@@ -36,8 +36,8 @@ class CredentialCheckerTest {
 
     @Test
     void testCheckAge() {
-        assertEquals(true, checker.checkAge(50), "Age validation failed.");
-        assertEquals(false, checker.checkAge(200), "Invalid age passed validation.");
-        assertEquals(false, checker.checkAge(0), "Invalid age passed validation.");
+        assertTrue(checker.checkAge(50), "Age validation failed.");
+        assertFalse(checker.checkAge(200), "Invalid age passed validation.");
+        assertFalse(checker.checkAge(0), "Invalid age passed validation.");
     }
 }

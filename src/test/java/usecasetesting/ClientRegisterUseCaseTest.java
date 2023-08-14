@@ -1,6 +1,5 @@
 package usecasetesting;
 
-import adapter.controller.ControlContainer;
 import businessrule.gateway.ClientGateway;
 import businessrule.inputboundary.UserRegisterInputBoundary;
 import businessrule.outputboundary.BaseOutputBoundary;
@@ -11,12 +10,8 @@ import driver.database.ClientRepository;
 import entity.factory.ClientFactory;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.fail;
-;
-
 public class ClientRegisterUseCaseTest {
     final static String PASSWORD = "abcdefghi";
-    final static int USER_ID = 11234567;
     final static String USER_NAME = "joseph";
     final static String EMAIL = "test@gmail.com";
     final static String STATE_ABB = "ca";
@@ -29,14 +24,12 @@ public class ClientRegisterUseCaseTest {
     final static float ANNUAL_INCOME = 1000.0f;
     final static String PASSWORD2 = "abcdefghif";
 
-    private ClientFactory clientFactory;
     private ClientGateway clientGateway;
-    private BaseOutputBoundary baseOutputBoundary;
     private UserRegisterInputBoundary clientRegisterInputBoundary;
     public void setUpClientRegisterUseCase(){
         clientGateway = new ClientRepository();
-        clientFactory = new ClientFactory();
-        baseOutputBoundary = new BaseOutputBoundary() {
+        ClientFactory clientFactory = new ClientFactory();
+        BaseOutputBoundary baseOutputBoundary = new BaseOutputBoundary() {
 
             @Override
             public BaseResponseModel prepareSuccess(String msg) {
@@ -126,6 +119,6 @@ public class ClientRegisterUseCaseTest {
 
     public void ClearAllRepository(){
         clientGateway = new ClientRepository();
-        clientGateway.deleteAll();;
+        clientGateway.deleteAll();
     }
 }
