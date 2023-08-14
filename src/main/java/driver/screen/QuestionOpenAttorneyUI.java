@@ -12,7 +12,7 @@ import java.util.Map;
 
 import static driver.screen.UIDrawer.*;
 
-public class QuestionOpenAttorneyUI extends QuestionUI {
+public class QuestionOpenAttorneyUI extends QuestionNewUI {
 
     public QuestionOpenAttorneyUI(String userName, int userId, UIManager UIManager, int questionId, String title,
                                   String questionType, LocalDate deadline, Map<Integer, PostDisplayFormatter> postMap) {
@@ -28,22 +28,5 @@ public class QuestionOpenAttorneyUI extends QuestionUI {
         add(spacer);
         add(backAndHomepage);
         add(spacer);
-    }
-
-    @Override
-    protected void handlePostAction(ControlContainer controlContainer, JPanel screens,
-                                    CardLayout cardLayout) {
-        System.out.println("The user wants to post a reply.");
-        try {
-            PostControl postControl = controlContainer.getPostControl();
-            postControl.createPost(questionId, inputPostArea.getText());
-        } catch (ApplicationException ex) {
-            JOptionPane.showMessageDialog(this, ex.getMessage());
-        }
-    }
-
-    @Override
-    protected void handleCloseAction(ControlContainer controlContainer, JPanel screens,
-                                     CardLayout cardLayout) {
     }
 }

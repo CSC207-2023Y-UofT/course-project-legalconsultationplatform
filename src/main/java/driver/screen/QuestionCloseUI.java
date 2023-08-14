@@ -17,8 +17,10 @@ public class QuestionCloseUI extends QuestionUI{
 
         //Spacers
         JPanel spacer = addSpacer(50);
+        JPanel spacer2 = addSpacer(20);
 
         add(topPanel);
+        add(spacer2);
         add(backAndHomepage);
         add(spacer);
     }

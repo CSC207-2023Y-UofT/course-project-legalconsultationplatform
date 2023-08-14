@@ -1,6 +1,9 @@
 package driver.screen;
 
 import adapter.controller.*;
+import businessrule.SessionManager;
+import businessrule.UIFactory;
+import businessrule.UserSession;
 
 import javax.swing.*;
 import java.awt.*;
@@ -60,6 +63,8 @@ public class ClientHomePageUI extends HomePageUI implements ActionListener {
                 WelcomeUI welcomeUI = new WelcomeUI(uiManager);
                 screens.add(welcomeUI, "Welcome");
                 cardLayout.show(screens, "Welcome");
+                SessionManager.clearSession();
+                UIFactory.clearUIFactory();
                 break;
         }
     }

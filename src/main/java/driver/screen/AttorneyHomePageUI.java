@@ -2,6 +2,8 @@ package driver.screen;
 
 import adapter.controller.ControlContainer;
 import adapter.controller.ViewQuestionControl;
+import businessrule.SessionManager;
+import businessrule.UIFactory;
 import cn.hutool.core.net.LocalPortGenerater;
 
 import javax.swing.*;
@@ -64,6 +66,8 @@ public class AttorneyHomePageUI extends HomePageUI implements ActionListener {
                 WelcomeUI welcomeUI = new WelcomeUI(uiManager);
                 screens.add(welcomeUI, "Welcome");
                 cardLayout.show(screens, "Welcome");
+                SessionManager.clearSession();
+                UIFactory.clearUIFactory();
                 break;
         }
     }

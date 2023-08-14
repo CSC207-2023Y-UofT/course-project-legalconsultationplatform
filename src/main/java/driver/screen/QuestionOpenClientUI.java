@@ -19,7 +19,6 @@ public class QuestionOpenClientUI extends QuestionOpenAttorneyUI{
         super(userName, userId ,UIManager,questionId, title, questionType, deadline, postMap);
 
         //The spacer
-        JPanel spacer = addSpacer(20);
         JPanel spacer2 = addSpacer(30);
 
         ///Add everything together
