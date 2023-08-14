@@ -8,8 +8,15 @@ import businessrule.outputboundary.UserOutputBoundary;
 import businessrule.requestmodel.UserLoginRequestModel;
 import businessrule.gateway.UserGateway;
 import businessrule.responsemodel.UserResponseModel;
+import businessrule.responsemodel.ViewResponseModel;
+import businessrule.usecase.util.BuilderService;
+import businessrule.usecase.util.QuestionDisplayFormatter;
+import businessrule.usecase.util.QuestionMapConstructor;
 import entity.User;
 import entity.ApplicationException;
+
+import javax.swing.text.View;
+import java.util.Map;
 
 public class UserLoginInteractor implements UserLoginInputBoundary{
     final UserGatewayFactory userGatewayFactory;
@@ -33,6 +40,10 @@ public class UserLoginInteractor implements UserLoginInputBoundary{
         }
         UserResponseModel responseModel = constructResponseModel(user);
         setUserSession(responseModel);
+
+
+        Map<Integer, QuestionDisplayFormatter> questionMap = new QuestionMapConstructor().constructQuestionMap(user.getQuestionsList());
+        BuilderService.getInstance().constructViewResponse(responseModel, questionMap);
         return outputBoundary.prepareSuccess(responseModel);
     }
 

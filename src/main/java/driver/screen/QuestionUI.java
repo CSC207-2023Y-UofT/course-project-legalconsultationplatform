@@ -34,9 +34,10 @@ public abstract class QuestionUI extends UserUI {
     static final String POST_BUTTON_NAME = "Post";
     static final String CLOSE_BUTTON_NAME = "Close Question";
 
-    public QuestionUI(String userName, int userId, UIManager UIManager, String title,
+    public QuestionUI(String userName, int userId, UIManager UIManager, int questionId, String title,
                            String questionType, LocalDate deadline, Map<Integer, PostDisplayFormatter> postMap) {
         super(userName, userId, UIManager);
+        this.questionId = questionId;
 
         //Set question title
         questionTitle.setLayout(new BoxLayout(questionTitle, BoxLayout.Y_AXIS));
@@ -46,6 +47,7 @@ public abstract class QuestionUI extends UserUI {
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String deadlineString = "Deadline: " + deadline.format(formatter);
         JLabel deadlineLine = new JLabel(deadlineString);
+        setPromptFont(deadlineLine);
         deadlineLine.setAlignmentX(CENTER_ALIGNMENT);
 
         questionTitle.add(titlePanel);
@@ -86,13 +88,12 @@ public abstract class QuestionUI extends UserUI {
 
 
         //Set up topPanel
-        JPanel spacer = addSpacer(20);
 
         topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
+        topPanel.setOpaque(false);
         topPanel.setAlignmentX(CENTER_ALIGNMENT);
         topPanel.add(helloMessage);
         topPanel.add(questionTitle);
-        topPanel.add(spacer);
         topPanel.add(previousDiscussions);
         topPanel.add(postScrollPane);
 

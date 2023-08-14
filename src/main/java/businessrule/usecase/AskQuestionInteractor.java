@@ -83,7 +83,6 @@ public class AskQuestionInteractor implements QuestionInputBoundary {
         Question question = questionFactory.create(randomQuestionId, questionRequestModel.getQuestionCategory(), questionRequestModel.getTitle(), now, askedByClient, questionRequestModel.getLegalDeadline());
         questionGateway.save(question);
         clientGateway.updateQuestionList(askedByClient, question);
-
         return question;
     }
 }

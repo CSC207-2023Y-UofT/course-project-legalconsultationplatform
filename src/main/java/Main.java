@@ -45,13 +45,14 @@ public class Main {
 
     //define outputBoundary
     UserOutputBoundary homePageOutputBoundary = new HomePageResponseFormatter(UIManager);
+    UserOutputBoundary loginHomePageOutputBoundary = new LoginHomePageResponseFormatter(UIManager);
     BaseOutputBoundary registerOutputBoundary = new RegisterResponseFormatter(UIManager);
     TheQuestionOutputBoundary theQuestionOutputBoundary = new TheQuestionResponseFormatter(UIManager);
     ViewOutputBoundary viewOutputBoundary = new ViewResponseFormatter(UIManager);
     System.out.println("System = finished set up output boundary");
 
     //define useCase
-    UserLoginInputBoundary userLoginInteractor = new UserLoginInteractor(gatewayFactory, homePageOutputBoundary);
+    UserLoginInputBoundary userLoginInteractor = new UserLoginInteractor(gatewayFactory, loginHomePageOutputBoundary);
     UserLoginControl loginControl = new UserLoginControl(userLoginInteractor);
 
     UserRegisterInputBoundary clientRegisterInteractor = new ClientRegisterInteractor(clientGateway, clientFactory, registerOutputBoundary);

@@ -14,9 +14,9 @@ import static driver.screen.UIDrawer.*;
 
 public class QuestionOpenAttorneyUI extends QuestionUI {
 
-    public QuestionOpenAttorneyUI(String userName, int userId, UIManager UIManager, String title,
+    public QuestionOpenAttorneyUI(String userName, int userId, UIManager UIManager, int questionId, String title,
                                   String questionType, LocalDate deadline, Map<Integer, PostDisplayFormatter> postMap) {
-        super(userName, userId, UIManager, title, questionType, deadline, postMap);
+        super(userName, userId, UIManager, questionId, title, questionType, deadline, postMap);
 
         //spacers
         JPanel spacer = addSpacer(20);
@@ -27,6 +27,7 @@ public class QuestionOpenAttorneyUI extends QuestionUI {
         add(inputPost);
         add(spacer);
         add(backAndHomepage);
+        add(spacer);
     }
 
     @Override

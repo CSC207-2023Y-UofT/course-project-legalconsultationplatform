@@ -59,8 +59,8 @@ public class AskQuestionUI extends UserUI implements ActionListener {
         UIDesign.setTitleFont(title);
 
         //Question type and title
-
         JPanel inputPanel = new JPanel();
+        inputPanel.setOpaque(false);
         setSizeInLayout(inputPanel, new Dimension(360, 150));
         JPanel questionTypePanel = dropDownPanelDrawer(new JLabel(QUESTION_TYPE_PROMPT), questionType);
         JPanel questionTitlePanel = labelTextPanelDrawer(new JLabel(QUESTION_TITLE_PROMPT), titleForQuestion);

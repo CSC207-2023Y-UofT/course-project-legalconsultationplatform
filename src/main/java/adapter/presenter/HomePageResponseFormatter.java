@@ -23,12 +23,15 @@ public class HomePageResponseFormatter implements UserOutputBoundary {
 
     @Override
     public UserResponseModel prepareSuccess(UserResponseModel response) {
+        pageConstructor(response);
+        return response;
+    }
+
+    protected void pageConstructor(UserResponseModel response){
         JPanel screens = UIManager.getScreens();
         CardLayout cardLayout = UIManager.getCardLayout();
         JPanel homePage = UIFactory.getUI(UIFactory.UIType.HOME_PAGE, UIManager, response);
         screens.add(homePage, "Home Page");
         cardLayout.show(screens, "Home Page");
-
-        return response;
     }
 }

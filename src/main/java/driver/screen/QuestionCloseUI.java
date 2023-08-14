@@ -11,18 +11,16 @@ import static driver.screen.UIDrawer.*;
 
 
 public class QuestionCloseUI extends QuestionUI{
-    public QuestionCloseUI(String userName, int userId, UIManager UIManager, String title,
+    public QuestionCloseUI(String userName, int userId, UIManager UIManager, int questionId, String title,
                            String questionType, LocalDate deadline, Map<Integer, PostDisplayFormatter> postMap) {
-        super(userName, userId, UIManager, title, questionType, deadline, postMap);
+        super(userName, userId, UIManager, questionId, title, questionType, deadline, postMap);
 
         //Spacers
-        JPanel spacer = addSpacer(20);
-        JPanel spacer2 = addSpacer(50);
+        JPanel spacer = addSpacer(50);
 
         add(topPanel);
-        add(spacer);
         add(backAndHomepage);
-        add(spacer2);
+        add(spacer);
     }
 
     @Override

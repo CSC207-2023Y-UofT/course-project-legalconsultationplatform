@@ -54,15 +54,17 @@ public class UIFactory {
         Boolean isClose = questionResponseModel.isClose();
         if (isClose) {
             return new QuestionCloseUI(questionResponseModel.getUserName(), questionResponseModel.getUserId(),
-                    uiManager, questionResponseModel.getTitle(), questionResponseModel.getType(),
+                    uiManager, questionResponseModel.getQuestionId(), questionResponseModel.getTitle(), questionResponseModel.getType(),
                     questionResponseModel.getDeadline(), questionResponseModel.getPostMap());
         } else if (userType.equals(ATTORNEY_TYPE)){
             return new QuestionOpenAttorneyUI(questionResponseModel.getUserName(),
-                    questionResponseModel.getUserId(), uiManager, questionResponseModel.getTitle(),
-                    questionResponseModel.getType(), questionResponseModel.getDeadline(),
+                    questionResponseModel.getUserId(), uiManager, questionResponseModel.getQuestionId(),
+                    questionResponseModel.getTitle(), questionResponseModel.getType(), questionResponseModel.getDeadline(),
                     questionResponseModel.getPostMap());
         } else{
-            return new QuestionOpenClientUI(questionResponseModel.getUserName(), questionResponseModel.getUserId(), uiManager, questionResponseModel.getTitle(), questionResponseModel.getType(), questionResponseModel.getDeadline(), questionResponseModel.getPostMap());
+            return new QuestionOpenClientUI(questionResponseModel.getUserName(), questionResponseModel.getUserId(), uiManager,
+                    questionResponseModel.getQuestionId(), questionResponseModel.getTitle(),
+                    questionResponseModel.getType(), questionResponseModel.getDeadline(), questionResponseModel.getPostMap());
         }
     }
 

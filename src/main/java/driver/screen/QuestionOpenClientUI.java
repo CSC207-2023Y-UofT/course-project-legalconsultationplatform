@@ -14,9 +14,9 @@ import static driver.screen.UIDrawer.*;
 
 public class QuestionOpenClientUI extends QuestionOpenAttorneyUI{
 
-    public QuestionOpenClientUI(String userName, int userId, UIManager UIManager, String title,
+    public QuestionOpenClientUI(String userName, int userId, UIManager UIManager, int questionId, String title,
                                 String questionType, LocalDate deadline, Map<Integer, PostDisplayFormatter> postMap) {
-        super(userName, userId ,UIManager,title, questionType, deadline, postMap);
+        super(userName, userId ,UIManager,questionId, title, questionType, deadline, postMap);
 
         //The spacer
         JPanel spacer = addSpacer(20);
@@ -29,6 +29,7 @@ public class QuestionOpenClientUI extends QuestionOpenAttorneyUI{
         add(spacer2);
         add(closeButton);
         add(backAndHomepage);
+        add(spacer2);
     }
 
     @Override

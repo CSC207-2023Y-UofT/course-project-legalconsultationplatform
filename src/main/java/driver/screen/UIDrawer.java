@@ -56,7 +56,7 @@ public class UIDrawer {
         JPanel helloMessage = new JPanel();
         helloMessage.setLayout(new FlowLayout(FlowLayout.RIGHT));
         helloMessage.setBackground(lightGreenColor);
-        setSizeInLayout(helloMessage, new Dimension(360, 40));
+        setSizeInLayout(helloMessage, new Dimension(360, 20));
 
         JLabel messageLabel = new JLabel("Hello, " + userName + " (" + userId + ")");
         setPromptFont(messageLabel);

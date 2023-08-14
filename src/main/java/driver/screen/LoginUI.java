@@ -44,6 +44,7 @@ public class LoginUI extends BaseUI implements ActionListener {
 
         // Add userId and password input fields
         JPanel inputPanel = new JPanel();
+        inputPanel.setOpaque(false);
         setSizeInLayout(inputPanel, new Dimension(360, 150));
         JPanel userIdPanel = labelTextPanelDrawer(new JLabel("User Id"), userId);
         JPanel passwordPanel = labelTextPanelDrawer(new JLabel("Password"), password);

@@ -61,6 +61,7 @@ public class QuestionListUI extends UserUI implements ActionListener {
         }
 
         JScrollPane questionScrollPane = new JScrollPane();
+        questionScrollPane.setBackground(lightGreenColor);
         questionScrollPane.setViewportView(questionScrollPanel);
         UIDesign.setSizeInLayout(questionScrollPane, new Dimension(350, 450));
         questionScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
