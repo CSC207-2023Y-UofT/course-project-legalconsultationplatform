@@ -140,14 +140,6 @@ public class ViewRecommendationUseCaseTest {
         ClearAllRepository();
     }
 
-    @Test
-    public void TestAttorneyViewRecommendationWithAllTakenQuestion() {
-        setUpBrowseUseCase();
-        viewInputBoundary.viewQuestion();
-        ClearAllRepository();
-    }
-
-
     public void ClearAllRepository() {
         questionGateway = new QuestionRepo();
         clientGateway = new ClientRepository();

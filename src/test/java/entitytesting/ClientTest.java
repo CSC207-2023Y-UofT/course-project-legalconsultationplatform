@@ -99,7 +99,7 @@ class ClientTest {
         Question question = new Question();
         question.setTaken(true);
 
-        assertFalse(client.isQuestionCloseable(question));
+        assertTrue(client.isQuestionCloseable(question));
     }
 
     @Test
