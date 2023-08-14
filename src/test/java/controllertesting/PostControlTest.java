@@ -10,6 +10,7 @@ import businessrule.responsemodel.UserResponseModel;
 import businessrule.usecase.util.PostDisplayFormatter;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -21,15 +22,15 @@ public class PostControlTest {
     private static String USER_NAME = "SampleUser";
     private static String USER_TYPE = "SampleType";
     private static int QUESTION_ID = 333333333;
+    private static String QUESTION_TITLE = "Sample title";
+    private static String QUESTION_TYPE = "sample quesiton type";
     private static String POST_TEXT = "Sample Post Text";
-    private static final Map<Integer, PostDisplayFormatter> POST_MAP = new HashMap<>();
 
     private static TheQuestionResponseModel expectedResponse;
 
     public void setUpPostControl() {
         // Arrange
-        expectedResponse =
-        = new UserResponseModel(USER_ID, USER_NAME, USER_TYPE).toQuestionResponseBuilder()
+        expectedResponse = new TheQuestionResponseModel(USER_ID, USER_NAME, USER_TYPE, QUESTION_ID, QUESTION_TITLE, QUESTION_TYPE, null, false, null);
     }
 
     @Test
@@ -45,7 +46,7 @@ public class PostControlTest {
         SessionManager.setSession(session);
 
         // Act
-        UserResponseModel actualResponse = control.createPost(QUESTION_ID, POST_TEXT);
+        TheQuestionResponseModel actualResponse = control.createPost(QUESTION_ID, POST_TEXT);
 
         // Assert
         assertEquals(expectedResponse, actualResponse);

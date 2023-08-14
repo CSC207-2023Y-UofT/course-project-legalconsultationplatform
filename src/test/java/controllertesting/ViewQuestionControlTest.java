@@ -5,6 +5,7 @@ import businessrule.inputboundary.ViewInputBoundary;
 
 import businessrule.responsemodel.UserResponseModel;
 
+import businessrule.responsemodel.ViewResponseModel;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,11 +14,12 @@ import static org.mockito.Mockito.*;
 public class ViewQuestionControlTest {
     private static int USER_ID = 11234567;
     private static String USER_NAME = "SampleUser";
-    private static UserResponseModel expectedResponse;
+    private static String USER_TYPE = "SampleType";
+    private static ViewResponseModel expectedResponse;
 
     public void setUpViewQuestionControl() {
         // Arrange
-        expectedResponse = new UserResponseModel(USER_ID, USER_NAME, "SampleType"); // Initializing with suitable values
+        expectedResponse = new ViewResponseModel(USER_ID, USER_NAME, USER_TYPE, null); // Initializing with suitable values
     }
 
     @Test
@@ -30,7 +32,7 @@ public class ViewQuestionControlTest {
         ViewQuestionControl control = new ViewQuestionControl(mockInputBoundary);
 
         // Act
-        UserResponseModel actualResponse = control.viewQuestion();
+        ViewResponseModel actualResponse = control.viewQuestion();
 
         // Assert
         assertEquals(expectedResponse, actualResponse);

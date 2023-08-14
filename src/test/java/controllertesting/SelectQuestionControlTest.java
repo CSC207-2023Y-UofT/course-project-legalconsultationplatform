@@ -16,11 +16,15 @@ import static org.mockito.Mockito.*;
 public class SelectQuestionControlTest {
     private static int QUESTION_ID = 323456783;
     private static int USER_ID = 11233456;
-    private static UserResponseModel expectedResponse;
+    private static String USER_NAME = "SampleUser";
+    private static String USER_TYPE = "SampleType";
+    private static String QUESTION_TITLE = "Sample title";
+    private static String QUESTION_TYPE = "sample quesiton type";
+    private static TheQuestionResponseModel expectedResponse;
 
     public void setUpSelectQuestionControl() {
         // Arrange
-        expectedResponse = new UserResponseModel(USER_ID, "SampleUser", "SampleType"); // Assuming suitable constructor
+        expectedResponse = new TheQuestionResponseModel(USER_ID, USER_NAME, USER_TYPE, QUESTION_ID, QUESTION_TITLE, QUESTION_TYPE, null, false, null);
 
         // Set up user session if needed
         UserResponseModel userResponseModel = new UserResponseModel(USER_ID, "SampleUser", "SampleType");
@@ -38,7 +42,7 @@ public class SelectQuestionControlTest {
         SelectQuestionControl control = new SelectQuestionControl(mockInputBoundary);
 
         // Act
-        UserResponseModel actualResponse = control.selectQuestion(QUESTION_ID);
+        TheQuestionResponseModel actualResponse = control.selectQuestion(QUESTION_ID);
 
         // Assert
         assertEquals(expectedResponse, actualResponse);
