@@ -116,31 +116,39 @@ public class QuestionOpenClientUI extends QuestionOpenAttorneyUI{
         ControlContainer controlContainer = UIManager.getControlContainer();
         JPanel screens = UIManager.getScreens();
         CardLayout cardLayout = UIManager.getCardLayout();
-        if (POST_BUTTON_NAME.equals(actionCommand)) {
-            System.out.println("The client wants to post a reply.");
-            try {
-                PostControl postControl = controlContainer.getPostControl();
-                postControl.createPost(questionId, inputPostArea.getText());
-            } catch (ApplicationException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage());
-            }
-        } else if (CLOSE_BUTTON_NAME.equals(actionCommand)) {
-            System.out.println("Client want to close the question");
-            try {
-                CloseQuestionControl closeQuestionControl = controlContainer.getCloseQuestionControl();
-                closeQuestionControl.closeQuestion(questionId);
-                JFrame rateFrame = new JFrame("Rate this question");
-                RatePanel ratePanel = new RatePanel(controlContainer, rateFrame, userId, questionId);
-                rateFrame.add(ratePanel);
-                rateFrame.pack();
-                rateFrame.setVisible(true);
-            } catch (ApplicationException ex) {
-                JOptionPane.showMessageDialog(this, ex.getMessage());
-            }
-        } else if (HOME_PAGE_BUTTON_NAME.equals(actionCommand)) {
-            cardLayout.show(screens, "Home Page");
-        } else if (BACK_BUTTON_NAME.equals(actionCommand)) {
-            cardLayout.show(screens, "Question List");
+        switch (actionCommand) {
+            case POST_BUTTON_NAME:
+                System.out.println("The client wants to post a reply.");
+                try {
+                    PostControl postControl = controlContainer.getPostControl();
+                    postControl.createPost(questionId, inputPostArea.getText());
+                } catch (ApplicationException ex) {
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
+                }
+                break;
+
+            case CLOSE_BUTTON_NAME:
+                System.out.println("Client wants to close the question.");
+                try {
+                    CloseQuestionControl closeQuestionControl = controlContainer.getCloseQuestionControl();
+                    closeQuestionControl.closeQuestion(questionId);
+                    JFrame rateFrame = new JFrame("Rate this question");
+                    RatePanel ratePanel = new RatePanel(controlContainer, rateFrame, userId, questionId);
+                    rateFrame.add(ratePanel);
+                    rateFrame.pack();
+                    rateFrame.setVisible(true);
+                } catch (ApplicationException ex) {
+                    JOptionPane.showMessageDialog(this, ex.getMessage());
+                }
+                break;
+
+            case HOME_PAGE_BUTTON_NAME:
+                cardLayout.show(screens, "Home Page");
+                break;
+
+            case BACK_BUTTON_NAME:
+                cardLayout.show(screens, "Question List");
+                break;
         }
     }
 }

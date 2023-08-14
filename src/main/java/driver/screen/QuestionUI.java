@@ -97,10 +97,14 @@ public class QuestionUI extends UserUI{
         String actionCommand = e.getActionCommand();
         CardLayout cardLayout = UIManager.getCardLayout();
         JPanel screens = UIManager.getScreens();
-        if (HOME_PAGE_BUTTON_NAME.equals(actionCommand)) {
-            cardLayout.show(screens, "Home Page");
-        } else if (BACK_BUTTON_NAME.equals(actionCommand)){
-            cardLayout.show(screens, "Question List");
+        switch (actionCommand) {
+            case HOME_PAGE_BUTTON_NAME:
+                cardLayout.show(screens, "Home Page");
+                break;
+
+            case BACK_BUTTON_NAME:
+                cardLayout.show(screens, "Question List");
+                break;
         }
     }
 }
