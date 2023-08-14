@@ -18,6 +18,7 @@ import entity.factory.QuestionFactory;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class AskQuestionInteractor implements QuestionInputBoundary {
     final QuestionGateway questionGateway;
@@ -55,10 +56,11 @@ public class AskQuestionInteractor implements QuestionInputBoundary {
     private void checkValidateInput(QuestionRequestModel questionRequestModel) {
         if (questionRequestModel.getQuestionCategory() == null) {
             throw new ApplicationException("Please specify your question type.");
-        } else if (questionRequestModel.getTitle() == null) {
+        } else if (Objects.equals(questionRequestModel.getTitle(), EMPTY_TITLE)) {
             throw new ApplicationException("Please specify your question title.");
+        } else if (questionRequestModel.getLegalDeadline() == null) {
+            throw new ApplicationException("Please specify your question's deadline");
         }
-
     }
 
     private int generateQuestionId(){
