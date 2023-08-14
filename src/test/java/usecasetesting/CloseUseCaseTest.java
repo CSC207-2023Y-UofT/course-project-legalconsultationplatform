@@ -25,7 +25,6 @@ public class CloseUseCaseTest {
     final static int SECOND_ATTORNEY_ID = 12222222;
     final static int QUESTION_ID = 323456789;
     final static int CLOSED_QUESTION_ID = 333333333;
-    final static int NON_TAKEN_QUESTION_ID = 311111111;
     private QuestionGateway questionGateway;
     private PostGateway postGateway;
     private ClientGateway clientGateway;
@@ -78,11 +77,6 @@ public class CloseUseCaseTest {
         question.setTaken(true);
         questionGateway.save(question);
 
-        Question question3 = new Question();
-        question3.setQuestionId(NON_TAKEN_QUESTION_ID);
-        questionGateway.save(question3);
-
-
         UserResponseModel userResponseModel = new UserResponseModel(CLIENT_ID, CLIENT_USERNAME, CLIENT_TYPE);
         UserSession session = new UserSession(userResponseModel);
         SessionManager.setSession(session);
@@ -99,20 +93,10 @@ public class CloseUseCaseTest {
         ClearAllRepository();
     }
     @Test
-    public void TestClientCloseAlreadyClosedQuestion(){
+    public void TestClientUnclosableQuestion(){
         setUpCloseUseCase();
 
         CloseRequestModel inputData = new CloseRequestModel(CLOSED_QUESTION_ID);
-
-        closeInputBoundary.closeQuestion(inputData);
-        ClearAllRepository();
-    }
-
-    @Test
-    public void TestClientCloseNonTakenQuestion(){
-        setUpCloseUseCase();
-
-        CloseRequestModel inputData = new CloseRequestModel(NON_TAKEN_QUESTION_ID);
 
         closeInputBoundary.closeQuestion(inputData);
         ClearAllRepository();

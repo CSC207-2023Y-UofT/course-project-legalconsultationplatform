@@ -11,16 +11,12 @@ import businessrule.requestmodel.QuestionRequestModel;
 import businessrule.responsemodel.TheQuestionResponseModel;
 import businessrule.responsemodel.UserResponseModel;
 import businessrule.usecase.AskQuestionInteractor;
-
 import driver.database.*;
 import entity.*;
 import entity.factory.QuestionFactory;
 import org.junit.jupiter.api.Test;
-
 import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.*;
-;
 
 public class AskQuestionUseCaseTest {
     final static int CLIENT_ID = 21345678;

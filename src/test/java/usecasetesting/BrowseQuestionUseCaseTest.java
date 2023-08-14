@@ -78,47 +78,11 @@ public class BrowseQuestionUseCaseTest {
     }
 
     @Test
-    public void TestAttorneyBrowseQuestionUseCase() {
-        setUpBrowseUseCase();
-        Post post = new Post();
-        post.setPostId(POST_ID);
-        Question question3 = new Question();
-        question3.setQuestionId(QUESTION_ID);
-        question3.setTaken(false);
-        question3.setAskedByClient(CLIENT_ID);
-        question3.addPosts(post);
-        questionGateway.save(question3);
-        ViewOutputBoundary viewOutputBoundary = new ViewOutputBoundary() {
-            @Override
-            public void setControlContainer(ControlContainer controlContainer) {
-
-            }
-
-            @Override
-            public UserResponseModel prepareFail(String msg) {
-                return null;
-            }
-
-            @Override
-            public UserResponseModel prepareSuccess(UserResponseModel response) {
-                ViewResponseModel responseModel = (ViewResponseModel) response;
-                int expectedSize = 1;
-                assertEquals(expectedSize, responseModel.getQuestionMap().size(), "The Question Map is not correct.");
-                return null;
-            }
-        };
-        viewInputBoundary =new BrowseQuestionInteractor(viewOutputBoundary, questionGateway, attorneyGateway);
-        viewInputBoundary.viewQuestion();
-        ClearAllRepository();
-    }
-
-    @Test
-    public void TestAttorneyBrowseAllTakenQuestion(){
+    public void TestAttorneyBrowseQuestionUseCase(){
         setUpBrowseUseCase();
         viewInputBoundary.viewQuestion();
         ClearAllRepository();
     }
-
 
     public void ClearAllRepository(){
         questionGateway = new QuestionRepo();

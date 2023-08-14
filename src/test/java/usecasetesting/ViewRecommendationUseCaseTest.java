@@ -1,6 +1,5 @@
 package usecasetesting;
 
-import adapter.controller.ControlContainer;
 import businessrule.SessionManager;
 import businessrule.UserSession;
 import businessrule.gateway.AttorneyGateway;
@@ -8,26 +7,17 @@ import businessrule.gateway.ClientGateway;
 import businessrule.gateway.QuestionGateway;
 import businessrule.inputboundary.ViewInputBoundary;
 import businessrule.outputboundary.ViewOutputBoundary;
-
-import businessrule.responsemodel.TheQuestionResponseModel;
 import businessrule.responsemodel.UserResponseModel;
 import businessrule.responsemodel.ViewResponseModel;
 import businessrule.usecase.AttorneyRecommendInteractor;
-import businessrule.usecase.BrowseQuestionInteractor;
 import driver.database.*;
-
 import entity.*;
-
 import org.junit.jupiter.api.Test;
-
 import java.time.LocalDate;
-
 import static org.junit.jupiter.api.Assertions.*;
-;
 
 public class ViewRecommendationUseCaseTest {
     final static int CLIENT_ID = 21345678;
-    final static String CLIENT_USERNAME = "test client";
     final static int ATTORNEY_ID = 11345678;
     final static String ATTORNEY_USERNAME = "test attorney";
     final static String ATTORNEY_TYPE = "Attorney";
@@ -35,25 +25,20 @@ public class ViewRecommendationUseCaseTest {
     final static int QUESTION_ID = 323456789;
     final static int TAKEN_QUESTION_ID = 333333333;
     final static int QUESTION_ID_4 = 312142133;
-    final static int CLOSED_QUESTION_ID = 322222222;
     final static int POST_ID = 455555555;
     private QuestionGateway questionGateway;
     private ClientGateway clientGateway;
     private AttorneyGateway attorneyGateway;
-    private ViewOutputBoundary viewOutputBoundary = new ViewOutputBoundary() {
-        @Override
-        public void setControlContainer(ControlContainer controlContainer) {
-        }
+    private final ViewOutputBoundary viewOutputBoundary = new ViewOutputBoundary() {
 
         @Override
-        public UserResponseModel prepareFail(String msg) {
+        public ViewResponseModel prepareFail(String msg) {
             return null;
         }
 
         @Override
-        public UserResponseModel prepareSuccess(UserResponseModel response) {
-            ViewResponseModel responseModel = (ViewResponseModel) response;
-            assertEquals(0, responseModel.getQuestionMap().size(), "The Question Map is not correct.");
+        public ViewResponseModel prepareSuccess(ViewResponseModel response) {
+            assertEquals(0, response.getQuestionMap().size(), "The Question Map is not correct.");
             return null;
         }
 
@@ -116,22 +101,17 @@ public class ViewRecommendationUseCaseTest {
         question3.addPosts(post);
         questionGateway.save(question3);
         ViewOutputBoundary viewOutputBoundary = new ViewOutputBoundary() {
-            @Override
-            public void setControlContainer(ControlContainer controlContainer) {
-
-            }
 
             @Override
-            public UserResponseModel prepareFail(String msg) {
+            public ViewResponseModel prepareFail(String msg) {
                 return null;
             }
 
             @Override
-            public UserResponseModel prepareSuccess(UserResponseModel response) {
-                ViewResponseModel responseModel = (ViewResponseModel) response;
+            public ViewResponseModel prepareSuccess(ViewResponseModel response) {
                 int expectedSize = 1;
-                assertEquals(expectedSize, responseModel.getQuestionMap().size(), "The Question Map is not correct.");
-                assertEquals("temp type", responseModel.getQuestionMap().get(QUESTION_ID_4).getType(), "The Question Map is not correct.");
+                assertEquals(expectedSize, response.getQuestionMap().size(), "The Question Map is not correct.");
+                assertEquals("temp type", response.getQuestionMap().get(QUESTION_ID_4).getType(), "The Question Map is not correct.");
                 return null;
             }
         };
