@@ -9,10 +9,10 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class CloseQuestionControlTest {
-    private static int QUESTION_ID = 333333333;
-    private static int USER_ID = 11234567;
-    private static String USERNAME = "SampleUser";
-    private static String USER_TYPE = "Client";
+    private static final int QUESTION_ID = 333333333;
+    private static final int USER_ID = 11234567;
+    private static final String USERNAME = "SampleUser";
+    private static final String USER_TYPE = "Client";
     private static UserResponseModel expectedResponse;
 
     public void setUpCloseQuestionControl() {

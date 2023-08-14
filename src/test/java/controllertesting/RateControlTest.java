@@ -13,14 +13,14 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class RateControlTest {
-    private static int RATE = 5;
-    private static int USER_ID = 11123456;
-    private static int QUESTION_ID = 333333333;
+    private static final int RATE = 5;
+    private static final int USER_ID = 11123456;
+    private static final int QUESTION_ID = 333333333;
     private static UserResponseModel expectedResponse;
 
     public void setUpRateControl() {
         // Arrange
-        expectedResponse = new UserResponseModel(USER_ID, "SampleUser", "SampleType"); // Assuming suitable constructor
+        expectedResponse = new UserResponseModel(USER_ID, "SampleUser", "SampleType");
 
         // Set up user session if needed
         UserResponseModel userResponseModel = new UserResponseModel(USER_ID, "SampleUser", "SampleType");

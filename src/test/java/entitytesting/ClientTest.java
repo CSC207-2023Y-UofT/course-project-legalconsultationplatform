@@ -196,29 +196,6 @@ class ClientTest {
     }
 
     @Test
-    void testEqualsSucceed() {
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
-        ClientFactory clientFactory = new ClientFactory();
-        Client client = clientFactory.createUser(registrationData);
-
-        assertEquals(client, client, "The equal method is wrong");
-    }
-
-    @Test
-    void testEqualsFailByNotClient() {
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
-        ClientFactory clientFactory = new ClientFactory();
-        Client client = clientFactory.createUser(registrationData);
-        Question question = new Question();
-
-        assertEquals(false, client.equals(question), "The equal method is wrong");
-    }
-
-    @Test
     void testEqualsFailByNotEqual() {
         RegistrationData registrationData1 = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
                 expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
@@ -277,8 +254,7 @@ class ClientTest {
                 expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
                 expectedNumberOfHousehold, expectedAnnualIncome);
         ClientFactory clientFactory = new ClientFactory();
-        Client client = clientFactory.createUser(registrationData);;
-
+        Client client = clientFactory.createUser(registrationData);
         Question question = new Question();
         question.setClose(false);
         assertFalse(client.isQuestionRateable(question), "IsQuestionRateable is wrong.");

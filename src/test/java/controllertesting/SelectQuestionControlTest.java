@@ -14,12 +14,12 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class SelectQuestionControlTest {
-    private static int QUESTION_ID = 323456783;
-    private static int USER_ID = 11233456;
-    private static String USER_NAME = "SampleUser";
-    private static String USER_TYPE = "SampleType";
-    private static String QUESTION_TITLE = "Sample title";
-    private static String QUESTION_TYPE = "sample quesiton type";
+    private static final int QUESTION_ID = 323456783;
+    private static final int USER_ID = 11233456;
+    private static final String USER_NAME = "SampleUser";
+    private static final String USER_TYPE = "SampleType";
+    private static final String QUESTION_TITLE = "Sample title";
+    private static final String QUESTION_TYPE = "sample question type";
     private static TheQuestionResponseModel expectedResponse;
 
     public void setUpSelectQuestionControl() {
