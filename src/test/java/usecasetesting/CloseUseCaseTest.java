@@ -53,7 +53,7 @@ public class CloseUseCaseTest {
 
             @Override
             public UserResponseModel prepareFail(String msg) {
-                assertEquals("You cannot close this question!", msg);
+                assertEquals("You can only close this question once it was taken by attorney.", msg);
                 return null;
             }
 

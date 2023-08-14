@@ -3,8 +3,8 @@ package controllertesting;
 import adapter.controller.UserLoginControl;
 import businessrule.inputboundary.UserLoginInputBoundary;
 import businessrule.requestmodel.UserLoginRequestModel;
-import businessrule.responsemodel.HomePageResponseModel;
 
+import businessrule.responsemodel.UserResponseModel;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -13,11 +13,11 @@ import static org.mockito.Mockito.*;
 public class UserLoginControlTest {
     private static int USER_ID = 11234567;
     private static String PASSWORD = "test password";
-    private static HomePageResponseModel expectedResponse;
+    private static UserResponseModel expectedResponse;
 
     public void setUpUserLoginControl() {
         // Arrange
-        expectedResponse = new HomePageResponseModel(USER_ID, "SampleUser", "SampleType"); // Assuming suitable constructor
+        expectedResponse = new UserResponseModel(USER_ID, "SampleUser", "SampleType"); // Assuming suitable constructor
     }
 
     @Test
@@ -30,7 +30,7 @@ public class UserLoginControlTest {
         UserLoginControl control = new UserLoginControl(mockInputBoundary);
 
         // Act
-        HomePageResponseModel actualResponse = control.login(USER_ID, PASSWORD);
+        UserResponseModel actualResponse = control.login(USER_ID, PASSWORD);
 
         // Assert
         assertEquals(expectedResponse, actualResponse);
@@ -39,3 +39,4 @@ public class UserLoginControlTest {
         verify(mockInputBoundary, times(1)).login(any(UserLoginRequestModel.class));
     }
 }
+
