@@ -1,6 +1,6 @@
 package businessrule.responsemodel;
 
-public class UserResponseModel {
+public class UserResponseModel extends BaseResponseModel{
     private final int userId;
     private final String userName;
     private final String userType;
