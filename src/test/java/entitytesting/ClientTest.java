@@ -97,8 +97,9 @@ class ClientTest {
         Client client = clientFactory.createUser(registrationData);
 
         Question question = new Question();
+        question.setTaken(true);
 
-        assertFalse(client.isQuestionCloseable(question));
+        assertTrue(client.isQuestionCloseable(question));
     }
 
     @Test
