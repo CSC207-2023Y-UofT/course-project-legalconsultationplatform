@@ -41,7 +41,7 @@ public class RateInteractor implements RateInputBoundary {
 
         if (answer.isClose() && answer.isTaken()) {
             questionGateway.updateRating(answerId, rating);
-            System.out.println(questionGateway.get(answerId).getRating());
+            answer.setRating(rating);
             Attorney attorney = attorneyGateway.get(answer.getTakenByAttorney());
 
             // Send email notification to the attorney

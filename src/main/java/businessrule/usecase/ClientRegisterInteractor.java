@@ -26,8 +26,7 @@ public class ClientRegisterInteractor extends UserRegisterInteractor<ClientGatew
         requestModel.setUserId(userId);
         Client client = userFactory.createUser(requestModel);
         userGateway.save(client);
-        String message = "Your userId is " + userId;
-        return outputBoundary.prepareSuccess(message);
+        return outputBoundary.prepareSuccess(String.valueOf(userId));
     }
 
     private void checkCredential(RegistrationData requestModel) throws ApplicationException{
