@@ -41,7 +41,7 @@ public class ReplyInteractor implements PostInputBoundary {
     }
 
     @Override
-    public UserResponseModel createPost(PostRequestModel postRequestModel) {
+    public TheQuestionResponseModel createPost(PostRequestModel postRequestModel) {
         // get input data
         UserSession session = SessionManager.getSession();
         UserResponseModel response = session.getUserResponseModel();
@@ -54,7 +54,6 @@ public class ReplyInteractor implements PostInputBoundary {
         if (postRequestModel.getPostText().equals(EMPTY_CONTENT)) {
             outputBoundary.prepareFail("Please specify your reply content.");
         }
-
         // handle reply logic and prepare response model
         boolean isQuestionReplyable = user.isQuestionReplyable(question);
 

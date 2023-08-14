@@ -55,10 +55,6 @@ public class RateAnswerUseCaseTest {
         attorneyGateway.deleteAll();
         postGateway.deleteAll();
         userOutputBoundary = new UserOutputBoundary() {
-            @Override
-            public void setControlContainer(ControlContainer controlContainer) {
-
-            }
 
             @Override
             public UserResponseModel prepareFail(String msg) {

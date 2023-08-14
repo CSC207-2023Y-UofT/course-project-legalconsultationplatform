@@ -51,22 +51,18 @@ public class SelectQuestionUseCaseTest {
         attorneyGateway = new AttorneyRepository();
         postGateway = new PostRepo();
         theQuestionOutputBoundary = new TheQuestionOutputBoundary() {
-            @Override
-            public void setControlContainer(ControlContainer controlContainer) {
-            }
 
             @Override
-            public UserResponseModel prepareFail(String msg) {
+            public TheQuestionResponseModel prepareFail(String msg) {
                 assertEquals("This question is not accessible.", msg);
                 return null;
             }
 
             @Override
-            public UserResponseModel prepareSuccess(UserResponseModel response) {
-                TheQuestionResponseModel responseModel = (TheQuestionResponseModel) response;
-                assertEquals(2, responseModel.getPostMap().size(), "The post map is not correct.");
+            public TheQuestionResponseModel prepareSuccess(TheQuestionResponseModel response) {
+                assertEquals(2, response.getPostMap().size(), "The post map is not correct.");
                 List<PostDisplayFormatter> arrayList;
-                arrayList = new ArrayList<>(responseModel.getPostMap().values());
+                arrayList = new ArrayList<>(response.getPostMap().values());
                 assertEquals("test text", arrayList.get(0).getPostText());
                 return null;
             }

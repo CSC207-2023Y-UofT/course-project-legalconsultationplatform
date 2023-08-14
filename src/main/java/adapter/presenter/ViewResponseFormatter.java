@@ -21,7 +21,7 @@ public class ViewResponseFormatter implements ViewOutputBoundary {
     }
 
     @Override
-    public UserResponseModel prepareSuccess(UserResponseModel response) {
+    public ViewResponseModel prepareSuccess(ViewResponseModel response) {
         JPanel screens = UIManager.getScreens();
         CardLayout cardLayout = UIManager.getCardLayout();
         JPanel questionListUI = UIFactory.getUI(UIFactory.UIType.QUESTION_LIST_UI, UIManager, response);

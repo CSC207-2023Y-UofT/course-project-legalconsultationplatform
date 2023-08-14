@@ -46,10 +46,6 @@ public class CloseUseCaseTest {
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
         userOutputBoundary = new UserOutputBoundary() {
-            @Override
-            public void setControlContainer(ControlContainer controlContainer) {
-
-            }
 
             @Override
             public UserResponseModel prepareFail(String msg) {

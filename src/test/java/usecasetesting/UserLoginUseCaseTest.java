@@ -31,10 +31,6 @@ public class UserLoginUseCaseTest {
         clientGateway = new ClientRepository();
 
         userOutputBoundary = new UserOutputBoundary() {
-            @Override
-            public void setControlContainer(ControlContainer controlContainer) {
-
-            }
 
             @Override
             public UserResponseModel prepareFail(String msg) {

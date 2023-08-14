@@ -2,6 +2,7 @@ package adapter.controller;
 
 import businessrule.inputboundary.PostInputBoundary;
 import businessrule.requestmodel.PostRequestModel;
+import businessrule.responsemodel.TheQuestionResponseModel;
 import businessrule.responsemodel.UserResponseModel;
 
 public class PostControl {
@@ -11,7 +12,7 @@ public class PostControl {
         this.postInput = postInput;
     }
 
-    public UserResponseModel createPost(int questionId, String postText){
+    public TheQuestionResponseModel createPost(int questionId, String postText){
         PostRequestModel postRequestModel = new PostRequestModel(questionId, postText);
 
         return postInput.createPost(postRequestModel);

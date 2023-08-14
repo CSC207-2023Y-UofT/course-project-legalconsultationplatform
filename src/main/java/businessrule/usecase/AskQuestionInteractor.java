@@ -34,7 +34,7 @@ public class AskQuestionInteractor implements QuestionInputBoundary {
         this.clientGateway = clientGateway;
     }
 
-    public UserResponseModel createQuestion(QuestionRequestModel questionRequestModel){
+    public TheQuestionResponseModel createQuestion(QuestionRequestModel questionRequestModel){
         try {checkValidateInput(questionRequestModel);}
         catch (ApplicationException e) {
             return outputBoundary.prepareFail(e.getMessage());

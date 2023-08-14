@@ -37,10 +37,6 @@ public class ClientRegisterUseCaseTest {
         clientGateway = new ClientRepository();
         clientFactory = new ClientFactory();
         baseOutputBoundary = new BaseOutputBoundary() {
-            @Override
-            public void setControlContainer(ControlContainer controlContainer) {
-
-            }
 
             @Override
             public BaseResponseModel prepareSuccess(String msg) {

@@ -42,21 +42,16 @@ public class AskQuestionUseCaseTest {
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
         theQuestionOutputBoundary = new TheQuestionOutputBoundary() {
-            @Override
-            public void setControlContainer(ControlContainer controlContainer) {
-
-            }
 
             @Override
-            public UserResponseModel prepareFail(String msg) {
+            public TheQuestionResponseModel prepareFail(String msg) {
                 assertEquals("Please specify your question type.", msg);
                 return null;
             }
 
             @Override
-            public UserResponseModel prepareSuccess(UserResponseModel response) {
-                TheQuestionResponseModel responseModel = (TheQuestionResponseModel) response;
-                assertEquals(0, responseModel.getPostMap().size(), "PostMap is not correct");
+            public TheQuestionResponseModel prepareSuccess(TheQuestionResponseModel response) {
+                assertEquals(0, response.getPostMap().size(), "PostMap is not correct");
                 return null;
             }
 

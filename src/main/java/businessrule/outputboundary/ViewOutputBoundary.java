@@ -6,6 +6,6 @@ import businessrule.responsemodel.ViewResponseModel;
 import entity.User;
 
 public interface ViewOutputBoundary {
-    UserResponseModel prepareFail(String msg);
-    UserResponseModel prepareSuccess(UserResponseModel response);
+    ViewResponseModel prepareFail(String msg);
+    ViewResponseModel prepareSuccess(ViewResponseModel response);
 }

@@ -106,7 +106,6 @@ public class AskQuestionUI extends UserUI implements ActionListener {
                     deadlinelocalDate = zonedDateTime.toLocalDate();
                 }
                 try {
-                    System.out.println("it's been in questioncontrol");
                     questionControl.createQuestion((String) questionType.getSelectedItem(),
                             titleForQuestion.getText(), LocalDate.now(), deadlinelocalDate);
                 } catch (Exception e) {

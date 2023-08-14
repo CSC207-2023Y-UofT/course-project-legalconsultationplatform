@@ -4,7 +4,6 @@ import businessrule.SessionManager;
 import businessrule.UserSession;
 import businessrule.inputboundary.SelectInputBoundary;
 import businessrule.outputboundary.TheQuestionOutputBoundary;
-import businessrule.outputboundary.UserOutputBoundary;
 import businessrule.requestmodel.SelectRequestModel;
 import businessrule.responsemodel.UserResponseModel;
 import businessrule.usecase.util.BuilderService;
@@ -30,7 +29,7 @@ public class SelectQuestionInteractor implements SelectInputBoundary {
     }
 
     @Override
-    public UserResponseModel selectQuestion(SelectRequestModel selectRequestModel) {
+    public TheQuestionResponseModel selectQuestion(SelectRequestModel selectRequestModel) {
         // get input data
         UserSession session = SessionManager.getSession();
         UserResponseModel response = session.getUserResponseModel();

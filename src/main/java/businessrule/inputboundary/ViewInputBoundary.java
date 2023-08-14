@@ -1,7 +1,8 @@
 package businessrule.inputboundary;
 
 import businessrule.responsemodel.UserResponseModel;
+import businessrule.responsemodel.ViewResponseModel;
 
 public interface ViewInputBoundary {
-    UserResponseModel viewQuestion();
+    ViewResponseModel viewQuestion();
 }

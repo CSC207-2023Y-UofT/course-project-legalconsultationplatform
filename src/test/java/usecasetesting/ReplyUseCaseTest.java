@@ -49,18 +49,15 @@ public class ReplyUseCaseTest {
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();;
         theQuestionOutputBoundary = new TheQuestionOutputBoundary() {
-            @Override
-            public void setControlContainer(ControlContainer controlContainer) {
-            }
 
             @Override
-            public UserResponseModel prepareFail(String msg) {
+            public TheQuestionResponseModel prepareFail(String msg) {
                 assertEquals("You cannot reply to this question", msg);
                 return null;
             }
 
             @Override
-            public UserResponseModel prepareSuccess(UserResponseModel response) {
+            public TheQuestionResponseModel prepareSuccess(TheQuestionResponseModel response) {
                 return null;
             }
 

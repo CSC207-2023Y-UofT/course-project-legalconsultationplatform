@@ -14,7 +14,7 @@ public class QuestionControl {
         this.questionInput = questionInput;
     }
 
-    public UserResponseModel createQuestion(String questionCategory, String title, LocalDate createAt, LocalDate legalDeadline){
+    public TheQuestionResponseModel createQuestion(String questionCategory, String title, LocalDate createAt, LocalDate legalDeadline){
         QuestionRequestModel requestModel = new QuestionRequestModel(questionCategory, title, createAt, legalDeadline);
         return questionInput.createQuestion(requestModel);
     }

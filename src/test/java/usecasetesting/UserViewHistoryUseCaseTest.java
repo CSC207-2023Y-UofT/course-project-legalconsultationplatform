@@ -47,22 +47,17 @@ public class UserViewHistoryUseCaseTest {
         attorneyGateway = new AttorneyRepository();
 
         viewOutputBoundary = new ViewOutputBoundary() {
-            @Override
-            public void setControlContainer(ControlContainer controlContainer) {
-
-            }
 
             @Override
-            public UserResponseModel prepareFail(String msg) {
+            public ViewResponseModel prepareFail(String msg) {
                 return null;
             }
 
             @Override
-            public UserResponseModel prepareSuccess(UserResponseModel response) {
-                ViewResponseModel responseModel = (ViewResponseModel) response;
-                assertEquals(1, responseModel.getQuestionMap().size(), "The Question Map is not correct.");
+            public ViewResponseModel prepareSuccess(ViewResponseModel response) {
+                assertEquals(1, response.getQuestionMap().size(), "The Question Map is not correct.");
                 List<QuestionDisplayFormatter> arrayList;
-                arrayList = new ArrayList<>(responseModel.getQuestionMap().values());
+                arrayList = new ArrayList<>(response.getQuestionMap().values());
                 assertEquals("test title", arrayList.get(0).getTitle());
                 return null;
             }

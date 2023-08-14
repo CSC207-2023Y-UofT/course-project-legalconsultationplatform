@@ -5,5 +5,5 @@ import businessrule.requestmodel.QuestionRequestModel;
 import businessrule.responsemodel.UserResponseModel;
 
 public interface QuestionInputBoundary {
-    UserResponseModel createQuestion(QuestionRequestModel questionRequestModel);
+    TheQuestionResponseModel createQuestion(QuestionRequestModel questionRequestModel);
 }

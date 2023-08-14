@@ -15,6 +15,7 @@ import businessrule.usecase.util.QuestionMapConstructor;
 import entity.Question;
 import entity.User;
 
+import javax.swing.text.View;
 import java.util.List;
 import java.util.Map;
 
@@ -28,7 +29,7 @@ public abstract class ViewQuestionInteractorBase implements ViewInputBoundary {
     }
 
     @Override
-    public UserResponseModel viewQuestion() {
+    public ViewResponseModel viewQuestion() {
         // get input
         UserSession session = SessionManager.getSession();
         UserResponseModel response = session.getUserResponseModel();

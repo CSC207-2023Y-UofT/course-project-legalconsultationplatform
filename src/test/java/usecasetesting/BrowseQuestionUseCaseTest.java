@@ -37,19 +37,15 @@ public class BrowseQuestionUseCaseTest {
     private ClientGateway clientGateway;
     private AttorneyGateway attorneyGateway;
     private ViewOutputBoundary viewOutputBoundary = new ViewOutputBoundary() {
-        @Override
-        public void setControlContainer(ControlContainer controlContainer) {
-        }
 
         @Override
-        public UserResponseModel prepareFail(String msg) {
+        public ViewResponseModel prepareFail(String msg) {
             return null;
         }
 
         @Override
-        public UserResponseModel prepareSuccess(UserResponseModel response) {
-            ViewResponseModel responseModel = (ViewResponseModel) response;
-            assertEquals(0, responseModel.getQuestionMap().size(), "The Question Map is not correct.");
+        public ViewResponseModel prepareSuccess(ViewResponseModel response) {
+            assertEquals(0, response.getQuestionMap().size(), "The Question Map is not correct.");
             return null;
         }
 

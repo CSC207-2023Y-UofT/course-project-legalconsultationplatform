@@ -3,6 +3,7 @@ package adapter.presenter;
 
 import businessrule.UIFactory;
 import businessrule.outputboundary.TheQuestionOutputBoundary;
+import businessrule.responsemodel.TheQuestionResponseModel;
 import businessrule.responsemodel.UserResponseModel;
 import driver.screen.UIManager;
 import entity.ApplicationException;
@@ -17,12 +18,12 @@ public class TheQuestionResponseFormatter implements TheQuestionOutputBoundary {
         this.UIManager = UIManager;
     }
     @Override
-    public UserResponseModel prepareFail(String msg) {
+    public TheQuestionResponseModel prepareFail(String msg) {
         throw new ApplicationException(msg);
     }
 
     @Override
-    public UserResponseModel prepareSuccess(UserResponseModel response) {
+    public TheQuestionResponseModel prepareSuccess(TheQuestionResponseModel response) {
         JPanel screens = UIManager.getScreens();
         CardLayout cardLayout = UIManager.getCardLayout();
         JPanel questionUI = UIFactory.getUI(UIFactory.UIType.QUESTION_UI, UIManager, response);

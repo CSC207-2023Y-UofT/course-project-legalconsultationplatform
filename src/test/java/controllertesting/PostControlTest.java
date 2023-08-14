@@ -5,8 +5,13 @@ import businessrule.SessionManager;
 import businessrule.UserSession;
 import businessrule.inputboundary.PostInputBoundary;
 import businessrule.requestmodel.PostRequestModel;
+import businessrule.responsemodel.TheQuestionResponseModel;
 import businessrule.responsemodel.UserResponseModel;
+import businessrule.usecase.util.PostDisplayFormatter;
 import org.junit.jupiter.api.Test;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -17,12 +22,14 @@ public class PostControlTest {
     private static String USER_TYPE = "SampleType";
     private static int QUESTION_ID = 333333333;
     private static String POST_TEXT = "Sample Post Text";
+    private static final Map<Integer, PostDisplayFormatter> POST_MAP = new HashMap<>();
 
-    private static UserResponseModel expectedResponse;
+    private static TheQuestionResponseModel expectedResponse;
 
     public void setUpPostControl() {
         // Arrange
-        expectedResponse = new UserResponseModel(USER_ID, USER_NAME, USER_TYPE);
+        expectedResponse =
+        = new UserResponseModel(USER_ID, USER_NAME, USER_TYPE).toQuestionResponseBuilder()
     }
 
     @Test
