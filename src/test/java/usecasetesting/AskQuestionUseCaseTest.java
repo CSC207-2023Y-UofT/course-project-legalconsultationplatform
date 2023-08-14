@@ -1,6 +1,5 @@
 package usecasetesting;
 
-import adapter.controller.ControlContainer;
 import businessrule.SessionManager;
 import businessrule.UserSession;
 import businessrule.gateway.AttorneyGateway;
@@ -30,18 +29,16 @@ public class AskQuestionUseCaseTest {
     final static int ATTORNEY_ID = 11345678;
     final static int SECOND_ATTORNEY_ID = 12222222;
     private QuestionGateway questionGateway;
-    private QuestionFactory questionFactory;
     private ClientGateway clientGateway;
     private AttorneyGateway attorneyGateway;
-    private TheQuestionOutputBoundary theQuestionOutputBoundary;
     private QuestionInputBoundary questionInputBoundary;
 
     public void setUpAskQuestionUseCase(){
         questionGateway = new QuestionRepo();
-        questionFactory = new QuestionFactory();
+        QuestionFactory questionFactory = new QuestionFactory();
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
-        theQuestionOutputBoundary = new TheQuestionOutputBoundary() {
+        TheQuestionOutputBoundary theQuestionOutputBoundary = new TheQuestionOutputBoundary() {
 
             @Override
             public TheQuestionResponseModel prepareFail(String msg) {

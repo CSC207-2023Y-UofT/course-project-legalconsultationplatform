@@ -45,7 +45,7 @@ public class Main {
 
     //define outputBoundary
     UserOutputBoundary homePageOutputBoundary = new HomePageResponseFormatter(UIManager);
-    UserOutputBoundary loginHomePageOutputBoundary = new LoginHomePageResponseFormatter(UIManager);
+    UserOutputBoundary loginHomePageOutputBoundary = new HomePageResponseFormatter(UIManager);
     BaseOutputBoundary registerOutputBoundary = new RegisterResponseFormatter(UIManager);
     TheQuestionOutputBoundary theQuestionOutputBoundary = new TheQuestionResponseFormatter(UIManager);
     ViewOutputBoundary viewOutputBoundary = new ViewResponseFormatter(UIManager);

@@ -1,7 +1,6 @@
 package usecasetesting;
 
 
-import adapter.controller.ControlContainer;
 import businessrule.SessionManager;
 import businessrule.UserSession;
 import businessrule.gateway.*;
@@ -13,10 +12,8 @@ import businessrule.usecase.CloseQuestionInteractor;
 import driver.database.*;
 import entity.Attorney;
 import entity.Client;
-import entity.factory.PostFactory;
 import entity.Question;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -30,22 +27,17 @@ public class CloseUseCaseTest {
     final static int CLOSED_QUESTION_ID = 333333333;
     private QuestionGateway questionGateway;
     private PostGateway postGateway;
-    private PostFactory postFactory;
-    private UserGatewayFactory userGatewayFactory;
     private ClientGateway clientGateway;
     private AttorneyGateway attorneyGateway;
-    private UserOutputBoundary userOutputBoundary;
     private CloseInputBoundary closeInputBoundary;
 
     public void setUpCloseUseCase(){
 
         questionGateway = new QuestionRepo();
         postGateway = new PostRepo();
-        postFactory = new PostFactory();
-        userGatewayFactory = new UserGatewayFactory();
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
-        userOutputBoundary = new UserOutputBoundary() {
+        UserOutputBoundary userOutputBoundary = new UserOutputBoundary() {
 
             @Override
             public UserResponseModel prepareFail(String msg) {

@@ -1,24 +1,19 @@
 package usecasetesting;
 
-import adapter.controller.ControlContainer;
+
 import businessrule.SessionManager;
 import businessrule.UserSession;
 import businessrule.gateway.*;
 import businessrule.inputboundary.PostInputBoundary;
-
 import businessrule.outputboundary.TheQuestionOutputBoundary;
 import businessrule.requestmodel.PostRequestModel;
-
 import businessrule.responsemodel.TheQuestionResponseModel;
 import businessrule.responsemodel.UserResponseModel;
 import businessrule.usecase.ReplyInteractor;
 import driver.database.*;
-
 import entity.*;
-
 import entity.factory.PostFactory;
 import org.junit.jupiter.api.Test;
-
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -34,21 +29,18 @@ public class ReplyUseCaseTest {
     final static int CLOSED_QUESTION_ID = 333333333;
     private QuestionGateway questionGateway;
     private PostGateway postGateway;
-    private PostFactory postFactory;
-    private UserGatewayFactory userGatewayFactory;
     private ClientGateway clientGateway;
     private AttorneyGateway attorneyGateway;
-    private TheQuestionOutputBoundary theQuestionOutputBoundary;
     private PostInputBoundary postInputBoundary;
     public void setUpReplyUseCase(){
 
         questionGateway = new QuestionRepo();
         postGateway = new PostRepo();
-        postFactory = new PostFactory();
-        userGatewayFactory = new UserGatewayFactory();
+        PostFactory postFactory = new PostFactory();
+        UserGatewayFactory userGatewayFactory = new UserGatewayFactory();
         clientGateway = new ClientRepository();
-        attorneyGateway = new AttorneyRepository();;
-        theQuestionOutputBoundary = new TheQuestionOutputBoundary() {
+        attorneyGateway = new AttorneyRepository();
+        TheQuestionOutputBoundary theQuestionOutputBoundary = new TheQuestionOutputBoundary() {
 
             @Override
             public TheQuestionResponseModel prepareFail(String msg) {

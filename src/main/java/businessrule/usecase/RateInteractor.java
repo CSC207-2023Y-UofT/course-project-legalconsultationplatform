@@ -32,6 +32,7 @@ public class RateInteractor implements RateInputBoundary {
     public UserResponseModel rateAnswer(RateRequestModel rateRequestModel) {
         // get input
         int rating = rateRequestModel.getRating();
+        System.out.println("rate in usecase is " + rating);
         int answerId = rateRequestModel.getAnswerId();
         UserSession session = SessionManager.getSession();
         UserResponseModel response = session.getUserResponseModel();
@@ -42,6 +43,7 @@ public class RateInteractor implements RateInputBoundary {
         if (answer.isClose() && answer.isTaken()) {
             questionGateway.updateRating(answerId, rating);
             Attorney attorney = attorneyGateway.get(answer.getTakenByAttorney());
+            System.out.println(questionGateway.get(answerId).getRating());
 
             // Send email notification to the attorney
             sendEmail(attorney, answer);
@@ -61,7 +63,7 @@ public class RateInteractor implements RateInputBoundary {
             String questionType = answer.getType();
             String questionTitle = answer.getTitle();
             String platformName = "Legal Consultation Platform+";
-            String stringRating = (answer.getRating() == 0) ? "Unsatisfied" : "Satisfied";
+            String stringRating = (answer.getRating() == 0) ? "Not satisfied" : "Satisfied";
 
             String emailContent = "Dear " + attorneyName + ",\n\n" +
                     "We hope you're doing well. We wanted to inform you that your response to the " + questionType +

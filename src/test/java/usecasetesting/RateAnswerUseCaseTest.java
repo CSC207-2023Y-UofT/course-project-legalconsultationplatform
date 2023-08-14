@@ -1,23 +1,17 @@
 package usecasetesting;
 
 
-import adapter.controller.ControlContainer;
 import businessrule.SessionManager;
 import businessrule.UserSession;
 import businessrule.gateway.*;
-
 import businessrule.inputboundary.RateInputBoundary;
-
 import businessrule.outputboundary.UserOutputBoundary;
 import businessrule.requestmodel.RateRequestModel;
-
 import businessrule.responsemodel.UserResponseModel;
 import businessrule.usecase.RateInteractor;
-
 import driver.database.*;
 import entity.Attorney;
 import entity.Client;
-import entity.factory.PostFactory;
 import entity.Question;
 import org.junit.jupiter.api.Test;
 
@@ -30,31 +24,25 @@ public class RateAnswerUseCaseTest {
     final static String CLIENT_USERNAME = "test client";
     final static String CLIENT_TYPE = "Client";
     final static int ATTORNEY_ID = 11345678;
-    final static int SECOND_ATTORNEY_ID = 12222222;
     final static int QUESTION_ID = 323456789;
     final static int CLOSED_QUESTION_ID = 333333333;
     private QuestionGateway questionGateway;
     private PostGateway postGateway;
-    private PostFactory postFactory;
-    private UserGatewayFactory userGatewayFactory;
     private ClientGateway clientGateway;
     private AttorneyGateway attorneyGateway;
-    private UserOutputBoundary userOutputBoundary;
     private RateInputBoundary rateInputBoundary;
 
     public void setUpRateAnswerUseCase(){
 
         questionGateway = new QuestionRepo();
         postGateway = new PostRepo();
-        postFactory = new PostFactory();
-        userGatewayFactory = new UserGatewayFactory();
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
         clientGateway.deleteAll();
         questionGateway.deleteAll();
         attorneyGateway.deleteAll();
         postGateway.deleteAll();
-        userOutputBoundary = new UserOutputBoundary() {
+        UserOutputBoundary userOutputBoundary = new UserOutputBoundary() {
 
             @Override
             public UserResponseModel prepareFail(String msg) {

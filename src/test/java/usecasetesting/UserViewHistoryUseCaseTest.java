@@ -1,6 +1,5 @@
 package usecasetesting;
 
-import adapter.controller.ControlContainer;
 import businessrule.SessionManager;
 import businessrule.UserSession;
 import businessrule.gateway.AttorneyGateway;
@@ -36,17 +35,15 @@ public class UserViewHistoryUseCaseTest {
     private QuestionGateway questionGateway;
     private ClientGateway clientGateway;
     private AttorneyGateway attorneyGateway;
-    private UserGatewayFactory userGatewayFactory;
-    private ViewOutputBoundary viewOutputBoundary;
     private ViewInputBoundary viewInputBoundary;
 
     public void setUpViewQuestionUseCase(){
-        userGatewayFactory = new UserGatewayFactory();
+        UserGatewayFactory userGatewayFactory = new UserGatewayFactory();
         questionGateway = new QuestionRepo();
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
 
-        viewOutputBoundary = new ViewOutputBoundary() {
+        ViewOutputBoundary viewOutputBoundary = new ViewOutputBoundary() {
 
             @Override
             public ViewResponseModel prepareFail(String msg) {
@@ -63,7 +60,7 @@ public class UserViewHistoryUseCaseTest {
             }
         };
 
-        viewInputBoundary = new ViewQuestionInteractor( viewOutputBoundary, questionGateway, userGatewayFactory);
+        viewInputBoundary = new ViewQuestionInteractor(viewOutputBoundary, questionGateway, userGatewayFactory);
 
         Question question = new Question();
         question.setQuestionId(QUESTION_ID);
