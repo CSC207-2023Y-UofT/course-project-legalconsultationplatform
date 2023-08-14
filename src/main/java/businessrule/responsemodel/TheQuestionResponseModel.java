@@ -22,6 +22,16 @@ public class TheQuestionResponseModel extends UserResponseModel{
         this.postMap = builder.postMap;
     }
 
+    public TheQuestionResponseModel(int userId, String userName, String userType, int questionId, String title, String type, LocalDate deadline, boolean isClose, Map<Integer, PostDisplayFormatter> postMap) {
+        super(userId, userName, userType);
+        this.questionId = questionId;
+        this.title = title;
+        this.type = type;
+        this.deadline = deadline;
+        this.isClose = isClose;
+        this.postMap = postMap;
+    }
+
     public static class Builder {
         private int userId;
         private String userName;

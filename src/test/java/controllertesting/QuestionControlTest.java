@@ -25,7 +25,7 @@ public class QuestionControlTest {
     private static String TITLE = "SampleTitle";
     private static String TYPE = "SampleType";
 
-    private static UserResponseModel expectedUserResponse;
+    private static TheQuestionResponseModel expectedUserResponse;
 
     public void setUpQuestionControl() {
         // Arrange
@@ -41,7 +41,8 @@ public class QuestionControlTest {
         String userName = "SampleUser";
         String userType = "SampleType";
 
-        expectedUserResponse = new UserResponseModel(userId, userName, userType);
+        expectedUserResponse = new TheQuestionResponseModel(USER_ID, USER_NAME, "Client", QUESTION_ID, TITLE, TYPE, null, false, null);
+
     }
 
     @Test
@@ -58,7 +59,7 @@ public class QuestionControlTest {
         LocalDate legalDeadline = LocalDate.now().plusDays(10);
 
         // Act
-        UserResponseModel actualResponse = control.createQuestion(questionCategory, TITLE, createAt, legalDeadline);
+        TheQuestionResponseModel actualResponse = control.createQuestion(questionCategory, TITLE, createAt, legalDeadline);
 
         // Assert
         assertEquals(expectedUserResponse, actualResponse);

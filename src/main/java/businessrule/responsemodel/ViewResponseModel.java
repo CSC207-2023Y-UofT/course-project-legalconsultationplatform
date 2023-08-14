@@ -13,6 +13,11 @@ public class ViewResponseModel extends UserResponseModel{
         this.questionMap = builder.questionMap;
     }
 
+    public ViewResponseModel(int userId, String userName, String userType, Map<Integer, QuestionDisplayFormatter> questionMap) {
+        super(userId, userName, userType);
+        this.questionMap = questionMap;
+    }
+
     public static class Builder {
         private int userId;
         private String userName;
