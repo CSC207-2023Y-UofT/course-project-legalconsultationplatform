@@ -33,10 +33,12 @@ public class UIDrawer {
             JButton button = new JButton(s);
             button.addActionListener(parent);
             setButton(button, dimension);
+            button.setAlignmentX(Component.CENTER_ALIGNMENT);
             result.add(button);
             result.add(spacer);
         }
         result.setOpaque(false);
+        result.setAlignmentX(Component.CENTER_ALIGNMENT);
         return result;
     }
 

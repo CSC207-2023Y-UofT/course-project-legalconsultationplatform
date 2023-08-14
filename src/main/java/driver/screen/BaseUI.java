@@ -10,6 +10,7 @@ public abstract class BaseUI extends JPanel implements ActionListener {
         setBackgroundFrame(this);
         setBackground(lightGreenColor);
         setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        setAlignmentX(CENTER_ALIGNMENT);
         this.uiManager = UIManager;
     }
 }

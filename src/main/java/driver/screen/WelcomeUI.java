@@ -27,6 +27,7 @@ public class WelcomeUI extends BaseUI implements ActionListener {
         //Welcome title
         JLabel title = new JLabel(TITLE_TEXT);
         setTitleFont(title);
+        title.setAlignmentX(CENTER_ALIGNMENT);
 
         //Buttons panel
 

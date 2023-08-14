@@ -120,8 +120,10 @@ public class RegisterUI extends BaseUI{
         contentPanel.add(spacer2);
         contentPanel.add(inputPanel);
         contentPanel.add(buttons);
+        contentPanel.setBackground(lightGreenColor);
 
         JScrollPane scrollPane = new JScrollPane(contentPanel);
+        scrollPane.setOpaque(false);
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
 
