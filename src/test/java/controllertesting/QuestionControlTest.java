@@ -6,24 +6,18 @@ import businessrule.UserSession;
 import businessrule.inputboundary.QuestionInputBoundary;
 import businessrule.requestmodel.QuestionRequestModel;
 import businessrule.responsemodel.TheQuestionResponseModel;
-
 import businessrule.responsemodel.UserResponseModel;
-import businessrule.usecase.util.PostDisplayFormatter;
 import org.junit.jupiter.api.Test;
-
 import java.time.LocalDate;
-import java.util.HashMap;
-import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class QuestionControlTest {
-    private static int USER_ID = 11234567;
-    private static int QUESTION_ID = 333333333;
-    private static String USER_NAME = "SampleUser";
-    private static String TITLE = "SampleTitle";
-    private static String TYPE = "SampleType";
+    private static final int USER_ID = 11234567;
+    private static final int QUESTION_ID = 333333333;
+    private static final String USER_NAME = "SampleUser";
+    private static final String TITLE = "SampleTitle";
+    private static final String TYPE = "SampleType";
 
     private static TheQuestionResponseModel expectedUserResponse;
 
@@ -31,15 +25,7 @@ public class QuestionControlTest {
         // Arrange
         UserResponseModel userResponseModel = new UserResponseModel(USER_ID, USER_NAME, TYPE);
         UserSession userSession = new UserSession(userResponseModel);
-        SessionManager.setSession(userSession); // Set the user session
-
-        LocalDate deadline = LocalDate.now().plusDays(5);
-        boolean isClose = false;
-        Map<Integer, PostDisplayFormatter> postMap = new HashMap<>(); // Assuming suitable values or empty
-
-        int userId = 42; // Set the expected userId
-        String userName = "SampleUser";
-        String userType = "SampleType";
+        SessionManager.setSession(userSession);
 
         expectedUserResponse = new TheQuestionResponseModel(USER_ID, USER_NAME, "Client", QUESTION_ID, TITLE, TYPE, null, false, null);
 

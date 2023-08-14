@@ -11,13 +11,13 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 public class UserLoginControlTest {
-    private static int USER_ID = 11234567;
-    private static String PASSWORD = "test password";
+    private static final int USER_ID = 11234567;
+    private static final String PASSWORD = "test password";
     private static UserResponseModel expectedResponse;
 
     public void setUpUserLoginControl() {
         // Arrange
-        expectedResponse = new UserResponseModel(USER_ID, "SampleUser", "SampleType"); // Assuming suitable constructor
+        expectedResponse = new UserResponseModel(USER_ID, "SampleUser", "SampleType");
     }
 
     @Test

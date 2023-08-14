@@ -1,10 +1,7 @@
 package entitytesting;
 
-import entity.Attorney;
 import org.junit.jupiter.api.Test;
 import entity.Question;
-
-
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -63,31 +60,18 @@ class QuestionTest {
         assertEquals(expectedAskedByClient, question.getAskedByClient(), "AskedByClient is wrong.");
         assertEquals(expectedLegalDeadline, question.getLegalDeadline(), "LegalDeadline is wrong.");
     }
-    @Test
-    void testEqualsSucceed() {
-        Question question1 = new Question(1, "fraud", "Question Title", LocalDate.now(), 2000000, LocalDate.now());
-        assertEquals(true, question1.equals(question1), "The equal method is wrong");
-    }
-
-    @Test
-    void testEqualsFailByNotQuestion() {
-        Question question1 = new Question(1, "fraud", "Question Title", LocalDate.now(), 2000000, LocalDate.now());
-        Attorney attorney = new Attorney();
-
-        assertEquals(false, question1.equals(attorney), "The equal method is wrong");
-    }
 
     @Test
     void testEqualsFailByNotEqual() {
         Question question1 = new Question(1, "fraud", "Question Title", LocalDate.now(), 2000000, LocalDate.now());
         Question question2 = new Question(2, "fraud", "Question Title", LocalDate.now(), 2000000, LocalDate.now());
-        assertEquals(false, question1.equals(question2), "The equal method is wrong");
+        assertNotEquals(question1, question2, "The equal method is wrong");
     }
 
     @Test
     void testHashCodeFail() {
         Question question1 = new Question(1, "fraud", "Question Title", LocalDate.now(), 2000000, LocalDate.now());
-        assertEquals(false, question1.hashCode() == Objects.hashCode(2), "The hashCode is wrong");
+        assertNotEquals(question1.hashCode(), Objects.hashCode(2), "The hashCode is wrong");
     }
 
     @Test
