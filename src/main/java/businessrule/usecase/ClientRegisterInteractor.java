@@ -23,6 +23,9 @@ public class ClientRegisterInteractor extends UserRegisterInteractor<ClientGatew
             return outputBoundary.prepareFail(e.getMessage());
         }
         int userId = generateId();
+        requestModel.setUserId(userId);
+        Client client = userFactory.createUser(requestModel);
+        userGateway.save(client);
         String message = "Your userId is " + userId;
         return outputBoundary.prepareSuccess(message);
     }

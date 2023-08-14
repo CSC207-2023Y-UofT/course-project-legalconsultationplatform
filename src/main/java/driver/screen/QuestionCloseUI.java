@@ -11,11 +11,6 @@ import static driver.screen.UIDrawer.*;
 
 
 public class QuestionCloseUI extends QuestionUI{
-    protected String userName;
-    protected int userId;
-    protected UIManager UIManager;
-    JPanel topPanel;
-    JPanel backAndHomepage;
     public QuestionCloseUI(String userName, int userId, UIManager UIManager, String title,
                            String questionType, LocalDate deadline, Map<Integer, PostDisplayFormatter> postMap) {
         super(userName, userId, UIManager, title, questionType, deadline, postMap);

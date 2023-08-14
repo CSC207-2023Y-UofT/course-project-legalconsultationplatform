@@ -13,13 +13,6 @@ import java.util.Map;
 import static driver.screen.UIDrawer.*;
 
 public class QuestionOpenClientUI extends QuestionOpenAttorneyUI{
-    protected String userName;
-    protected int userId;
-    protected UIManager UIManager;
-    JPanel topPanel;
-    JPanel backAndHomepage;
-    JPanel inputPost;
-    JPanel closeButton;
 
     public QuestionOpenClientUI(String userName, int userId, UIManager UIManager, String title,
                                 String questionType, LocalDate deadline, Map<Integer, PostDisplayFormatter> postMap) {

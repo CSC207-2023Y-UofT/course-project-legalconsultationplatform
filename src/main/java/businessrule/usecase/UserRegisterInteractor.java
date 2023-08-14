@@ -32,9 +32,4 @@ public abstract class UserRegisterInteractor<T extends UserGateway<U>, F extends
             exists = userGateway.existsById(randomUserId);
         } return randomUserId;
     }
-
-    protected int saveUser(U user) {
-        userGateway.save(user);
-        return user.getUserId();
-    }
 }

@@ -6,11 +6,10 @@ import java.awt.*;
 import static driver.screen.UIDesign.setTitleFont;
 
 public abstract class HomePageUI extends UserUI {
-    protected String userName;
-    protected int userId;
-    protected UIManager UIManager;
     protected JLabel title;
     static final String TITLE_NAME = "Home";
+    static final String LOG_OUT_BUTTON_NAME = "Log Out";
+    static final String VIEW_QUESTION_HISTORY_BUTTON_NAME = "View question history";
 
     public HomePageUI(String userName, int userId, UIManager UIManager) {
         super(userName, userId, UIManager);

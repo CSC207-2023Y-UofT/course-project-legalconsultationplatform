@@ -8,7 +8,6 @@ public abstract class UserUI extends BaseUI{
     protected String userName;
     protected int userId;
     protected JPanel helloMessage;
-    protected UIManager UIManager;
 
     public UserUI(String userName, int userId, UIManager UIManager) {
         super(UIManager);

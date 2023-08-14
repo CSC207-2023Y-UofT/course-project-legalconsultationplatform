@@ -2,12 +2,10 @@ package driver.screen;
 
 import adapter.controller.ClientRegisterControl;
 import adapter.controller.ControlContainer;
-import com.objectdb.o.BAC;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -15,7 +13,6 @@ import static driver.screen.UIDrawer.*;
 import static driver.screen.UIDesign.*;
 
 public class RegisterUI extends BaseUI{
-    UIManager UIManager;
 
     JTextField userName = new JTextField(15);
     JPasswordField password1 = new JPasswordField(15);
@@ -66,7 +63,7 @@ public class RegisterUI extends BaseUI{
 
         //Input panel
         JPanel inputPanel = new JPanel();
-        setSizeInLayout(inputPanel, new Dimension(FRAME_WIDTH, 150));
+        setSizeInLayout(inputPanel, new Dimension(FRAME_WIDTH, 550));
         JPanel inputSpacer = addSpacer(5);
         JPanel userNamePanel = labelTextPanelDrawer(new JLabel(USER_NAME_PROMPT), userName);
         JPanel passwordPanel = labelTextPanelDrawer(new JLabel(PASSWORD_PROMPT), password1);
@@ -106,6 +103,7 @@ public class RegisterUI extends BaseUI{
         inputPanel.add(inputSpacer);
         inputPanel.add(maritalStatusPanel);
         inputPanel.add(inputSpacer);
+        inputPanel.setOpaque(false);
 
         //Register button here
         List<String> buttonList = new ArrayList<>();
@@ -113,11 +111,21 @@ public class RegisterUI extends BaseUI{
         buttonList.add(BACK_BUTTON_NAME);
         JPanel buttons = setButtonPanel(buttonList, new Dimension(150, 50), 20, this);
 
-        add(spacer1);
-        add(title);
-        add(spacer2);
-        add(inputPanel);
-        add(buttons);
+        JPanel contentPanel = new JPanel();
+        contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
+        contentPanel.add(Box.createVerticalStrut(20));
+
+        contentPanel.add(spacer1);
+        contentPanel.add(title);
+        contentPanel.add(spacer2);
+        contentPanel.add(inputPanel);
+        contentPanel.add(buttons);
+
+        JScrollPane scrollPane = new JScrollPane(contentPanel);
+        scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        scrollPane.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
+
+        add(scrollPane);
     }
 
 
@@ -125,9 +133,9 @@ public class RegisterUI extends BaseUI{
     public void actionPerformed(ActionEvent e) {
         System.out.println("User clicks register");
         String actionCommand = e.getActionCommand();
-        ControlContainer controlContainer = UIManager.getControlContainer();
-        JPanel screens = UIManager.getScreens();
-        CardLayout cardLayout = UIManager.getCardLayout();
+        ControlContainer controlContainer = uiManager.getControlContainer();
+        JPanel screens = uiManager.getScreens();
+        CardLayout cardLayout = uiManager.getCardLayout();
         ClientRegisterControl clientRegisterControl = controlContainer.getClientRegisterControl();
         switch (actionCommand) {
             case REGISTER_BUTTON_NAME:

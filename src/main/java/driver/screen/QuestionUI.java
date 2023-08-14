@@ -2,7 +2,6 @@ package driver.screen;
 import adapter.controller.ControlContainer;
 import businessrule.usecase.util.PostDisplayFormatter;
 
-import javax.naming.ldap.Control;
 import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
@@ -20,15 +19,11 @@ import static driver.screen.UIDesign.*;
 import static driver.screen.UIDrawer.*;
 
 public abstract class QuestionUI extends UserUI {
-    protected String userName;
-    protected int userId;
-    protected JPanel helloMessage;
-    protected UIManager UIManager;
     int questionId;
-    JPanel questionTitle;
-    JPanel previousDiscussions;
-    JScrollPane postScrollPane;
-    JPanel topPanel;
+    JPanel questionTitle = new JPanel();
+    JPanel previousDiscussions = new JPanel();
+    JScrollPane postScrollPane = new JScrollPane();
+    JPanel topPanel = new JPanel();
     JPanel backAndHomepage;
     JPanel inputPost;
     JPanel closeButton;
@@ -93,6 +88,8 @@ public abstract class QuestionUI extends UserUI {
         //Set up topPanel
         JPanel spacer = addSpacer(20);
 
+        topPanel.setLayout(new BoxLayout(topPanel, BoxLayout.Y_AXIS));
+        topPanel.setAlignmentX(CENTER_ALIGNMENT);
         topPanel.add(helloMessage);
         topPanel.add(questionTitle);
         topPanel.add(spacer);
@@ -173,9 +170,9 @@ public abstract class QuestionUI extends UserUI {
 
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
-        ControlContainer controlContainer = UIManager.getControlContainer();
-        CardLayout cardLayout = UIManager.getCardLayout();
-        JPanel screens = UIManager.getScreens();
+        ControlContainer controlContainer = uiManager.getControlContainer();
+        CardLayout cardLayout = uiManager.getCardLayout();
+        JPanel screens = uiManager.getScreens();
         switch (actionCommand) {
             case HOME_PAGE_BUTTON_NAME:
                 cardLayout.show(screens, "Home Page");

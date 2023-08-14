@@ -14,14 +14,7 @@ import static driver.screen.UIDrawer.*;
 
 
 public class ClientHomePageUI extends HomePageUI implements ActionListener {
-    protected String userName;
-    protected int userId;
-    protected JPanel helloMessage;
-    protected UIManager UIManager;
-    protected JLabel title;
     static final String ASK_NEW_QUESTION_BUTTON_NAME = "Ask new question";
-    static final String VIEW_QUESTION_HISTORY_BUTTON_NAME = "View question history";
-    static final String LOG_OUT_BUTTON_NAME = "Log Out";
     public ClientHomePageUI(String userName, int userId, UIManager UIManager) {
         super(userName, userId, UIManager);
 
@@ -45,14 +38,14 @@ public class ClientHomePageUI extends HomePageUI implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
-        ControlContainer controlContainer = UIManager.getControlContainer();
-        JPanel screens = UIManager.getScreens();
-        CardLayout cardLayout = UIManager.getCardLayout();
+        ControlContainer controlContainer = uiManager.getControlContainer();
+        JPanel screens = uiManager.getScreens();
+        CardLayout cardLayout = uiManager.getCardLayout();
 
         switch (actionCommand) {
             case ASK_NEW_QUESTION_BUTTON_NAME:
                 System.out.println("Client chooses to ask new question.");
-                AskQuestionUI askQuestionUI = new AskQuestionUI(userName, userId, UIManager);
+                AskQuestionUI askQuestionUI = new AskQuestionUI(userName, userId, uiManager);
                 screens.add(askQuestionUI, "askQuestion");
                 cardLayout.show(screens, "askQuestion");
                 break;
@@ -64,7 +57,7 @@ public class ClientHomePageUI extends HomePageUI implements ActionListener {
                 break;
 
             case LOG_OUT_BUTTON_NAME:
-                WelcomeUI welcomeUI = new WelcomeUI(UIManager);
+                WelcomeUI welcomeUI = new WelcomeUI(uiManager);
                 screens.add(welcomeUI, "Welcome");
                 cardLayout.show(screens, "Welcome");
                 break;

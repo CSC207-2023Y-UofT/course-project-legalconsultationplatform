@@ -15,10 +15,6 @@ import static driver.screen.UIDesign.*;
 import static driver.screen.UIDrawer.*;
 
 public class QuestionListUI extends UserUI implements ActionListener {
-    protected String userName;
-    protected int userId;
-    protected JPanel helloMessage;
-    protected UIManager UIManager;
     Map<Integer, QuestionDisplayFormatter> questionMap;
     static final String HOME_PAGE_BUTTON_NAME = "Home Page";
 
@@ -86,8 +82,8 @@ public class QuestionListUI extends UserUI implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        JPanel screens = UIManager.getScreens();
-        CardLayout cardLayout = UIManager.getCardLayout();
+        JPanel screens = uiManager.getScreens();
+        CardLayout cardLayout = uiManager.getCardLayout();
         cardLayout.show(screens, "Home Page");
     }
 }

@@ -19,7 +19,6 @@ import static driver.screen.UIDrawer.*;
  * @author kaxi
  */
 public class LoginUI extends BaseUI implements ActionListener {
-    UIManager UIManager;
     JTextField userId = new JTextField(15);
     JPasswordField password = new JPasswordField(15);
     static final String LOGIN_BUTTON_NAME = "Login";
@@ -70,15 +69,16 @@ public class LoginUI extends BaseUI implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent evt) {
         String actionCommand = evt.getActionCommand();
-        ControlContainer controlContainer = UIManager.getControlContainer();
-        JPanel screens = UIManager.getScreens();
-        CardLayout cardLayout = UIManager.getCardLayout();
+        ControlContainer controlContainer = uiManager.getControlContainer();
+        JPanel screens = uiManager.getScreens();
+        CardLayout cardLayout = uiManager.getCardLayout();
         UserLoginControl loginControl = controlContainer.getUserLoginControl();
         switch (actionCommand) {
             case LOGIN_BUTTON_NAME:
                 try {
                     loginControl.login(Integer.parseInt(userId.getText()), String.valueOf(password.getPassword()));
                 } catch (Exception e) {
+                    e.printStackTrace();
                     JOptionPane.showMessageDialog(this, e.getMessage());
                 }
                 break;

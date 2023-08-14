@@ -14,15 +14,8 @@ import java.util.List;
 import static driver.screen.UIDrawer.*;
 
 public class AttorneyHomePageUI extends HomePageUI implements ActionListener {
-    protected String userName;
-    protected int userId;
-    protected JPanel helloMessage;
-    protected UIManager UIManager;
-    protected JLabel title;
-    static final String BROWSE_AVAILABLE_QUESTIONS_BUTTON_NAME = "Ask new question";
-    static final String VIEW_QUESTION_HISTORY_BUTTON_NAME = "View question history";
-    static final String RECOMMENDED_QUESTIONS_BUTTON_NAME = "Recommended questions";
-    static final String LOG_OUT_BUTTON_NAME = "Log Out";
+    static final String BROWSE_AVAILABLE_QUESTIONS_BUTTON_NAME = "Browse Available Questions";
+    static final String RECOMMENDED_QUESTIONS_BUTTON_NAME = "Recommended Questions";
     public AttorneyHomePageUI(String userName, int userId, UIManager UIManager) {
         super(userName, userId, UIManager);
 
@@ -48,9 +41,9 @@ public class AttorneyHomePageUI extends HomePageUI implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
-        ControlContainer controlContainer = UIManager.getControlContainer();
-        JPanel screens = UIManager.getScreens();
-        CardLayout cardLayout = UIManager.getCardLayout();
+        ControlContainer controlContainer = uiManager.getControlContainer();
+        JPanel screens = uiManager.getScreens();
+        CardLayout cardLayout = uiManager.getCardLayout();
         switch (actionCommand) {
             case BROWSE_AVAILABLE_QUESTIONS_BUTTON_NAME:
                 ViewQuestionControl browseQuestionControl = controlContainer.getBrowseQuestionControl();
@@ -68,7 +61,7 @@ public class AttorneyHomePageUI extends HomePageUI implements ActionListener {
                 break;
 
             case LOG_OUT_BUTTON_NAME:
-                WelcomeUI welcomeUI = new WelcomeUI(UIManager);
+                WelcomeUI welcomeUI = new WelcomeUI(uiManager);
                 screens.add(welcomeUI, "Welcome");
                 cardLayout.show(screens, "Welcome");
                 break;

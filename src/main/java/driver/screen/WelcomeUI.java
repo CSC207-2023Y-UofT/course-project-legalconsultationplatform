@@ -13,7 +13,6 @@ import static driver.screen.UIDesign.*;
 import static driver.screen.UIDrawer.*;
 
 public class WelcomeUI extends BaseUI implements ActionListener {
-    UIManager UIManager;
     static final String TITLE_TEXT = "WELCOME";
     static final String REGISTER_BUTTON_NAME = "Register";
     static final String LOGIN_BUTTON_NAME = "Login";
@@ -45,20 +44,18 @@ public class WelcomeUI extends BaseUI implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
-        System.out.println("Control container is"+ UIManager.getControlContainer());
-        ControlContainer controlContainer = UIManager.getControlContainer();
-        JPanel screens = UIManager.getScreens();
-        CardLayout cardLayout = UIManager.getCardLayout();
+        JPanel screens = uiManager.getScreens();
+        CardLayout cardLayout = uiManager.getCardLayout();
         switch (actionCommand) {
             case REGISTER_BUTTON_NAME:
-                RegisterUI registerUI = new RegisterUI(UIManager);
+                RegisterUI registerUI = new RegisterUI(uiManager);
                 screens.add(registerUI, "Register");
                 cardLayout.show(screens, "Register");
                 System.out.println("User chooses register\nRegister screen showed");
                 break;
 
             case LOGIN_BUTTON_NAME:
-                LoginUI loginUI = new LoginUI(UIManager);
+                LoginUI loginUI = new LoginUI(uiManager);
                 screens.add(loginUI, "Login");
                 cardLayout.show(screens, "Login");
                 System.out.println("User chooses login\nLogin screen showed");

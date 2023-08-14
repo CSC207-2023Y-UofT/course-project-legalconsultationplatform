@@ -24,8 +24,9 @@ public class UIDesign {
     public static Font italicFont = new Font("Novo Sans", Font.ITALIC, 12);
 
     //All shape and sizes used in the UI
-    public static Dimension frameSize = new Dimension(360, 640);
     public static final int FRAME_WIDTH = 360;
+    public static final int FRAME_HEIGHT = 640;
+    public static Dimension frameSize = new Dimension(FRAME_WIDTH, FRAME_HEIGHT);
 
     private UIDesign() {
     }

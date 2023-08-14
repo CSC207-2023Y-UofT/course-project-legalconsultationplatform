@@ -49,8 +49,21 @@ public class UIFactory {
         return new QuestionListUI(viewResponseModel.getUserName(), viewResponseModel.getUserId(), uiManager, viewResponseModel.getQuestionMap());
     }
 
-    private static QuestionCloseUI getQuestionUI(UIManager uiManager, TheQuestionResponseModel questionResponseModel) {
-        return new QuestionCloseUI(questionResponseModel.getUserName(), questionResponseModel.getUserId(), uiManager, questionResponseModel.getTitle(), questionResponseModel.getType(), questionResponseModel.getDeadline(), questionResponseModel.getPostMap());
+    private static QuestionUI getQuestionUI(UIManager uiManager, TheQuestionResponseModel questionResponseModel) {
+        String userType = questionResponseModel.getUserType();
+        Boolean isClose = questionResponseModel.isClose();
+        if (isClose) {
+            return new QuestionCloseUI(questionResponseModel.getUserName(), questionResponseModel.getUserId(),
+                    uiManager, questionResponseModel.getTitle(), questionResponseModel.getType(),
+                    questionResponseModel.getDeadline(), questionResponseModel.getPostMap());
+        } else if (userType.equals(ATTORNEY_TYPE)){
+            return new QuestionOpenAttorneyUI(questionResponseModel.getUserName(),
+                    questionResponseModel.getUserId(), uiManager, questionResponseModel.getTitle(),
+                    questionResponseModel.getType(), questionResponseModel.getDeadline(),
+                    questionResponseModel.getPostMap());
+        } else{
+            return new QuestionOpenClientUI(questionResponseModel.getUserName(), questionResponseModel.getUserId(), uiManager, questionResponseModel.getTitle(), questionResponseModel.getType(), questionResponseModel.getDeadline(), questionResponseModel.getPostMap());
+        }
     }
 
     private static BaseUI getBaseUI(UIType uiType, UIManager uiManager) {

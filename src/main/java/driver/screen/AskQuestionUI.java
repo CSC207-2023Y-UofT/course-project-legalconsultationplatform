@@ -26,11 +26,6 @@ import static driver.screen.UIDrawer.*;
  * @author joseph
  */
 public class AskQuestionUI extends UserUI implements ActionListener {
-
-    protected String userName;
-    protected int userId;
-    protected JPanel helloMessage;
-    protected UIManager UIManager;
     JComboBox<String> questionType = new JComboBox<>(QUESTION_TYPE_LIST);
     JTextField titleForQuestion = new JTextField(15);
     JDateChooser deadlineChooser = new JDateChooser();
@@ -96,9 +91,9 @@ public class AskQuestionUI extends UserUI implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent evt) {
         String actionCommand = evt.getActionCommand();
-        ControlContainer controlContainer = UIManager.getControlContainer();
-        JPanel screens = UIManager.getScreens();
-        CardLayout cardLayout = UIManager.getCardLayout();
+        ControlContainer controlContainer = uiManager.getControlContainer();
+        JPanel screens = uiManager.getScreens();
+        CardLayout cardLayout = uiManager.getCardLayout();
         switch (actionCommand) {
             case SUBMIT_BUTTON_NAME:
                 System.out.println("Click" + evt.getActionCommand());
@@ -111,9 +106,11 @@ public class AskQuestionUI extends UserUI implements ActionListener {
                     deadlinelocalDate = zonedDateTime.toLocalDate();
                 }
                 try {
+                    System.out.println("it's been in questioncontrol");
                     questionControl.createQuestion((String) questionType.getSelectedItem(),
                             titleForQuestion.getText(), LocalDate.now(), deadlinelocalDate);
                 } catch (Exception e) {
+                    e.printStackTrace();
                     JOptionPane.showMessageDialog(this, e.getMessage());
                 }
                 break;

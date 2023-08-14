@@ -36,6 +36,7 @@ public class UIDrawer {
             result.add(button);
             result.add(spacer);
         }
+        result.setOpaque(false);
         return result;
     }
 
