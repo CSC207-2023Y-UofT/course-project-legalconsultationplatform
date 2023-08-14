@@ -4,6 +4,7 @@ import businessrule.responsemodel.BaseResponseModel;
 import businessrule.responsemodel.TheQuestionResponseModel;
 import businessrule.responsemodel.UserResponseModel;
 import businessrule.responsemodel.ViewResponseModel;
+import businessrule.usecase.util.PostDisplayFormatter;
 import driver.screen.*;
 import java.util.HashMap;
 import java.util.Map;
@@ -52,6 +53,7 @@ public class UIFactory {
     private static QuestionUI getQuestionUI(UIManager uiManager, TheQuestionResponseModel questionResponseModel) {
         String userType = questionResponseModel.getUserType();
         Boolean isClose = questionResponseModel.isClose();
+        Map<Integer, PostDisplayFormatter> postMap = questionResponseModel.getPostMap();
         if (isClose) {
             return new QuestionCloseUI(questionResponseModel.getUserName(), questionResponseModel.getUserId(),
                     uiManager, questionResponseModel.getQuestionId(), questionResponseModel.getTitle(), questionResponseModel.getType(),
@@ -61,6 +63,10 @@ public class UIFactory {
                     questionResponseModel.getUserId(), uiManager, questionResponseModel.getQuestionId(),
                     questionResponseModel.getTitle(), questionResponseModel.getType(), questionResponseModel.getDeadline(),
                     questionResponseModel.getPostMap());
+        } else if (postMap.isEmpty()) {
+            return new QuestionNewUI(questionResponseModel.getUserName(), questionResponseModel.getUserId(), uiManager,
+                    questionResponseModel.getQuestionId(), questionResponseModel.getTitle(),
+                    questionResponseModel.getType(), questionResponseModel.getDeadline(), questionResponseModel.getPostMap());
         } else{
             return new QuestionOpenClientUI(questionResponseModel.getUserName(), questionResponseModel.getUserId(), uiManager,
                     questionResponseModel.getQuestionId(), questionResponseModel.getTitle(),
@@ -114,6 +120,9 @@ public class UIFactory {
 
         uiCache.put(uiType, uiInstance);
         return uiInstance;
+    }
+    public static void clearUIFactory(){
+        uiCache.clear();
     }
 }
 

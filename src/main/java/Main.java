@@ -32,6 +32,16 @@ public class Main {
     PostGateway postGateway = new PostRepo();
     System.out.println("System - finished set up repo");
 
+
+        AttorneyRepository attorneyRepo = new AttorneyRepository();
+        attorneyRepo.delete(12345678);
+        Attorney attorney = new Attorney();
+        attorney.setUserName("Kaxi");
+        attorney.setPassword("12345678");
+        attorney.setUserId(12345678);
+        attorney.setEmail("123455@gmail.com");
+        attorneyRepo.save(attorney);
+
     //set up Jframe
     JFrame application = new JFrame("Legal Consultation Platform");
     application.setSize(UIDesign.frameSize);
@@ -45,14 +55,13 @@ public class Main {
 
     //define outputBoundary
     UserOutputBoundary homePageOutputBoundary = new HomePageResponseFormatter(UIManager);
-    UserOutputBoundary loginHomePageOutputBoundary = new HomePageResponseFormatter(UIManager);
     BaseOutputBoundary registerOutputBoundary = new RegisterResponseFormatter(UIManager);
     TheQuestionOutputBoundary theQuestionOutputBoundary = new TheQuestionResponseFormatter(UIManager);
     ViewOutputBoundary viewOutputBoundary = new ViewResponseFormatter(UIManager);
     System.out.println("System = finished set up output boundary");
 
     //define useCase
-    UserLoginInputBoundary userLoginInteractor = new UserLoginInteractor(gatewayFactory, loginHomePageOutputBoundary);
+    UserLoginInputBoundary userLoginInteractor = new UserLoginInteractor(gatewayFactory, homePageOutputBoundary);
     UserLoginControl loginControl = new UserLoginControl(userLoginInteractor);
 
     UserRegisterInputBoundary clientRegisterInteractor = new ClientRegisterInteractor(clientGateway, clientFactory, registerOutputBoundary);

@@ -13,11 +13,8 @@ import businessrule.responsemodel.UserResponseModel;
 import businessrule.usecase.util.*;
 import businessrule.gateway.UserGateway;
 import businessrule.gateway.UserGatewayFactory;
-import entity.Attorney;
-import entity.Post;
-import entity.Question;
+import entity.*;
 import entity.factory.PostFactory;
-import entity.User;
 
 import java.time.LocalDate;
 import java.util.Map;
@@ -116,7 +113,7 @@ public class ReplyInteractor implements PostInputBoundary {
     private void sendClientEmail(Question question) {
         try {
             UserGateway<? extends User> clientGateway = userGatewayFactory.createUserGateway(question.getAskedByClient());
-            User client = clientGateway.get(question.getTakenByAttorney());
+            User client = clientGateway.get(question.getAskedByClient());
             // Send email notification to the client
             String clientEmail = client.getEmail();
             String title = "New Reply to Your Question";
