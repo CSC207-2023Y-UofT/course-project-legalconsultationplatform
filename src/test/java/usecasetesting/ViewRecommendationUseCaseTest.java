@@ -12,6 +12,7 @@ import businessrule.outputboundary.ViewOutputBoundary;
 import businessrule.responsemodel.TheQuestionResponseModel;
 import businessrule.responsemodel.UserResponseModel;
 import businessrule.responsemodel.ViewResponseModel;
+import businessrule.usecase.AttorneyRecommendInteractor;
 import businessrule.usecase.BrowseQuestionInteractor;
 import driver.database.*;
 
@@ -19,10 +20,12 @@ import entity.*;
 
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.*;
 ;
 
-public class BrowseQuestionUseCaseTest {
+public class ViewRecommendationUseCaseTest {
     final static int CLIENT_ID = 21345678;
     final static String CLIENT_USERNAME = "test client";
     final static int ATTORNEY_ID = 11345678;
@@ -31,6 +34,7 @@ public class BrowseQuestionUseCaseTest {
     final static int SECOND_ATTORNEY_ID = 12222222;
     final static int QUESTION_ID = 323456789;
     final static int TAKEN_QUESTION_ID = 333333333;
+    final static int QUESTION_ID_4 = 312142133;
     final static int CLOSED_QUESTION_ID = 322222222;
     final static int POST_ID = 455555555;
     private QuestionGateway questionGateway;
@@ -56,15 +60,22 @@ public class BrowseQuestionUseCaseTest {
     };
     private ViewInputBoundary viewInputBoundary;
 
-    public void setUpBrowseUseCase(){
+    public void setUpBrowseUseCase() {
         questionGateway = new QuestionRepo();
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
-        viewInputBoundary = new BrowseQuestionInteractor(viewOutputBoundary, questionGateway, attorneyGateway);
+        clientGateway.deleteAll();
+        questionGateway.deleteAll();
+        attorneyGateway.deleteAll();
+        viewInputBoundary = new AttorneyRecommendInteractor(viewOutputBoundary, questionGateway, attorneyGateway);
 
         Attorney attorney = new Attorney();
         attorney.setUserId(ATTORNEY_ID);
+        Question question4 = new Question(QUESTION_ID_4, "temp type", "temp title", LocalDate.now(), CLIENT_ID, LocalDate.now());
+        questionGateway.save(question4);
+        attorney.addRecommendation(question4);
         attorneyGateway.save(attorney);
+
 
         Attorney secondAttorney = new Attorney();
         attorney.setUserId(SECOND_ATTORNEY_ID);
@@ -81,6 +92,8 @@ public class BrowseQuestionUseCaseTest {
         question2.addPosts(post);
         questionGateway.save(question2);
 
+
+
         Client client = new Client();
         client.setUserId(CLIENT_ID);
         client.addQuestion(question2);
@@ -92,7 +105,7 @@ public class BrowseQuestionUseCaseTest {
     }
 
     @Test
-    public void TestAttorneyBrowseQuestionUseCase() {
+    public void TestAttorneyViewRecommendationUseCase() {
         setUpBrowseUseCase();
         Post post = new Post();
         post.setPostId(POST_ID);
@@ -118,23 +131,24 @@ public class BrowseQuestionUseCaseTest {
                 ViewResponseModel responseModel = (ViewResponseModel) response;
                 int expectedSize = 1;
                 assertEquals(expectedSize, responseModel.getQuestionMap().size(), "The Question Map is not correct.");
+                assertEquals("temp type", responseModel.getQuestionMap().get(QUESTION_ID_4).getType(), "The Question Map is not correct.");
                 return null;
             }
         };
-        viewInputBoundary =new BrowseQuestionInteractor(viewOutputBoundary, questionGateway, attorneyGateway);
+        viewInputBoundary = new AttorneyRecommendInteractor(viewOutputBoundary, questionGateway, attorneyGateway);
         viewInputBoundary.viewQuestion();
         ClearAllRepository();
     }
 
     @Test
-    public void TestAttorneyBrowseAllTakenQuestion(){
+    public void TestAttorneyViewRecommendationWithAllTakenQuestion() {
         setUpBrowseUseCase();
         viewInputBoundary.viewQuestion();
         ClearAllRepository();
     }
 
 
-    public void ClearAllRepository(){
+    public void ClearAllRepository() {
         questionGateway = new QuestionRepo();
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();
