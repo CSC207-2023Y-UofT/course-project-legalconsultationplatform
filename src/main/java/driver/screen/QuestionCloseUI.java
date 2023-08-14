@@ -4,14 +4,9 @@ import businessrule.usecase.util.PostDisplayFormatter;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.event.ActionEvent;
 import java.time.LocalDate;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Map;
 
-import static driver.screen.UIDesign.*;
 import static driver.screen.UIDrawer.*;
 
 

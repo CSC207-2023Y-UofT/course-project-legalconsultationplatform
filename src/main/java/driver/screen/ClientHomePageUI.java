@@ -60,7 +60,7 @@ public class ClientHomePageUI extends HomePageUI implements ActionListener {
             case VIEW_QUESTION_HISTORY_BUTTON_NAME:
                 System.out.println("Client chooses to view question history.");
                 ViewQuestionControl viewQuestionControl = controlContainer.getViewQuestionControl();
-                viewQuestionControl.viewQuestion(userId);
+                viewQuestionControl.viewQuestion();
                 break;
 
             case LOG_OUT_BUTTON_NAME:

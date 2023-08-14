@@ -1,7 +1,6 @@
 package driver.screen;
 
 import javax.swing.*;
-import java.awt.*;
 import java.awt.event.ActionListener;
 import static driver.screen.UIDesign.*;
 

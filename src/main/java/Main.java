@@ -1,8 +1,10 @@
 import adapter.controller.*;
 import adapter.presenter.*;
+import businessrule.UIFactory;
 import businessrule.gateway.*;
 import businessrule.inputboundary.*;
 import businessrule.outputboundary.*;
+import businessrule.responsemodel.BaseResponseModel;
 import businessrule.usecase.*;
 import driver.database.*;
 import driver.screen.UIDesign;
@@ -30,15 +32,7 @@ public class Main {
     PostGateway postGateway = new PostRepo();
     System.out.println("System - finished set up repo");
 
-    //Test attorney
-        AttorneyRepository attorneyRepo = new AttorneyRepository();
-        Attorney attorney = new Attorney();
-        attorney.setName("Kaxi");
-        attorney.setPassword("12345678");
-        attorney.setUserId(12345678);
-        attorneyRepo.save(attorney);
-
-    //set up jframe
+    //set up Jframe
     JFrame application = new JFrame("Legal Consultation Platform");
     application.setSize(UIDesign.frameSize);
     application.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -47,19 +41,20 @@ public class Main {
     application.add(screens);
     System.out.println("System - finished set up frame");
 
+    UIManager UIManager = new UIManager(screens, cardlayout);
+
     //define outputBoundary
-    HomePageOutputBoundary homePageOutputBoundary = new HomePageResponseFormatter(cardlayout, screens);
-    RegisterOutputBoundary registerOutputBoundary = new RegisterResponseFormatter(cardlayout, screens);
-    TheQuestionOutputBoundary theQuestionOutputBoundary = new TheQuestionResponseFormatter(cardlayout, screens);
-    ViewOutputBoundary viewOutputBoundary = new ViewResponseFormatter(cardlayout, screens);
+    UserOutputBoundary homePageOutputBoundary = new HomePageResponseFormatter(UIManager);
+    BaseOutputBoundary registerOutputBoundary = new RegisterResponseFormatter(UIManager);
+    TheQuestionOutputBoundary theQuestionOutputBoundary = new TheQuestionResponseFormatter(UIManager);
+    ViewOutputBoundary viewOutputBoundary = new ViewResponseFormatter(UIManager);
     System.out.println("System = finished set up output boundary");
 
     //define useCase
     UserLoginInputBoundary userLoginInteractor = new UserLoginInteractor(gatewayFactory, homePageOutputBoundary);
     UserLoginControl loginControl = new UserLoginControl(userLoginInteractor);
 
-    ClientRegisterInputBoundary clientRegisterInteractor = new ClientRegisterInteractor(clientGateway, registerOutputBoundary,
-            clientFactory);
+    UserRegisterInputBoundary clientRegisterInteractor = new ClientRegisterInteractor(clientGateway, clientFactory, registerOutputBoundary);
     ClientRegisterControl registerControl = new ClientRegisterControl(clientRegisterInteractor);
 
     QuestionInputBoundary questionInteractor = new AskQuestionInteractor(questionGateway, theQuestionOutputBoundary,
@@ -67,19 +62,15 @@ public class Main {
     QuestionControl questionControl = new QuestionControl(questionInteractor);
 
     CloseInputBoundary closeQuestionInteractor = new CloseQuestionInteractor(questionGateway, homePageOutputBoundary,
-            gatewayFactory);
+            clientGateway);
     CloseQuestionControl closeQuestionControl = new CloseQuestionControl(closeQuestionInteractor);
 
     ViewInputBoundary browseQuestionInterator = new BrowseQuestionInteractor(viewOutputBoundary, questionGateway,
             attorneyGateway);
     ViewQuestionControl browseQuestionControl = new ViewQuestionControl(browseQuestionInterator);
 
-    ViewInputBoundary viewQuestionInteractor = new ViewQuestionInteractor(questionGateway, viewOutputBoundary, gatewayFactory);
+    ViewInputBoundary viewQuestionInteractor = new ViewQuestionInteractor(viewOutputBoundary, questionGateway, gatewayFactory);
     ViewQuestionControl viewQuestionControl = new ViewQuestionControl(viewQuestionInteractor);
-
-    ViewInputBoundary viewRateableQuestionInteractor = new ViewRateableQuestionInteractor(viewOutputBoundary,
-            questionGateway, clientGateway);
-    ViewQuestionControl viewRateableQuestionControl = new ViewQuestionControl(viewRateableQuestionInteractor);
 
     ViewInputBoundary recommendationInteractor = new AttorneyRecommendInteractor(viewOutputBoundary, questionGateway,
             attorneyGateway);
@@ -88,31 +79,28 @@ public class Main {
     SelectInputBoundary selectQuestionInteractor = new SelectQuestionInteractor(questionGateway, theQuestionOutputBoundary, gatewayFactory);
     SelectQuestionControl selectQuestionControl = new SelectQuestionControl(selectQuestionInteractor);
 
-    PostInputBoundary replyInteractor = new ReplyInteractor(questionGateway, postGateway,
-            homePageOutputBoundary, postFactory, gatewayFactory);
+    PostInputBoundary replyInteractor = new ReplyInteractor(questionGateway, postGateway, theQuestionOutputBoundary,
+            postFactory, gatewayFactory);
     PostControl postControl = new PostControl(replyInteractor);
 
-    RateInputBoundary rateInteractor = new RateInteractor(questionGateway, homePageOutputBoundary,
-            clientGateway);
+    RateInputBoundary rateInteractor = new RateInteractor(questionGateway, homePageOutputBoundary, clientGateway,
+            attorneyGateway);
     RateControl rateControl = new RateControl(rateInteractor);
     System.out.println("System - finished set up use case");
 
     //control container
     ControlContainer controlContainer = new ControlContainer(registerControl, closeQuestionControl,
             postControl, questionControl, rateControl, selectQuestionControl, loginControl, viewQuestionControl,
-    browseQuestionControl, viewRateableQuestionControl, recommendationControl);
+    browseQuestionControl, recommendationControl);
 
     //feed control container into the response formatter
-    homePageOutputBoundary.setControlContainer(controlContainer);
-    registerOutputBoundary.setControlContainer(controlContainer);
-    theQuestionOutputBoundary.setControlContainer(controlContainer);
-    viewOutputBoundary.setControlContainer(controlContainer);
+    UIManager.setControlContainer(controlContainer);
     System.out.println("System - finished set up control container");
+    ControlContainer controlContainer1 = UIManager.getControlContainer();
+        System.out.println("Control container: " + controlContainer1);
 
-    //Create the UITool for all UI pages
-        UIManager UIManager = new UIManager(controlContainer, screens, cardlayout);
     //Initiate the UI
-    WelcomeUI welcomeUI = new WelcomeUI(UIManager);
+    JPanel welcomeUI = UIFactory.getUI(UIFactory.UIType.WELCOME_UI, UIManager, new BaseResponseModel());
     screens.add(welcomeUI, "Welcome");
     cardlayout.show(screens, "Welcome");
     application.setVisible(true);

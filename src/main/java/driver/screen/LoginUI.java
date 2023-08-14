@@ -84,8 +84,6 @@ public class LoginUI extends BaseUI implements ActionListener {
                 break;
 
             case BACK_BUTTON_NAME:
-                WelcomeUI welcomeUI = new WelcomeUI(UIManager);
-                screens.add(welcomeUI, "Welcome");
                 cardLayout.show(screens, "Welcome");
                 break;
         }

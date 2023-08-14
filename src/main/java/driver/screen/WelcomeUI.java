@@ -45,14 +45,14 @@ public class WelcomeUI extends BaseUI implements ActionListener {
     @Override
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
+        System.out.println("Control container is"+ UIManager.getControlContainer());
         ControlContainer controlContainer = UIManager.getControlContainer();
         JPanel screens = UIManager.getScreens();
         CardLayout cardLayout = UIManager.getCardLayout();
         switch (actionCommand) {
             case REGISTER_BUTTON_NAME:
                 RegisterUI registerUI = new RegisterUI(UIManager);
-                JScrollPane registerScrollPane = new JScrollPane(registerUI);
-                screens.add(registerScrollPane, "Register");
+                screens.add(registerUI, "Register");
                 cardLayout.show(screens, "Register");
                 System.out.println("User chooses register\nRegister screen showed");
                 break;

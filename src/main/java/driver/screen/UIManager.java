@@ -10,8 +10,7 @@ public class UIManager {
     JPanel screens;
     CardLayout cardLayout;
 
-    public UIManager(ControlContainer controlContainer, JPanel screens, CardLayout cardLayout) {
-        this.controlContainer = controlContainer;
+    public UIManager(JPanel screens, CardLayout cardLayout) {
         this.screens = screens;
         this.cardLayout = cardLayout;
     }
@@ -26,5 +25,9 @@ public class UIManager {
 
     public CardLayout getCardLayout() {
         return cardLayout;
+    }
+
+    public void setControlContainer(ControlContainer controlContainer) {
+        this.controlContainer = controlContainer;
     }
 }

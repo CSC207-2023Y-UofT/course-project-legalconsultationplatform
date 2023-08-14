@@ -119,9 +119,7 @@ public class AskQuestionUI extends UserUI implements ActionListener {
                 break;
 
             case CANCEL_BUTTON_NAME:
-                ClientHomePageUI homePageUI = new ClientHomePageUI(userName, userId, UIManager);
-                screens.add(homePageUI, "HomePage");
-                cardLayout.show(screens, "HomePage");
+                cardLayout.show(screens, "Home Page");
                 break;
         }
     }

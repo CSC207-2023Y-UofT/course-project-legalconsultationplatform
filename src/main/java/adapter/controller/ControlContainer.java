@@ -10,14 +10,13 @@ public class ControlContainer {
     UserLoginControl userLoginControl;
     ViewQuestionControl viewQuestionControl;
     ViewQuestionControl browseQuestionControl;
-    ViewQuestionControl viewRateableQuestionControl;
     ViewQuestionControl recommendationControl;
 
     public ControlContainer(ClientRegisterControl clientRegisterControl, CloseQuestionControl closeQuestionControl,
                             PostControl postControl, QuestionControl questionControl, RateControl rateControl,
                             SelectQuestionControl selectQuestionControl, UserLoginControl userLoginControl,
                             ViewQuestionControl viewQuestionControl, ViewQuestionControl browseQuestionControl,
-                            ViewQuestionControl viewRateableQuestionControl, ViewQuestionControl recommendationControl) {
+                            ViewQuestionControl recommendationControl) {
         this.clientRegisterControl = clientRegisterControl;
         this.closeQuestionControl = closeQuestionControl;
         this.postControl = postControl;
@@ -27,7 +26,6 @@ public class ControlContainer {
         this.userLoginControl = userLoginControl;
         this.viewQuestionControl = viewQuestionControl;
         this.browseQuestionControl = browseQuestionControl;
-        this.viewRateableQuestionControl = viewRateableQuestionControl;
         this.recommendationControl = recommendationControl;
     }
 
@@ -64,8 +62,6 @@ public class ControlContainer {
     }
 
     public ViewQuestionControl getBrowseQuestionControl() {return browseQuestionControl;}
-
-    public ViewQuestionControl getViewRateableQuestionControl() {return viewRateableQuestionControl;}
 
     public ViewQuestionControl getRecommendationControl() {return recommendationControl;}
 }

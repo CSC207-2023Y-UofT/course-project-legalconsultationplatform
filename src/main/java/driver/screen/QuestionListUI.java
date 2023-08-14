@@ -86,19 +86,9 @@ public class QuestionListUI extends UserUI implements ActionListener {
     }
     @Override
     public void actionPerformed(ActionEvent e) {
-        ControlContainer controlContainer = UIManager.getControlContainer();
         JPanel screens = UIManager.getScreens();
         CardLayout cardLayout = UIManager.getCardLayout();
-        String stringId = Integer.toString(userId);
-        if (stringId.startsWith("2")) {
-            ClientHomePageUI clientUI = new ClientHomePageUI(userName, userId, UIManager);
-            screens.add(clientUI, "ClientHomePage");
-            cardLayout.show(screens, "ClientHomePage");
-        } else {
-            AttorneyHomePageUI attorneyUI = new AttorneyHomePageUI(userName, userId, UIManager);
-            screens.add(attorneyUI, "AttorneyHomePage");
-            cardLayout.show(screens, "AttorneyHomePage");
-        }
+        cardLayout.show(screens, "Home Page");
     }
 }
 
