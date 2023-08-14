@@ -1,8 +1,9 @@
 package businessrule.inputboundary;
 
 import businessrule.requestmodel.PostRequestModel;
-import businessrule.responsemodel.HomePageResponseModel;
+import businessrule.responsemodel.TheQuestionResponseModel;
+import businessrule.responsemodel.UserResponseModel;
 
 public interface PostInputBoundary {
-    HomePageResponseModel createPost(PostRequestModel postRequestModel);
+    TheQuestionResponseModel createPost(PostRequestModel postRequestModel);
 }

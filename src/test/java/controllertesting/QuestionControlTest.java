@@ -1,10 +1,13 @@
 package controllertesting;
 
 import adapter.controller.QuestionControl;
+import businessrule.SessionManager;
+import businessrule.UserSession;
 import businessrule.inputboundary.QuestionInputBoundary;
 import businessrule.requestmodel.QuestionRequestModel;
 import businessrule.responsemodel.TheQuestionResponseModel;
 
+import businessrule.responsemodel.UserResponseModel;
 import businessrule.usecase.util.PostDisplayFormatter;
 import org.junit.jupiter.api.Test;
 
@@ -22,36 +25,44 @@ public class QuestionControlTest {
     private static String TITLE = "SampleTitle";
     private static String TYPE = "SampleType";
 
-    private static TheQuestionResponseModel expectedResponse;
+    private static TheQuestionResponseModel expectedUserResponse;
 
-    public void setUpQuestionControl(){
+    public void setUpQuestionControl() {
         // Arrange
+        UserResponseModel userResponseModel = new UserResponseModel(USER_ID, USER_NAME, TYPE);
+        UserSession userSession = new UserSession(userResponseModel);
+        SessionManager.setSession(userSession); // Set the user session
+
         LocalDate deadline = LocalDate.now().plusDays(5);
         boolean isClose = false;
         Map<Integer, PostDisplayFormatter> postMap = new HashMap<>(); // Assuming suitable values or empty
 
-         expectedResponse = new TheQuestionResponseModel(USER_ID, QUESTION_ID, USER_NAME, TITLE, TYPE, deadline, isClose, postMap);
+        int userId = 42; // Set the expected userId
+        String userName = "SampleUser";
+        String userType = "SampleType";
+
+        expectedUserResponse = new TheQuestionResponseModel(USER_ID, USER_NAME, "Client", QUESTION_ID, TITLE, TYPE, null, false, null);
+
     }
 
     @Test
     public void testCreateQuestion() {
         setUpQuestionControl();
         QuestionInputBoundary mockInputBoundary = mock(QuestionInputBoundary.class);
-        when(mockInputBoundary.createQuestion(any(QuestionRequestModel.class))).thenReturn(expectedResponse);
+        when(mockInputBoundary.createQuestion(any(QuestionRequestModel.class))).thenReturn(expectedUserResponse);
 
         QuestionControl control = new QuestionControl(mockInputBoundary);
 
         // Sample input parameters
         String questionCategory = "SampleCategory";
         LocalDate createAt = LocalDate.now();
-        int askedByClient = 42;
         LocalDate legalDeadline = LocalDate.now().plusDays(10);
 
         // Act
-        TheQuestionResponseModel actualResponse = control.createQuestion(questionCategory, TITLE, createAt, askedByClient, legalDeadline);
+        TheQuestionResponseModel actualResponse = control.createQuestion(questionCategory, TITLE, createAt, legalDeadline);
 
         // Assert
-        assertEquals(expectedResponse, actualResponse);
+        assertEquals(expectedUserResponse, actualResponse);
 
         // Verify interactions
         verify(mockInputBoundary, times(1)).createQuestion(any(QuestionRequestModel.class));

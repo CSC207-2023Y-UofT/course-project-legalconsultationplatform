@@ -17,7 +17,7 @@ public interface User {
     void setPostalCode(String value);
     void setPassword(String value);
     void setUserId(int value);
-    boolean isClient();
+    String getUserType();
     boolean isQuestionCloseable(Question question);
     boolean isQuestionSelectable(Question question);
     boolean isQuestionReplyable(Question question);

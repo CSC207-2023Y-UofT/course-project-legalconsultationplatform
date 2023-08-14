@@ -2,8 +2,8 @@ package businessrule.usecase;
 
 
 import businessrule.gateway.ClientGateway;
-import businessrule.outputboundary.RegisterOutputBoundary;
-import businessrule.responsemodel.RegisterResponseModel;
+import businessrule.outputboundary.BaseOutputBoundary;
+import businessrule.responsemodel.BaseResponseModel;
 import entity.ApplicationException;
 import entity.Client;
 import entity.factory.ClientFactory;
@@ -12,19 +12,21 @@ import businessrule.requestmodel.RegistrationData;
 
 public class ClientRegisterInteractor extends UserRegisterInteractor<ClientGateway, ClientFactory, Client> {
 
-    public ClientRegisterInteractor(ClientGateway clientGateway, ClientFactory clientFactory, RegisterOutputBoundary outputBoundary) {
-        super(clientGateway, clientFactory, outputBoundary);
+    public ClientRegisterInteractor(ClientGateway userGateway, ClientFactory userFactory, BaseOutputBoundary outputBoundary) {
+        super(userGateway, userFactory, outputBoundary);
     }
 
     @Override
-    public RegisterResponseModel create(RegistrationData requestModel) {
+    public BaseResponseModel create(RegistrationData requestModel) {
         try {checkCredential(requestModel);}
         catch (ApplicationException e) {
             return outputBoundary.prepareFail(e.getMessage());
         }
         int userId = generateId();
-        String message = "Your userId is " + userId;
-        return outputBoundary.prepareSuccess(message);
+        requestModel.setUserId(userId);
+        Client client = userFactory.createUser(requestModel);
+        userGateway.save(client);
+        return outputBoundary.prepareSuccess(String.valueOf(userId));
     }
 
     private void checkCredential(RegistrationData requestModel) throws ApplicationException{
@@ -33,14 +35,8 @@ public class ClientRegisterInteractor extends UserRegisterInteractor<ClientGatew
         String inputEmail = requestModel.email;
         String inputPassword1 = requestModel.password;
         String inputPassword2 = requestModel.password2;
-        String inputStateAbb = requestModel.stateAbb;
         String inputPostalCode = requestModel.postalCode;
-        String inputEthnicity = requestModel.ethnicity;
         int inputAge = requestModel.age;
-        String inputGender = requestModel.gender;
-        String inputMaritalStatus = requestModel.maritalStatus;
-        int inputNumberOfHousehold = requestModel.numberOfHousehold;
-        float inputAnnualIncome = requestModel.annualIncome;
 
         // validate input data
         CredentialChecker checker = new CredentialChecker();

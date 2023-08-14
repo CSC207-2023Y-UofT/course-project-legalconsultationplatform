@@ -116,14 +116,17 @@ public class Client extends UserImp {
 
     public void setAnnualIncome(float annualIncome) {this.annualIncome = annualIncome;}
 
-    @Transient
     @Override
-    public boolean isClient() {return true;}
+    @Transient
+    public String getUserType() {
+        return "Client";
+    }
 
     @Override
     public boolean isQuestionCloseable(Question question) {
         boolean isClose = question.isClose();
-        return !isClose;
+        boolean isTaken = question.isTaken();
+        return (isTaken && !isClose);
     }
 
     @Override

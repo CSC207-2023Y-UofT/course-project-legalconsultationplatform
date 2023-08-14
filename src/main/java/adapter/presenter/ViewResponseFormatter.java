@@ -1,30 +1,20 @@
 package adapter.presenter;
 
-import adapter.controller.ControlContainer;
+import businessrule.UIFactory;
 import businessrule.outputboundary.ViewOutputBoundary;
+import businessrule.responsemodel.UserResponseModel;
 import businessrule.responsemodel.ViewResponseModel;
-import businessrule.usecase.util.QuestionDisplayFormatter;
+import driver.screen.UIManager;
 import entity.ApplicationException;
-import driver.screen.QuestionListUI;
-
 import javax.swing.*;
 import java.awt.*;
-import java.util.Map;
 
 public class ViewResponseFormatter implements ViewOutputBoundary {
-    CardLayout cardLayout;
-    JPanel screens;
-    ControlContainer controlContainer;
+    UIManager UIManager;
 
-    public ViewResponseFormatter(CardLayout cardLayout, JPanel screens) {
-        this.cardLayout = cardLayout;
-        this.screens = screens;
+    public ViewResponseFormatter(driver.screen.UIManager UIManager) {
+        this.UIManager = UIManager;
     }
-    @Override
-    public void setControlContainer(ControlContainer controlContainer) {
-        this.controlContainer = controlContainer;
-    }
-
     @Override
     public ViewResponseModel prepareFail(String msg) {
         throw new ApplicationException(msg);
@@ -32,13 +22,12 @@ public class ViewResponseFormatter implements ViewOutputBoundary {
 
     @Override
     public ViewResponseModel prepareSuccess(ViewResponseModel response) {
-        int userId = response.getUserId();
-        String userName = response.getUserName();
-        Map<Integer, QuestionDisplayFormatter> questionMap = response.getQuestionMap();
-        QuestionListUI questionListUI = new QuestionListUI(controlContainer, cardLayout, screens, userId, userName, questionMap);
-        screens.add(questionListUI, "browseQuestion");
-        cardLayout.show(screens, "browseQuestion");
-        System.out.println("Available questions showed");
+        JPanel screens = UIManager.getScreens();
+        CardLayout cardLayout = UIManager.getCardLayout();
+        JPanel questionListUI = UIFactory.getUI(UIFactory.UIType.QUESTION_LIST_UI, UIManager, response);
+        screens.add(questionListUI, "Question List");
+        cardLayout.show(screens, "Question List");
+
         return response;
     }
 }

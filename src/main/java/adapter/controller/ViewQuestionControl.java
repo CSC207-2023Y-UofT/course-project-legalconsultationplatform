@@ -1,8 +1,10 @@
 package adapter.controller;
 
-import businessrule.responsemodel.ViewResponseModel;
+import businessrule.responsemodel.UserResponseModel;
 import businessrule.inputboundary.ViewInputBoundary;
-import businessrule.requestmodel.ViewRequestModel;
+import businessrule.responsemodel.ViewResponseModel;
+
+import javax.swing.text.View;
 
 public class ViewQuestionControl{
 
@@ -12,8 +14,7 @@ public class ViewQuestionControl{
         this.viewInputBoundary = viewInputBoundary;
     }
 
-    public ViewResponseModel viewQuestion(int userId){
-        ViewRequestModel viewRequestModel = new ViewRequestModel(userId);
-        return viewInputBoundary.viewQuestion(viewRequestModel);
+    public ViewResponseModel viewQuestion(){
+        return viewInputBoundary.viewQuestion();
     }
 }

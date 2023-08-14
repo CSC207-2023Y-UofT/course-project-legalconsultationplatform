@@ -3,75 +3,64 @@ package driver.screen;
 import adapter.controller.ControlContainer;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.rmi.server.UID;
+import java.util.ArrayList;
+import java.util.List;
 
 import static driver.screen.UIDesign.*;
+import static driver.screen.UIDrawer.*;
 
-public class WelcomeUI extends JPanel implements ActionListener {
-    ControlContainer controlContainer;
-    CardLayout cardLayout;
-    JPanel screens;
+public class WelcomeUI extends BaseUI implements ActionListener {
+    static final String TITLE_TEXT = "WELCOME";
+    static final String REGISTER_BUTTON_NAME = "Register";
+    static final String LOGIN_BUTTON_NAME = "Login";
 
-    public WelcomeUI (ControlContainer controlContainer, CardLayout cardLayout, JPanel screens){
-        this.cardLayout = cardLayout;
-        this.screens = screens;
-        this.controlContainer = controlContainer;
-        UIDesign.setBackgroundFrame(this);
+    public WelcomeUI(UIManager UIManager) {
+        super(UIManager);
 
-        setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
+        //Spacers
+        JPanel topSpacer = addSpacer(160);
+        JPanel middleSpacer = addSpacer(80);
 
-        JLabel title = new JLabel("Welcome");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        UIDesign.setTitleFont(title);
+        //Welcome title
+        JLabel title = new JLabel(TITLE_TEXT);
+        setTitleFont(title);
+        title.setAlignmentX(CENTER_ALIGNMENT);
 
-        int topMargin = 50;
-        int leftMargin = 0;
-        int bottomMargin = 100;
-        int rightMargin = 0;
-        title.setBorder(new EmptyBorder(topMargin, leftMargin, bottomMargin, rightMargin));
+        //Buttons panel
 
+        List<String> buttonList = new ArrayList<>();
+        buttonList.add(REGISTER_BUTTON_NAME);
+        buttonList.add(LOGIN_BUTTON_NAME);
+        JPanel buttons = setButtonPanel(buttonList, new Dimension(150, 50), 40, this);
+
+        add(topSpacer);
         add(title);
-
-        JPanel buttonsPanel = new JPanel();
-        buttonsPanel.setBackground(lightGreenColor);
-        buttonsPanel.setLayout(new BoxLayout(buttonsPanel, BoxLayout.X_AXIS)); // Use X_AXIS for horizontal alignment
-
-        JButton registerButton = new JButton("Register");
-        JButton loginButton = new JButton("Login");
-
-        UIDesign.setButton(registerButton);
-        UIDesign.setButton(loginButton);
-
-        buttonsPanel.add(Box.createHorizontalGlue()); // Add glue to push buttons to the left
-        buttonsPanel.add(registerButton);
-        buttonsPanel.add(Box.createHorizontalGlue()); // Add glue to push buttons to the center
-        buttonsPanel.add(loginButton);
-        buttonsPanel.add(Box.createHorizontalGlue()); // Add glue to push buttons to the right
-
-        registerButton.addActionListener(this);
-        loginButton.addActionListener(this);
-
-        add(buttonsPanel);
+        add(middleSpacer);
+        add(buttons);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
-        if ("Register".equals(actionCommand)){
-            RegisterUI registerUI = new RegisterUI(controlContainer);
-            JScrollPane registerScrollPane = new JScrollPane(registerUI);
-            screens.add(registerScrollPane, "Register");
-            cardLayout.show(screens, "Register");
-            System.out.println("User chooses register\nRegister screen showed");
-        } else if ("Login".equals(actionCommand)){
-            LoginUI loginUI = new LoginUI(controlContainer);
-            screens.add(loginUI, "Login");
-            cardLayout.show(screens, "Login");
-            System.out.println("User chooses login\nLogin screen showed");
+        JPanel screens = uiManager.getScreens();
+        CardLayout cardLayout = uiManager.getCardLayout();
+        switch (actionCommand) {
+            case REGISTER_BUTTON_NAME:
+                RegisterUI registerUI = new RegisterUI(uiManager);
+                screens.add(registerUI, "Register");
+                cardLayout.show(screens, "Register");
+                System.out.println("User chooses register\nRegister screen showed");
+                break;
+
+            case LOGIN_BUTTON_NAME:
+                LoginUI loginUI = new LoginUI(uiManager);
+                screens.add(loginUI, "Login");
+                cardLayout.show(screens, "Login");
+                System.out.println("User chooses login\nLogin screen showed");
+                break;
         }
     }
 }

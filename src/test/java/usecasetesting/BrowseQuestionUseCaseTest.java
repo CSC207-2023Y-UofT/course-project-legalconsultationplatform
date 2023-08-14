@@ -1,12 +1,16 @@
 package usecasetesting;
 
 import adapter.controller.ControlContainer;
+import businessrule.SessionManager;
+import businessrule.UserSession;
 import businessrule.gateway.AttorneyGateway;
 import businessrule.gateway.ClientGateway;
 import businessrule.gateway.QuestionGateway;
 import businessrule.inputboundary.ViewInputBoundary;
 import businessrule.outputboundary.ViewOutputBoundary;
-import businessrule.requestmodel.ViewRequestModel;
+
+import businessrule.responsemodel.TheQuestionResponseModel;
+import businessrule.responsemodel.UserResponseModel;
 import businessrule.responsemodel.ViewResponseModel;
 import businessrule.usecase.BrowseQuestionInteractor;
 import driver.database.*;
@@ -20,7 +24,10 @@ import static org.junit.jupiter.api.Assertions.*;
 
 public class BrowseQuestionUseCaseTest {
     final static int CLIENT_ID = 21345678;
+    final static String CLIENT_USERNAME = "test client";
     final static int ATTORNEY_ID = 11345678;
+    final static String ATTORNEY_USERNAME = "test attorney";
+    final static String ATTORNEY_TYPE = "Attorney";
     final static int SECOND_ATTORNEY_ID = 12222222;
     final static int QUESTION_ID = 323456789;
     final static int TAKEN_QUESTION_ID = 333333333;
@@ -30,10 +37,6 @@ public class BrowseQuestionUseCaseTest {
     private ClientGateway clientGateway;
     private AttorneyGateway attorneyGateway;
     private ViewOutputBoundary viewOutputBoundary = new ViewOutputBoundary() {
-        @Override
-        public void setControlContainer(ControlContainer controlContainer) {
-
-        }
 
         @Override
         public ViewResponseModel prepareFail(String msg) {
@@ -45,6 +48,7 @@ public class BrowseQuestionUseCaseTest {
             assertEquals(0, response.getQuestionMap().size(), "The Question Map is not correct.");
             return null;
         }
+
     };
     private ViewInputBoundary viewInputBoundary;
 
@@ -78,14 +82,15 @@ public class BrowseQuestionUseCaseTest {
         client.addQuestion(question2);
         clientGateway.save(client);
 
+        UserResponseModel userResponseModel = new UserResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, ATTORNEY_TYPE);
+        UserSession session = new UserSession(userResponseModel);
+        SessionManager.setSession(session);
     }
 
     @Test
     public void TestAttorneyBrowseQuestionUseCase(){
         setUpBrowseUseCase();
-        ViewRequestModel inputData = new ViewRequestModel(ATTORNEY_ID);
-
-        viewInputBoundary.viewQuestion(inputData);
+        viewInputBoundary.viewQuestion();
         ClearAllRepository();
     }
 

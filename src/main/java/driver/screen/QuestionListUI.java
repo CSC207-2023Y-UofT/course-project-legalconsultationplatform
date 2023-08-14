@@ -1,5 +1,4 @@
 package driver.screen;
-
 import adapter.controller.ControlContainer;
 import adapter.controller.SelectQuestionControl;
 import businessrule.usecase.util.QuestionDisplayFormatter;
@@ -12,33 +11,27 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
 
-public class QuestionListUI extends JPanel{
-    ControlContainer controlContainer;
-    CardLayout cardLayout;
-    JPanel screens;
-    int userId;
-    String userName;
-    Map<Integer, QuestionDisplayFormatter> questionMap;
+import static driver.screen.UIDesign.*;
+import static driver.screen.UIDrawer.*;
 
-    public QuestionListUI(ControlContainer controlContainer, CardLayout cardLayout,
-                          JPanel screens, int userId, String userName,
+public class QuestionListUI extends UserUI implements ActionListener {
+    Map<Integer, QuestionDisplayFormatter> questionMap;
+    static final String HOME_PAGE_BUTTON_NAME = "Home Page";
+
+    public QuestionListUI(String userName, int userId, UIManager UIManager,
                           Map<Integer, QuestionDisplayFormatter> questionMap) {
-        this.controlContainer = controlContainer;
-        this.cardLayout = cardLayout;
-        this.screens = screens;
-        this.userId = userId;
-        this.userName = userName;
+        super(userName, userId, UIManager);
         this.questionMap = questionMap;
 
-        //UserName and UserId
-        String helloMessageString = "Hello, " + userName + "(" + userId + ")";
-        JLabel helloMessage = new JLabel(helloMessageString);
+        //spacer
+
+        JPanel spacer = addSpacer(10);
 
         //The scrollable question buttons
-        int numberOfQuestions = questionMap.size();
-        JScrollPane questionScrollPane = new JScrollPane();
         JPanel questionScrollPanel = new JPanel();
-        questionScrollPanel.setLayout(new GridLayout(numberOfQuestions, 1));
+        UIDesign.setSizeInLayout(questionScrollPanel, new Dimension(350, 450));
+        questionScrollPanel.setBackground(lightGreenColor);
+        questionScrollPanel.setLayout(new BoxLayout(questionScrollPanel, BoxLayout.Y_AXIS));
         for (Integer questionId : questionMap.keySet()) {
             //read all variables from displayFormatter
             QuestionDisplayFormatter question = questionMap.get(questionId);
@@ -48,30 +41,51 @@ public class QuestionListUI extends JPanel{
             DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
             LocalDate deadlineDate = question.getLegalDeadline();
             String deadline = deadlineDate.format(formatter);
-
-            //lines
-            // String titleLine = "(" + type + ")" + title;
             String deadlineLine = "Legal deadline: " + deadline;
-            // String overallText = titleLine + "\n" + deadlineLine;
-            String overallText = "<html><b>" + title+ "</b><br>" + deadlineLine + "</html>";
-
             //Format them all into a textArea
-            JButton questionButton = new JButton(overallText);
-            questionButton.setPreferredSize(new Dimension(400, 50));
-            questionScrollPanel.add(questionButton);
+            JPanel questionPanel = singleQuestionDrawer(title, type, deadlineLine);
+
+            JButton questionButton = new JButton();
+            UIDesign.setSizeInLayout(questionButton, new Dimension(340, 60));
+            questionButton.add(questionPanel);
             questionButton.addActionListener(new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     System.out.println("Question selected");
+                    ControlContainer controlContainer = UIManager.getControlContainer();
                     SelectQuestionControl selectQuestionControl = controlContainer.getSelectQuestionControl();
-                    selectQuestionControl.selectQuestion(questionId, userId);
+                    selectQuestionControl.selectQuestion(questionId);
                 }
             });
+            questionScrollPanel.add(questionButton);
         }
+
+        JScrollPane questionScrollPane = new JScrollPane();
+        questionScrollPane.setBackground(lightGreenColor);
         questionScrollPane.setViewportView(questionScrollPanel);
+        UIDesign.setSizeInLayout(questionScrollPane, new Dimension(350, 450));
+        questionScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        questionScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
+        //Home page button
+        JButton homePage = new JButton(HOME_PAGE_BUTTON_NAME);
+        setButton(homePage, new Dimension(150, 50));
+        homePage.setAlignmentX(CENTER_ALIGNMENT);
+        homePage.addActionListener(this);
 
         //Add everything in the panel
-        this.add(helloMessage);
-        this.add(questionScrollPane);
+        add(spacer);
+        add(helloMessage);
+        add(spacer);
+        add(questionScrollPane);
+        add(spacer);
+        add(homePage);
+    }
+    @Override
+    public void actionPerformed(ActionEvent e) {
+        JPanel screens = uiManager.getScreens();
+        CardLayout cardLayout = uiManager.getCardLayout();
+        cardLayout.show(screens, "Home Page");
     }
 }
+

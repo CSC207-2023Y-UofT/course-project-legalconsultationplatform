@@ -1,9 +1,8 @@
 package businessrule.inputboundary;
 
-import businessrule.outputboundary.HomePageOutputBoundary;
 import businessrule.requestmodel.CloseRequestModel;
-import businessrule.responsemodel.HomePageResponseModel;
+import businessrule.responsemodel.UserResponseModel;
 
 public interface CloseInputBoundary {
-    HomePageResponseModel closeQuestion(CloseRequestModel closeRequestModel);
+    UserResponseModel closeQuestion(CloseRequestModel closeRequestModel);
 }

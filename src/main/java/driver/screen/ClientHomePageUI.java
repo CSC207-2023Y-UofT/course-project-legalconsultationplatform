@@ -1,75 +1,71 @@
 package driver.screen;
 
 import adapter.controller.*;
+import businessrule.SessionManager;
+import businessrule.UIFactory;
+import businessrule.UserSession;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.rmi.server.UID;
+import java.util.ArrayList;
+import java.util.List;
 
-import static javax.swing.BoxLayout.*;
+import static driver.screen.UIDrawer.*;
 
-public class ClientHomePageUI extends JPanel implements ActionListener {
-    ControlContainer controlContainer;
-    CardLayout cardLayout;
-    JPanel screens;
-    int userId;
-    String userName;
-    public ClientHomePageUI(ControlContainer controlContainer, CardLayout cardLayout, JPanel screens,
-                            int userId, String userName) {
-        this.controlContainer = controlContainer;
-        this.userId = userId;
-        this.userName = userName;
-        this.cardLayout = cardLayout;
-        this.screens = screens;
 
-        setBackground(UIDesign.lightGreenColor);
-        JLabel title = new JLabel("Home");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        UIDesign.setTitleFont(title);
-        this.setLayout(new BoxLayout(this, Y_AXIS));
-        this.add(title);
 
-        int topMargin = 50;
-        int leftMargin = 0;
-        int bottomMargin = 0;
-        int rightMargin = 0;
-        title.setBorder(new EmptyBorder(topMargin, leftMargin, bottomMargin, rightMargin));
+public class ClientHomePageUI extends HomePageUI implements ActionListener {
+    static final String ASK_NEW_QUESTION_BUTTON_NAME = "Ask new question";
+    public ClientHomePageUI(String userName, int userId, UIManager UIManager) {
+        super(userName, userId, UIManager);
 
-        String helloMessageString = "Hello, " + userName + "(" + userId + ")";
-        JLabel helloMessage = new JLabel(helloMessageString);
-        helloMessage.setBorder(new EmptyBorder(0,0,50,0));
+        //Spacers
+        JPanel topSpacer = addSpacer(50);
 
-        JPanel buttons = new JPanel();
-        buttons.setBackground(UIDesign.lightGreenColor);
-        JButton askNewQuestion = new JButton("Ask new question");
-        JButton viewQuestionHistory = new JButton("View question history");
+        //Buttons
+        List<String> buttonList = new ArrayList<>();
+        buttonList.add(ASK_NEW_QUESTION_BUTTON_NAME);
+        buttonList.add(VIEW_QUESTION_HISTORY_BUTTON_NAME);
+        buttonList.add(LOG_OUT_BUTTON_NAME);
+        JPanel buttons = setButtonPanel(buttonList, new Dimension(300, 50), 50, this);
 
-        UIDesign.setHomePageButton(askNewQuestion);
-        UIDesign.setHomePageButton(viewQuestionHistory);
-        buttons.add(askNewQuestion);
-        buttons.add(viewQuestionHistory);
-        askNewQuestion.addActionListener(this);
-        viewQuestionHistory.addActionListener(this);
-
-        this.add(helloMessage);
-        this.add(buttons);
+        add(helloMessage);
+        add(topSpacer);
+        add(title);
+        add(topSpacer);
+        add(buttons);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
-        if ("Ask new question".equals(actionCommand)){
-            System.out.println("Client chooses to ask new question.");
-            AskQuestionUI askQuestionUI = new AskQuestionUI(controlContainer, cardLayout, screens, userId, userName);
-            screens.add(askQuestionUI, "askQuestion");
-            cardLayout.show(screens, "askQuestion");
-        } else if ("View question history".equals(actionCommand)){
-            System.out.println("Client chooses to view question history.");
-            ViewQuestionControl viewQuestionControl = controlContainer.getViewQuestionControl();
-            viewQuestionControl.viewQuestion(userId);
+        ControlContainer controlContainer = uiManager.getControlContainer();
+        JPanel screens = uiManager.getScreens();
+        CardLayout cardLayout = uiManager.getCardLayout();
+
+        switch (actionCommand) {
+            case ASK_NEW_QUESTION_BUTTON_NAME:
+                System.out.println("Client chooses to ask new question.");
+                AskQuestionUI askQuestionUI = new AskQuestionUI(userName, userId, uiManager);
+                screens.add(askQuestionUI, "askQuestion");
+                cardLayout.show(screens, "askQuestion");
+                break;
+
+            case VIEW_QUESTION_HISTORY_BUTTON_NAME:
+                System.out.println("Client chooses to view question history.");
+                ViewQuestionControl viewQuestionControl = controlContainer.getViewQuestionControl();
+                viewQuestionControl.viewQuestion();
+                break;
+
+            case LOG_OUT_BUTTON_NAME:
+                WelcomeUI welcomeUI = new WelcomeUI(uiManager);
+                screens.add(welcomeUI, "Welcome");
+                cardLayout.show(screens, "Welcome");
+                SessionManager.clearSession();
+                UIFactory.clearUIFactory();
+                break;
         }
     }
 }

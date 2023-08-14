@@ -51,7 +51,7 @@ class ClientTest {
         assertEquals(expectedNumberOfHousehold, client.getNumberOfHousehold(), "Number of household is incorrect.");
         assertEquals(expectedAnnualIncome, client.getAnnualIncome(), "Annual income is incorrect.");
         assertTrue(client.getQuestionsList().isEmpty(), "Questions list should be empty initially.");
-        assertTrue(client.isClient(), "isClient should be true for Client.");
+        assertEquals("Client", client.getUserType(), "isClient should be true for Client.");
     }
 
     @Test
@@ -98,7 +98,7 @@ class ClientTest {
 
         Question question = new Question();
 
-        assertTrue(client.isQuestionCloseable(question));
+        assertFalse(client.isQuestionCloseable(question));
     }
 
     @Test

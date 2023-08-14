@@ -3,7 +3,7 @@ package controllertesting;
 import adapter.controller.ClientRegisterControl;
 import businessrule.inputboundary.UserRegisterInputBoundary;
 import businessrule.requestmodel.RegistrationData;
-import businessrule.responsemodel.RegisterResponseModel;
+import businessrule.responsemodel.BaseResponseModel;
 
 import org.junit.jupiter.api.Test;
 
@@ -24,11 +24,11 @@ public class ClientRegisterControlTest {
     private static int NUMBER_OF_HOUSEHOLD = 3;
     private static float ANNUAL_INCOME = 60000.0f;
 
-    private static RegisterResponseModel expectedResponse;
+    private static BaseResponseModel expectedResponse;
 
     public void setUpClientRegisterControl() {
         // Arrange
-        expectedResponse = new RegisterResponseModel();
+        expectedResponse = new BaseResponseModel();
     }
 
     @Test
@@ -41,7 +41,7 @@ public class ClientRegisterControlTest {
         ClientRegisterControl control = new ClientRegisterControl(mockInputBoundary);
 
         // Act
-        RegisterResponseModel actualResponse = control.create(USER_NAME, EMAIL, PASSWORD1, PASSWORD2, STATE_ABB,
+        BaseResponseModel actualResponse = control.create(USER_NAME, EMAIL, PASSWORD1, PASSWORD2, STATE_ABB,
                 POSTAL_CODE, ETHNICITY, AGE, GENDER, MARITAL_STATUS, NUMBER_OF_HOUSEHOLD, ANNUAL_INCOME);
 
         // Assert

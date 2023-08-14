@@ -1,11 +1,8 @@
 package driver.database;
 
 import businessrule.gateway.QuestionGateway;
-import entity.Client;
 import entity.Post;
 import entity.Question;
-import entity.User;
-
 import javax.jdo.JDOHelper;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;

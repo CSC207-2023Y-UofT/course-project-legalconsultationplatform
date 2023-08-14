@@ -4,76 +4,89 @@ import adapter.controller.ControlContainer;
 import adapter.controller.UserLoginControl;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.rmi.server.UID;
+import java.util.ArrayList;
+import java.util.List;
+
+import static driver.screen.UIDesign.*;
+import static driver.screen.UIDrawer.*;
 
 
 /**
  *
  * @author kaxi
  */
-public class LoginUI extends JPanel implements ActionListener{
-    ControlContainer controlContainer;
+public class LoginUI extends BaseUI implements ActionListener {
     JTextField userId = new JTextField(15);
     JPasswordField password = new JPasswordField(15);
+    static final String LOGIN_BUTTON_NAME = "Login";
+    static final String BACK_BUTTON_NAME = "Back";
+
     /**
      * Creates new form UserLogin
      */
-    public LoginUI(ControlContainer controlContainer) {
+    public LoginUI(UIManager UIManager) {
+        super(UIManager);
 
-        this.controlContainer = controlContainer;
-        UIDesign.setBackgroundFrame(this);
-        setLayout(new GridBagLayout());
-        GridBagConstraints gbc = new GridBagConstraints();
-        gbc.gridx = 0;
-        gbc.gridy = GridBagConstraints.RELATIVE;
-        gbc.anchor = GridBagConstraints.WEST;
-        gbc.insets = new Insets(5, 5, 5, 5); // Padding around each component
+
+        //Spacers
+        JPanel spacer1 = addSpacer(200);
+        JPanel spacer2 = addSpacer(30);
+        JPanel spacer3 = addSpacer(20);
+
 
         // Create the title label
         JLabel title = new JLabel("Log In");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        UIDesign.setTitleFont(title);
-        int topMargin = 30;
-        int leftMargin = 0;
-        int bottomMargin = 0;
-        int rightMargin = 0;
-        title.setBorder(new EmptyBorder(topMargin, leftMargin, bottomMargin, rightMargin));
-        add(title, gbc);
+        setTitleFont(title);
 
-        // Add some vertical glue between the title, userId, and password
+        // Add userId and password input fields
+        JPanel inputPanel = new JPanel();
+        inputPanel.setOpaque(false);
+        setSizeInLayout(inputPanel, new Dimension(360, 150));
+        JPanel userIdPanel = labelTextPanelDrawer(new JLabel("User Id"), userId);
+        JPanel passwordPanel = labelTextPanelDrawer(new JLabel("Password"), password);
+        inputPanel.add(userIdPanel);
+        inputPanel.add(spacer2);
+        inputPanel.add(passwordPanel);
 
-        gbc.gridx = 0; // Set the gridx to 0 to place components under the title
+        // Add
+        List<String> buttonList = new ArrayList<>();
+        buttonList.add(LOGIN_BUTTON_NAME);
+        buttonList.add(BACK_BUTTON_NAME);
+        JPanel buttons = setButtonPanel(buttonList, new Dimension(150, 50), 20, this);
 
-        LabelTextPanel userIdPanel = new LabelTextPanel(new JLabel("User Id"), userId);
-        add(userIdPanel, gbc);
+        add(spacer1);
+        add(title);
+        add(inputPanel);
+        add(spacer3);
+        add(buttons);
 
-        LabelTextPanel passwordPanel = new LabelTextPanel(new JLabel("Password"), password);
-        add(passwordPanel, gbc);
-
-        JButton buttonToSubmit = new JButton("Login");
-        UIDesign.setButton(buttonToSubmit);
-        JPanel buttons = new JPanel();
-        buttons.setBackground(UIDesign.lightGreenColor);
-        buttons.setLayout(new BoxLayout(buttons, BoxLayout.X_AXIS)); // Use X_AXIS for horizontal alignment
-        buttons.add(buttonToSubmit);
-        buttonToSubmit.addActionListener(this);
-        add(buttons, gbc);
 
     }
-    @Override
-    public void actionPerformed(ActionEvent evt){
-        System.out.println("Click" + evt.getActionCommand());
-        UserLoginControl loginControl = controlContainer.getUserLoginControl();
 
-        try {
-            loginControl.login(Integer.parseInt(userId.getText()), String.valueOf(password.getPassword()));
-        }
-        catch(Exception e){
-            JOptionPane.showMessageDialog(this, e.getMessage());
+    @Override
+    public void actionPerformed(ActionEvent evt) {
+        String actionCommand = evt.getActionCommand();
+        ControlContainer controlContainer = uiManager.getControlContainer();
+        JPanel screens = uiManager.getScreens();
+        CardLayout cardLayout = uiManager.getCardLayout();
+        UserLoginControl loginControl = controlContainer.getUserLoginControl();
+        switch (actionCommand) {
+            case LOGIN_BUTTON_NAME:
+                try {
+                    loginControl.login(Integer.parseInt(userId.getText()), String.valueOf(password.getPassword()));
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    JOptionPane.showMessageDialog(this, e.getMessage());
+                }
+                break;
+
+            case BACK_BUTTON_NAME:
+                cardLayout.show(screens, "Welcome");
+                break;
         }
     }
 }

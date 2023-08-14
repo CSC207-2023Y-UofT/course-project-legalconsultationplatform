@@ -3,9 +3,9 @@ package usecasetesting;
 import adapter.controller.ControlContainer;
 import businessrule.gateway.ClientGateway;
 import businessrule.inputboundary.UserRegisterInputBoundary;
-import businessrule.outputboundary.RegisterOutputBoundary;
+import businessrule.outputboundary.BaseOutputBoundary;
 import businessrule.requestmodel.RegistrationData;
-import businessrule.responsemodel.RegisterResponseModel;
+import businessrule.responsemodel.BaseResponseModel;
 import businessrule.usecase.ClientRegisterInteractor;
 import driver.database.ClientRepository;
 import entity.factory.ClientFactory;
@@ -31,32 +31,28 @@ public class ClientRegisterUseCaseTest {
 
     private ClientFactory clientFactory;
     private ClientGateway clientGateway;
-    private RegisterOutputBoundary registerOutputBoundary;
+    private BaseOutputBoundary baseOutputBoundary;
     private UserRegisterInputBoundary clientRegisterInputBoundary;
     public void setUpClientRegisterUseCase(){
         clientGateway = new ClientRepository();
         clientFactory = new ClientFactory();
-        registerOutputBoundary = new RegisterOutputBoundary() {
-            @Override
-            public void setControlContainer(ControlContainer controlContainer) {
-
-            }
+        baseOutputBoundary = new BaseOutputBoundary() {
 
             @Override
-            public RegisterResponseModel prepareSuccess(String msg) {
+            public BaseResponseModel prepareSuccess(String msg) {
                 System.out.println(msg);
                 System.out.println("Registration is approved.");
                 return null;
             }
 
             @Override
-            public RegisterResponseModel prepareFail(String msg) {
+            public BaseResponseModel prepareFail(String msg) {
                 System.out.println(msg);
                 return null;
             }
         };
 
-        clientRegisterInputBoundary = new ClientRegisterInteractor(clientGateway, clientFactory, registerOutputBoundary);
+        clientRegisterInputBoundary = new ClientRegisterInteractor(clientGateway, clientFactory, baseOutputBoundary);
 
     }
     @Test

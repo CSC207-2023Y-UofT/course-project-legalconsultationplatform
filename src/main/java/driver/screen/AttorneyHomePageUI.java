@@ -2,83 +2,73 @@ package driver.screen;
 
 import adapter.controller.ControlContainer;
 import adapter.controller.ViewQuestionControl;
+import businessrule.SessionManager;
+import businessrule.UIFactory;
+import cn.hutool.core.net.LocalPortGenerater;
 
 import javax.swing.*;
-import javax.swing.border.EmptyBorder;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
+import java.util.List;
 
-public class AttorneyHomePageUI extends JPanel implements ActionListener {
-    ControlContainer controlContainer;
-    CardLayout cardLayout;
-    JPanel screens;
-    int userId;
-    String userName;
-    public AttorneyHomePageUI(ControlContainer controlContainer, CardLayout cardLayout, JPanel screens,
-                              int userId, String userName) {
-        this.controlContainer = controlContainer;
-        this.userId = userId;
-        this.userName = userName;
-        this.cardLayout = cardLayout;
-        this.screens = screens;
+import static driver.screen.UIDrawer.*;
 
-        UIDesign.setBackgroundFrame(this);
-        //The title
-        JLabel title = new JLabel("Home Page");
-        title.setAlignmentX(Component.CENTER_ALIGNMENT);
-        UIDesign.setTitleFont(title);
+public class AttorneyHomePageUI extends HomePageUI implements ActionListener {
+    static final String BROWSE_AVAILABLE_QUESTIONS_BUTTON_NAME = "Browse Available Questions";
+    static final String RECOMMENDED_QUESTIONS_BUTTON_NAME = "Recommended Questions";
+    public AttorneyHomePageUI(String userName, int userId, UIManager UIManager) {
+        super(userName, userId, UIManager);
 
-        int topMargin = 50;
-        int leftMargin = 0;
-        int bottomMargin = 0;
-        int rightMargin = 0;
-        title.setBorder(new EmptyBorder(topMargin, leftMargin, bottomMargin, rightMargin));
+        //Spacer
+        JPanel topSpacer = addSpacer(50);
 
-        //The userName and userId
-        String helloMessageString = "Hello, " + userName + "(" + userId + ")";
-        JLabel helloMessage = new JLabel(helloMessageString);
-        helloMessage.setBorder(new EmptyBorder(0,0,30,0));
+        //Buttons
+        List<String> buttonList = new ArrayList<>();
+        buttonList.add(BROWSE_AVAILABLE_QUESTIONS_BUTTON_NAME);
+        buttonList.add(VIEW_QUESTION_HISTORY_BUTTON_NAME);
+        buttonList.add(RECOMMENDED_QUESTIONS_BUTTON_NAME);
+        buttonList.add(LOG_OUT_BUTTON_NAME);
+        JPanel buttons = setButtonPanel(buttonList, new Dimension(300, 50), 50, this);
 
-        //The three buttons
-        JPanel buttons = new JPanel();
-        buttons.setBackground(UIDesign.lightGreenColor);
-        JButton browseQuestions = new JButton("Browse available questions");
-        browseQuestions.setBorder(new EmptyBorder(0,0,20,0));
-        JButton viewQuestionHistory = new JButton("View question history");
-        viewQuestionHistory.setBorder(new EmptyBorder(0,0,20,0));
-        JButton recommendation = new JButton("Recommended questions");
 
-        UIDesign.setHomePageButton(browseQuestions);
-        UIDesign.setHomePageButton(viewQuestionHistory);
-        UIDesign.setHomePageButton(recommendation);
-
-        buttons.add(browseQuestions);
-        buttons.add(viewQuestionHistory);
-        buttons.add(recommendation);
-        browseQuestions.addActionListener(this);
-        viewQuestionHistory.addActionListener(this);
-        recommendation.addActionListener(this);
-
-        this.setLayout(new BoxLayout(this, BoxLayout.Y_AXIS));
-        this.add(title);
-        this.add(helloMessage);
-        this.add(buttons);
+        add(helloMessage);
+        add(topSpacer);
+        add(title);
+        add(topSpacer);
+        add(buttons);
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
         String actionCommand = e.getActionCommand();
-        if ("Browse available questions".equals(actionCommand)){
-            System.out.println("Attorney chooses browse available questions.");
-            // BrowseQuestionControl browseQuestionControl = controlContainer.getBrowseQuestionControl();
-            // browseQuestionControl.browseQuestion(userId);
-        } else if ("View question history".equals(actionCommand)){
-            System.out.println("Attorney chooses view question history.");
-            ViewQuestionControl viewQuestionControl = controlContainer.getViewQuestionControl();
-            viewQuestionControl.viewQuestion(userId);
-        } else if ("Recommended questions".equals(actionCommand)){
-            JOptionPane.showMessageDialog(this, "Recommendation unavailable");
+        ControlContainer controlContainer = uiManager.getControlContainer();
+        JPanel screens = uiManager.getScreens();
+        CardLayout cardLayout = uiManager.getCardLayout();
+        switch (actionCommand) {
+            case BROWSE_AVAILABLE_QUESTIONS_BUTTON_NAME:
+                ViewQuestionControl browseQuestionControl = controlContainer.getBrowseQuestionControl();
+                browseQuestionControl.viewQuestion();
+                break;
+
+            case VIEW_QUESTION_HISTORY_BUTTON_NAME:
+                ViewQuestionControl viewQuestionControl = controlContainer.getViewQuestionControl();
+                viewQuestionControl.viewQuestion();
+                break;
+
+            case RECOMMENDED_QUESTIONS_BUTTON_NAME:
+                ViewQuestionControl recommendationControl = controlContainer.getRecommendationControl();
+                recommendationControl.viewQuestion();
+                break;
+
+            case LOG_OUT_BUTTON_NAME:
+                WelcomeUI welcomeUI = new WelcomeUI(uiManager);
+                screens.add(welcomeUI, "Welcome");
+                cardLayout.show(screens, "Welcome");
+                SessionManager.clearSession();
+                UIFactory.clearUIFactory();
+                break;
         }
     }
 }

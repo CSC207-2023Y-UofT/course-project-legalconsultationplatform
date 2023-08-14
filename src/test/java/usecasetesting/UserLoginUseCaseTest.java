@@ -1,16 +1,18 @@
 package usecasetesting;
 
 import adapter.controller.ControlContainer;
+import businessrule.SessionManager;
 import businessrule.gateway.ClientGateway;
 import businessrule.gateway.UserGatewayFactory;
 import businessrule.inputboundary.UserLoginInputBoundary;
-import businessrule.outputboundary.HomePageOutputBoundary;
+
+import businessrule.outputboundary.UserOutputBoundary;
 import businessrule.requestmodel.UserLoginRequestModel;
-import businessrule.responsemodel.HomePageResponseModel;
+
+import businessrule.responsemodel.UserResponseModel;
 import businessrule.usecase.UserLoginInteractor;
 import driver.database.*;
 import entity.Client;
-import org.junit.BeforeClass;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -21,31 +23,28 @@ public class UserLoginUseCaseTest {
     final static String PASSWORD = "abcdefg";
     private UserGatewayFactory userGatewayFactory;
     private ClientGateway clientGateway;
-    private HomePageOutputBoundary homePageOutputBoundary;
+    private UserOutputBoundary userOutputBoundary;
     private UserLoginInputBoundary userLoginInputBoundary;
 
     public void setUpUserLoginUseCase(){
         userGatewayFactory = new UserGatewayFactory();
         clientGateway = new ClientRepository();
 
-        homePageOutputBoundary = new HomePageOutputBoundary() {
-            @Override
-            public void setControlContainer(ControlContainer controlContainer) {
-
-            }
+        userOutputBoundary = new UserOutputBoundary() {
 
             @Override
-            public HomePageResponseModel prepareFail(String msg) {
+            public UserResponseModel prepareFail(String msg) {
                 System.out.println(msg);
                 return null;
             }
 
             @Override
-            public HomePageResponseModel prepareSuccess(HomePageResponseModel homePageResponseModel) {
+            public UserResponseModel prepareSuccess(UserResponseModel userResponseModel) {
+                assertNotEquals(null, SessionManager.getSession());
                 return null;
             }
         };
-        userLoginInputBoundary = new UserLoginInteractor(userGatewayFactory, homePageOutputBoundary);
+        userLoginInputBoundary = new UserLoginInteractor(userGatewayFactory, userOutputBoundary);
 
         Client client = new Client();
         client.setUserId(CLIENT_ID);

@@ -1,50 +1,37 @@
 package adapter.presenter;
-import adapter.controller.ControlContainer;
-import businessrule.outputboundary.HomePageOutputBoundary;
-import businessrule.responsemodel.HomePageResponseModel;
+import businessrule.UIFactory;
+import businessrule.outputboundary.UserOutputBoundary;
+import businessrule.responsemodel.UserResponseModel;
+import driver.screen.HomePageUI;
+import driver.screen.UIManager;
 import entity.ApplicationException;
-import driver.screen.AttorneyHomePageUI;
-import driver.screen.ClientHomePageUI;
 
 import javax.swing.*;
 import java.awt.*;
 
-public class HomePageResponseFormatter implements HomePageOutputBoundary {
-    CardLayout cardLayout;
-    JPanel screens;
-    ControlContainer controlContainer;
+public class HomePageResponseFormatter implements UserOutputBoundary {
+    UIManager UIManager;
 
-    public HomePageResponseFormatter(CardLayout cardLayout, JPanel screens) {
-        this.cardLayout = cardLayout;
-        this.screens = screens;
+    public HomePageResponseFormatter(UIManager UIManager) {
+        this.UIManager = UIManager;
     }
 
     @Override
-    public void setControlContainer(ControlContainer controlContainer) {
-        this.controlContainer = controlContainer;
-    }
-
-    @Override
-    public HomePageResponseModel prepareFail(String msg) {
+    public UserResponseModel prepareFail(String msg) {
         throw new ApplicationException(msg);
     }
 
     @Override
-    public HomePageResponseModel prepareSuccess(HomePageResponseModel response) {
-        int userId = response.getUserId();
-        String userName = response.getUserName();
-        String userType = response.getUserType();
-        if (userType.equals("Attorney")) {
-            AttorneyHomePageUI AttorneyHomePage = new AttorneyHomePageUI(controlContainer, cardLayout, screens,
-                    userId, userName);
-            screens.add(AttorneyHomePage, "AttorneyHomePage");
-            cardLayout.show(screens, "AttorneyHomePage");
-        } else {
-            ClientHomePageUI clientHomePage = new ClientHomePageUI(controlContainer, cardLayout, screens,
-                    userId, userName);
-            screens.add(clientHomePage, "ClientHomePage");
-            cardLayout.show(screens, "ClientHomePage");
-        }
+    public UserResponseModel prepareSuccess(UserResponseModel response) {
+        pageConstructor(response);
         return response;
+    }
+
+    protected void pageConstructor(UserResponseModel response){
+        JPanel screens = UIManager.getScreens();
+        CardLayout cardLayout = UIManager.getCardLayout();
+        JPanel homePage = UIFactory.getUI(UIFactory.UIType.HOME_PAGE, UIManager, response);
+        screens.add(homePage, "Home Page");
+        cardLayout.show(screens, "Home Page");
     }
 }
