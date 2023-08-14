@@ -30,7 +30,7 @@ public class QuestionListUI extends UserUI implements ActionListener {
         //The scrollable question buttons
         JPanel questionScrollPanel = new JPanel();
         UIDesign.setSizeInLayout(questionScrollPanel, new Dimension(350, 450));
-        questionScrollPanel.setOpaque(false);
+        questionScrollPanel.setBackground(lightGreenColor);
         questionScrollPanel.setLayout(new BoxLayout(questionScrollPanel, BoxLayout.Y_AXIS));
         for (Integer questionId : questionMap.keySet()) {
             //read all variables from displayFormatter
