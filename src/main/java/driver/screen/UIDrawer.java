@@ -246,4 +246,26 @@ public class UIDrawer {
         titlePanel.setOpaque(false);
         return titlePanel;
     }
+
+    protected static JPanel replyAreaDrawer(JTextArea inputPostArea, String buttonName, ActionListener parent) {
+        inputPostArea.setLineWrap(true);
+        inputPostArea.setWrapStyleWord(true);
+
+        JScrollPane inputScrollPane = new JScrollPane(inputPostArea);
+        inputScrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+        inputScrollPane.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        setSizeInLayout(inputScrollPane, new Dimension(270, 50));
+
+        JButton postReply = new JButton(buttonName);
+        postReply.setForeground(darkGreenColor);
+        Dimension postButtonSize = new Dimension(80, 50);
+        setSizeInLayout(postReply, postButtonSize);
+        postReply.addActionListener(parent);
+        JPanel inputPost = new JPanel();
+        inputPost.setLayout(new FlowLayout());
+        inputPost.add(inputScrollPane);
+        inputPost.add(postReply);
+        inputPost.setOpaque(false);
+        return inputPost;
+    }
 }

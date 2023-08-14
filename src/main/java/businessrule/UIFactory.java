@@ -49,8 +49,8 @@ public class UIFactory {
         return new QuestionListUI(viewResponseModel.getUserName(), viewResponseModel.getUserId(), uiManager, viewResponseModel.getQuestionMap());
     }
 
-    private static QuestionUI getQuestionUI(UIManager uiManager, TheQuestionResponseModel questionResponseModel) {
-        return new QuestionUI(questionResponseModel.getUserName(), questionResponseModel.getUserId(), uiManager, questionResponseModel.getTitle(), questionResponseModel.getType(), questionResponseModel.getDeadline(), questionResponseModel.getPostMap());
+    private static QuestionCloseUI getQuestionUI(UIManager uiManager, TheQuestionResponseModel questionResponseModel) {
+        return new QuestionCloseUI(questionResponseModel.getUserName(), questionResponseModel.getUserId(), uiManager, questionResponseModel.getTitle(), questionResponseModel.getType(), questionResponseModel.getDeadline(), questionResponseModel.getPostMap());
     }
 
     private static BaseUI getBaseUI(UIType uiType, UIManager uiManager) {
