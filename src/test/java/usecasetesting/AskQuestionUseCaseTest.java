@@ -89,7 +89,7 @@ public class AskQuestionUseCaseTest {
 
         User user = clientGateway.get(CLIENT_ID);
         assertEquals(1, user.getQuestionsList().size(), "The ask question use case failed.");
-        ClearAllRepository();
+        clearAllRepository();
     }
 
     /**
@@ -105,7 +105,7 @@ public class AskQuestionUseCaseTest {
 
         User user = clientGateway.get(CLIENT_ID);
         assertEquals(0, user.getQuestionsList().size(), "The ask question use case failed.");
-        ClearAllRepository();
+        clearAllRepository();
     }
 
     /**
