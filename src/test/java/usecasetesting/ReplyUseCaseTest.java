@@ -58,15 +58,17 @@ public class ReplyUseCaseTest {
 
         Question question = new Question();
         question.setQuestionId(QUESTION_ID);
+        question.setAskedByClient(CLIENT_ID);
         questionGateway.save(question);
 
         Question closedQuestion = new Question();
         closedQuestion.setQuestionId(CLOSED_QUESTION_ID);
+        closedQuestion.setAskedByClient(CLIENT_ID);
         questionGateway.save(closedQuestion);
 
         Client client = new Client();
         client.setUserId(CLIENT_ID);
-        client.setEmail("josephpc061@gmail.com");
+        client.setEmail("josephpc0612@gmail.com");
         client.addQuestion(question);
         clientGateway.save(client);
 
