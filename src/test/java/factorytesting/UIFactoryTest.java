@@ -12,6 +12,7 @@ import businessrule.usecase.util.PostMapConstructor;
 import businessrule.usecase.util.QuestionDisplayFormatter;
 import driver.screen.*;
 import driver.screen.UIManager;
+import entity.Post;
 import entity.Question;
 import entity.factory.QuestionFactory;
 import org.junit.jupiter.api.BeforeEach;
@@ -34,6 +35,7 @@ class UIFactoryTest {
     private final String USER_TYPE = "Client";
     private final String TITLE = "test title";
     private final String QUESTION_TYPE = "test type";
+    private final String POST_TEXT = "test text";
     private UserResponseModel userResponseModel;
     private BaseResponseModel baseResponseModel;
     private TheQuestionResponseModel theQuestionResponseModel;
@@ -51,7 +53,10 @@ class UIFactoryTest {
         CardLayout testCardLayout = new CardLayout();
         uiManager = new UIManager(testScreen, testCardLayout);
         Question question = new Question();
+        PostDisplayFormatter post = new PostDisplayFormatter(POST_TEXT, USER_TYPE, USER_NAME, LocalDate.now());
+
         postMap = new HashMap<>();
+        postMap.put(1, post);
         questionMap = new HashMap<>();
         theQuestionResponseModel = BuilderService.getInstance().constructTheQuestionResponse(question, userResponseModel, postMap);
         viewResponseModel = BuilderService.getInstance().constructViewResponse(userResponseModel, questionMap);
