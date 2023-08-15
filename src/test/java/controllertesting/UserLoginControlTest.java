@@ -1,10 +1,10 @@
 package controllertesting;
 
-import adapter.controller.UserLoginControl;
-import businessrule.inputboundary.UserLoginInputBoundary;
-import businessrule.requestmodel.UserLoginRequestModel;
+import adapters.controllers.UserLoginControl;
+import usecases.inputboundary.UserLoginInputBoundary;
+import usecases.requests.UserLoginRequestModel;
 
-import businessrule.responsemodel.UserResponseModel;
+import usecases.responses.UserResponseModel;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

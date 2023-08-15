@@ -1,12 +1,12 @@
 package controllertesting;
 
-import adapter.controller.PostControl;
-import businessrule.SessionManager;
-import businessrule.UserSession;
-import businessrule.inputboundary.PostInputBoundary;
-import businessrule.requestmodel.PostRequestModel;
-import businessrule.responsemodel.TheQuestionResponseModel;
-import businessrule.responsemodel.UserResponseModel;
+import adapters.controllers.PostControl;
+import usecases.session.SessionManager;
+import usecases.session.UserSession;
+import usecases.inputboundary.PostInputBoundary;
+import usecases.requests.PostRequestModel;
+import usecases.responses.TheQuestionResponseModel;
+import usecases.responses.UserResponseModel;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;

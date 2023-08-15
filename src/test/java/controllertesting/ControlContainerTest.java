@@ -1,6 +1,6 @@
 package controllertesting;
 
-import adapter.controller.*;
+import adapters.controllers.*;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

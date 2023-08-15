@@ -2,7 +2,7 @@ package factorytesting;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import businessrule.usecase.util.RandomNumberGenerator;
+import usecases.utils.RandomNumberGenerator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

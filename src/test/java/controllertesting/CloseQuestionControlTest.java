@@ -1,9 +1,9 @@
 package controllertesting;
 
-import adapter.controller.CloseQuestionControl;
-import businessrule.inputboundary.CloseInputBoundary;
-import businessrule.requestmodel.CloseRequestModel;
-import businessrule.responsemodel.UserResponseModel;
+import adapters.controllers.CloseQuestionControl;
+import usecases.inputboundary.CloseInputBoundary;
+import usecases.requests.CloseRequestModel;
+import usecases.responses.UserResponseModel;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;

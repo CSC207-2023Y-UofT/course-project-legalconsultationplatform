@@ -1,8 +1,8 @@
 package controllertesting;
 
-import adapter.controller.ViewQuestionControl;
-import businessrule.inputboundary.ViewInputBoundary;
-import businessrule.responsemodel.ViewResponseModel;
+import adapters.controllers.ViewQuestionControl;
+import usecases.inputboundary.ViewInputBoundary;
+import usecases.responses.ViewResponseModel;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;

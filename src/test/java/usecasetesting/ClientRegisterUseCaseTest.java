@@ -1,13 +1,13 @@
 package usecasetesting;
 
-import businessrule.gateway.ClientGateway;
-import businessrule.inputboundary.UserRegisterInputBoundary;
-import businessrule.outputboundary.BaseOutputBoundary;
-import businessrule.requestmodel.RegistrationData;
-import businessrule.responsemodel.BaseResponseModel;
-import businessrule.usecase.ClientRegisterInteractor;
-import driver.database.ClientRepository;
-import entity.factory.ClientFactory;
+import usecases.gateway.ClientGateway;
+import usecases.inputboundary.UserRegisterInputBoundary;
+import usecases.outputboundary.BaseOutputBoundary;
+import usecases.requests.RegistrationData;
+import usecases.responses.BaseResponseModel;
+import usecases.interactors.ClientRegisterInteractor;
+import infrastructure.database.ClientRepository;
+import entities.factories.ClientFactory;
 import org.junit.jupiter.api.Test;
 
 /**

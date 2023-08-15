@@ -1,18 +1,18 @@
 package usecasetesting;
 
 
-import businessrule.SessionManager;
-import businessrule.UserSession;
-import businessrule.gateway.*;
-import businessrule.inputboundary.RateInputBoundary;
-import businessrule.outputboundary.UserOutputBoundary;
-import businessrule.requestmodel.RateRequestModel;
-import businessrule.responsemodel.UserResponseModel;
-import businessrule.usecase.RateInteractor;
-import driver.database.*;
-import entity.Attorney;
-import entity.Client;
-import entity.Question;
+import usecases.session.SessionManager;
+import usecases.session.UserSession;
+import usecases.gateway.*;
+import usecases.inputboundary.RateInputBoundary;
+import usecases.outputboundary.UserOutputBoundary;
+import usecases.requests.RateRequestModel;
+import usecases.responses.UserResponseModel;
+import usecases.interactors.RateInteractor;
+import infrastructure.database.*;
+import entities.user.Attorney;
+import entities.user.Client;
+import entities.Question;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -59,7 +59,7 @@ public class RateAnswerUseCaseTest {
                 return null;
             }
         };
-        rateInputBoundary = new RateInteractor(questionGateway, userOutputBoundary,  clientGateway, attorneyGateway);
+        rateInputBoundary = new RateInteractor(questionGateway, userOutputBoundary, attorneyGateway);
 
         Question question = new Question();
         question.setQuestionId(QUESTION_ID);

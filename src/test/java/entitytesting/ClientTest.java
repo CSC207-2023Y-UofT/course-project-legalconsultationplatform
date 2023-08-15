@@ -1,9 +1,9 @@
 package entitytesting;
 
-import businessrule.requestmodel.RegistrationData;
-import entity.Client;
-import entity.Question;
-import entity.factory.ClientFactory;
+import usecases.requests.RegistrationData;
+import entities.user.Client;
+import entities.Question;
+import entities.factories.ClientFactory;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;

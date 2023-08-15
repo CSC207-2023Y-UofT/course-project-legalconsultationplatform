@@ -1,11 +1,11 @@
 package controllertesting;
 
-import adapter.controller.RateControl;
-import businessrule.SessionManager;
-import businessrule.UserSession;
-import businessrule.inputboundary.RateInputBoundary;
-import businessrule.requestmodel.RateRequestModel;
-import businessrule.responsemodel.UserResponseModel;
+import adapters.controllers.RateControl;
+import usecases.session.SessionManager;
+import usecases.session.UserSession;
+import usecases.inputboundary.RateInputBoundary;
+import usecases.requests.RateRequestModel;
+import usecases.responses.UserResponseModel;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;

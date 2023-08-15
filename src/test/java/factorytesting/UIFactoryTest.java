@@ -1,16 +1,16 @@
 package factorytesting;
 
-import businessrule.UIFactory;
-import businessrule.responsemodel.BaseResponseModel;
-import businessrule.responsemodel.TheQuestionResponseModel;
-import businessrule.responsemodel.UserResponseModel;
-import businessrule.responsemodel.ViewResponseModel;
-import businessrule.usecase.util.BuilderService;
-import businessrule.usecase.util.PostDisplayFormatter;
-import businessrule.usecase.util.QuestionDisplayFormatter;
-import driver.screen.*;
-import driver.screen.UIManager;
-import entity.Question;
+import infrastructure.screens.UIFactory;
+import usecases.responses.BaseResponseModel;
+import usecases.responses.TheQuestionResponseModel;
+import usecases.responses.UserResponseModel;
+import usecases.responses.ViewResponseModel;
+import usecases.utils.BuilderService;
+import usecases.dto.PostDisplay;
+import usecases.dto.QuestionDisplay;
+import infrastructure.screens.*;
+import infrastructure.screens.utils.UIManager;
+import entities.Question;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import javax.swing.*;
@@ -32,8 +32,8 @@ class UIFactoryTest {
     private TheQuestionResponseModel theQuestionResponseModel;
     private ViewResponseModel viewResponseModel;
     private UIManager uiManager;
-    private Map<Integer, PostDisplayFormatter> postMap;
-    private Map<Integer, QuestionDisplayFormatter> questionMap;
+    private Map<Integer, PostDisplay> postMap;
+    private Map<Integer, QuestionDisplay> questionMap;
 
     @BeforeEach
     void setUpUIFactory() {
@@ -45,7 +45,7 @@ class UIFactoryTest {
         uiManager = new UIManager(testScreen, testCardLayout);
         Question question = new Question(QUESTION_ID, QUESTION_TYPE, TITLE, LocalDate.now(), USER_ID, LocalDate.now());
         String POST_TEXT = "test text";
-        PostDisplayFormatter post = new PostDisplayFormatter(POST_TEXT, USER_TYPE, USER_NAME, LocalDate.now());
+        PostDisplay post = new PostDisplay(POST_TEXT, USER_TYPE, USER_NAME, LocalDate.now());
 
         postMap = new HashMap<>();
         postMap.put(1, post);

@@ -1,15 +1,15 @@
 package usecasetesting;
 
-import businessrule.SessionManager;
-import businessrule.gateway.ClientGateway;
-import businessrule.gateway.UserGatewayFactory;
-import businessrule.inputboundary.UserLoginInputBoundary;
-import businessrule.outputboundary.UserOutputBoundary;
-import businessrule.requestmodel.UserLoginRequestModel;
-import businessrule.responsemodel.UserResponseModel;
-import businessrule.usecase.UserLoginInteractor;
-import driver.database.*;
-import entity.Client;
+import usecases.session.SessionManager;
+import usecases.gateway.ClientGateway;
+import infrastructure.database.UserGatewayFactory;
+import usecases.inputboundary.UserLoginInputBoundary;
+import usecases.outputboundary.UserOutputBoundary;
+import usecases.requests.UserLoginRequestModel;
+import usecases.responses.UserResponseModel;
+import usecases.interactors.UserLoginInteractor;
+import infrastructure.database.*;
+import entities.user.Client;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

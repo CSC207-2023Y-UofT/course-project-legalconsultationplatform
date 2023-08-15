@@ -1,14 +1,14 @@
 package gatewaytesting;
 
-import businessrule.requestmodel.RegistrationData;
-import driver.database.*;
-import entity.Post;
-import entity.factory.AttorneyFactory;
+import usecases.requests.RegistrationData;
+import infrastructure.database.*;
+import entities.Post;
+import entities.factories.AttorneyFactory;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import entity.Question;
-import entity.Attorney;
+import entities.Question;
+import entities.user.Attorney;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;

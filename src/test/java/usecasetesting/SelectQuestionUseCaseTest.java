@@ -1,18 +1,20 @@
 package usecasetesting;
 
 
-import businessrule.SessionManager;
-import businessrule.UserSession;
-import businessrule.gateway.*;
-import businessrule.inputboundary.SelectInputBoundary;
-import businessrule.outputboundary.TheQuestionOutputBoundary;
-import businessrule.requestmodel.SelectRequestModel;
-import businessrule.responsemodel.TheQuestionResponseModel;
-import businessrule.responsemodel.UserResponseModel;
-import businessrule.usecase.util.PostDisplayFormatter;
-import businessrule.usecase.SelectQuestionInteractor;
-import driver.database.*;
-import entity.*;
+import entities.user.Attorney;
+import entities.user.Client;
+import usecases.session.SessionManager;
+import usecases.session.UserSession;
+import usecases.gateway.*;
+import usecases.inputboundary.SelectInputBoundary;
+import usecases.outputboundary.TheQuestionOutputBoundary;
+import usecases.requests.SelectRequestModel;
+import usecases.responses.TheQuestionResponseModel;
+import usecases.responses.UserResponseModel;
+import usecases.dto.PostDisplay;
+import usecases.interactors.SelectQuestionInteractor;
+import infrastructure.database.*;
+import entities.*;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
@@ -61,7 +63,7 @@ public class SelectQuestionUseCaseTest {
             @Override
             public TheQuestionResponseModel prepareSuccess(TheQuestionResponseModel response) {
                 assertEquals(2, response.getPostMap().size(), "The post map is not correct.");
-                List<PostDisplayFormatter> arrayList;
+                List<PostDisplay> arrayList;
                 arrayList = new ArrayList<>(response.getPostMap().values());
                 assertEquals("test text", arrayList.get(0).getPostText());
                 return null;

@@ -1,9 +1,9 @@
 package gatewaytesting;
 
-import driver.database.DatabaseConnection;
-import driver.database.PostRepo;
+import infrastructure.database.DatabaseConnection;
+import infrastructure.database.PostRepo;
 import org.junit.jupiter.api.*;
-import entity.Post;
+import entities.Post;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;

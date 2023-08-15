@@ -1,8 +1,8 @@
 package entitytesting;
-import businessrule.requestmodel.RegistrationData;
-import entity.Attorney;
-import entity.Question;
-import entity.factory.AttorneyFactory;
+import usecases.requests.RegistrationData;
+import entities.user.Attorney;
+import entities.Question;
+import entities.factories.AttorneyFactory;
 import org.junit.jupiter.api.Test;
 import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;

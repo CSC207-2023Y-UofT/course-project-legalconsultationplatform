@@ -1,9 +1,9 @@
 package controllertesting;
 
-import adapter.controller.ClientRegisterControl;
-import businessrule.inputboundary.UserRegisterInputBoundary;
-import businessrule.requestmodel.RegistrationData;
-import businessrule.responsemodel.BaseResponseModel;
+import adapters.controllers.ClientRegisterControl;
+import usecases.inputboundary.UserRegisterInputBoundary;
+import usecases.requests.RegistrationData;
+import usecases.responses.BaseResponseModel;
 
 import org.junit.jupiter.api.Test;
 

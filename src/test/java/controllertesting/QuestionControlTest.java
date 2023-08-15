@@ -1,12 +1,12 @@
 package controllertesting;
 
-import adapter.controller.QuestionControl;
-import businessrule.SessionManager;
-import businessrule.UserSession;
-import businessrule.inputboundary.QuestionInputBoundary;
-import businessrule.requestmodel.QuestionRequestModel;
-import businessrule.responsemodel.TheQuestionResponseModel;
-import businessrule.responsemodel.UserResponseModel;
+import adapters.controllers.QuestionControl;
+import usecases.session.SessionManager;
+import usecases.session.UserSession;
+import usecases.inputboundary.QuestionInputBoundary;
+import usecases.requests.QuestionRequestModel;
+import usecases.responses.TheQuestionResponseModel;
+import usecases.responses.UserResponseModel;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;

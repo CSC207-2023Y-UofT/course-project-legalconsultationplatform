@@ -1,8 +1,8 @@
 package factorytesting;
 
-import businessrule.requestmodel.RegistrationData;
-import entity.Client;
-import entity.factory.ClientFactory;
+import usecases.requests.RegistrationData;
+import entities.user.Client;
+import entities.factories.ClientFactory;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 

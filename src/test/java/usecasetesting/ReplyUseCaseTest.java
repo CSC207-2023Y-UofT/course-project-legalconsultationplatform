@@ -1,18 +1,21 @@
 package usecasetesting;
 
 
-import businessrule.SessionManager;
-import businessrule.UserSession;
-import businessrule.gateway.*;
-import businessrule.inputboundary.PostInputBoundary;
-import businessrule.outputboundary.TheQuestionOutputBoundary;
-import businessrule.requestmodel.PostRequestModel;
-import businessrule.responsemodel.TheQuestionResponseModel;
-import businessrule.responsemodel.UserResponseModel;
-import businessrule.usecase.ReplyInteractor;
-import driver.database.*;
-import entity.*;
-import entity.factory.PostFactory;
+import entities.user.Attorney;
+import entities.user.Client;
+import entities.user.User;
+import usecases.session.SessionManager;
+import usecases.session.UserSession;
+import usecases.gateway.*;
+import usecases.inputboundary.PostInputBoundary;
+import usecases.outputboundary.TheQuestionOutputBoundary;
+import usecases.requests.PostRequestModel;
+import usecases.responses.TheQuestionResponseModel;
+import usecases.responses.UserResponseModel;
+import usecases.interactors.ReplyInteractor;
+import infrastructure.database.*;
+import entities.*;
+import entities.factories.PostFactory;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -74,7 +77,7 @@ public class ReplyUseCaseTest {
 
         Client client = new Client();
         client.setUserId(CLIENT_ID);
-        client.setEmail("josephpc0612@gmail.com");
+        client.setEmail("josephpc061@gmail.com");
         client.addQuestion(question);
         clientGateway.save(client);
 
