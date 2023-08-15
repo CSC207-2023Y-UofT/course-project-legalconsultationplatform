@@ -1,5 +1,6 @@
 package gatewaytesting;
 
+import usecases.requests.ClientRegistrationData;
 import usecases.requests.RegistrationData;
 import infrastructure.database.*;
 import entities.Question;
@@ -71,7 +72,15 @@ public class AttorneyRepositoryTest {
         int clientNumHouseHold = 1;
         float clientAnnualIncome = 100;
 
-        RegistrationData registrationData2 = new RegistrationData(clientUsername, clientEmail, clientPassword, clientPassword2, clientState, clientPostalCode, clientEthnicity, clientAge, clientGender, clientMaritalStatus, clientNumHouseHold, clientAnnualIncome);
+        RegistrationData data = new RegistrationData(clientUsername, clientEmail, clientPassword, clientPassword2, clientState, clientPostalCode);
+        ClientRegistrationData registrationData2 = new ClientRegistrationData.Builder(data)
+                .age(clientAge)
+                .annualIncome(clientAnnualIncome)
+                .gender(clientGender)
+                .maritalStatus(clientMaritalStatus)
+                .numberOfHousehold(clientNumHouseHold)
+                .ethnicity(clientEthnicity)
+                .build();
 
         ClientFactory clientFactory = new ClientFactory();
         Client c  = clientFactory.createUser(registrationData2);
@@ -264,8 +273,15 @@ public class AttorneyRepositoryTest {
         Attorney a1 = attorneyFactory.createUser(registrationData2);
         a.setUserId(attorneyId2);
 
-        RegistrationData registrationData3 = new RegistrationData("bob", "bob.bob@gmail.com", "bob123321", "bob123321", "ON",
-                "M1MA6A", "asian", 20, "Male", "Single", 1, 1000.0f);
+        RegistrationData data = new RegistrationData("bob", "bob.bob@gmail.com", "bob123321", "bob123321", "ON", "M1MA6A");
+        ClientRegistrationData registrationData3 = new ClientRegistrationData.Builder(data)
+                .age(20)
+                .annualIncome(1000.0f)
+                .gender("Male")
+                .maritalStatus("Single")
+                .numberOfHousehold(1)
+                .ethnicity("asian")
+                .build();
 
         ClientFactory clientFactory = new ClientFactory();
         Client c  = clientFactory.createUser(registrationData3);

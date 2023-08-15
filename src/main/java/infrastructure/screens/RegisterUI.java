@@ -1,8 +1,10 @@
 package infrastructure.screens;
 
-import adapters.controllers.ClientRegisterControl;
+import adapters.controllers.RegisterControl;
 import adapters.controllers.ControlContainer;
 import infrastructure.screens.utils.UIManager;
+import usecases.requests.ClientRegistrationData;
+import usecases.requests.RegistrationData;
 
 import javax.swing.*;
 import java.awt.*;
@@ -147,15 +149,20 @@ public class RegisterUI extends BaseUI{
         ControlContainer controlContainer = uiManager.getControlContainer();
         JPanel screens = uiManager.getScreens();
         CardLayout cardLayout = uiManager.getCardLayout();
-        ClientRegisterControl clientRegisterControl = controlContainer.getClientRegisterControl();
+        RegisterControl registerControl = controlContainer.getClientRegisterControl();
         switch (actionCommand) {
             case REGISTER_BUTTON_NAME:
                 try {
-                    clientRegisterControl.create(userName.getText(), email.getText(), String.valueOf(password1.getPassword()),
-                            String.valueOf(password2.getPassword()), stateAbb.getText(), postalCode.getText(),
-                            (String) ethnicity.getSelectedItem(), Integer.parseInt(age.getText()), (String) gender.getSelectedItem(),
-                            (String) maritalStatus.getSelectedItem(), Integer.parseInt(numberOfHousehold.getText()),
-                            Float.parseFloat(annualIncome.getText()));
+                    RegistrationData registrationData = new RegistrationData(userName.getText(), email.getText(), String.valueOf(password1.getPassword()), String.valueOf(password2.getPassword()), stateAbb.getText(), postalCode.getText());
+                    ClientRegistrationData clientRegistrationData = new ClientRegistrationData.Builder(registrationData)
+                            .ethnicity((String) ethnicity.getSelectedItem())
+                            .age(Integer.parseInt(age.getText()))
+                            .gender((String) gender.getSelectedItem())
+                            .maritalStatus((String) maritalStatus.getSelectedItem())
+                            .numberOfHousehold(Integer.parseInt(numberOfHousehold.getText()))
+                            .annualIncome(Float.parseFloat(annualIncome.getText()))
+                            .build();
+                    registerControl.create(clientRegistrationData);
                 } catch (Exception ex) {
                     JOptionPane.showMessageDialog(this, ex.getMessage());
                 }

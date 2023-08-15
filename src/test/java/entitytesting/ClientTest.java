@@ -1,5 +1,6 @@
 package entitytesting;
 
+import usecases.requests.ClientRegistrationData;
 import usecases.requests.RegistrationData;
 import entities.user.Client;
 import entities.Question;
@@ -35,9 +36,16 @@ class ClientTest {
     @Test
     void testConstructorAndGetter() {
         // constructor
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData data = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
         ClientFactory clientFactory = new ClientFactory();
         Client client = clientFactory.createUser(registrationData);
         client.setUserId(expectedUserId);
@@ -101,9 +109,16 @@ class ClientTest {
      */
     @Test
     void testClientIsQuestionCloseableSucceed() {
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData data = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
         ClientFactory clientFactory = new ClientFactory();
         Client client = clientFactory.createUser(registrationData);
 
@@ -118,9 +133,16 @@ class ClientTest {
      */
     @Test
     void testClientIsQuestionCloseableFail() {
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData data = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
         ClientFactory clientFactory = new ClientFactory();
         Client client = clientFactory.createUser(registrationData);
 
@@ -135,9 +157,16 @@ class ClientTest {
      */
     @Test
     void testClientIsQuestionSelectable() {
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData data = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
         ClientFactory clientFactory = new ClientFactory();
         Client client = clientFactory.createUser(registrationData);
         Question question = new Question();
@@ -151,9 +180,16 @@ class ClientTest {
      */
     @Test
     void testClientIsQuestionReplyableSucceed() {
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData data = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
         ClientFactory clientFactory = new ClientFactory();
         Client client = clientFactory.createUser(registrationData);
 
@@ -169,9 +205,16 @@ class ClientTest {
      */
     @Test
     void testClientIsQuestionReplyableFail() {
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData data = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
         ClientFactory clientFactory = new ClientFactory();
         Client client = clientFactory.createUser(registrationData);
         Question question = new Question();
@@ -186,9 +229,16 @@ class ClientTest {
      */
     @Test
     void testAddQuestion() {
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData data = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
         ClientFactory clientFactory = new ClientFactory();
         Client client = clientFactory.createUser(registrationData);
 
@@ -204,9 +254,16 @@ class ClientTest {
      */
     @Test
     void testHashCodeSucceed() {
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData data = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
         ClientFactory clientFactory = new ClientFactory();
         Client client = clientFactory.createUser(registrationData);
         client.setUserId(expectedUserId);
@@ -219,9 +276,16 @@ class ClientTest {
      */
     @Test
     void testHashCodeFail() {
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData data = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
         ClientFactory clientFactory = new ClientFactory();
         Client client = clientFactory.createUser(registrationData);
 
@@ -233,12 +297,28 @@ class ClientTest {
      */
     @Test
     void testEqualsFailByNotEqual() {
-        RegistrationData registrationData1 = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
-        RegistrationData registrationData2 = new RegistrationData("joseph", expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData data1 = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData1 = new ClientRegistrationData.Builder(data1)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
+
+        RegistrationData data2 = new RegistrationData("test", expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData2 = new ClientRegistrationData.Builder(data2)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
+
         ClientFactory clientFactory = new ClientFactory();
         Client client1 = clientFactory.createUser(registrationData1);
         client1.setUserId(1);
@@ -253,9 +333,16 @@ class ClientTest {
      */
     @Test
     void testToStringSucceed() {
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData data = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
         ClientFactory clientFactory = new ClientFactory();
         Client client = clientFactory.createUser(registrationData);
 
@@ -268,9 +355,16 @@ class ClientTest {
      */
     @Test
     void testToStringFail() {
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData data = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
         ClientFactory clientFactory = new ClientFactory();
         Client client = clientFactory.createUser(registrationData);
 
@@ -283,9 +377,16 @@ class ClientTest {
      */
     @Test
     void testIsQuestionRateableSucceed() {
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData data = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
         ClientFactory clientFactory = new ClientFactory();
         Client client = clientFactory.createUser(registrationData);
         Question question = new Question();
@@ -298,9 +399,16 @@ class ClientTest {
      */
     @Test
     void testIsQuestionRateableFail() {
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData data = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
         ClientFactory clientFactory = new ClientFactory();
         Client client = clientFactory.createUser(registrationData);
         Question question = new Question();

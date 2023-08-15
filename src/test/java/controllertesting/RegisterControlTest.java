@@ -1,7 +1,8 @@
 package controllertesting;
 
-import adapters.controllers.ClientRegisterControl;
+import adapters.controllers.RegisterControl;
 import usecases.inputboundary.UserRegisterInputBoundary;
+import usecases.requests.ClientRegistrationData;
 import usecases.requests.RegistrationData;
 import usecases.responses.BaseResponseModel;
 
@@ -13,7 +14,7 @@ import static org.mockito.Mockito.*;
 /**
  * This class contains unit tests for the ClientRegisterControl class.
  */
-public class ClientRegisterControlTest {
+public class RegisterControlTest {
     private static final String USER_NAME = "SampleUser";
     private static final String EMAIL = "sample@example.com";
     private static final String PASSWORD1 = "test password";
@@ -47,11 +48,20 @@ public class ClientRegisterControlTest {
         UserRegisterInputBoundary mockInputBoundary = mock(UserRegisterInputBoundary.class);
         when(mockInputBoundary.create(any(RegistrationData.class))).thenReturn(expectedResponse);
 
-        ClientRegisterControl control = new ClientRegisterControl(mockInputBoundary);
+        RegisterControl control = new RegisterControl(mockInputBoundary);
+
+        RegistrationData data = new RegistrationData(USER_NAME, EMAIL, PASSWORD1, PASSWORD2, STATE_ABB, POSTAL_CODE);
+        ClientRegistrationData inputData = new ClientRegistrationData.Builder(data)
+                .age(AGE)
+                .annualIncome(ANNUAL_INCOME)
+                .gender(GENDER)
+                .maritalStatus(MARITAL_STATUS)
+                .numberOfHousehold(NUMBER_OF_HOUSEHOLD)
+                .ethnicity(ETHNICITY)
+                .build();
 
         // Act
-        BaseResponseModel actualResponse = control.create(USER_NAME, EMAIL, PASSWORD1, PASSWORD2, STATE_ABB,
-                POSTAL_CODE, ETHNICITY, AGE, GENDER, MARITAL_STATUS, NUMBER_OF_HOUSEHOLD, ANNUAL_INCOME);
+        BaseResponseModel actualResponse = control.create(inputData);
 
         // Assert
         assertNotNull(actualResponse);

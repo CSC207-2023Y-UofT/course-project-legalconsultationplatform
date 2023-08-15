@@ -25,10 +25,10 @@ public class RegistrationData {
 
     // fields for attorney registration
     public Set<String> professionals;
-    // for user
-    /**
-     * Constructor for user registration.
-     */
+
+    public RegistrationData() {
+    }
+
     public RegistrationData(String userName, String email, String password, String password2, String stateAbb, String postalCode) {
         this.userName = userName;
         this.email = email;
@@ -38,40 +38,55 @@ public class RegistrationData {
         this.postalCode = postalCode;
     }
 
-    /**
-     * Constructor for client registration.
-     */
-    // for client registration
-    public RegistrationData(String userName, String email, String password, String password2, String stateAbb, String postalCode, String ethnicity, int age, String gender, String maritalStatus, int numberOfHousehold, float annualIncome) {
-        this.userName = userName;
-        this.email = email;
-        this.password = password;
-        this.password2 = password2;
-        this.stateAbb = stateAbb;
-        this.postalCode = postalCode;
-        this.ethnicity = ethnicity;
-        this.age = age;
-        this.gender = gender;
-        this.maritalStatus = maritalStatus;
-        this.numberOfHousehold = numberOfHousehold;
-        this.annualIncome = annualIncome;
+    public RegistrationData(Builder builder) {
+        this.userName = builder.userName;
+        this.email = builder.email;
+        this.password = builder.password;
+        this.password2 = builder.password2;
+        this.stateAbb = builder.stateAbb;
+        this.postalCode = builder.postalCode;
     }
 
-    /**
-     * Constructor for attorney registration.
-     */
-    public RegistrationData(String userName, String email, String password, String password2, String stateAbb, String postalCode, Set<String> professionals) {
-        this.userName = userName;
-        this.email = email;
-        this.password = password;
-        this.password2 = password2;
-        this.stateAbb = stateAbb;
-        this.postalCode = postalCode;
-        this.professionals = professionals;
-    }
-
-    /**
-     * Sets the user ID.
-     */
     public void setUserId(int userId) {this.userId = userId;}
+
+    public static class Builder {
+        private String userName;
+        private String email;
+        private String password;
+        private String stateAbb;
+        private String postalCode;
+        private String password2;
+
+        public Builder userName(String userName) {
+            this.userName = userName;
+            return this;
+        }
+
+        public Builder email(String email) {
+            this.email = email;
+            return this;
+        }
+
+        public Builder password(String password) {
+            this.password = password;
+            return this;
+        }
+
+        public Builder stateAbb(String stateAbb) {
+            this.stateAbb = stateAbb;
+            return this;
+        }
+
+        public Builder postalCode(String postalCode) {
+            this.postalCode = postalCode;
+            return this;
+        }
+
+        public Builder password2(String password) {
+            this.password2 = password;
+            return this;
+        }
+
+        public RegistrationData build() {return new RegistrationData(this);}
+    }
 }

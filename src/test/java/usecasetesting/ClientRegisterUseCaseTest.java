@@ -3,6 +3,7 @@ package usecasetesting;
 import usecases.gateway.ClientGateway;
 import usecases.inputboundary.UserRegisterInputBoundary;
 import usecases.outputboundary.BaseOutputBoundary;
+import usecases.requests.ClientRegistrationData;
 import usecases.requests.RegistrationData;
 import usecases.responses.BaseResponseModel;
 import usecases.interactors.ClientRegisterInteractor;
@@ -52,7 +53,7 @@ public class ClientRegisterUseCaseTest {
             }
         };
 
-        clientRegisterInputBoundary = new ClientRegisterInteractor(clientGateway, clientFactory, baseOutputBoundary);
+        clientRegisterInputBoundary = new ClientRegisterInteractor(clientGateway, baseOutputBoundary, clientFactory);
 
     }
 
@@ -63,7 +64,15 @@ public class ClientRegisterUseCaseTest {
     public void TestSuccessfulRegistration(){
         setUpClientRegisterUseCase();
 
-        RegistrationData inputData = new RegistrationData(USER_NAME, EMAIL, PASSWORD, PASSWORD2, STATE_ABB, POSTALCODE, ETHNICITY, AGE, GENDER, MARITAL_STATUS, NUMBER_OF_HOUSEHOLD, ANNUAL_INCOME);
+        RegistrationData data = new RegistrationData(USER_NAME, EMAIL, PASSWORD, PASSWORD2, STATE_ABB, POSTALCODE);
+        ClientRegistrationData inputData = new ClientRegistrationData.Builder(data)
+                                                                    .age(AGE)
+                                                                    .annualIncome(ANNUAL_INCOME)
+                                                                    .gender(GENDER)
+                                                                    .maritalStatus(MARITAL_STATUS)
+                                                                    .numberOfHousehold(NUMBER_OF_HOUSEHOLD)
+                                                                    .ethnicity(ETHNICITY)
+                                                                    .build();
 
         clientRegisterInputBoundary.create(inputData);
         ClearAllRepository();
@@ -76,7 +85,15 @@ public class ClientRegisterUseCaseTest {
     public void TestRegistrationFailByAlreadyExists(){
         setUpClientRegisterUseCase();
 
-        RegistrationData inputData = new RegistrationData(USER_NAME, EMAIL, PASSWORD, PASSWORD2, STATE_ABB, POSTALCODE, ETHNICITY, AGE, GENDER, MARITAL_STATUS, NUMBER_OF_HOUSEHOLD, ANNUAL_INCOME);
+        RegistrationData data = new RegistrationData(USER_NAME, EMAIL, PASSWORD, PASSWORD2, STATE_ABB, POSTALCODE);
+        ClientRegistrationData inputData = new ClientRegistrationData.Builder(data)
+                .age(AGE)
+                .annualIncome(ANNUAL_INCOME)
+                .gender(GENDER)
+                .maritalStatus(MARITAL_STATUS)
+                .numberOfHousehold(NUMBER_OF_HOUSEHOLD)
+                .ethnicity(ETHNICITY)
+                .build();
         clientRegisterInputBoundary.create(inputData);
         clientRegisterInputBoundary.create(inputData);
 
@@ -90,7 +107,15 @@ public class ClientRegisterUseCaseTest {
     public void TestRegistrationFailByPasswordDoesNotMatch(){
         setUpClientRegisterUseCase();
 
-        RegistrationData inputData = new RegistrationData(USER_NAME, EMAIL, PASSWORD, "a", STATE_ABB, POSTALCODE, ETHNICITY, AGE, GENDER, MARITAL_STATUS, NUMBER_OF_HOUSEHOLD, ANNUAL_INCOME);
+        RegistrationData data = new RegistrationData(USER_NAME, EMAIL, PASSWORD, "a", STATE_ABB, POSTALCODE);
+        ClientRegistrationData inputData = new ClientRegistrationData.Builder(data)
+                .age(AGE)
+                .annualIncome(ANNUAL_INCOME)
+                .gender(GENDER)
+                .maritalStatus(MARITAL_STATUS)
+                .numberOfHousehold(NUMBER_OF_HOUSEHOLD)
+                .ethnicity(ETHNICITY)
+                .build();
         clientRegisterInputBoundary.create(inputData);
         ClearAllRepository();
     }
@@ -102,7 +127,15 @@ public class ClientRegisterUseCaseTest {
     public void TestRegistrationFailByPasswordLengthTooSmall(){
         setUpClientRegisterUseCase();
 
-        RegistrationData inputData = new RegistrationData(USER_NAME, EMAIL, "a", "a", STATE_ABB, POSTALCODE, ETHNICITY, AGE, GENDER, MARITAL_STATUS, NUMBER_OF_HOUSEHOLD, ANNUAL_INCOME);
+        RegistrationData data = new RegistrationData(USER_NAME, EMAIL, "a", "a", STATE_ABB, POSTALCODE);
+        ClientRegistrationData inputData = new ClientRegistrationData.Builder(data)
+                .age(AGE)
+                .annualIncome(ANNUAL_INCOME)
+                .gender(GENDER)
+                .maritalStatus(MARITAL_STATUS)
+                .numberOfHousehold(NUMBER_OF_HOUSEHOLD)
+                .ethnicity(ETHNICITY)
+                .build();
 
         clientRegisterInputBoundary.create(inputData);
         ClearAllRepository();
@@ -115,8 +148,15 @@ public class ClientRegisterUseCaseTest {
     public void TestRegistrationFailByInvalidEmail(){
         setUpClientRegisterUseCase();
 
-        RegistrationData inputData = new RegistrationData(USER_NAME, "abcd", PASSWORD, PASSWORD2, STATE_ABB, POSTALCODE, ETHNICITY, AGE, GENDER, MARITAL_STATUS, NUMBER_OF_HOUSEHOLD, ANNUAL_INCOME);
-
+        RegistrationData data = new RegistrationData(USER_NAME, "abcd", PASSWORD, PASSWORD2, STATE_ABB, POSTALCODE);
+        ClientRegistrationData inputData = new ClientRegistrationData.Builder(data)
+                .age(AGE)
+                .annualIncome(ANNUAL_INCOME)
+                .gender(GENDER)
+                .maritalStatus(MARITAL_STATUS)
+                .numberOfHousehold(NUMBER_OF_HOUSEHOLD)
+                .ethnicity(ETHNICITY)
+                .build();
         clientRegisterInputBoundary.create(inputData);
         ClearAllRepository();
     }
@@ -128,7 +168,15 @@ public class ClientRegisterUseCaseTest {
     public void TestRegistrationFailByInvalidAge(){
         setUpClientRegisterUseCase();
 
-        RegistrationData inputData = new RegistrationData(USER_NAME, EMAIL, PASSWORD, PASSWORD2, STATE_ABB, POSTALCODE, ETHNICITY, 300, GENDER, MARITAL_STATUS, NUMBER_OF_HOUSEHOLD, ANNUAL_INCOME);
+        RegistrationData data = new RegistrationData(USER_NAME, EMAIL, PASSWORD, PASSWORD2, STATE_ABB, POSTALCODE);
+        ClientRegistrationData inputData = new ClientRegistrationData.Builder(data)
+                .age(300)
+                .annualIncome(ANNUAL_INCOME)
+                .gender(GENDER)
+                .maritalStatus(MARITAL_STATUS)
+                .numberOfHousehold(NUMBER_OF_HOUSEHOLD)
+                .ethnicity(ETHNICITY)
+                .build();
 
         clientRegisterInputBoundary.create(inputData);
         ClearAllRepository();
@@ -141,7 +189,15 @@ public class ClientRegisterUseCaseTest {
     public void TestRegistrationFailByInvalidPostalCode(){
         setUpClientRegisterUseCase();
 
-        RegistrationData inputData = new RegistrationData(USER_NAME, EMAIL, PASSWORD, PASSWORD2, STATE_ABB, "test code", ETHNICITY, AGE, GENDER, MARITAL_STATUS, NUMBER_OF_HOUSEHOLD, ANNUAL_INCOME);
+        RegistrationData data = new RegistrationData(USER_NAME, EMAIL, PASSWORD, PASSWORD2, STATE_ABB, "test code");
+        ClientRegistrationData inputData = new ClientRegistrationData.Builder(data)
+                .age(AGE)
+                .annualIncome(ANNUAL_INCOME)
+                .gender(GENDER)
+                .maritalStatus(MARITAL_STATUS)
+                .numberOfHousehold(NUMBER_OF_HOUSEHOLD)
+                .ethnicity(ETHNICITY)
+                .build();
 
         clientRegisterInputBoundary.create(inputData);
         ClearAllRepository();

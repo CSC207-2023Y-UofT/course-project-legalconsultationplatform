@@ -1,5 +1,6 @@
 package entities.factories;
 
+import entities.user.User;
 import usecases.requests.RegistrationData;
 import entities.user.UserImp;
 
@@ -8,7 +9,7 @@ import entities.user.UserImp;
  *
  * @param <T> The type of user to create, extending UserImp.
  */
-public interface UserFactory<T extends UserImp> {
+public interface UserFactory<T extends User> {
 
     /**
      * Creates a user instance based on the provided registration data.

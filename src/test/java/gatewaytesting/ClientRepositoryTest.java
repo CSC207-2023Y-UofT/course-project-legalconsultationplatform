@@ -1,5 +1,6 @@
 package gatewaytesting;
 
+import usecases.requests.ClientRegistrationData;
 import usecases.requests.RegistrationData;
 import infrastructure.database.AttorneyRepository;
 import infrastructure.database.ClientRepository;
@@ -54,7 +55,16 @@ public class ClientRepositoryTest {
         int clientNumHouseHold = 1;
         float clientAnnualIncome = 100;
 
-        RegistrationData registrationData = new RegistrationData(clientName, clientEmail, clientPassword, clientPassword2, clientState, clientPostalCode, clientEthnicity, clientAge, clientGender, clientMaritalStatus, clientNumHouseHold, clientAnnualIncome);
+        RegistrationData data = new RegistrationData(clientName, clientEmail, clientPassword, clientPassword2, clientState, clientPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(clientAge)
+                .annualIncome(clientAnnualIncome)
+                .gender(clientGender)
+                .maritalStatus(clientMaritalStatus)
+                .numberOfHousehold(clientNumHouseHold)
+                .ethnicity(clientEthnicity)
+                .build();
+
 
         ClientFactory clientFactory = new ClientFactory();
         Client c  = clientFactory.createUser(registrationData);
@@ -167,7 +177,15 @@ public class ClientRepositoryTest {
         float clientAnnualIncome = 100;
 
         //constructors
-        RegistrationData registrationData = new RegistrationData(clientUsername, clientEmail, clientPassword, clientPassword2, clientState, clientPostalCode, clientEthnicity, clientAge, clientGender, clientMaritalStatus, clientNumHouseHold, clientAnnualIncome);
+        RegistrationData data = new RegistrationData(clientUsername, clientEmail, clientPassword, clientPassword2, clientState, clientPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(clientAge)
+                .annualIncome(clientAnnualIncome)
+                .gender(clientGender)
+                .maritalStatus(clientMaritalStatus)
+                .numberOfHousehold(clientNumHouseHold)
+                .ethnicity(clientEthnicity)
+                .build();
 
         ClientFactory clientFactory = new ClientFactory();
         Client c  = clientFactory.createUser(registrationData);
@@ -200,7 +218,15 @@ public class ClientRepositoryTest {
         float clientAnnualIncome = 100;
 
         //constructors
-        RegistrationData registrationData = new RegistrationData(clientUsername, clientEmail, clientPassword, clientPassword2, clientState, clientPostalCode, clientEthnicity, clientAge, clientGender, clientMaritalStatus, clientNumHouseHold, clientAnnualIncome);
+        RegistrationData data = new RegistrationData(clientUsername, clientEmail, clientPassword, clientPassword2, clientState, clientPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(clientAge)
+                .annualIncome(clientAnnualIncome)
+                .gender(clientGender)
+                .maritalStatus(clientMaritalStatus)
+                .numberOfHousehold(clientNumHouseHold)
+                .ethnicity(clientEthnicity)
+                .build();
 
         ClientFactory clientFactory = new ClientFactory();
         Client c  = clientFactory.createUser(registrationData);
@@ -234,7 +260,15 @@ public class ClientRepositoryTest {
         float clientAnnualIncome = 100;
 
         //constructors
-        RegistrationData registrationData = new RegistrationData(clientUsername, clientEmail, clientPassword, clientPassword2, clientState, clientPostalCode, clientEthnicity, clientAge, clientGender, clientMaritalStatus, clientNumHouseHold, clientAnnualIncome);
+        RegistrationData data = new RegistrationData(clientUsername, clientEmail, clientPassword, clientPassword2, clientState, clientPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(clientAge)
+                .annualIncome(clientAnnualIncome)
+                .gender(clientGender)
+                .maritalStatus(clientMaritalStatus)
+                .numberOfHousehold(clientNumHouseHold)
+                .ethnicity(clientEthnicity)
+                .build();
 
         ClientFactory clientFactory = new ClientFactory();
         Client c  = clientFactory.createUser(registrationData);
@@ -274,12 +308,28 @@ public class ClientRepositoryTest {
         float clientAnnualIncome = 100;
 
         //constructors
-        RegistrationData registrationData = new RegistrationData(clientUsername, clientEmail, clientPassword, clientPassword2, clientState, clientPostalCode, clientEthnicity, clientAge, clientGender, clientMaritalStatus, clientNumHouseHold, clientAnnualIncome);
+        RegistrationData data = new RegistrationData(clientUsername, clientEmail, clientPassword, clientPassword2, clientState, clientPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(clientAge)
+                .annualIncome(clientAnnualIncome)
+                .gender(clientGender)
+                .maritalStatus(clientMaritalStatus)
+                .numberOfHousehold(clientNumHouseHold)
+                .ethnicity(clientEthnicity)
+                .build();
 
         ClientFactory clientFactory = new ClientFactory();
         Client c  = clientFactory.createUser(registrationData);
         c.setUserId(clientId);
-        RegistrationData registrationData2 = new RegistrationData(clientUsername, clientEmail, clientPassword, clientPassword2, clientState, clientPostalCode, clientEthnicity, clientAge, clientGender, clientMaritalStatus, clientNumHouseHold, clientAnnualIncome);
+
+        ClientRegistrationData registrationData2 = new ClientRegistrationData.Builder(data)
+                .age(clientAge)
+                .annualIncome(clientAnnualIncome)
+                .gender(clientGender)
+                .maritalStatus(clientMaritalStatus)
+                .numberOfHousehold(clientNumHouseHold)
+                .ethnicity(clientEthnicity)
+                .build();
         Client c1 = clientFactory.createUser(registrationData2);
         c1.setUserId(clientId2);
 

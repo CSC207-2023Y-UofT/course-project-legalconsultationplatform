@@ -1,5 +1,6 @@
 import adapters.controllers.*;
 import adapters.presenters.*;
+import entities.factories.AttorneyFactory;
 import infrastructure.screens.UIFactory;
 import usecases.gateway.*;
 import usecases.inputboundary.*;
@@ -9,7 +10,6 @@ import usecases.interactors.*;
 import infrastructure.database.*;
 import infrastructure.screens.utils.UIDesign;
 import infrastructure.screens.utils.UIManager;
-import entities.user.Attorney;
 import entities.factories.ClientFactory;
 import entities.factories.PostFactory;
 import entities.factories.QuestionFactory;
@@ -24,6 +24,7 @@ public class Main {
     ClientGateway clientGateway = new ClientRepository();
     AttorneyGateway attorneyGateway = new AttorneyRepository();
     ClientFactory clientFactory = new ClientFactory();
+    AttorneyFactory attorneyFactory = new AttorneyFactory();
 
     QuestionFactory questionFactory = new QuestionFactory();
     QuestionGateway questionGateway = new QuestionRepo();
@@ -63,8 +64,10 @@ public class Main {
     UserLoginInputBoundary userLoginInteractor = new UserLoginInteractor(gatewayFactory, homePageOutputBoundary);
     UserLoginControl loginControl = new UserLoginControl(userLoginInteractor);
 
-    UserRegisterInputBoundary clientRegisterInteractor = new ClientRegisterInteractor(clientGateway, clientFactory, registerOutputBoundary);
-    ClientRegisterControl registerControl = new ClientRegisterControl(clientRegisterInteractor);
+    UserRegisterInputBoundary clientRegisterInteractor = new ClientRegisterInteractor(clientGateway, registerOutputBoundary, clientFactory);
+    UserRegisterInputBoundary attorneyRegisterInteractor = new AttorneyRegisterInteractor(attorneyGateway, registerOutputBoundary, attorneyFactory);
+    RegisterControl registerControl = new RegisterControl(clientRegisterInteractor);
+    RegisterControl attorneyRegisterControl = new RegisterControl(attorneyRegisterInteractor);
 
     QuestionInputBoundary questionInteractor = new AskQuestionInteractor(questionGateway, theQuestionOutputBoundary,
             questionFactory, clientGateway);
@@ -100,7 +103,7 @@ public class Main {
     //control container
     ControlContainer controlContainer = new ControlContainer(registerControl, closeQuestionControl,
             postControl, questionControl, rateControl, selectQuestionControl, loginControl, viewQuestionControl,
-    browseQuestionControl, recommendationControl);
+    browseQuestionControl, recommendationControl, attorneyRegisterControl);
 
     //feed control container into the response formatter
     UIManager.setControlContainer(controlContainer);

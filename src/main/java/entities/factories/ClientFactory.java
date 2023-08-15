@@ -1,5 +1,6 @@
 package entities.factories;
 
+import usecases.requests.ClientRegistrationData;
 import usecases.requests.RegistrationData;
 import entities.user.Client;
 
