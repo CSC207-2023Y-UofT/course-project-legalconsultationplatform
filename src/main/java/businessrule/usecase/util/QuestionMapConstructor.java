@@ -8,7 +8,17 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class constructs a map of question IDs to formatted display objects using `QuestionDisplayFormatter`.
+ */
 public class QuestionMapConstructor {
+
+    /**
+     * Constructs a map of question IDs to formatted display objects.
+     *
+     * @param questionList The list of questions to be processed.
+     * @return A map where each question's ID is associated with a corresponding formatted display object.
+     */
     public Map<Integer, QuestionDisplayFormatter> constructQuestionMap(List<Question> questionList) {
         Map<Integer, QuestionDisplayFormatter> questionMap = new LinkedHashMap<>();
         if (questionList.isEmpty()) {

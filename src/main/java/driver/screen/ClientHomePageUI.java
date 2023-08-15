@@ -14,10 +14,21 @@ import java.util.List;
 
 import static driver.screen.UIDrawer.*;
 
-
-
+/**
+ * This class represents a JPanel for the Client's home page user interface.
+ */
 public class ClientHomePageUI extends HomePageUI implements ActionListener {
     static final String ASK_NEW_QUESTION_BUTTON_NAME = "Ask new question";
+
+    /**
+     * Constructs a new ClientHomePageUI instance.
+     *
+     * @param controlContainer The container for controllers.
+     * @param cardLayout The CardLayout for managing screens.
+     * @param screens The parent panel containing multiple screens.
+     * @param userId The ID of the logged-in client user.
+     * @param userName The name of the logged-in client user.
+     */
     public ClientHomePageUI(String userName, int userId, UIManager UIManager) {
         super(userName, userId, UIManager);
 

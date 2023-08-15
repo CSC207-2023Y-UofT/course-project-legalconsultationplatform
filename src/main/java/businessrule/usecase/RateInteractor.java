@@ -14,6 +14,11 @@ import entity.Attorney;
 import entity.Client;
 import entity.Question;
 
+/**
+ * This class represents the interactor responsible for rating an answer.
+ *
+ * This interactor handles the process of rating an answer given by a client, updating the rating of the associated question.
+ */
 public class RateInteractor implements RateInputBoundary {
 
     private final QuestionGateway questionGateway;
@@ -21,6 +26,14 @@ public class RateInteractor implements RateInputBoundary {
     private final ClientGateway clientGateway;
     private final AttorneyGateway attorneyGateway;
 
+    /**
+     * Constructor for RateInteractor.
+     *
+     * @param questionGateway The gateway for managing question entities.
+     * @param outputBoundary The output boundary for preparing user response models.
+     * @param clientGateway The gateway for managing client entities.
+     * @param attorneyGateway The gateway for managing attorney entities
+     */
     public RateInteractor(QuestionGateway questionGateway, UserOutputBoundary outputBoundary, ClientGateway clientGateway, AttorneyGateway attorneyGateway) {
         this.questionGateway = questionGateway;
         this.outputBoundary = outputBoundary;
@@ -28,6 +41,12 @@ public class RateInteractor implements RateInputBoundary {
         this.attorneyGateway = attorneyGateway;
     }
 
+    /**
+     * Rate an answer and update the associated question's rating.
+     *
+     * @param rateRequestModel The request model containing rating details.
+     * @return The response model for the home page.
+     */
     @Override
     public UserResponseModel rateAnswer(RateRequestModel rateRequestModel) {
         // get input

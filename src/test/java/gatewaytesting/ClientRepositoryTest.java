@@ -21,6 +21,9 @@ import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class contains unit tests for the ClientRepository class.
+ */
 public class ClientRepositoryTest {
 
     //Client
@@ -32,6 +35,9 @@ public class ClientRepositoryTest {
     final static int QUESTION_ID1 = 25;
     final static int QUESTION_ID2 = 35;
 
+    /**
+     * Set up the test environment by initializing the ClientRepository instance.
+     */
     @BeforeAll
     public static void setUp() {
         //Client
@@ -91,6 +97,9 @@ public class ClientRepositoryTest {
         qRepo.save(q2);
     }
 
+    /**
+     * Test whether a client ID exists in the repository.
+     */
     @Test
     public void testExistsById(){
         ClientRepository repo = new ClientRepository();
@@ -100,6 +109,9 @@ public class ClientRepositoryTest {
         assertFalse(repo.existsById(200), "The id exists!");
     }
 
+    /**
+     * Test whether a client with a given username exists in the repository.
+     */
     @Test
     public void testExistsByName() {
         ClientRepository repo = new ClientRepository();
@@ -109,6 +121,9 @@ public class ClientRepositoryTest {
         assertFalse(repo.existsByName("John"), "The username exists!");
     }
 
+    /**
+     * Test updating a client's question list.
+     */
     @Test
     public void testUpdateQuestionList() {
         ClientRepository repo = new ClientRepository();
@@ -120,6 +135,9 @@ public class ClientRepositoryTest {
         assert expectedList.equals(repo.get(CLIENT_ID).getQuestionsList());
     }
 
+    /**
+     * Delete all data in AttorneyRepository, ClientRepository and QuestionRepo.
+     */
     @AfterAll
     public static void tearDown() {
         ClientRepository repo = new ClientRepository();
@@ -130,6 +148,9 @@ public class ClientRepositoryTest {
         qRepo.deleteAll();
     }
 
+    /**
+     * Test getting a client from the repository.
+     */
     @Test
     public void testGetUser() {
         String clientUsername = "bob";
@@ -160,6 +181,9 @@ public class ClientRepositoryTest {
         assertEquals(c, repo.get(100), "That is not the correct client!");
     }
 
+    /**
+     * Test adding a client to the repository.
+     */
     @Test
     public void testAddUser() {
         String clientUsername = "bob";
@@ -190,6 +214,9 @@ public class ClientRepositoryTest {
         assertTrue(repo.existsById(100), "The client is not added!");
     }
 
+    /**
+     * Test deleting a client in the repository.
+     */
     @Test
     public void testDeleteUser() {
         int clientId = 100;
@@ -226,6 +253,9 @@ public class ClientRepositoryTest {
         repo.save(c);
     }
 
+    /**
+     * Test deleting all client in the repository.
+     */
     @Test
     public void testDeleteAllUser() {
         int clientId = 100;

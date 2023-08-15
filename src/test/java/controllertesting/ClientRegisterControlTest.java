@@ -10,6 +10,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
+/**
+ * This class contains unit tests for the ClientRegisterControl class.
+ */
 public class ClientRegisterControlTest {
     private static final String USER_NAME = "SampleUser";
     private static final String EMAIL = "sample@example.com";
@@ -26,11 +29,17 @@ public class ClientRegisterControlTest {
 
     private static BaseResponseModel expectedResponse;
 
+    /**
+     * Sets up the needed resources for testing ClientRegisterControl.
+     */
     public void setUpClientRegisterControl() {
         // Arrange
         expectedResponse = new BaseResponseModel();
     }
 
+    /**
+     * Tests the create method of ClientRegisterControl.
+     */
     @Test
     public void testCreateClientRegistration() {
         setUpClientRegisterControl();

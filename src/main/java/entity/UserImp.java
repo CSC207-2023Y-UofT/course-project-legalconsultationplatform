@@ -11,6 +11,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * This class respresents a user entity with common properties and behaviors.
+ */
 @Entity
 public abstract class UserImp implements User{
     @Id
@@ -124,13 +127,42 @@ public abstract class UserImp implements User{
     @Override
     public int hashCode() {return Objects.hashCode(userId);}
 
+    /**
+     * Return the string representation of the user type
+     *
+     * @return user type
+     */
     public abstract String getUserType();
 
+    /**
+     * Check if a question can be closed for the user.
+     *
+     * @param question The question to be checked.
+     * @return True if the question can be closed, otherwise false.
+     */
     public abstract boolean isQuestionCloseable(Question question);
 
+    /**
+     * Check if a question is selectable for the user.
+     *
+     * @param question The question to be checked.
+     * @return True if the question is selectable, otherwise false.
+     */
     public abstract boolean isQuestionSelectable(Question question);
 
+    /**
+     * Check if a question can be replied to by the user.
+     *
+     * @param question The question to be checked.
+     * @return True if the question can be replied to, otherwise false.
+     */
     public abstract boolean isQuestionReplyable(Question question);
 
+    /**
+     * Check if a question is rateable by the user.
+     *
+     * @param question The question to be checked.
+     * @return True if the question is rateable, otherwise false.
+     */
     public abstract boolean isQuestionRateable(Question question);
 }

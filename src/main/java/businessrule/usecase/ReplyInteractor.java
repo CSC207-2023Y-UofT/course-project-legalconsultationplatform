@@ -19,7 +19,9 @@ import entity.factory.PostFactory;
 import java.time.LocalDate;
 import java.util.Map;
 
-
+/**
+ * This class represents the use case for creating a new post (reply) in response to a question.
+ */
 public class ReplyInteractor implements PostInputBoundary {
 
     final QuestionGateway questionGateway;
@@ -37,6 +39,12 @@ public class ReplyInteractor implements PostInputBoundary {
         this.userGatewayFactory = userGatewayFactory;
     }
 
+    /**
+     * Creates a new post (reply) in response to a question.
+     *
+     * @param postRequestModel The request model containing the details for the new post.
+     * @return A response model containing information about the updating question UI.
+     */
     @Override
     public TheQuestionResponseModel createPost(PostRequestModel postRequestModel) {
         // get input data

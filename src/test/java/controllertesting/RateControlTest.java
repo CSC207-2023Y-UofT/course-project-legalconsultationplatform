@@ -5,19 +5,24 @@ import businessrule.SessionManager;
 import businessrule.UserSession;
 import businessrule.inputboundary.RateInputBoundary;
 import businessrule.requestmodel.RateRequestModel;
-
 import businessrule.responsemodel.UserResponseModel;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+/**
+ * This class contains unit tests for the RateControl class.
+ */
 public class RateControlTest {
     private static final int RATE = 5;
     private static final int USER_ID = 11123456;
     private static final int QUESTION_ID = 333333333;
     private static UserResponseModel expectedResponse;
 
+    /**
+     * Sets up the necessary resources for testing RateControl.
+     */
     public void setUpRateControl() {
         // Arrange
         expectedResponse = new UserResponseModel(USER_ID, "SampleUser", "SampleType");
@@ -28,6 +33,9 @@ public class RateControlTest {
         SessionManager.setSession(userSession);
     }
 
+    /**
+     * Tests the rateAnswer method of RateControl.
+     */
     @Test
     public void testRateAnswer() {
         setUpRateControl();

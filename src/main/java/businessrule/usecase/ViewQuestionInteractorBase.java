@@ -19,10 +19,19 @@ import javax.swing.text.View;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class represents the use case to view questions.
+ */
 public abstract class ViewQuestionInteractorBase implements ViewInputBoundary {
     protected final ViewOutputBoundary outputBoundary;
     protected final QuestionGateway questionGateway;
 
+    /**
+     * Constructs a ViewQuestionInteractorBase instance.
+     *
+     * @param putputBoundary The output boundary for communicating results.
+     * @param questionGateway The gateway for accessing question data.
+     */
     public ViewQuestionInteractorBase(ViewOutputBoundary outputBoundary, QuestionGateway questionGateway) {
         this.outputBoundary = outputBoundary;
         this.questionGateway = questionGateway;
@@ -44,6 +53,19 @@ public abstract class ViewQuestionInteractorBase implements ViewInputBoundary {
         return outputBoundary.prepareSuccess(BuilderService.getInstance().constructViewResponse(response, questionMap));
     }
 
+    /**
+     * Fetches a list of questions based on the provided view request model.
+     *
+     * @param userId
+     * @return A list of questions based on the provided criteria.
+     */
     protected abstract List<Question> fetchQuestions(int userId);
+
+    /**
+     * Fetches user information based on the provided view request model.
+     *
+     * @param  userId
+     * @return The user associated with the provided criteria.
+     */
     protected abstract User fetchUser(int userId);
 }

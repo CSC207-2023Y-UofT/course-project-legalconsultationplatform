@@ -2,6 +2,9 @@ package businessrule.requestmodel;
 
 import java.util.Set;
 
+/**
+ * This class represents registration data for a user, client, or attorney.
+ */
 public class RegistrationData {
     // common fields for user registration
     public int userId;
@@ -22,8 +25,10 @@ public class RegistrationData {
 
     // fields for attorney registration
     public Set<String> professionals;
-
     // for user
+    /**
+     * Constructor for user registration.
+     */
     public RegistrationData(String userName, String email, String password, String password2, String stateAbb, String postalCode) {
         this.userName = userName;
         this.email = email;
@@ -33,6 +38,9 @@ public class RegistrationData {
         this.postalCode = postalCode;
     }
 
+    /**
+     * Constructor for client registration.
+     */
     // for client registration
     public RegistrationData(String userName, String email, String password, String password2, String stateAbb, String postalCode, String ethnicity, int age, String gender, String maritalStatus, int numberOfHousehold, float annualIncome) {
         this.userName = userName;
@@ -49,6 +57,9 @@ public class RegistrationData {
         this.annualIncome = annualIncome;
     }
 
+    /**
+     * Constructor for attorney registration.
+     */
     public RegistrationData(String userName, String email, String password, String password2, String stateAbb, String postalCode, Set<String> professionals) {
         this.userName = userName;
         this.email = email;
@@ -59,6 +70,8 @@ public class RegistrationData {
         this.professionals = professionals;
     }
 
-
+    /**
+     * Sets the user ID.
+     */
     public void setUserId(int userId) {this.userId = userId;}
 }

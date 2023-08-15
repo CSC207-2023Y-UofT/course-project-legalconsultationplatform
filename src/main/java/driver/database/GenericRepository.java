@@ -5,9 +5,19 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import java.util.List;
 
+/**
+ * This class represents managing entities in the database.
+ *
+ * @param <T> The type of entity managed by the repository.
+ */
 public class GenericRepository<T> implements GenericGateway<T> {
     final Class<T> entityType;
 
+    /**
+     * Constructs a GenericRepository instance.
+     *
+     * @param entityType The class representing the type of entity managed by the repository.
+     */
     public GenericRepository(Class<T> entityType) {
         this.entityType = entityType;
     }
@@ -77,12 +87,19 @@ public class GenericRepository<T> implements GenericGateway<T> {
         }
     }
 
+    /**
+     * Represents an operation that accepts an EntityManager and performs an action.
+     */
     interface DatabaseOperation {
         void accept(EntityManager entityManager);
     }
 
+    /**
+     * Represents an operation that accepts an EntityManager and returns a result.
+     *
+     * @param <R> The type of the result returned by the operation.
+     */
     interface DatabaseOperationWithResult<R> {
         R apply(EntityManager entityManager);
     }
-
 }

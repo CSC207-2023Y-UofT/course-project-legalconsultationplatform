@@ -6,6 +6,9 @@ import javax.swing.border.LineBorder;
 import java.awt.*;
 import java.util.concurrent.Flow;
 
+/**
+ * This class represents a consistent design settings and helper methods for UI components.
+ */
 public class UIDesign {
     //All colors used in the UI
     public static Color lightGreenColor = new Color(202,216,209);

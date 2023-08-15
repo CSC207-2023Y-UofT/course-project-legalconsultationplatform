@@ -5,8 +5,14 @@ import entity.Post;
 import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class contains unit tests for the Post class.
+ */
 class PostTest {
 
+    /**
+     * Test the constructor and getter methods of the Post class.
+     */
     @Test
     void testConstructorAndGetter() {
         // expected values
@@ -27,6 +33,9 @@ class PostTest {
         assertEquals(expectedBelongsTo, post.getBelongsTo(), "BelongsTo is wrong.");
     }
 
+    /**
+     * Test the setter methods of the Post class.
+     */
     @Test
     void testSetters() {
         // expected values
@@ -54,6 +63,9 @@ class PostTest {
         assertEquals(expectedBelongsTo, post.getBelongsTo(), "BelongsTo is wrong.");
     }
 
+    /**
+     * Test the equals method of the Post class when objects are the same.
+     */
     @Test
     void testEqualsFailByDifferentPostId() {
         Post post1 = new Post(1000000, 2000000, LocalDate.now(), "This is a post.", 3000000);
@@ -61,6 +73,9 @@ class PostTest {
         assertNotEquals(post1, post2, "The equal method is wrong");
     }
 
+    /**
+     * Test the toString method of the Post class when it succeeds.
+     */
     @Test
     void testToStringSucceed() {
         int expectedQuestionId = 1000000;
@@ -70,6 +85,9 @@ class PostTest {
         assertEquals(expectedToString, post.toString(), "The toString method is wrong");
     }
 
+    /**
+     * Test the toString method of the Post class when it fails.
+     */
     @Test
     void testToStringFail() {
         int expectedQuestionId = 1000000;

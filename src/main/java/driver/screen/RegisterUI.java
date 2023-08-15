@@ -12,6 +12,9 @@ import java.util.List;
 import static driver.screen.UIDrawer.*;
 import static driver.screen.UIDesign.*;
 
+/**
+ * This class represents a JPanel for the user registration interface.
+ */
 public class RegisterUI extends BaseUI{
 
     JTextField userName = new JTextField(15);
@@ -49,6 +52,11 @@ public class RegisterUI extends BaseUI{
     static final String GENDER_PROMPT = "Gender";
     static final String MARITAL_STATUS_PROMPT = "Marital Status";
 
+    /**
+     * Constructs a new RegisterUI instance.
+     *
+     * @param UIManager UIManager class contains screens, cadlayouts, and control container
+     */
     public RegisterUI(UIManager UIManager) {
         super(UIManager);
 

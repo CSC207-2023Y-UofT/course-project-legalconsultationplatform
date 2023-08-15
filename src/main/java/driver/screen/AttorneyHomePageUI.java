@@ -15,9 +15,24 @@ import java.util.List;
 
 import static driver.screen.UIDrawer.*;
 
+
+/**
+ * This class represents a JPanel for the Attorney's home page user interface.
+ */
+
 public class AttorneyHomePageUI extends HomePageUI implements ActionListener {
     static final String BROWSE_AVAILABLE_QUESTIONS_BUTTON_NAME = "Browse Available Questions";
     static final String RECOMMENDED_QUESTIONS_BUTTON_NAME = "Recommended Questions";
+
+    /**
+     * Constructs an AttorneyHomePageUI instance.
+     *
+     * @param controlContainer The container for controllers.
+     * @param cardLayout The CardLayout for managing screens.
+     * @param screens The parent panel containing multiple screens.
+     * @param userId The ID of the logged-in attorney user.
+     * @param userName The name of the logged-in attorney user.
+     */
     public AttorneyHomePageUI(String userName, int userId, UIManager UIManager) {
         super(userName, userId, UIManager);
 

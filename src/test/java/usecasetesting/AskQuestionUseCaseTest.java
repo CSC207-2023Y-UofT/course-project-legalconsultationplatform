@@ -18,6 +18,10 @@ import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
+
+/**
+ * This class contains unit tests for the AskQuestionUseCase class.
+ */
 public class AskQuestionUseCaseTest {
     final static int CLIENT_ID = 21345678;
     final static String CLIENT_USERNAME = "test client";
@@ -29,6 +33,9 @@ public class AskQuestionUseCaseTest {
     private AttorneyGateway attorneyGateway;
     private QuestionInputBoundary questionInputBoundary;
 
+    /**
+     * Set up the test environment by initializing the AskQuestionUseCase instance.
+     */
     public void setUpAskQuestionUseCase(){
         questionGateway = new QuestionRepo();
         QuestionFactory questionFactory = new QuestionFactory();
@@ -69,6 +76,9 @@ public class AskQuestionUseCaseTest {
         SessionManager.setSession(session);
     }
 
+    /**
+     * Test the AskQuestionUseCase when the question is created successfully.
+     */
     @Test
     public void TestAskQuestionPassed(){
         setUpAskQuestionUseCase();
@@ -82,6 +92,9 @@ public class AskQuestionUseCaseTest {
         ClearAllRepository();
     }
 
+    /**
+     * Test the AskQuestionUseCase when the question creation fails due to an empty category.
+     */
     @Test
     public void TestAskQuestionFailByEmptyCategory(){
         setUpAskQuestionUseCase();
@@ -95,7 +108,10 @@ public class AskQuestionUseCaseTest {
         ClearAllRepository();
     }
 
-    public void ClearAllRepository(){
+    /**
+     * Delete all data in questionGateway, clientGateway and attorneyGateway.
+     */
+    public void clearAllRepository(){
         questionGateway = new QuestionRepo();
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();

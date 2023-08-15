@@ -19,7 +19,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-
+/**
+ * This class contains test cases for the SelectQuestionUseCase.
+ */
 public class SelectQuestionUseCaseTest {
     final static int CLIENT_ID = 21345678;
     final static String CLIENT_USERNAME = "test client";
@@ -39,6 +41,9 @@ public class SelectQuestionUseCaseTest {
     private AttorneyGateway attorneyGateway;
     private SelectInputBoundary selectInputBoundary;
 
+    /**
+     * Set up the test environment by initializing the SelectQuestionUseCase instance.
+     */
     public void setUpSelectUseCase(){
         questionGateway = new QuestionRepo();
         UserGatewayFactory userGatewayFactory = new UserGatewayFactory();
@@ -109,6 +114,9 @@ public class SelectQuestionUseCaseTest {
         questionGateway.save(question3);
     }
 
+    /**
+     * Test the scenario where a client selects a question.
+     */
     @Test
     public void TestClientSelectQuestionUseCase(){
         setUpSelectUseCase();
@@ -122,6 +130,9 @@ public class SelectQuestionUseCaseTest {
         ClearAllRepository();
     }
 
+    /**
+     * Test the scenario where an attorney selects a non-taken question.
+     */
     @Test
     public void TestAttorneySelectNonTakenQuestionUseCase(){
         setUpSelectUseCase();
@@ -134,6 +145,9 @@ public class SelectQuestionUseCaseTest {
         ClearAllRepository();
     }
 
+    /**
+     * Test the scenario where an attorney selects a question taken by himself.
+     */
     @Test
     public void TestAttorneySelectQuestionTakenByHimselfUseCase(){
         setUpSelectUseCase();
@@ -146,6 +160,9 @@ public class SelectQuestionUseCaseTest {
         ClearAllRepository();
     }
 
+    /**
+     * Test the scenario where an attorney's attempt to select a closed question fails.
+     */
     @Test
     public void TestAttorneySelectQuestionFailByClosedQuestion(){
         setUpSelectUseCase();
@@ -158,6 +175,9 @@ public class SelectQuestionUseCaseTest {
         ClearAllRepository();
     }
 
+    /**
+     * Test the scenario where an attorney's attempt to select a question taken by another attorney fails.
+     */
     @Test
     public void TestAttorneySelectQuestionFailByTakenByOther(){
         setUpSelectUseCase();
@@ -170,6 +190,9 @@ public class SelectQuestionUseCaseTest {
         ClearAllRepository();
     }
 
+    /**
+     * Delete all data in clientGateway, questionGateway, attorneyGateway, postGateway.
+     */
     public void ClearAllRepository(){
         questionGateway = new QuestionRepo();
         clientGateway = new ClientRepository();

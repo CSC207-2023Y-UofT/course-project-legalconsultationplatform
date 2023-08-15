@@ -14,10 +14,11 @@ import entity.Attorney;
 import entity.Client;
 import entity.Question;
 import org.junit.jupiter.api.Test;
-
-
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class contains unit tests for the RateAnswerUseCase class.
+ */
 public class RateAnswerUseCaseTest {
 
     final static int CLIENT_ID = 21345678;
@@ -32,6 +33,9 @@ public class RateAnswerUseCaseTest {
     private AttorneyGateway attorneyGateway;
     private RateInputBoundary rateInputBoundary;
 
+    /**
+     * Set up the test environment by initializing the RateAnswerUseCase instance.
+     */
     public void setUpRateAnswerUseCase(){
 
         questionGateway = new QuestionRepo();
@@ -87,6 +91,10 @@ public class RateAnswerUseCaseTest {
         UserSession session = new UserSession(userResponseModel);
         SessionManager.setSession(session);
     }
+
+    /**
+     * Test for the scenario when a client rates a closed question.
+     */
     @Test
     public void TestClientRateClosedQuestion(){
         setUpRateAnswerUseCase();
@@ -96,6 +104,10 @@ public class RateAnswerUseCaseTest {
         assertEquals(10, questionGateway.get(CLOSED_QUESTION_ID).getRating());
         ClearAllRepository();
     }
+
+    /**
+     * Test for the scenario when a client rates an unclosed question.
+     */
     @Test
     public void TestClientRateUnClosedQuestion(){
         setUpRateAnswerUseCase();
@@ -104,6 +116,10 @@ public class RateAnswerUseCaseTest {
         rateInputBoundary.rateAnswer(inputData);
         ClearAllRepository();
     }
+
+    /**
+     * Delete all data in clientGateway, questionGateway, attorneyGateway, postGateway.
+     */
     public void ClearAllRepository(){
         questionGateway = new QuestionRepo();
         clientGateway = new ClientRepository();

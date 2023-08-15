@@ -2,6 +2,14 @@ package businessrule.usecase.util;
 import org.apache.commons.validator.routines.EmailValidator;
 import java.util.regex.*;
 
+/**
+ * This is a utility class for checking various credentials and data formats.
+ *
+ * The "CredentialChecker" class provides methods to validate different types of credentials,
+ * ensuring that they meet specific criteria or follow certain patterns.
+*/
+
+
 public class CredentialChecker {
 
     public boolean checkPostalCode(String postalCode){

@@ -14,19 +14,36 @@ import businessrule.usecase.util.QuestionDisplayFormatter;
 import businessrule.usecase.util.QuestionMapConstructor;
 import entity.User;
 import entity.ApplicationException;
-
 import javax.swing.text.View;
 import java.util.Map;
 
+/**
+ * This class represents the interactor responsible for handling user login.
+ *
+ * This interactor handles the process of authenticating user login credentials,retrieving user information,
+ * and preparing the appropriate response model.
+ */
 public class UserLoginInteractor implements UserLoginInputBoundary{
     final UserGatewayFactory userGatewayFactory;
     final UserOutputBoundary outputBoundary;
 
+    /**
+     * Constructor for UserLoginInteractor.
+     *
+     * @param userGatewayFactory The factory for creating user gateways.
+     * @param outputBoundary The output boundary for preparing home page response models.
+     */
     public UserLoginInteractor(UserGatewayFactory userGatewayFactory, UserOutputBoundary outputBoundary) {
         this.userGatewayFactory = userGatewayFactory;
         this.outputBoundary = outputBoundary;
     }
 
+    /**
+     * Authenticate user login and prepare the response model.
+     *
+     * @param requestModel The request model containing user login details.
+     * @return The response model for the home page.
+     */
     @Override
     public UserResponseModel login(UserLoginRequestModel requestModel) {
         int userId = requestModel.getUserId();

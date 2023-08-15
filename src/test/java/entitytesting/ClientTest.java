@@ -10,7 +10,9 @@ import java.time.LocalDate;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * This class contains unit tests for the Client class.
+ */
 class ClientTest {
 
     int expectedUserId = 1000000;
@@ -27,6 +29,9 @@ class ClientTest {
     int expectedNumberOfHousehold = 1;
     float expectedAnnualIncome = 60000.0f;
 
+    /**
+     * Tests the constructor and getter methods of the Client class.
+     */
     @Test
     void testConstructorAndGetter() {
         // constructor
@@ -54,6 +59,9 @@ class ClientTest {
         assertEquals("Client", client.getUserType(), "isClient should be true for Client.");
     }
 
+    /**
+     * Tests the setter methods of the Client class.
+     */
     @Test
     void testSetters() {
         // no-arg constructor
@@ -88,6 +96,9 @@ class ClientTest {
         assertEquals(expectedAnnualIncome, client.getAnnualIncome(), "Annual income is incorrect.");
     }
 
+    /**
+     * Tests whether a question can be closed successfully for a client.
+     */
     @Test
     void testClientIsQuestionCloseableSucceed() {
         RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
@@ -102,6 +113,9 @@ class ClientTest {
         assertTrue(client.isQuestionCloseable(question));
     }
 
+    /**
+     * Tests whether a closed question is not closeable for a client.
+     */
     @Test
     void testClientIsQuestionCloseableFail() {
         RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
@@ -116,6 +130,9 @@ class ClientTest {
         assertFalse(client.isQuestionCloseable(question));
     }
 
+    /**
+     * Tests whether a question is selectable for a client.
+     */
     @Test
     void testClientIsQuestionSelectable() {
         RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
@@ -129,6 +146,9 @@ class ClientTest {
 
     }
 
+    /**
+     * Tests whether a question can be replied to successfully for a client.
+     */
     @Test
     void testClientIsQuestionReplyableSucceed() {
         RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
@@ -144,6 +164,9 @@ class ClientTest {
 
     }
 
+    /**
+     * Tests whether a closed question is not replyable for a client.
+     */
     @Test
     void testClientIsQuestionReplyableFail() {
         RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
@@ -158,6 +181,9 @@ class ClientTest {
 
     }
 
+    /**
+     * Tests the addition of a question to the client's question list.
+     */
     @Test
     void testAddQuestion() {
         RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
@@ -173,6 +199,9 @@ class ClientTest {
         assertTrue(client.getQuestionsList().contains(question), "The question is not added in the list.");
     }
 
+    /**
+     * Tests the hash code generation of the Client class.
+     */
     @Test
     void testHashCodeSucceed() {
         RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
@@ -185,6 +214,9 @@ class ClientTest {
         assertEquals(client.hashCode(), Objects.hashCode(1000000), "The hashcode is wrong");
     }
 
+    /**
+     * Tests whether the generated hash code differs when expected and actual user IDs do not match.
+     */
     @Test
     void testHashCodeFail() {
         RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
@@ -196,6 +228,9 @@ class ClientTest {
         assertNotEquals(client.hashCode(), Objects.hashCode(100000), "The hashcode is wrong");
     }
 
+    /**
+     * Tests inequality between two Client objects with non-matching data.
+     */
     @Test
     void testEqualsFailByNotEqual() {
         RegistrationData registrationData1 = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
@@ -213,6 +248,9 @@ class ClientTest {
         assertNotEquals(client1, client2, "The equal method is wrong");
     }
 
+    /**
+     * Test the toString method of the Client class when it succeeds.
+     */
     @Test
     void testToStringSucceed() {
         RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
@@ -225,6 +263,9 @@ class ClientTest {
         assertEquals(expectedToString, client.toString(), "The toString method is wrong");
     }
 
+    /**
+     * Test the toString method of the Client class when it fails.
+     */
     @Test
     void testToStringFail() {
         RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
@@ -237,6 +278,9 @@ class ClientTest {
         assertNotSame(expectedToString, client.toString(), "The toString method is wrong");
     }
 
+    /**
+     * Tests whether a closed question is rateable for a client.
+     */
     @Test
     void testIsQuestionRateableSucceed() {
         RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
@@ -249,6 +293,9 @@ class ClientTest {
         assertTrue(client.isQuestionRateable(question), "IsQuestionRateable is wrong.");
     }
 
+    /**
+     * Tests whether a non-closed question is not rateable for a client.
+     */
     @Test
     void testIsQuestionRateableFail() {
         RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,

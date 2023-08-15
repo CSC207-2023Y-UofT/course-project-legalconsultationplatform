@@ -22,8 +22,7 @@ import static driver.screen.UIDrawer.*;
 
 
 /**
- *
- * @author joseph
+ * This class represents the user interface for asking a new question.
  */
 public class AskQuestionUI extends UserUI implements ActionListener {
     JComboBox<String> questionType = new JComboBox<>(QUESTION_TYPE_LIST);

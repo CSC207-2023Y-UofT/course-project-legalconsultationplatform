@@ -12,11 +12,20 @@ import java.util.List;
 import static driver.screen.UIDesign.*;
 import static driver.screen.UIDrawer.*;
 
+/**
+ * This class represents the initial screen of the application where users can choose to register or log in.
+ */
 public class WelcomeUI extends BaseUI implements ActionListener {
     static final String TITLE_TEXT = "WELCOME";
     static final String REGISTER_BUTTON_NAME = "Register";
     static final String LOGIN_BUTTON_NAME = "Login";
 
+    /**
+     * Constructs a WelcomeUI instance with the provided control container,
+     * card layout, and screens panel.
+     *
+     * @param UIManager UIManager that contains screens, cardlayouts, and control container
+     */
     public WelcomeUI(UIManager UIManager) {
         super(UIManager);
 

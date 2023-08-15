@@ -15,8 +15,7 @@ import static driver.screen.UIDrawer.*;
 
 
 /**
- *
- * @author kaxi
+ * This class represents a user interface for logging in as both a client and an attorney.
  */
 public class LoginUI extends BaseUI implements ActionListener {
     JTextField userId = new JTextField(15);

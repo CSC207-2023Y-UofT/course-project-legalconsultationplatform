@@ -4,6 +4,10 @@ import businessrule.usecase.util.PostDisplayFormatter;
 import java.time.LocalDate;
 import java.util.Map;
 
+/**
+ * This class represents a question with detailed informatio.
+ * It is including its user, title, type, deadline, closure status, and associated posts.
+ */
 public class TheQuestionResponseModel extends UserResponseModel{
     private final int questionId;
     private final String title;

@@ -4,6 +4,9 @@ import businessrule.usecase.util.QuestionDisplayFormatter;
 
 import java.util.Map;
 
+/**
+ * This class represents a response model that provides a simple and convenient way to transfer view data as a response to the client.
+ */
 public class ViewResponseModel extends UserResponseModel{
 
     private final Map<Integer, QuestionDisplayFormatter> questionMap;

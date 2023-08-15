@@ -5,8 +5,17 @@ import driver.database.ClientRepository;
 import entity.ApplicationException;
 import entity.User;
 
+/**
+ * This class represents for creating instances of UserGateway based on the user's role.
+ */
 public class UserGatewayFactory {
 
+    /**
+     * Creates a UserGateway based on the user's role.
+     *
+     * @param userId The ID of the user for whom the gateway is to be created.
+     * @return An instance of UserGateway for the specified user.
+     */
     public UserGateway<? extends User> createUserGateway(int userId) {
         try {
             UserGateway<? extends User> userGateway;
@@ -20,6 +29,14 @@ public class UserGatewayFactory {
             throw new ApplicationException("UserId does not exist");
         }
     }
+
+    /**
+     * Checks if the given user ID belongs to a client.
+     *
+     * @param userId The ID of the user to check.
+     * @return True if the user is a client, false if the user is an attorney.
+     * @throws ApplicationException If the user ID format is invalid or if it doesn't exist.
+     */
     private static boolean isClient(int userId) throws ApplicationException {
         if (Integer.toString(userId).startsWith("1")) {
             return false;

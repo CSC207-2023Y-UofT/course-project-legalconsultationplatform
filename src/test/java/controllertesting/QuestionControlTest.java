@@ -12,16 +12,21 @@ import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+/**
+ * This class contains unit tests for the QuestionControl class.
+ */
 public class QuestionControlTest {
     private static final int USER_ID = 11234567;
     private static final int QUESTION_ID = 333333333;
     private static final String USER_NAME = "SampleUser";
     private static final String TITLE = "SampleTitle";
     private static final String TYPE = "SampleType";
-
     private static TheQuestionResponseModel expectedUserResponse;
 
-    public void setUpQuestionControl() {
+    /**
+     * Sets up the necessary resources for testing QuestionControl.
+     */
+    public void setUpQuestionControl(){
         // Arrange
         UserResponseModel userResponseModel = new UserResponseModel(USER_ID, USER_NAME, TYPE);
         UserSession userSession = new UserSession(userResponseModel);
@@ -31,12 +36,16 @@ public class QuestionControlTest {
 
     }
 
+    /**
+     * Tests the createQuestion method of QuestionControl.
+     */
     @Test
     public void testCreateQuestion() {
         setUpQuestionControl();
         QuestionInputBoundary mockInputBoundary = mock(QuestionInputBoundary.class);
         when(mockInputBoundary.createQuestion(any(QuestionRequestModel.class))).thenReturn(expectedUserResponse);
 
+        when(mockInputBoundary.createQuestion(any(QuestionRequestModel.class))).thenReturn(expectedUserResponse);
         QuestionControl control = new QuestionControl(mockInputBoundary);
 
         // Sample input parameters

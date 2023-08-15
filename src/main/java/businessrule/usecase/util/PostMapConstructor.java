@@ -12,11 +12,26 @@ import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * This class represents a map of post IDs to formatted post display information.
+ * It uses a `UserGatewayFactory` to create user gateways for retrieving user information.
+ */
 public class PostMapConstructor {
     private final UserGatewayFactory userGatewayFactory;
 
+    /**
+     * Constructs a `PostMapConstructor` object with the given `UserGatewayFactory`.
+     *
+     * @param userGatewayFactory The factory for creating user gateways.
+     */
     public PostMapConstructor(UserGatewayFactory userGatewayFactory) {this.userGatewayFactory = userGatewayFactory;}
 
+    /**
+     * Constructs a map of post IDs to formatted post display information based on the given question.
+     *
+     * @param question The question containing posts to be mapped.
+     * @return A map of post IDs to formatted post display information.
+     */
     public Map<Integer, PostDisplayFormatter> constructPostMap(Question question) {
         List<Post> postList = question.getPosts();
 

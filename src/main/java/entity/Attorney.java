@@ -11,6 +11,13 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Set;
 
+/**
+ * This is a class representing attorney user.
+ *
+ * An Attorney is a registered user who is a legal professional, capable of answering legal questions
+ * posted by clients. The Attorney has attributes such as user ID, name, email, password, state abbreviation,
+ * postal code, and a list of questions associated with them.
+ */
 @Entity
 public class Attorney extends UserImp {
     @OneToMany(targetEntity = Question.class, fetch = FetchType.EAGER)
@@ -19,24 +26,49 @@ public class Attorney extends UserImp {
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<String> professionals;
 
+    /**
+     * Default constructor for creating an Attorney instance.
+     */
     public Attorney() {
         super();
         recommendations = new ArrayList<>();
         professionals = new HashSet<>();
     }
 
+    /**
+     * Constructor for creating an Attorney instance using a builder.
+     *
+     * @param builder The builder instance used for constructing the Attorney.
+     */
     public Attorney(Builder builder) {
         super(builder);
     }
+
+    /**
+     * Builder class for constructing Attorney instances.
+     */
     public static class Builder extends UserImp.Builder<Builder> {
+
+        /**
+         * Constructor for the Attorney builder.
+         *
+         * @param data The registration data for creating the Attorney.
+         */
         public Builder(RegistrationData data) {
             super(data);
         }
 
+        /**
+         * Set the list of professional specialties for the Attorney.
+         *
+         * @param professionals The set of professional specialties.
+         * @return The builder instance.
+         */
         public Attorney.Builder professionals(Set<String> professionals) {
             this.data.professionals = professionals;
             return this;
         }
+
         @Override
         protected Attorney.Builder self() {
             return this;

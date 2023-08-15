@@ -10,14 +10,24 @@ import java.awt.event.ActionListener;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Map;
-
 import static driver.screen.UIDesign.*;
 import static driver.screen.UIDrawer.*;
 
+/**
+ * This class represents a JPanel for a list of questions displayed in the user interface.
+ */
 public class QuestionListUI extends UserUI implements ActionListener {
     Map<Integer, QuestionDisplayFormatter> questionMap;
     static final String HOME_PAGE_BUTTON_NAME = "Home Page";
 
+    /**
+     * Constructs a new QuestionListUI instance.
+     *
+     * @param userId The ID of the logged-in user.
+     * @param userName The name of the logged-in user.
+     * @param UIManager A UIManager class that contains screen, cardlayout, and control container
+     * @param questionMap A map of question IDs to their display formatters.
+     */
     public QuestionListUI(String userName, int userId, UIManager UIManager,
                           Map<Integer, QuestionDisplayFormatter> questionMap) {
         super(userName, userId, UIManager);

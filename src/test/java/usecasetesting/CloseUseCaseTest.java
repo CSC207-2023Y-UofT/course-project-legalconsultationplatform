@@ -17,6 +17,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 
+/**
+ * This class contains test cases for the CloseUseCase class.
+ */
 public class CloseUseCaseTest {
     final static int CLIENT_ID = 21345678;
     final static String CLIENT_USERNAME = "test client";
@@ -31,6 +34,9 @@ public class CloseUseCaseTest {
     private AttorneyGateway attorneyGateway;
     private CloseInputBoundary closeInputBoundary;
 
+    /**
+     * Set up the test environment by initializing the CloseUseUseCase instance.
+     */
     public void setUpCloseUseCase(){
 
         questionGateway = new QuestionRepo();
@@ -81,6 +87,10 @@ public class CloseUseCaseTest {
         UserSession session = new UserSession(userResponseModel);
         SessionManager.setSession(session);
     }
+
+    /**
+     * Test case for closing a question by a client.
+     */
     @Test
     public void TestClientCloseableQuestion(){
         setUpCloseUseCase();
@@ -92,6 +102,10 @@ public class CloseUseCaseTest {
         assertTrue(question.isClose());
         ClearAllRepository();
     }
+
+    /**
+     * Test case for attempting to close an already closed question by a client.
+     */
     @Test
     public void TestClientUnclosableQuestion(){
         setUpCloseUseCase();
@@ -102,7 +116,10 @@ public class CloseUseCaseTest {
         ClearAllRepository();
     }
 
-    public void ClearAllRepository(){
+    /**
+     * Delete all data in clientGateway.
+     */
+    public void ClearAllRepository() {
         questionGateway = new QuestionRepo();
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();

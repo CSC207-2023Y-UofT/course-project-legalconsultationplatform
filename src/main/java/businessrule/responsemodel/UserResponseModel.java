@@ -1,10 +1,20 @@
 package businessrule.responsemodel;
 
+/**
+ * This class represents a response model to store the basic information for the user specific output.
+ */
 public class UserResponseModel extends BaseResponseModel{
     private final int userId;
     private final String userName;
     private final String userType;
 
+    /**
+     * Constructs a new UserResponseModel object with the specified user information.
+     *
+     * @param userId The unique identifier of the user.
+     * @param userName The name of the user.
+     * @param userType The type of the user.
+     */
     public UserResponseModel(int userId, String userName, String userType) {
         this.userId = userId;
         this.userName = userName;

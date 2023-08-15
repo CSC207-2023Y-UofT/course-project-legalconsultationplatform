@@ -13,6 +13,9 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+/**
+ * This class contains unit tests for the SelectQuestionControl class.
+ */
 public class SelectQuestionControlTest {
     private static final int QUESTION_ID = 323456783;
     private static final int USER_ID = 11233456;
@@ -22,6 +25,9 @@ public class SelectQuestionControlTest {
     private static final String QUESTION_TYPE = "sample question type";
     private static TheQuestionResponseModel expectedResponse;
 
+    /**
+     * Sets up the necessary resources for testing SelectQuestionControl.
+     */
     public void setUpSelectQuestionControl() {
         // Arrange
         expectedResponse = new TheQuestionResponseModel(USER_ID, USER_NAME, USER_TYPE, QUESTION_ID, QUESTION_TITLE, QUESTION_TYPE, null, false, null);
@@ -32,6 +38,9 @@ public class SelectQuestionControlTest {
         SessionManager.setSession(userSession);
     }
 
+    /**
+     * Tests the selectQuestion method of SelectQuestionControl.
+     */
     @Test
     public void testSelectQuestion() {
         setUpSelectQuestionControl();
