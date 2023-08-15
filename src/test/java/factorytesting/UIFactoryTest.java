@@ -1,41 +1,32 @@
 package factorytesting;
 
 import businessrule.UIFactory;
-import businessrule.gateway.UserGatewayFactory;
 import businessrule.responsemodel.BaseResponseModel;
 import businessrule.responsemodel.TheQuestionResponseModel;
 import businessrule.responsemodel.UserResponseModel;
 import businessrule.responsemodel.ViewResponseModel;
 import businessrule.usecase.util.BuilderService;
 import businessrule.usecase.util.PostDisplayFormatter;
-import businessrule.usecase.util.PostMapConstructor;
 import businessrule.usecase.util.QuestionDisplayFormatter;
 import driver.screen.*;
 import driver.screen.UIManager;
-import entity.Post;
 import entity.Question;
-import entity.factory.QuestionFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-
 import javax.swing.*;
 import java.awt.*;
 import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class UIFactoryTest {
 
-    private UIFactory uiFactory;
     private final int USER_ID = 24567893;
     private final int QUESTION_ID = 324724768;
     private final String USER_NAME = "test client";
-    private final String USER_TYPE = "Client";
     private final String TITLE = "test title";
     private final String QUESTION_TYPE = "test type";
-    private final String POST_TEXT = "test text";
     private UserResponseModel userResponseModel;
     private BaseResponseModel baseResponseModel;
     private TheQuestionResponseModel theQuestionResponseModel;
@@ -46,13 +37,14 @@ class UIFactoryTest {
 
     @BeforeEach
     void setUpUIFactory() {
-        uiFactory = new UIFactory();
         baseResponseModel = new BaseResponseModel();
+        String USER_TYPE = "Client";
         userResponseModel = new UserResponseModel(USER_ID, USER_NAME, USER_TYPE);
         JPanel testScreen = new JPanel();
         CardLayout testCardLayout = new CardLayout();
         uiManager = new UIManager(testScreen, testCardLayout);
-        Question question = new Question();
+        Question question = new Question(QUESTION_ID, QUESTION_TYPE, TITLE, LocalDate.now(), USER_ID, LocalDate.now());
+        String POST_TEXT = "test text";
         PostDisplayFormatter post = new PostDisplayFormatter(POST_TEXT, USER_TYPE, USER_NAME, LocalDate.now());
 
         postMap = new HashMap<>();
@@ -107,7 +99,7 @@ class UIFactoryTest {
     @Test
     void testQuestionUI() {
         setUpUIFactory();
-        QuestionUI expectedUI = new QuestionNewUI(USER_NAME, USER_ID, uiManager, QUESTION_ID, TITLE, QUESTION_TYPE, LocalDate.now(), postMap);
+        QuestionOpenClientUI expectedUI = new QuestionOpenClientUI(USER_NAME, USER_ID, uiManager, QUESTION_ID, TITLE, QUESTION_TYPE, LocalDate.now(), postMap);
         assertEquals(expectedUI.getClass(), UIFactory.getUI(UIFactory.UIType.QUESTION_UI, uiManager, theQuestionResponseModel).getClass());
     }
 }
