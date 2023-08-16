@@ -7,6 +7,9 @@ The COVID-19 pandemic has brought numerous challenges to the forefront, one of w
 
 Despite the American Bar Association's (ABA) best efforts, their data reveals a worrying trend. Across the U.S., over 30% of legal questions posed on their platform remain unanswered by attorneys. In certain states like Louisiana, the neglect is even more pronounced with over 70% of inquiries going unanswered. Additionally, among the questions that do receive attention, approximately 35% are inadequately addressed.
 
+<img width="1048" alt="Issue" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/6f8046fd-5268-4a9b-85b0-466e8fe9885e">
+
+
 Addressing this gap, we introduce the **Legal Consultation Platform+** , a solution tailored to serve both individuals seeking legal advice and registered, licensed attorneys willing to provide it. Our platform is designed to create an environment where individuals can post their legal inquiries free of charge, and attorneys can browse and respond to these questions at their convenience.
 
 One of the standout features of **Legal Consultation Platform+** is its intelligent attorney-question matching system. This system recommends up to five questions from the feed to each attorney, based on their expertise and interests. This not only streamlines the process for attorneys, saving them valuable time, but also enhances the quality of responses. To ensure attorneys do not miss out on relevant inquiries, the platform also sends them email notifications.
@@ -21,6 +24,7 @@ Our mission with **Legal Consultation Platform+** is to democratize access to le
 
 ---
 ## Client User Guide
+<img width="716" alt="Client" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/fcc44779-800d-415f-af11-5b95e54fb5df">
 
 ### Registration and Account Set-Up
 
@@ -49,6 +53,7 @@ Finally, clients can provide binary ratings on their overall experience.
 ---
 
 ## Attorney User Guide
+<img width="728" alt="Attorney" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/fc02839e-21af-4299-a5f0-e4e9323e15ea">
 
 ### Registration and Verification
 
@@ -72,7 +77,9 @@ Attorneys also receive a weekly email containing a feed of recommended questions
 
 ### User Request Flow
 
-![Packaging Strategy]("https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/b043145a-2765-428d-8f04-49d1799400ca")
+<img width="1032" alt="Clean Architecture" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/6c805993-4c06-434a-adbe-181e5fd09adc">
+
+<img width="867" alt="Packaging Strategy" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/1007bc31-4b3b-479b-b639-5f390fd71e72">
 
 Our application's design and packaging strategy rigorously adheres to the principles of Clean Architecture, ensuring a clear separation of concerns and a maintainable structure. Here's a breakdown of how user requests navigate through our system:
 
@@ -105,6 +112,7 @@ Our software adopts a hybrid Model-View-Controller (MVC) and Model-View-Presente
 ---
 ## Database Specification
 [*In Deevelopment*]
+<img width="1032" alt="DataBase" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/6bc7d8e2-c175-44e5-a3fd-342b16c932e7">
 
 ---
 ## Matching System Specification
@@ -113,6 +121,7 @@ Our system is designed to enhance attorney-client interactions by intelligently 
 Attorneys are matched with up to five unanswered questions weekly, ensuring consistent engagement and timely responses.
 
 ### System Design
+<img width="690" alt="Matching Graph" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/d9253394-1e84-4bc5-9a9d-1793e0d74a7a">
 
 The attorney-question relationship is visualized as a bipartite graph. Each edge symbolizes potential interactions between attorneys and clients, with distinct weights denoting the relevance of the match.
 To find the optimal pairings, we employ the Hungarian algorithm, maximizing the cumulative edge weights.
