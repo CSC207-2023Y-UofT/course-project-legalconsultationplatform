@@ -25,7 +25,7 @@ public class UserRepository<T extends User> extends GenericRepository<T> impleme
     @Override
     public boolean existsByName(String inputUserName) {
         return executeTransactionWithResult(entityManager -> {
-            List<T> users = entityManager.createQuery("SELECT u FROM " + entityType.getSimpleName() +
+            List<T> users = entityManager.createQuery("SELECT u FROM " + entityType.getName() +
                     " u WHERE u.name = :name", entityType).setParameter("name", inputUserName).getResultList();
             return !users.isEmpty();
         });

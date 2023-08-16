@@ -309,7 +309,7 @@ public class AttorneyRepositoryTest {
 
         //test remove all client
         repo.deleteAll();
-        Long count = em.createQuery("SELECT COUNT(a) FROM Attorney a", Long.class).getSingleResult();
+        Long count = em.createQuery("SELECT COUNT(a) FROM entities.user.Attorney a", Long.class).getSingleResult();
         assertEquals(0, count, "The database still has saved client objects!");
         //test client a still in database
         assertTrue(clientRepo.existsById(100), "client c is no longer in the database");

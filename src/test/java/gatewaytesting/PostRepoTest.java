@@ -144,7 +144,7 @@ public class PostRepoTest {
 
         //test remove all posts
         repo.deleteAll();
-        Long count = em.createQuery("SELECT COUNT(p) FROM Post p", Long.class).getSingleResult();
+        Long count = em.createQuery("SELECT COUNT(p) FROM entities.Post p", Long.class).getSingleResult();
         assertEquals(0, count, "The database still have saved post objects!");
     }
 
