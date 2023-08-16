@@ -2,7 +2,7 @@ package adapters.controllers;
 
 import usecases.inputboundary.UserLoginInputBoundary;
 import usecases.requests.UserLoginRequestModel;
-import usecases.responses.UserResponseModel;
+import usecases.responses.ViewResponseModel;
 
 /**
  * This class represents the controller responsible for handling user login functionality.
@@ -27,7 +27,7 @@ public class UserLoginControl {
      * @param password The password of the user attempting to log in.
      * @return A UserResponseModel containing information about the home page after login.
      */
-    public UserResponseModel login(int userId, String password){
+    public ViewResponseModel login(int userId, String password){
         UserLoginRequestModel requestModel = new UserLoginRequestModel(userId, password);
         return inputBoundary.login(requestModel);
     }

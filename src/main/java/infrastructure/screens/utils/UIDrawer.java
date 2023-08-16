@@ -1,7 +1,5 @@
 package infrastructure.screens.utils;
 
-import com.toedter.calendar.JDateChooser;
-
 import javax.swing.*;
 import javax.swing.border.LineBorder;
 import java.awt.*;

@@ -1,10 +1,11 @@
 package usecases.interactors;
 
+import usecases.outputboundary.ViewOutputBoundary;
+import usecases.responses.ViewResponseModel;
 import usecases.session.SessionManager;
 import usecases.session.UserSession;
 import infrastructure.database.UserGatewayFactory;
 import usecases.inputboundary.UserLoginInputBoundary;
-import usecases.outputboundary.UserOutputBoundary;
 import usecases.requests.UserLoginRequestModel;
 import usecases.gateway.UserGateway;
 import usecases.responses.UserResponseModel;
@@ -23,7 +24,7 @@ import java.util.Map;
  */
 public class UserLoginInteractor implements UserLoginInputBoundary{
     final UserGatewayFactory userGatewayFactory;
-    final UserOutputBoundary outputBoundary;
+    final ViewOutputBoundary outputBoundary;
 
     /**
      * Constructor for UserLoginInteractor.
@@ -31,7 +32,7 @@ public class UserLoginInteractor implements UserLoginInputBoundary{
      * @param userGatewayFactory The factory for creating user gateways.
      * @param outputBoundary The output boundary for preparing home page response models.
      */
-    public UserLoginInteractor(UserGatewayFactory userGatewayFactory, UserOutputBoundary outputBoundary) {
+    public UserLoginInteractor(UserGatewayFactory userGatewayFactory, ViewOutputBoundary outputBoundary) {
         this.userGatewayFactory = userGatewayFactory;
         this.outputBoundary = outputBoundary;
     }
@@ -43,7 +44,7 @@ public class UserLoginInteractor implements UserLoginInputBoundary{
      * @return The response model for the home page.
      */
     @Override
-    public UserResponseModel login(UserLoginRequestModel requestModel) {
+    public ViewResponseModel login(UserLoginRequestModel requestModel) {
         int userId = requestModel.getUserId();
         User user = fetchUser(userId);
         if (user == null) {
@@ -54,12 +55,10 @@ public class UserLoginInteractor implements UserLoginInputBoundary{
             return outputBoundary.prepareFail("Password is incorrect");
         }
         UserResponseModel responseModel = constructResponseModel(user);
-        setUserSession(responseModel);
-
-
         Map<Integer, QuestionDisplay> questionMap = new QuestionMapConstructor().constructQuestionMap(user.getQuestionsList());
-        BuilderService.getInstance().constructViewResponse(responseModel, questionMap);
-        return outputBoundary.prepareSuccess(responseModel);
+        ViewResponseModel viewResponseModel =  BuilderService.getInstance().constructViewResponse(responseModel, questionMap);
+        setUserSession(viewResponseModel);
+        return outputBoundary.prepareSuccess(viewResponseModel);
     }
 
     private User fetchUser(int userId) {
@@ -74,7 +73,7 @@ public class UserLoginInteractor implements UserLoginInputBoundary{
         return null;
     }
 
-    private void setUserSession(UserResponseModel response) {
+    private void setUserSession(ViewResponseModel response) {
         UserSession userSession = new UserSession(response);
         SessionManager.setSession(userSession);
     }

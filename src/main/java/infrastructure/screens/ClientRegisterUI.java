@@ -9,7 +9,6 @@ import usecases.requests.RegistrationData;
 import javax.swing.*;
 import java.awt.*;
 
-import static infrastructure.screens.utils.UIDesign.*;
 import static infrastructure.screens.utils.UIDrawer.*;
 
 public class ClientRegisterUI extends RegisterUI{
@@ -50,7 +49,7 @@ public class ClientRegisterUI extends RegisterUI{
 
         JPanel inputPanel = registrationPanelDrawer();
 
-        JScrollPane scrollPane= registerScrollDrawer(title, inputPanel, registerButtons, 20, 780);
+        JScrollPane scrollPane= registerScrollDrawer(title, inputPanel, registerButtons, 780);
         add(scrollPane);
 
     }

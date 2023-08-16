@@ -16,10 +16,6 @@ public class EmailNotificationSender{
     private static final String password ="qunbxhfcdnlzfccc";
     private static final int port =465;
 
-    public static void main(String[] args) throws Exception {
-        sendEmail("josephpc0612@gmail.com","test title", "test content");
-    }
-
     /**
      *
      * @param email The email address of the user, should be in valid format.

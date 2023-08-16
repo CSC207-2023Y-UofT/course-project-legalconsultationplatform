@@ -1,13 +1,12 @@
 package controllertesting;
 
 import adapters.controllers.SelectQuestionControl;
+import usecases.responses.ViewResponseModel;
 import usecases.session.SessionManager;
 import usecases.session.UserSession;
 import usecases.inputboundary.SelectInputBoundary;
 import usecases.requests.SelectRequestModel;
 import usecases.responses.TheQuestionResponseModel;
-
-import usecases.responses.UserResponseModel;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -33,7 +32,7 @@ public class SelectQuestionControlTest {
         expectedResponse = new TheQuestionResponseModel(USER_ID, USER_NAME, USER_TYPE, QUESTION_ID, QUESTION_TITLE, QUESTION_TYPE, null, false, null);
 
         // Set up user session if needed
-        UserResponseModel userResponseModel = new UserResponseModel(USER_ID, "SampleUser", "SampleType");
+        ViewResponseModel userResponseModel = new ViewResponseModel(USER_ID, "SampleUser", "SampleType", null);
         UserSession userSession = new UserSession(userResponseModel);
         SessionManager.setSession(userSession);
     }

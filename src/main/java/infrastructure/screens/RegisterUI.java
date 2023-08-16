@@ -1,11 +1,7 @@
 package infrastructure.screens;
 
-import adapters.controllers.RegisterControl;
 import adapters.controllers.ControlContainer;
-import infrastructure.screens.utils.UIDesign;
 import infrastructure.screens.utils.UIManager;
-import usecases.requests.ClientRegistrationData;
-import usecases.requests.RegistrationData;
 
 import javax.swing.*;
 import java.awt.*;
@@ -41,10 +37,10 @@ public abstract class RegisterUI extends BaseUI{
     static final String PASSWORD_PROMPT = "Password";
     static final String REPEAT_PASSWORD_PROMPT = "Repeat password";
     static final String EMAIL_PROMPT = "Email Address";
-    static final String POSTAL_CODE_PROMPT = "Zip Code";
+    static final String POSTAL_CODE_PROMPT = "US 5-digit Zip Code or '12345' if not from US";
     static final String REGISTER_BUTTON_NAME = "Register";
     static final String BACK_BUTTON_NAME = "Back";
-    static final String STATE_ABB_PROMPT = "State Abbreviation";
+    static final String STATE_ABB_PROMPT = "US state abbreviation in capital letters or 'Other'";
 
     /**
      * Constructs a new RegisterUI instance.
@@ -93,13 +89,13 @@ public abstract class RegisterUI extends BaseUI{
         return result;
     }
 
-    protected static JScrollPane registerScrollDrawer(JLabel title, JPanel inputPanel, JPanel buttons, int spacerHeight, int totalHeight){
+    protected static JScrollPane registerScrollDrawer(JLabel title, JPanel inputPanel, JPanel buttons, int totalHeight){
         JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
         contentPanel.add(Box.createVerticalStrut(20));
         setSizeInLayout(contentPanel, new Dimension(340, totalHeight));
 
-        JPanel spacer = addSpacer(spacerHeight);
+        JPanel spacer = addSpacer(20);
         contentPanel.add(spacer);
         contentPanel.add(title);
         contentPanel.add(spacer);

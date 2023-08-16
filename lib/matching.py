@@ -7,43 +7,33 @@ from typing import Set
 
 
 def matching_algo(problems, attorneys, edge_weights):
-    """
-    :param problems: a list of question id to match
-    :param attorneys: a list of attorney id to match
-    :param edge_weights: a dictionary that maps a question id - attorney id
-    pairs to the probability of customer satisfaction
-    :return:
-    """
     num_problems = len(problems)
     num_attorneys = len(attorneys)
 
-    # Create the cost matrix
-    cost_matrix = np.zeros((num_problems, num_attorneys))
+    # Adjust matrix to be square if necessary
+    max_dim = max(num_problems, num_attorneys)
+    cost_matrix = np.full((max_dim, max_dim), np.inf)  # Initialize with large values
+
     for i, problem in enumerate(problems):
         for j, attorney in enumerate(attorneys):
-            # Negate the weights for maximization
-            cost_matrix[i, j] = -edge_weights[(problem, attorney)]
+            # Negate the weights for maximization and handle missing weights
+            cost_matrix[i, j] = -edge_weights.get((problem, attorney), np.inf)
 
-    # Perform linear sum assignment multiple times to enforce the one-to-five
-    # matching constraint
     matching_results = []
-    used_attorneys: Set[int] = set()  # To track attorneys that have been assigned
+    n = 0
 
-    while len(matching_results) < 5 * num_problems:
+    while n < min(5, len(attorneys)):
+        # If all values in the cost_matrix are infinity, break
+        if np.all(np.isinf(cost_matrix)):
+            break
+
         row_ind, col_ind = linear_sum_assignment(cost_matrix)
 
-        # Generate matching results based on the assignments
         for i, j in zip(row_ind, col_ind):
-            used_attorneys.add(attorneys[j])
-
-            # If we've used all attorneys, we reset the used_attorneys set
-            if len(used_attorneys) == num_attorneys:
-                used_attorneys.clear()
-
-            # Set the cost of the assigned attorney to a large value only if
-            # they haven't been used for all problems yet
-            if attorneys[j] not in used_attorneys:
-                cost_matrix[i, j] = np.inf
+            if i < num_problems and j < num_attorneys:  # Ensure we don't consider padded values
+                matching_results.append((problems[i], attorneys[j]))
+                cost_matrix[i, j] = np.inf  # Mark the matched pair with a large cost
+        n += 1
 
     return matching_results
 

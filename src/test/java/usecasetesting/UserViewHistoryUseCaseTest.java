@@ -90,7 +90,7 @@ public class UserViewHistoryUseCaseTest {
     @Test
     public void TestClientViewUseCase(){
         setUpViewQuestionUseCase();
-        UserResponseModel userResponseModel = new UserResponseModel(CLIENT_ID, CLIENT_USERNAME, CLIENT_TYPE);
+        ViewResponseModel userResponseModel = new ViewResponseModel(CLIENT_ID, CLIENT_USERNAME, CLIENT_TYPE, null);
         UserSession session = new UserSession(userResponseModel);
         SessionManager.setSession(session);
 
@@ -104,7 +104,7 @@ public class UserViewHistoryUseCaseTest {
     @Test
     public void TestAttorneyViewUseCase(){
         setUpViewQuestionUseCase();
-        UserResponseModel userResponseModel = new UserResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, ATTORNEY_TYPE);
+        ViewResponseModel userResponseModel = new ViewResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, ATTORNEY_TYPE, null);
         UserSession session = new UserSession(userResponseModel);
         SessionManager.setSession(session);
 

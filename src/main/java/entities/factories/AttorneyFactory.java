@@ -1,6 +1,5 @@
 package entities.factories;
 
-import usecases.requests.AttorneyRegistrationData;
 import usecases.requests.RegistrationData;
 import entities.user.Attorney;
 

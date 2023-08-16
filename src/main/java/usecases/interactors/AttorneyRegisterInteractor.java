@@ -2,12 +2,11 @@ package usecases.interactors;
 
 import entities.ApplicationException;
 import entities.factories.AttorneyFactory;
-import entities.factories.UserFactory;
 import entities.user.Attorney;
 import usecases.gateway.AttorneyGateway;
-import usecases.gateway.UserGateway;
 import usecases.outputboundary.BaseOutputBoundary;
 import usecases.requests.RegistrationData;
+import usecases.utils.RandomNumberGenerator;
 
 import java.util.Set;
 
@@ -20,8 +19,19 @@ public class AttorneyRegisterInteractor extends UserRegisterInteractor<AttorneyG
     protected void checkCredential(RegistrationData requestModel) throws ApplicationException {
         super.checkCredential(requestModel);
         Set<String> professionals = requestModel.professionals;
-        if (professionals.isEmpty()) {
+        if (professionals == null) {
             throw new ApplicationException("Please select at least one area of professionals");
         }
+    }
+
+    @Override
+    protected int generateId() {
+        RandomNumberGenerator generator = new RandomNumberGenerator();
+        int randomUserId = generator.generateAttorneyId(8);
+        boolean exists = userGateway.existsById(randomUserId);
+        while (exists) {
+            randomUserId = generator.generateAttorneyId(8);
+            exists = userGateway.existsById(randomUserId);
+        } return randomUserId;
     }
 }

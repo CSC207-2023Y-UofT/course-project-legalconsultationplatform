@@ -6,7 +6,6 @@ import usecases.inputboundary.UserRegisterInputBoundary;
 import usecases.outputboundary.BaseOutputBoundary;
 import usecases.responses.BaseResponseModel;
 import usecases.utils.CredentialChecker;
-import usecases.utils.RandomNumberGenerator;
 import entities.user.User;
 import usecases.requests.RegistrationData;
 import entities.factories.UserFactory;
@@ -50,15 +49,7 @@ public abstract class UserRegisterInteractor<T extends UserGateway<U>, F extends
         return outputBoundary.prepareSuccess(String.valueOf(userId));
     }
 
-    protected int generateId() {
-        RandomNumberGenerator generator = new RandomNumberGenerator();
-        int randomUserId = generator.generateClientId(8);
-        boolean exists = userGateway.existsById(randomUserId);
-        while (exists) {
-            randomUserId = generator.generateClientId(8);
-            exists = userGateway.existsById(randomUserId);
-        } return randomUserId;
-    }
+    protected abstract int generateId();
 
     protected void checkCredential(RegistrationData requestModel) throws ApplicationException {
         // prepare input data

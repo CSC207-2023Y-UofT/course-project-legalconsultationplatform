@@ -87,6 +87,7 @@ public class MatchingHandler {
         List<Attorney> attorneyList = attorneyGateway.getAll();
         Map<Integer[], Double> weights = constructWeight(questionList, attorneyList);
         List<Matching> matchingList = new ArrayList<>();
+        System.out.println(weights);
 
         if (! questionList.isEmpty() && ! attorneyList.isEmpty()){
             List<Integer[]> matchingResult = pythonMatching(getQuestionIdList(questionList), getAttorneyIdList(attorneyList), weights);

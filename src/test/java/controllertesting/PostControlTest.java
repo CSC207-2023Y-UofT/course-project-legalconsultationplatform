@@ -1,12 +1,12 @@
 package controllertesting;
 
 import adapters.controllers.PostControl;
+import usecases.responses.ViewResponseModel;
 import usecases.session.SessionManager;
 import usecases.session.UserSession;
 import usecases.inputboundary.PostInputBoundary;
 import usecases.requests.PostRequestModel;
 import usecases.responses.TheQuestionResponseModel;
-import usecases.responses.UserResponseModel;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -44,7 +44,7 @@ public class PostControlTest {
         when(mockInputBoundary.createPost(any(PostRequestModel.class))).thenReturn(expectedResponse);
 
         PostControl control = new PostControl(mockInputBoundary);
-        UserResponseModel userResponseModel = new UserResponseModel(USER_ID, USER_NAME, "attorney");
+        ViewResponseModel userResponseModel = new ViewResponseModel(USER_ID, USER_NAME, "attorney", null);
         UserSession session = new UserSession(userResponseModel);
         SessionManager.setSession(session);
 

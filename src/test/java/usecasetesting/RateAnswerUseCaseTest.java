@@ -1,6 +1,7 @@
 package usecasetesting;
 
 
+import usecases.responses.ViewResponseModel;
 import usecases.session.SessionManager;
 import usecases.session.UserSession;
 import usecases.gateway.*;
@@ -87,7 +88,7 @@ public class RateAnswerUseCaseTest {
         question.setTaken(true);
         questionGateway.save(question);
 
-        UserResponseModel userResponseModel = new UserResponseModel(CLIENT_ID, CLIENT_USERNAME, CLIENT_TYPE);
+        ViewResponseModel userResponseModel = new ViewResponseModel(CLIENT_ID, CLIENT_USERNAME, CLIENT_TYPE, null);
         UserSession session = new UserSession(userResponseModel);
         SessionManager.setSession(session);
     }

@@ -2,6 +2,7 @@ package infrastructure.screens;
 
 import adapters.controllers.ControlContainer;
 import adapters.controllers.RegisterControl;
+import entities.ApplicationException;
 import infrastructure.screens.utils.UIManager;
 import usecases.requests.AttorneyRegistrationData;
 import usecases.requests.RegistrationData;
@@ -34,20 +35,15 @@ public class AttorneyRegisterUI extends RegisterUI {
         professionals.setSelectionMode(ListSelectionModel.MULTIPLE_INTERVAL_SELECTION);
         professionals.addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting()) {
-                if (professionals.isSelectionEmpty()) {
-                    selectedProfessionals = new HashSet<>();
-                } else {
-                    List<String> selectedItems = professionals.getSelectedValuesList();
-
-                    selectedProfessionals = new HashSet<>(selectedItems);
-                }
+                List<String> selectedItems = professionals.getSelectedValuesList();
+                selectedProfessionals = new HashSet<>(selectedItems);
             }
         });
         professionalPanel = promptPanelDrawer(new JLabel("<html>" + PROFESSIONALS_PROMPT_LINE_1 + "<br>" + PROFESSIONALS_PROMPT_LINE_2+ "</html>"), professionals);
 
         JPanel inputPanel = registrationPanelDrawer();
 
-        JScrollPane scrollPane= registerScrollDrawer(title, inputPanel, registerButtons, 20, 700);
+        JScrollPane scrollPane= registerScrollDrawer(title, inputPanel, registerButtons, 700);
         add(scrollPane);
     }
 
@@ -67,9 +63,8 @@ public class AttorneyRegisterUI extends RegisterUI {
             RegistrationData registrationData = new RegistrationData(userName.getText(), email.getText(), String.valueOf(password1.getPassword()), String.valueOf(password2.getPassword()), stateAbb.getText(), postalCode.getText());
             AttorneyRegistrationData attorneyRegistrationData = new AttorneyRegistrationData.Builder(registrationData)
                     .professionals(selectedProfessionals).build();
-
             attorneyRegisterControl.create(attorneyRegistrationData);
-        } catch (Exception ex) {
+        } catch (ApplicationException ex) {
             JOptionPane.showMessageDialog(this, ex.getMessage());
         }
     }
