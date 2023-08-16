@@ -53,7 +53,8 @@ Finally, clients can provide binary ratings on their overall experience.
 ---
 
 ## Attorney User Guide
-<img width="1032" alt="DataBase" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/70711ce8-35ad-472a-adf1-4ea085de6211">
+<img width="728" alt="Attorney" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/51451d5b-b174-47b0-a6f1-7c493ae64929">
+
 
 ### Registration and Verification
 
