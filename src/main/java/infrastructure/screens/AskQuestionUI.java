@@ -63,9 +63,9 @@ public class AskQuestionUI extends UserUI implements ActionListener {
         JPanel inputPanel = new JPanel();
         inputPanel.setOpaque(false);
         setSizeInLayout(inputPanel, new Dimension(360, 150));
-        JPanel questionTypePanel = dropDownPanelDrawer(new JLabel(QUESTION_TYPE_PROMPT), questionType);
+        JPanel questionTypePanel = promptPanelDrawer(new JLabel(QUESTION_TYPE_PROMPT), questionType);
         JPanel questionTitlePanel = labelTextPanelDrawer(new JLabel(QUESTION_TITLE_PROMPT), titleForQuestion);
-        JPanel legalDeadlinePanel = datePanelDrawer(new JLabel(DEADLINE_PROMPT), deadlineChooser);
+        JPanel legalDeadlinePanel = promptPanelDrawer(new JLabel(DEADLINE_PROMPT), deadlineChooser);
         inputPanel.add(questionTypePanel);
         inputPanel.add(spacer2);
         inputPanel.add(questionTitlePanel);

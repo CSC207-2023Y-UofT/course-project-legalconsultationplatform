@@ -63,10 +63,16 @@ class UIFactoryTest {
         assertEquals(expectedUI.getClass(), UIFactory.getUI(UIFactory.UIType.WELCOME_UI, uiManager, baseResponseModel).getClass());
     }
     @Test
-    void testGetRegisterUI() {
+    void testGetClientRegisterUI() {
         setUpUIFactory();
-        RegisterUI expectedUI = new RegisterUI(uiManager);
-        assertEquals(expectedUI.getClass(), UIFactory.getUI(UIFactory.UIType.REGISTER_UI, uiManager, baseResponseModel).getClass());
+        ClientRegisterUI expectedUI = new ClientRegisterUI(uiManager);
+        assertEquals(expectedUI.getClass(), UIFactory.getUI(UIFactory.UIType.CLIENT_REGISTER_UI, uiManager, baseResponseModel).getClass());
+    }
+    @Test
+    void testGetAttorneyRegisterUI(){
+        setUpUIFactory();
+        AttorneyRegisterUI expectedUI = new AttorneyRegisterUI(uiManager);
+        assertEquals(expectedUI.getClass(), UIFactory.getUI(UIFactory.UIType.ATTORNEY_REGISTER_UI, uiManager, baseResponseModel).getClass());
     }
     @Test
     void testGetLoginUI() {

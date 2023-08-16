@@ -77,32 +77,20 @@ public class UIDrawer {
         result.add(label);
         result.add(textField);
         result.setOpaque(false);
+        result.setAlignmentX(Component.CENTER_ALIGNMENT);
         return result;
     }
 
-    public static JPanel dropDownPanelDrawer(JLabel label, JComboBox<String> dropDownBox){
-        JPanel result = new JPanel();
-        result.setLayout(new BoxLayout(result, BoxLayout.Y_AXIS));
-        result.add(label);
-        result.add(dropDownBox);
-        label.setAlignmentX(Component.LEFT_ALIGNMENT);
-        dropDownBox.setAlignmentX(Component.LEFT_ALIGNMENT);
-        setPromptFont(label);
-        result.add(label);
-        result.add(dropDownBox);
-        result.setOpaque(false);
-        return result;
-    }
-
-    public static JPanel datePanelDrawer(JLabel label, JDateChooser dateChooser){
+    public static JPanel promptPanelDrawer(JLabel label, JComponent component){
         JPanel result = new JPanel();
         result.setLayout(new BoxLayout(result, BoxLayout.Y_AXIS));
         label.setAlignmentX(Component.LEFT_ALIGNMENT);
-        dateChooser.setAlignmentX(Component.LEFT_ALIGNMENT);
+        component.setAlignmentX(Component.LEFT_ALIGNMENT);
         setPromptFont(label);
         result.add(label);
-        result.add(dateChooser);
+        result.add(component);
         result.setOpaque(false);
+        result.setAlignmentX(Component.CENTER_ALIGNMENT);
         return result;
     }
 

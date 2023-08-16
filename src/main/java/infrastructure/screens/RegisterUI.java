@@ -2,6 +2,7 @@ package infrastructure.screens;
 
 import adapters.controllers.RegisterControl;
 import adapters.controllers.ControlContainer;
+import infrastructure.screens.utils.UIDesign;
 import infrastructure.screens.utils.UIManager;
 import usecases.requests.ClientRegistrationData;
 import usecases.requests.RegistrationData;
@@ -18,27 +19,23 @@ import static infrastructure.screens.utils.UIDesign.*;
 /**
  * This class represents a JPanel for the user registration interface.
  */
-public class RegisterUI extends BaseUI{
-
+public abstract class RegisterUI extends BaseUI{
     JTextField userName = new JTextField(15);
     JPasswordField password1 = new JPasswordField(15);
     JPasswordField password2 = new JPasswordField(15);
     JTextField email = new JTextField(15);
     JTextField postalCode = new JTextField(15);
     JTextField stateAbb = new JTextField(15);
+    static JLabel title;
 
-    JTextField age = new JTextField(15);
-    JTextField numberOfHousehold = new JTextField(15);
-    JTextField annualIncome = new JTextField(15);
-
-    String[] ethnicityList = {"Caucasian", "African American", "Asian", "Hispanic",
-            "Native American", "Pacific Islander", "Middle Eastern", "Indigenous", "Multiracial", "Other"};
-    String[] genderList = {"Male", "Female", "Transgender", "Non-binary", "Gender queer",
-            "Gender fluid", "Agender", "Bigender", "Two-spirit", "Other"};
-    String[] maritalStatusList = {"Single", "Married", "Separated", "Divorced or Widowed", "I'd rather not answer"};
-    JComboBox<String> ethnicity = new JComboBox<>(ethnicityList);
-    JComboBox<String> gender = new JComboBox<>(genderList);
-    JComboBox<String> maritalStatus = new JComboBox<>(maritalStatusList);
+    static JPanel inputSpacer = addSpacer(5);
+    JPanel registerButtons;
+    static JPanel userNamePanel;
+    static JPanel passwordPanel;
+    static JPanel repeatPasswordPanel;
+    static JPanel emailPanel;
+    static JPanel postalCodePanel;
+    static JPanel stateAbbPanel;
 
     static final String USER_NAME_PROMPT = "User Name";
     static final String PASSWORD_PROMPT = "Password";
@@ -48,12 +45,6 @@ public class RegisterUI extends BaseUI{
     static final String REGISTER_BUTTON_NAME = "Register";
     static final String BACK_BUTTON_NAME = "Back";
     static final String STATE_ABB_PROMPT = "State Abbreviation";
-    static final String AGE_PROMPT = "Age";
-    static final String HOUSEHOLD_PROMPT = "Number of household";
-    static final String INCOME_PROMPT = "Annual Income";
-    static final String ETHNICITY_PROMPT = "Ethnicity";
-    static final String GENDER_PROMPT = "Gender";
-    static final String MARITAL_STATUS_PROMPT = "Marital Status";
 
     /**
      * Constructs a new RegisterUI instance.
@@ -63,72 +54,55 @@ public class RegisterUI extends BaseUI{
     public RegisterUI(UIManager UIManager) {
         super(UIManager);
 
-        //Spacers
-        JPanel spacer1 = addSpacer(20);
-        JPanel spacer2 = addSpacer(20);
-
         // Create the title label with 30 pixels space on top
-        JLabel title = new JLabel("Create your profile");
+        title = new JLabel("Create your profile");
         title.setAlignmentX(Component.CENTER_ALIGNMENT);
         setTitleFont(title);
 
-        //Input panel
-        JPanel inputPanel = new JPanel();
-        setSizeInLayout(inputPanel, new Dimension(FRAME_WIDTH, 550));
-        JPanel inputSpacer = addSpacer(5);
-        JPanel userNamePanel = labelTextPanelDrawer(new JLabel(USER_NAME_PROMPT), userName);
-        JPanel passwordPanel = labelTextPanelDrawer(new JLabel(PASSWORD_PROMPT), password1);
-        JPanel repeatPasswordPanel = labelTextPanelDrawer(new JLabel(REPEAT_PASSWORD_PROMPT), password2);
-        JPanel emailPanel = labelTextPanelDrawer(new JLabel(EMAIL_PROMPT), email);
-        JPanel postalCodePanel = labelTextPanelDrawer(new JLabel(POSTAL_CODE_PROMPT), postalCode);
-        JPanel stateAbbPanel = labelTextPanelDrawer(new JLabel(STATE_ABB_PROMPT), stateAbb);
-        JPanel agePanel = labelTextPanelDrawer(new JLabel(AGE_PROMPT), age);
-        JPanel numberOfHouseholdPanel = labelTextPanelDrawer(new JLabel(HOUSEHOLD_PROMPT), numberOfHousehold);
-        JPanel annualIncomePanel = labelTextPanelDrawer(new JLabel(INCOME_PROMPT), annualIncome);
-
-        JPanel ethnicityPanel = dropDownPanelDrawer(new JLabel(ETHNICITY_PROMPT), ethnicity);
-        JPanel genderPanel = dropDownPanelDrawer(new JLabel(GENDER_PROMPT), gender);
-        JPanel maritalStatusPanel = dropDownPanelDrawer(new JLabel(MARITAL_STATUS_PROMPT), maritalStatus);
-
-        inputPanel.add(userNamePanel);
-        inputPanel.add(inputSpacer);
-        inputPanel.add(passwordPanel);
-        inputPanel.add(inputSpacer);
-        inputPanel.add(repeatPasswordPanel);
-        inputPanel.add(inputSpacer);
-        inputPanel.add(emailPanel);
-        inputPanel.add(inputSpacer);
-        inputPanel.add(postalCodePanel);
-        inputPanel.add(inputSpacer);
-        inputPanel.add(stateAbbPanel);
-        inputPanel.add(inputSpacer);
-        inputPanel.add(agePanel);
-        inputPanel.add(inputSpacer);
-        inputPanel.add(numberOfHouseholdPanel);
-        inputPanel.add(inputSpacer);
-        inputPanel.add(annualIncomePanel);
-        inputPanel.add(inputSpacer);
-        inputPanel.add(ethnicityPanel);
-        inputPanel.add(inputSpacer);
-        inputPanel.add(genderPanel);
-        inputPanel.add(inputSpacer);
-        inputPanel.add(maritalStatusPanel);
-        inputPanel.add(inputSpacer);
-        inputPanel.setOpaque(false);
+        //Input panel components
+        userNamePanel = labelTextPanelDrawer(new JLabel(USER_NAME_PROMPT), userName);
+        passwordPanel = labelTextPanelDrawer(new JLabel(PASSWORD_PROMPT), password1);
+        repeatPasswordPanel = labelTextPanelDrawer(new JLabel(REPEAT_PASSWORD_PROMPT), password2);
+        emailPanel = labelTextPanelDrawer(new JLabel(EMAIL_PROMPT), email);
+        postalCodePanel = labelTextPanelDrawer(new JLabel(POSTAL_CODE_PROMPT), postalCode);
+        stateAbbPanel = labelTextPanelDrawer(new JLabel(STATE_ABB_PROMPT), stateAbb);
 
         //Register button here
         List<String> buttonList = new ArrayList<>();
         buttonList.add(REGISTER_BUTTON_NAME);
         buttonList.add(BACK_BUTTON_NAME);
-        JPanel buttons = setButtonPanel(buttonList, new Dimension(150, 50), 20, this);
+        registerButtons = setButtonPanel(buttonList, new Dimension(150, 50), 20, this);
+    }
+    protected JPanel registrationPanelDrawer(){
+        JPanel result = new JPanel();
+        result.setLayout(new BoxLayout(result, BoxLayout.Y_AXIS));
+        result.setOpaque(false);
+        result.add(userNamePanel);
+        result.add(inputSpacer);
+        result.add(passwordPanel);
+        result.add(inputSpacer);
+        result.add(repeatPasswordPanel);
+        result.add(inputSpacer);
+        result.add(emailPanel);
+        result.add(inputSpacer);
+        result.add(stateAbbPanel);
+        result.add(inputSpacer);
+        result.add(postalCodePanel);
+        result.add(inputSpacer);
 
+        return result;
+    }
+
+    protected static JScrollPane registerScrollDrawer(JLabel title, JPanel inputPanel, JPanel buttons, int spacerHeight, int totalHeight){
         JPanel contentPanel = new JPanel();
         contentPanel.setLayout(new BoxLayout(contentPanel, BoxLayout.Y_AXIS));
         contentPanel.add(Box.createVerticalStrut(20));
+        setSizeInLayout(contentPanel, new Dimension(340, totalHeight));
 
-        contentPanel.add(spacer1);
+        JPanel spacer = addSpacer(spacerHeight);
+        contentPanel.add(spacer);
         contentPanel.add(title);
-        contentPanel.add(spacer2);
+        contentPanel.add(spacer);
         contentPanel.add(inputPanel);
         contentPanel.add(buttons);
         contentPanel.setBackground(lightGreenColor);
@@ -138,34 +112,18 @@ public class RegisterUI extends BaseUI{
         scrollPane.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
         scrollPane.setPreferredSize(new Dimension(FRAME_WIDTH, FRAME_HEIGHT));
 
-        add(scrollPane);
+        return scrollPane;
     }
-
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        System.out.println("User clicks register");
         String actionCommand = e.getActionCommand();
         ControlContainer controlContainer = uiManager.getControlContainer();
-        JPanel screens = uiManager.getScreens();
         CardLayout cardLayout = uiManager.getCardLayout();
-        RegisterControl registerControl = controlContainer.getClientRegisterControl();
+        JPanel screens = uiManager.getScreens();
         switch (actionCommand) {
             case REGISTER_BUTTON_NAME:
-                try {
-                    RegistrationData registrationData = new RegistrationData(userName.getText(), email.getText(), String.valueOf(password1.getPassword()), String.valueOf(password2.getPassword()), stateAbb.getText(), postalCode.getText());
-                    ClientRegistrationData clientRegistrationData = new ClientRegistrationData.Builder(registrationData)
-                            .ethnicity((String) ethnicity.getSelectedItem())
-                            .age(Integer.parseInt(age.getText()))
-                            .gender((String) gender.getSelectedItem())
-                            .maritalStatus((String) maritalStatus.getSelectedItem())
-                            .numberOfHousehold(Integer.parseInt(numberOfHousehold.getText()))
-                            .annualIncome(Float.parseFloat(annualIncome.getText()))
-                            .build();
-                    registerControl.create(clientRegistrationData);
-                } catch (Exception ex) {
-                    JOptionPane.showMessageDialog(this, ex.getMessage());
-                }
+                handleRegisterAction(controlContainer, screens, cardLayout);
                 break;
 
             case BACK_BUTTON_NAME:
@@ -173,4 +131,6 @@ public class RegisterUI extends BaseUI{
                 break;
         }
     }
+    protected abstract void handleRegisterAction(ControlContainer controlContainer, JPanel screens,
+                                        CardLayout cardLayout);
 }
