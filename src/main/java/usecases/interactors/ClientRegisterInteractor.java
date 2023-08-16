@@ -7,6 +7,7 @@ import usecases.outputboundary.BaseOutputBoundary;
 import entities.user.Client;
 import entities.factories.ClientFactory;
 import usecases.requests.RegistrationData;
+import usecases.utils.RandomNumberGenerator;
 
 /**
  * This class represents interactor responsible for client registration use case.
@@ -31,5 +32,16 @@ public class ClientRegisterInteractor extends UserRegisterInteractor<ClientGatew
         if (!checker.checkAge(inputAge)) {
             throw new ApplicationException("Age is invalid");
         }
+    }
+
+    @Override
+    protected int generateId() {
+        RandomNumberGenerator generator = new RandomNumberGenerator();
+        int randomUserId = generator.generateClientId(8);
+        boolean exists = userGateway.existsById(randomUserId);
+        while (exists) {
+            randomUserId = generator.generateClientId(8);
+            exists = userGateway.existsById(randomUserId);
+        } return randomUserId;
     }
 }

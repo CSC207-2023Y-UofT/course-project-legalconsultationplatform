@@ -47,7 +47,7 @@ public class Question {
 
     public Question() {
         rating = MISSING_RATING;
-        posts = new ArrayList<Post>();
+        posts = new ArrayList<>();
     }
 
     /**
@@ -68,7 +68,7 @@ public class Question {
         this.askedByClient = askedByClient;
         this.legalDeadline = legalDeadline;
         this.rating = MISSING_RATING;
-        this.posts = new ArrayList<Post>();
+        this.posts = new ArrayList<>();
     }
 
     /**

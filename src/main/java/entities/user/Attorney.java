@@ -41,6 +41,8 @@ public class Attorney extends UserImp {
      */
     public Attorney(Builder builder) {
         super(builder);
+        this.recommendations = new ArrayList<>();
+        this.questionsList = new ArrayList<>();
     }
 
     /**

@@ -2,7 +2,6 @@ package entities.factories;
 
 import entities.user.User;
 import usecases.requests.RegistrationData;
-import entities.user.UserImp;
 
 /**
  * This is a interface represents creating user instances.

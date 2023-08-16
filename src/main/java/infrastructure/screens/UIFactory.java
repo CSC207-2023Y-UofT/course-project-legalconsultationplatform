@@ -5,7 +5,6 @@ import usecases.responses.BaseResponseModel;
 import usecases.responses.TheQuestionResponseModel;
 import usecases.responses.UserResponseModel;
 import usecases.responses.ViewResponseModel;
-import usecases.dto.PostDisplay;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -65,7 +64,6 @@ public class UIFactory {
     private static QuestionUI getQuestionUI(UIManager uiManager, TheQuestionResponseModel questionResponseModel) {
         String userType = questionResponseModel.getUserType();
         boolean isClose = questionResponseModel.isClose();
-        Map<Integer, PostDisplay> postMap = questionResponseModel.getPostMap();
         if (isClose) {
             return new QuestionCloseUI(questionResponseModel.getUserName(), questionResponseModel.getUserId(),
                     uiManager, questionResponseModel.getQuestionId(), questionResponseModel.getTitle(), questionResponseModel.getType(),

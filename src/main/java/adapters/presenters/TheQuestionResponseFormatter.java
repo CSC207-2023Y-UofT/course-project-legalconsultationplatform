@@ -4,13 +4,10 @@ package adapters.presenters;
 import infrastructure.screens.UIFactory;
 import usecases.outputboundary.TheQuestionOutputBoundary;
 import usecases.responses.TheQuestionResponseModel;
-import usecases.dto.PostDisplay;
 import infrastructure.screens.utils.UIManager;
 import entities.ApplicationException;
-
 import javax.swing.*;
 import java.awt.*;
-import java.util.Map;
 
 /**
  * This class represents the  formatting the response model of a question into a user interface representation
