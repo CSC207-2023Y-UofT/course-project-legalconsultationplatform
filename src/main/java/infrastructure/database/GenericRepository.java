@@ -52,13 +52,13 @@ public class GenericRepository<T> implements GenericGateway<T> {
 
     @Override
     public void deleteAll() {
-        executeTransaction(entityManager -> entityManager.createQuery("DELETE FROM " + entityType.getSimpleName()).executeUpdate());
+        executeTransaction(entityManager -> entityManager.createQuery("DELETE FROM " + entityType.getName()).executeUpdate());
     }
 
     @Override
     public List<T> getAll() {
         return executeTransactionWithResult((EntityManager entityManager) -> entityManager.createQuery(
-                "SELECT e FROM " + entityType.getSimpleName() + " e", entityType).getResultList());
+                "SELECT e FROM " + entityType.getName() + " e", entityType).getResultList());
     }
 
     void executeTransaction(DatabaseOperation operation) {

@@ -27,7 +27,7 @@ public class QuestionRepo extends GenericRepository<Question> implements Questio
     public List<Question> getNotTakenQuestion() {
         EntityManager em = DatabaseConnection.getEntityManager();
         try {
-            return em.createQuery("SELECT q FROM Question q WHERE q.isTaken = false", Question.class)
+            return em.createQuery("SELECT q FROM entities.Question q WHERE q.isTaken = false", Question.class)
                     .getResultList();
         } catch(Exception e) {
             return new ArrayList<>();
@@ -40,7 +40,7 @@ public class QuestionRepo extends GenericRepository<Question> implements Questio
     public List<Question> getNotClosedQuestion() {
         EntityManager em = DatabaseConnection.getEntityManager();
         try {
-            return em.createQuery("SELECT q FROM Question q WHERE q.isClose = false", Question.class)
+            return em.createQuery("SELECT q FROM entities.Question q WHERE q.isClose = false", Question.class)
                     .getResultList();
         } catch(Exception e) {
             return new ArrayList<>();
@@ -53,7 +53,7 @@ public class QuestionRepo extends GenericRepository<Question> implements Questio
     public List<Post> getAllPostOfQuestion(int questionId) {
         EntityManager em = DatabaseConnection.getEntityManager();
         try {
-            return em.createQuery("SELECT p FROM Post p WHERE p.questionId =: questionId", Post.class)
+            return em.createQuery("SELECT p FROM entities.Post p WHERE p.questionId =: questionId", Post.class)
                     .setParameter("questionId", questionId).getResultList();
         } catch(Exception e) {
             return new ArrayList<>();

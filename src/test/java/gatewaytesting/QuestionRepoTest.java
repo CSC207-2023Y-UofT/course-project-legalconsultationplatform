@@ -394,11 +394,11 @@ public class QuestionRepoTest {
 
         //test remove all posts
         repo.deleteAll();
-        Long count = em.createQuery("SELECT COUNT(q) FROM Question q", Long.class).getSingleResult();
+        Long count = em.createQuery("SELECT COUNT(q) FROM entities.Question q", Long.class).getSingleResult();
         assertEquals(0, count, "The database still have saved post objects!");
         //test remove no posts
         repo.deleteAll();
-        Long count1 = em.createQuery("SELECT COUNT(q) FROM Question q", Long.class).getSingleResult();
+        Long count1 = em.createQuery("SELECT COUNT(q) FROM entities.Question q", Long.class).getSingleResult();
         assertEquals(0, count1, "The database still have saved post objects!");
 
         //recover
