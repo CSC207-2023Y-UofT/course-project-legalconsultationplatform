@@ -71,8 +71,9 @@ Attorneys also receive a weekly email containing a feed of recommended questions
 ## Architecture Overview
 
 ### User Request Flow
+<img width="867" alt="package" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/1007bc31-4b3b-479b-b639-5f390fd71e72">
 
-![Packaging Strategy](https://user-images.githubusercontent.com/123603507/260920851-b043145a-2765-428d-8f04-49d1799400ca.PNG)
+![Packaging Strategy](https://user-images.githubusercontent.com/123603507/260920851-b043145a-2765-428d-8f04-49d1799400ca)
 
 
 Our application's design and packaging strategy rigorously adheres to the principles of Clean Architecture, ensuring a clear separation of concerns and a maintainable structure. Here's a breakdown of how user requests navigate through our system:
