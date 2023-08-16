@@ -19,7 +19,8 @@ public class UIFactory {
 
     public enum UIType {
         WELCOME_UI,
-        REGISTER_UI,
+        CLIENT_REGISTER_UI,
+        ATTORNEY_REGISTER_UI,
         LOGIN_UI,
         HOME_PAGE,
         ASK_QUESTION_UI,
@@ -90,8 +91,11 @@ public class UIFactory {
             case WELCOME_UI:
                 return new WelcomeUI(uiManager);
 
-            case REGISTER_UI:
-                return new RegisterUI(uiManager);
+            case CLIENT_REGISTER_UI:
+                return new ClientRegisterUI(uiManager);
+
+            case ATTORNEY_REGISTER_UI:
+                return new AttorneyRegisterUI(uiManager);
 
             case LOGIN_UI:
                 return new LoginUI(uiManager);
@@ -109,7 +113,8 @@ public class UIFactory {
         BaseUI uiInstance;
         switch (uiType) {
             case WELCOME_UI:
-            case REGISTER_UI:
+            case CLIENT_REGISTER_UI:
+            case ATTORNEY_REGISTER_UI:
             case LOGIN_UI:
                 uiInstance = getBaseUI(uiType, uiManager);
                 break;

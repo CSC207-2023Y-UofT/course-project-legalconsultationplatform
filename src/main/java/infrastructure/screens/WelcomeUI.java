@@ -17,7 +17,8 @@ import static infrastructure.screens.utils.UIDrawer.*;
  */
 public class WelcomeUI extends BaseUI implements ActionListener {
     static final String TITLE_TEXT = "WELCOME";
-    static final String REGISTER_BUTTON_NAME = "Register";
+    static final String CLIENT_REGISTER_BUTTON_NAME = "Client Register";
+    static final String ATTORNEY_REGISTER_BUTTON_NAME = "Attorney Register";
     static final String LOGIN_BUTTON_NAME = "Login";
 
     /**
@@ -41,9 +42,10 @@ public class WelcomeUI extends BaseUI implements ActionListener {
         //Buttons panel
 
         List<String> buttonList = new ArrayList<>();
-        buttonList.add(REGISTER_BUTTON_NAME);
+        buttonList.add(ATTORNEY_REGISTER_BUTTON_NAME);
+        buttonList.add(CLIENT_REGISTER_BUTTON_NAME);
         buttonList.add(LOGIN_BUTTON_NAME);
-        JPanel buttons = setButtonPanel(buttonList, new Dimension(150, 50), 40, this);
+        JPanel buttons = setButtonPanel(buttonList, new Dimension(200, 50), 40, this);
 
         add(topSpacer);
         add(title);
@@ -57,11 +59,18 @@ public class WelcomeUI extends BaseUI implements ActionListener {
         JPanel screens = uiManager.getScreens();
         CardLayout cardLayout = uiManager.getCardLayout();
         switch (actionCommand) {
-            case REGISTER_BUTTON_NAME:
-                RegisterUI registerUI = new RegisterUI(uiManager);
-                screens.add(registerUI, "Register");
-                cardLayout.show(screens, "Register");
-                System.out.println("User chooses register\nRegister screen showed");
+            case ATTORNEY_REGISTER_BUTTON_NAME:
+                AttorneyRegisterUI attorneyRegisterUI = new AttorneyRegisterUI(uiManager);
+                screens.add(attorneyRegisterUI, "Attorney Register");
+                cardLayout.show(screens, "Attorney Register");
+                System.out.println("User chooses register as an attorney\nRegister screen showed");
+                break;
+
+            case CLIENT_REGISTER_BUTTON_NAME:
+                ClientRegisterUI clientRegisterUI = new ClientRegisterUI(uiManager);
+                screens.add(clientRegisterUI, "Client Register");
+                cardLayout.show(screens, "Client Register");
+                System.out.println("User chooses register as a client\nRegister screen showed");
                 break;
 
             case LOGIN_BUTTON_NAME:

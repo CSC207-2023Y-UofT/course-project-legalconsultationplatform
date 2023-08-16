@@ -23,6 +23,7 @@ public abstract class UserRegisterInteractor<T extends UserGateway<U>, F extends
     protected final F userFactory;
 
     protected final BaseOutputBoundary outputBoundary;
+    protected static final CredentialChecker checker = new CredentialChecker();
 
     /**
      * Constructor for UserRegisterInteractor.
@@ -66,10 +67,9 @@ public abstract class UserRegisterInteractor<T extends UserGateway<U>, F extends
         String inputPassword1 = requestModel.password;
         String inputPassword2 = requestModel.password2;
         String inputPostalCode = requestModel.postalCode;
-        int inputAge = requestModel.age;
+        String inputStateAbb = requestModel.stateAbb;
 
         // validate input data
-        CredentialChecker checker = new CredentialChecker();
         if (userGateway.existsByName(inputUserName)) {
             throw new ApplicationException("User name already exists");
         } else if (!inputPassword1.equals(inputPassword2)) {
@@ -78,10 +78,10 @@ public abstract class UserRegisterInteractor<T extends UserGateway<U>, F extends
             throw new ApplicationException("Password is less than 8 characters");
         } else if (!checker.checkEmail(inputEmail)) {
             throw new ApplicationException("Email is invalid");
-        } else if (!checker.checkAge(inputAge)) {
-            throw new ApplicationException("Age is invalid");
         } else if (!checker.checkPostalCode(inputPostalCode)) {
             throw new ApplicationException("Postal Code is invalid");
+        } else if (!checker.checkStateAbb(inputStateAbb)){
+            throw new ApplicationException("State Abbreviation is invalid");
         }
     }
 }
