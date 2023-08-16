@@ -1,10 +1,11 @@
 package usecases.interactors;
 
+import usecases.dto.QuestionDisplay;
+import usecases.responses.ViewResponseModel;
 import usecases.session.SessionManager;
 import usecases.session.UserSession;
 import usecases.outputboundary.TheQuestionOutputBoundary;
 import usecases.responses.TheQuestionResponseModel;
-import usecases.responses.UserResponseModel;
 import usecases.utils.BuilderService;
 import usecases.dto.PostDisplay;
 import usecases.utils.RandomNumberGenerator;
@@ -60,13 +61,14 @@ public class AskQuestionInteractor implements QuestionInputBoundary {
 
         // get usr session
         UserSession session = SessionManager.getSession();
-        UserResponseModel response = session.getUserResponseModel();
+        ViewResponseModel response = session.getUserResponseModel();
         int askedByClient = response.getUserId();
 
         // create question entity
         Question question = createQuestionEntity(questionRequestModel, askedByClient);
 
         // construct response model
+        response.getQuestionMap().put(question.getQuestionId(), new QuestionDisplay(question.getTitle(), question.getType(), question.getLegalDeadline(), question.isClose()));
         Map<Integer, PostDisplay> postMap = new HashMap<>();
         return outputBoundary.prepareSuccess(BuilderService.getInstance().constructTheQuestionResponse(question, response, postMap));
     }

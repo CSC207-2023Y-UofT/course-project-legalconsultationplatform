@@ -6,6 +6,8 @@ import usecases.outputboundary.TheQuestionOutputBoundary;
 import usecases.responses.TheQuestionResponseModel;
 import infrastructure.screens.utils.UIManager;
 import entities.ApplicationException;
+import usecases.session.SessionManager;
+
 import javax.swing.*;
 import java.awt.*;
 
@@ -49,7 +51,9 @@ public class TheQuestionResponseFormatter implements TheQuestionOutputBoundary {
         JPanel screens = UIManager.getScreens();
         CardLayout cardLayout = UIManager.getCardLayout();
         JPanel questionUI = UIFactory.getUI(UIFactory.UIType.QUESTION_UI, UIManager, response);
+        JPanel questionListUI = UIFactory.getUI(UIFactory.UIType.QUESTION_LIST_UI, UIManager, SessionManager.getSession().getUserResponseModel());
         screens.add(questionUI, "Question");
+        screens.add(questionListUI, "Question List");
         cardLayout.show(screens, "Question");
         return response;
     }
