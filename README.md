@@ -5,10 +5,11 @@
 
 The COVID-19 pandemic has brought numerous challenges to the forefront, one of which is an increased need for free legal consultation services across the United States. The uncertainty and economic instability resulting from the pandemic have led to a surge in legal inquiries, which existing resources have been unable to meet effectively. This discrepancy signals a systemic issue that needs immediate attention.
 
+<img width="1016" alt="Screen Shot 2023-08-16 at 2 08 35 PM" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/06bc6c00-9e63-4924-bfda-625d4bab16fe">
+
 Despite the American Bar Association's (ABA) best efforts, their data reveals a worrying trend. Across the U.S., over 30% of legal questions posed on their platform remain unanswered by attorneys. In certain states like Louisiana, the neglect is even more pronounced with over 70% of inquiries going unanswered. Additionally, among the questions that do receive attention, approximately 35% are inadequately addressed.
 
-<img width="1048" alt="Issue" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/6f8046fd-5268-4a9b-85b0-466e8fe9885e">
-
+<img width="1017" alt="Screen Shot 2023-08-16 at 2 08 51 PM" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/e29c2659-0e4b-45b7-a63c-95803d1d8780">
 
 Addressing this gap, we introduce the **Legal Consultation Platform+** , a solution tailored to serve both individuals seeking legal advice and registered, licensed attorneys willing to provide it. Our platform is designed to create an environment where individuals can post their legal inquiries free of charge, and attorneys can browse and respond to these questions at their convenience.
 
@@ -24,7 +25,6 @@ Our mission with **Legal Consultation Platform+** is to democratize access to le
 
 ---
 ## Client User Guide
-<img width="716" alt="Client" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/fcc44779-800d-415f-af11-5b95e54fb5df">
 
 ### Registration and Account Set-Up
 
@@ -50,10 +50,11 @@ Once a client is satisfied with the answer to a question, they can opt to close 
 
 Finally, clients can provide binary ratings on their overall experience.
 
+<img width="758" alt="Screen Shot 2023-08-16 at 2 09 14 PM" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/4591b560-0b1a-4f30-ae1e-a2b02afc167b">
+
 ---
 
 ## Attorney User Guide
-<img width="728" alt="Attorney" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/fc02839e-21af-4299-a5f0-e4e9323e15ea">
 
 ### Registration and Verification
 
@@ -71,15 +72,18 @@ On the "Browse Questions" page, attorneys can view all questions that have not y
 
 Attorneys also receive a weekly email containing a feed of recommended questions, based on our intelligent matching algorithm. They can view their question feed by clicking the "Question Recommendations" button on their homepage.
 
+<img width="749" alt="Screen Shot 2023-08-16 at 2 09 24 PM" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/15d3b4f9-bcd5-49f0-8505-b104efd22647">
+
+
 ---
 
 ## Architecture Overview
 
 ### User Request Flow
 
-<img width="1032" alt="Clean Architecture" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/6c805993-4c06-434a-adbe-181e5fd09adc">
 
-<img width="867" alt="Packaging Strategy" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/1007bc31-4b3b-479b-b639-5f390fd71e72">
+
+
 
 Our application's design and packaging strategy rigorously adheres to the principles of Clean Architecture, ensuring a clear separation of concerns and a maintainable structure. Here's a breakdown of how user requests navigate through our system:
 
@@ -88,6 +92,11 @@ Our application's design and packaging strategy rigorously adheres to the princi
 3. **Use Case Processing**: The bundled input is directly passed to the appropriate use case or interactor by the Controller. Here, operating within the confines of our business rules, it processes the input. All interactions, whether storing new data or fetching existing ones, are channeled through a 'gateway' interface, ensuring modularity and a clear distinction between business logic and data access.
 4. **Response Structuring**: Post-processing, the use case returns a response, tailored in a format that the Presenter can easily interpret and utilize.
 5. **UI Update**: With the processed response in hand, the Presenter manages the presentation logic, ensuring that the UI is updated seamlessly to either showcase results or reflect necessary changes.
+
+   
+<img width="1032" alt="Clean Architecture" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/6c805993-4c06-434a-adbe-181e5fd09adc">
+
+<img width="867" alt="Packaging Strategy" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/1007bc31-4b3b-479b-b639-5f390fd71e72">
 
 
 ### Design Patterns
@@ -112,6 +121,7 @@ Our software adopts a hybrid Model-View-Controller (MVC) and Model-View-Presente
 ---
 ## Database Specification
 [*In Deevelopment*]
+
 <img width="1032" alt="DataBase" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/6bc7d8e2-c175-44e5-a3fd-342b16c932e7">
 
 ---
