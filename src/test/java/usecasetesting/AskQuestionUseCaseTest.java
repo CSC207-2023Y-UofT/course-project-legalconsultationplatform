@@ -18,6 +18,8 @@ import infrastructure.database.*;
 import entities.factories.QuestionFactory;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
+import java.util.HashMap;
+
 import static org.junit.jupiter.api.Assertions.*;
 
 
@@ -73,7 +75,7 @@ public class AskQuestionUseCaseTest {
         attorney.setUserId(SECOND_ATTORNEY_ID);
         attorneyGateway.save(secondAttorney);
 
-        ViewResponseModel userResponseModel = new ViewResponseModel(CLIENT_ID, CLIENT_USERNAME, CLIENT_TYPE, null);
+        ViewResponseModel userResponseModel = new ViewResponseModel(CLIENT_ID, CLIENT_USERNAME, CLIENT_TYPE, new HashMap<>());
         UserSession session = new UserSession(userResponseModel);
         SessionManager.setSession(session);
     }
