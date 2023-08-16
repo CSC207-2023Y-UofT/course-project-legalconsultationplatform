@@ -1,25 +1,34 @@
 package controllertesting;
 
-import adapter.controller.UserLoginControl;
-import businessrule.inputboundary.UserLoginInputBoundary;
-import businessrule.requestmodel.UserLoginRequestModel;
+import adapters.controllers.UserLoginControl;
+import usecases.inputboundary.UserLoginInputBoundary;
+import usecases.requests.UserLoginRequestModel;
 
-import businessrule.responsemodel.UserResponseModel;
+import usecases.responses.UserResponseModel;
 import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
+/**
+ * This class contains unit tests for the UserLoginControl class.
+ */
 public class UserLoginControlTest {
     private static final int USER_ID = 11234567;
     private static final String PASSWORD = "test password";
     private static UserResponseModel expectedResponse;
 
+    /**
+     * Sets up the necessary resources for testing UserLoginControl.
+     */
     public void setUpUserLoginControl() {
         // Arrange
         expectedResponse = new UserResponseModel(USER_ID, "SampleUser", "SampleType");
     }
 
+    /**
+     * Tests the login method of UserLoginControl.
+     */
     @Test
     public void testLogin() {
         setUpUserLoginControl();

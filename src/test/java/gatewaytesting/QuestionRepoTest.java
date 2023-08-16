@@ -1,14 +1,14 @@
 package gatewaytesting;
 
-import businessrule.requestmodel.RegistrationData;
-import driver.database.*;
-import entity.Post;
-import entity.factory.AttorneyFactory;
+import usecases.requests.RegistrationData;
+import infrastructure.database.*;
+import entities.Post;
+import entities.factories.AttorneyFactory;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
-import entity.Question;
-import entity.Attorney;
+import entities.Question;
+import entities.user.Attorney;
 
 import javax.persistence.EntityManager;
 import java.time.LocalDate;
@@ -17,6 +17,9 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class contains unit tests for the QuestionRepo class.
+ */
 public class QuestionRepoTest {
 
     //Question
@@ -33,6 +36,9 @@ public class QuestionRepoTest {
     final static int ATTORNEY_ID = 150;
     final static int ATTORNEY_ID1 = 151;
 
+    /**
+     * Set up the test environment by initializing the QuestionRepo instance.
+     */
     @BeforeAll
     public static void setUp() {
         //Question
@@ -90,6 +96,9 @@ public class QuestionRepoTest {
         aRepo.save(a1);
     }
 
+    /**
+     * Tests the existsById method of the QuestionRepo class.
+     */
     @Test
     public void testExistsById() {
         QuestionRepo repo = new QuestionRepo();
@@ -99,6 +108,9 @@ public class QuestionRepoTest {
         assertFalse(repo.existsById(7), "The question exists!");
     }
 
+    /**
+     * Test for the getAll method of QuestionRepo.
+     */
     @Test
     public void testGetAllQuestion() {
         QuestionRepo repo = new QuestionRepo();
@@ -120,6 +132,9 @@ public class QuestionRepoTest {
         repo.save(q1);
     }
 
+    /**
+     * Test for the getNotTakenQuestion method of QuestionRepo.
+     */
     @Test
     public void testGetNotTakenQuestion() {
         QuestionRepo repo = new QuestionRepo();
@@ -129,6 +144,9 @@ public class QuestionRepoTest {
         assert expectedList.equals(repo.getNotTakenQuestion());
     }
 
+    /**
+     * Test for the getNotClosedQuestion method of QuestionRepo.
+     */
     @Test
     public void testGetNotClosedQuestion() {
         QuestionRepo repo = new QuestionRepo();
@@ -138,6 +156,9 @@ public class QuestionRepoTest {
         assert expectedList.equals(repo.getNotClosedQuestion());
     }
 
+    /**
+     * Test for the getAllPostOfQuestion method of QuestionRepo.
+     */
     @Test
     public void testGetAllPostByQuestion() {
         QuestionRepo repo = new QuestionRepo();
@@ -149,6 +170,9 @@ public class QuestionRepoTest {
         assert expectedList.equals(repo.getAllPostOfQuestion(QUESTION_ID));
     }
 
+    /**
+     * Test for the updateIsTaken method of QuestionRepo.
+     */
     @Test
     public void testUpdateIsTaken() {
         QuestionRepo repo = new QuestionRepo();
@@ -167,6 +191,9 @@ public class QuestionRepoTest {
         repo.updateIsTaken(QUESTION_ID1, false);
     }
 
+    /**
+     * Tests the updateTakenByAttorney method of the QuestionRepo class.
+     */
     @Test
     public void testUpdateTakenByAttorney() {
         QuestionRepo repo = new QuestionRepo();
@@ -179,6 +206,9 @@ public class QuestionRepoTest {
         assertNotEquals(ATTORNEY_ID, repo.get(QUESTION_ID).getTakenByAttorney(), "q is taken by a!");
     }
 
+    /**
+     * Tests the updateIsClose method of the QuestionRepo class.
+     */
     @Test
     public void testUpdateIsClose() {
         QuestionRepo repo = new QuestionRepo();
@@ -193,6 +223,9 @@ public class QuestionRepoTest {
         assertFalse(repo.get(QUESTION_ID).isClose(), "This question was updated!");
     }
 
+    /**
+     * Tests the updateRating method of the QuestionRepo class.
+     */
     @Test
     public void testUpdateRating() {
         QuestionRepo repo = new QuestionRepo();
@@ -207,6 +240,9 @@ public class QuestionRepoTest {
         assertEquals(0, repo.get(QUESTION_ID).getRating(), "This question was updated!");
     }
 
+    /**
+     * Tests the updateTakenAt method of the QuestionRepo class.
+     */
     @Test
     public void testUpdateTakenAt() {
         LocalDate changeDate = LocalDate.now().minusDays(1);
@@ -222,6 +258,9 @@ public class QuestionRepoTest {
         assertEquals(CREATE_AT, repo.get(QUESTION_ID).getTakenAt(), "This question was updated!");
     }
 
+    /**
+     * Tests the updatePosts method of the QuestionRepo class.
+     */
     @Test
     public void testUpdatePosts() {
         QuestionRepo repo = new QuestionRepo();
@@ -233,6 +272,9 @@ public class QuestionRepoTest {
         assert expectedList.equals(repo.get(QUESTION_ID).getPosts());
     }
 
+    /**
+     * Delete all data in AttorneyRepository, ClientRepository and QuestionRepo.
+     */
     @AfterAll
     public static void tearDown() {
         QuestionRepo repo = new QuestionRepo();
@@ -243,6 +285,9 @@ public class QuestionRepoTest {
         aRepo.deleteAll();
     }
 
+    /**
+     * Tests saving a question using the save method of the QuestionRepo class.
+     */
     @Test
     public void testSaveQuestion() {
         int questionId = 6;
@@ -265,6 +310,9 @@ public class QuestionRepoTest {
         assertTrue(repo.existsById(questionId), "Question is not saved into the database!");
     }
 
+    /**
+     * Tests retrieving a question using the get method of the QuestionRepo class.
+     */
     @Test
     public void testGetQuestion() {
         int questionId = 6;
@@ -287,6 +335,9 @@ public class QuestionRepoTest {
         assertEquals(q, repo.get(questionId), "That is not the correct question!");
     }
 
+    /**
+     * Tests deleting a question in the QuestionRepo.
+     */
     @Test
     public void testDeleteQuestion() {
         int questionId = 6;
@@ -318,6 +369,9 @@ public class QuestionRepoTest {
         repo.save(q1);
     }
 
+    /**
+     * Tests deleting all question in QuestionRepo.
+     */
     @Test
     public void testDeleteAllQuestion() {
         int questionId = 6;

@@ -2,13 +2,16 @@ package factorytesting;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import entity.Question;
-import entity.factory.QuestionFactory;
+import entities.Question;
+import entities.factories.QuestionFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
+/**
+ * This class contains unit tests for the QuestionFactory class.
+ */
 class QuestionFactoryTest {
 
     private QuestionFactory questionFactory;
@@ -19,6 +22,9 @@ class QuestionFactoryTest {
     private int askedByClient;
     private LocalDate legalDeadline;
 
+    /**
+     * Set up the QuestionFactory instance and test data before tests.
+     */
     @BeforeEach
     void setUpQuestionFactory() {
         questionFactory = new QuestionFactory();
@@ -30,6 +36,9 @@ class QuestionFactoryTest {
         legalDeadline = LocalDate.now();
     }
 
+    /**
+     * Test the create method of QuestionFactory.
+     */
     @Test
     void testCreate() {
         Question question = questionFactory.create(questionId, type, title, createAt, askedByClient, legalDeadline);

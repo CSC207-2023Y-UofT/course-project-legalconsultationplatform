@@ -1,16 +1,19 @@
 package entitytesting;
 
-import businessrule.requestmodel.RegistrationData;
-import entity.Client;
-import entity.Question;
-import entity.factory.ClientFactory;
+import usecases.requests.ClientRegistrationData;
+import usecases.requests.RegistrationData;
+import entities.user.Client;
+import entities.Question;
+import entities.factories.ClientFactory;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 import java.util.Objects;
 
 import static org.junit.jupiter.api.Assertions.*;
-
+/**
+ * This class contains unit tests for the Client class.
+ */
 class ClientTest {
 
     int expectedUserId = 1000000;
@@ -27,12 +30,22 @@ class ClientTest {
     int expectedNumberOfHousehold = 1;
     float expectedAnnualIncome = 60000.0f;
 
+    /**
+     * Tests the constructor and getter methods of the Client class.
+     */
     @Test
     void testConstructorAndGetter() {
         // constructor
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData data = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
         ClientFactory clientFactory = new ClientFactory();
         Client client = clientFactory.createUser(registrationData);
         client.setUserId(expectedUserId);
@@ -54,6 +67,9 @@ class ClientTest {
         assertEquals("Client", client.getUserType(), "isClient should be true for Client.");
     }
 
+    /**
+     * Tests the setter methods of the Client class.
+     */
     @Test
     void testSetters() {
         // no-arg constructor
@@ -88,11 +104,21 @@ class ClientTest {
         assertEquals(expectedAnnualIncome, client.getAnnualIncome(), "Annual income is incorrect.");
     }
 
+    /**
+     * Tests whether a question can be closed successfully for a client.
+     */
     @Test
     void testClientIsQuestionCloseableSucceed() {
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData data = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
         ClientFactory clientFactory = new ClientFactory();
         Client client = clientFactory.createUser(registrationData);
 
@@ -102,11 +128,21 @@ class ClientTest {
         assertTrue(client.isQuestionCloseable(question));
     }
 
+    /**
+     * Tests whether a closed question is not closeable for a client.
+     */
     @Test
     void testClientIsQuestionCloseableFail() {
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData data = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
         ClientFactory clientFactory = new ClientFactory();
         Client client = clientFactory.createUser(registrationData);
 
@@ -116,11 +152,21 @@ class ClientTest {
         assertFalse(client.isQuestionCloseable(question));
     }
 
+    /**
+     * Tests whether a question is selectable for a client.
+     */
     @Test
     void testClientIsQuestionSelectable() {
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData data = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
         ClientFactory clientFactory = new ClientFactory();
         Client client = clientFactory.createUser(registrationData);
         Question question = new Question();
@@ -129,11 +175,21 @@ class ClientTest {
 
     }
 
+    /**
+     * Tests whether a question can be replied to successfully for a client.
+     */
     @Test
     void testClientIsQuestionReplyableSucceed() {
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData data = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
         ClientFactory clientFactory = new ClientFactory();
         Client client = clientFactory.createUser(registrationData);
 
@@ -144,11 +200,21 @@ class ClientTest {
 
     }
 
+    /**
+     * Tests whether a closed question is not replyable for a client.
+     */
     @Test
     void testClientIsQuestionReplyableFail() {
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData data = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
         ClientFactory clientFactory = new ClientFactory();
         Client client = clientFactory.createUser(registrationData);
         Question question = new Question();
@@ -158,11 +224,21 @@ class ClientTest {
 
     }
 
+    /**
+     * Tests the addition of a question to the client's question list.
+     */
     @Test
     void testAddQuestion() {
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData data = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
         ClientFactory clientFactory = new ClientFactory();
         Client client = clientFactory.createUser(registrationData);
 
@@ -173,11 +249,21 @@ class ClientTest {
         assertTrue(client.getQuestionsList().contains(question), "The question is not added in the list.");
     }
 
+    /**
+     * Tests the hash code generation of the Client class.
+     */
     @Test
     void testHashCodeSucceed() {
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData data = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
         ClientFactory clientFactory = new ClientFactory();
         Client client = clientFactory.createUser(registrationData);
         client.setUserId(expectedUserId);
@@ -185,25 +271,54 @@ class ClientTest {
         assertEquals(client.hashCode(), Objects.hashCode(1000000), "The hashcode is wrong");
     }
 
+    /**
+     * Tests whether the generated hash code differs when expected and actual user IDs do not match.
+     */
     @Test
     void testHashCodeFail() {
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData data = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
         ClientFactory clientFactory = new ClientFactory();
         Client client = clientFactory.createUser(registrationData);
 
         assertNotEquals(client.hashCode(), Objects.hashCode(100000), "The hashcode is wrong");
     }
 
+    /**
+     * Tests inequality between two Client objects with non-matching data.
+     */
     @Test
     void testEqualsFailByNotEqual() {
-        RegistrationData registrationData1 = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
-        RegistrationData registrationData2 = new RegistrationData("joseph", expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData data1 = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData1 = new ClientRegistrationData.Builder(data1)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
+
+        RegistrationData data2 = new RegistrationData("test", expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData2 = new ClientRegistrationData.Builder(data2)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
+
         ClientFactory clientFactory = new ClientFactory();
         Client client1 = clientFactory.createUser(registrationData1);
         client1.setUserId(1);
@@ -213,11 +328,21 @@ class ClientTest {
         assertNotEquals(client1, client2, "The equal method is wrong");
     }
 
+    /**
+     * Test the toString method of the Client class when it succeeds.
+     */
     @Test
     void testToStringSucceed() {
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData data = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
         ClientFactory clientFactory = new ClientFactory();
         Client client = clientFactory.createUser(registrationData);
 
@@ -225,11 +350,21 @@ class ClientTest {
         assertEquals(expectedToString, client.toString(), "The toString method is wrong");
     }
 
+    /**
+     * Test the toString method of the Client class when it fails.
+     */
     @Test
     void testToStringFail() {
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData data = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
         ClientFactory clientFactory = new ClientFactory();
         Client client = clientFactory.createUser(registrationData);
 
@@ -237,11 +372,21 @@ class ClientTest {
         assertNotSame(expectedToString, client.toString(), "The toString method is wrong");
     }
 
+    /**
+     * Tests whether a closed question is rateable for a client.
+     */
     @Test
     void testIsQuestionRateableSucceed() {
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData data = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
         ClientFactory clientFactory = new ClientFactory();
         Client client = clientFactory.createUser(registrationData);
         Question question = new Question();
@@ -249,11 +394,21 @@ class ClientTest {
         assertTrue(client.isQuestionRateable(question), "IsQuestionRateable is wrong.");
     }
 
+    /**
+     * Tests whether a non-closed question is not rateable for a client.
+     */
     @Test
     void testIsQuestionRateableFail() {
-        RegistrationData registrationData = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
-                expectedPostalCode, expectedEthnicity, expectedAge, expectedGender, expectedMaritalStatus,
-                expectedNumberOfHousehold, expectedAnnualIncome);
+        RegistrationData data = new RegistrationData(expectedName, expectedEmail, expectedPassword, expectedPassword2, expectedStateAbb,
+                expectedPostalCode);
+        ClientRegistrationData registrationData = new ClientRegistrationData.Builder(data)
+                .age(expectedAge)
+                .annualIncome(expectedAnnualIncome)
+                .gender(expectedGender)
+                .maritalStatus(expectedMaritalStatus)
+                .numberOfHousehold(expectedNumberOfHousehold)
+                .ethnicity(expectedEthnicity)
+                .build();
         ClientFactory clientFactory = new ClientFactory();
         Client client = clientFactory.createUser(registrationData);
         Question question = new Question();

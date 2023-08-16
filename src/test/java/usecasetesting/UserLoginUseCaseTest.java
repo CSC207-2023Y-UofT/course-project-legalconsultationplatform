@@ -1,18 +1,21 @@
 package usecasetesting;
 
-import businessrule.SessionManager;
-import businessrule.gateway.ClientGateway;
-import businessrule.gateway.UserGatewayFactory;
-import businessrule.inputboundary.UserLoginInputBoundary;
-import businessrule.outputboundary.UserOutputBoundary;
-import businessrule.requestmodel.UserLoginRequestModel;
-import businessrule.responsemodel.UserResponseModel;
-import businessrule.usecase.UserLoginInteractor;
-import driver.database.*;
-import entity.Client;
+import usecases.session.SessionManager;
+import usecases.gateway.ClientGateway;
+import infrastructure.database.UserGatewayFactory;
+import usecases.inputboundary.UserLoginInputBoundary;
+import usecases.outputboundary.UserOutputBoundary;
+import usecases.requests.UserLoginRequestModel;
+import usecases.responses.UserResponseModel;
+import usecases.interactors.UserLoginInteractor;
+import infrastructure.database.*;
+import entities.user.Client;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class contains test cases for the UserLoginUseCase.
+ */
 
 public class UserLoginUseCaseTest {
     final static int CLIENT_ID = 21345678;
@@ -20,6 +23,9 @@ public class UserLoginUseCaseTest {
     private ClientGateway clientGateway;
     private UserLoginInputBoundary userLoginInputBoundary;
 
+    /**
+     * Set up the test environment by initializing the UserLoginUseCase instance.
+     */
     public void setUpUserLoginUseCase(){
         UserGatewayFactory userGatewayFactory = new UserGatewayFactory();
         clientGateway = new ClientRepository();
@@ -45,6 +51,9 @@ public class UserLoginUseCaseTest {
         client.setPassword(PASSWORD);
         clientGateway.save(client);
     }
+    /**
+     * Test a successful user login scenario.
+     */
     @Test
     public void TestLoginPass(){
         setUpUserLoginUseCase();
@@ -52,6 +61,9 @@ public class UserLoginUseCaseTest {
         userLoginInputBoundary.login(inputData);
         ClearAllRepository();
     }
+    /**
+     * Test user login fails because the provided ID does not exist.
+     */
     @Test
     public void TestLoginFailIdDNE(){
         setUpUserLoginUseCase();
@@ -59,6 +71,9 @@ public class UserLoginUseCaseTest {
         userLoginInputBoundary.login(inputData);
         ClearAllRepository();
     }
+    /**
+     * Test the scenario where user login fails because the provided password is incorrect.
+     */
     @Test
     public void TestLoginFailWrongPassword(){
         setUpUserLoginUseCase();
@@ -67,6 +82,9 @@ public class UserLoginUseCaseTest {
         ClearAllRepository();
     }
 
+    /**
+     * Delete all data in clientGateway.
+     */
     public void ClearAllRepository(){
         clientGateway = new ClientRepository();
         clientGateway.deleteAll();

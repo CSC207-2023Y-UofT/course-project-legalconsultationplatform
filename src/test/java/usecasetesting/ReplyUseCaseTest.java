@@ -1,22 +1,27 @@
 package usecasetesting;
 
 
-import businessrule.SessionManager;
-import businessrule.UserSession;
-import businessrule.gateway.*;
-import businessrule.inputboundary.PostInputBoundary;
-import businessrule.outputboundary.TheQuestionOutputBoundary;
-import businessrule.requestmodel.PostRequestModel;
-import businessrule.responsemodel.TheQuestionResponseModel;
-import businessrule.responsemodel.UserResponseModel;
-import businessrule.usecase.ReplyInteractor;
-import driver.database.*;
-import entity.*;
-import entity.factory.PostFactory;
+import entities.user.Attorney;
+import entities.user.Client;
+import entities.user.User;
+import usecases.session.SessionManager;
+import usecases.session.UserSession;
+import usecases.gateway.*;
+import usecases.inputboundary.PostInputBoundary;
+import usecases.outputboundary.TheQuestionOutputBoundary;
+import usecases.requests.PostRequestModel;
+import usecases.responses.TheQuestionResponseModel;
+import usecases.responses.UserResponseModel;
+import usecases.interactors.ReplyInteractor;
+import infrastructure.database.*;
+import entities.*;
+import entities.factories.PostFactory;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
-
+/**
+ * This class contains test cases for the ReplyUseCase.
+ */
 public class ReplyUseCaseTest {
     final static int CLIENT_ID = 21345678;
     final static String CLIENT_USERNAME = "test client";
@@ -32,6 +37,10 @@ public class ReplyUseCaseTest {
     private ClientGateway clientGateway;
     private AttorneyGateway attorneyGateway;
     private PostInputBoundary postInputBoundary;
+
+    /**
+     * Set up the test environment by initializing the ReplyUseCase instance.
+     */
     public void setUpReplyUseCase(){
 
         questionGateway = new QuestionRepo();
@@ -58,10 +67,12 @@ public class ReplyUseCaseTest {
 
         Question question = new Question();
         question.setQuestionId(QUESTION_ID);
+        question.setAskedByClient(CLIENT_ID);
         questionGateway.save(question);
 
         Question closedQuestion = new Question();
         closedQuestion.setQuestionId(CLOSED_QUESTION_ID);
+        closedQuestion.setAskedByClient(CLIENT_ID);
         questionGateway.save(closedQuestion);
 
         Client client = new Client();
@@ -80,6 +91,9 @@ public class ReplyUseCaseTest {
         attorneyGateway.save(secondAttorney);
     }
 
+    /**
+     * Test client's reply to a question.
+     */
     @Test
     public void testClientReply(){
         setUpReplyUseCase();
@@ -95,6 +109,9 @@ public class ReplyUseCaseTest {
         ClearAllRepository();
     }
 
+    /**
+     * Test attorney's first reply to a question.
+     */
     @Test
     public void testAttorneyFirstReply(){
         setUpReplyUseCase();
@@ -116,6 +133,9 @@ public class ReplyUseCaseTest {
         assertTrue(attorneyQuestion.isTaken());
         ClearAllRepository();
     }
+    /**
+     * Test attorney's follow-up reply to a question.
+     */
     @Test
     public void testAttorneyFollowUp(){
         setUpReplyUseCase();
@@ -143,6 +163,10 @@ public class ReplyUseCaseTest {
         ClearAllRepository();
 
     }
+
+    /**
+     * Test failure to reply to a closed question.
+     */
     @Test
     public void testFailToReplyQuestionClosed(){
         setUpReplyUseCase();
@@ -154,6 +178,9 @@ public class ReplyUseCaseTest {
         ClearAllRepository();
     }
 
+    /**
+     * Test failure to reply to a question that was taken by other attorney.
+     */
     @Test
     public void testAttorneyFailToReplyQuestionTakenByOther(){
         setUpReplyUseCase();
@@ -177,6 +204,9 @@ public class ReplyUseCaseTest {
         ClearAllRepository();
     }
 
+    /**
+     * Delete all data in clientGateway, questionGateway, attorneyGateway, postGateway.
+     */
     public void ClearAllRepository(){
         questionGateway = new QuestionRepo();
         clientGateway = new ClientRepository();

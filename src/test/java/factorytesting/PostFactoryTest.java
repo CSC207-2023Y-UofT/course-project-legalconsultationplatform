@@ -2,13 +2,16 @@ package factorytesting;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import entity.Post;
-import entity.factory.PostFactory;
+import entities.Post;
+import entities.factories.PostFactory;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.time.LocalDate;
 
+/**
+ * This class contains unit tests for PostFactory class.
+ */
 class PostFactoryTest {
 
     private PostFactory postFactory;
@@ -18,6 +21,9 @@ class PostFactoryTest {
     private String postText;
     private int belongsTo;
 
+    /**
+     * Set up the PostFactory instance before each test.
+     */
     @BeforeEach
     void setUpPostFactory() {
         postFactory = new PostFactory();
@@ -28,6 +34,9 @@ class PostFactoryTest {
         belongsTo = 3;
     }
 
+    /**
+     * Test the create method of PostFactory.
+     */
     @Test
     void testCreate() {
         Post post = postFactory.create(postId, questionId, createAt, postText, belongsTo);

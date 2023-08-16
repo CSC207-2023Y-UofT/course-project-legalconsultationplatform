@@ -1,29 +1,32 @@
 package usecasetesting;
 
-import businessrule.SessionManager;
-import businessrule.UserSession;
-import businessrule.gateway.AttorneyGateway;
-import businessrule.gateway.ClientGateway;
-import businessrule.gateway.QuestionGateway;
-import businessrule.gateway.UserGatewayFactory;
-import businessrule.inputboundary.ViewInputBoundary;
-import businessrule.outputboundary.ViewOutputBoundary;
-import businessrule.responsemodel.UserResponseModel;
-import businessrule.responsemodel.ViewResponseModel;
-import businessrule.usecase.util.QuestionDisplayFormatter;
-import businessrule.usecase.ViewQuestionInteractor;
-import driver.database.AttorneyRepository;
-import driver.database.ClientRepository;
-import driver.database.QuestionRepo;
-import entity.Attorney;
-import entity.Client;
-import entity.Question;
+import usecases.session.SessionManager;
+import usecases.session.UserSession;
+import usecases.gateway.AttorneyGateway;
+import usecases.gateway.ClientGateway;
+import usecases.gateway.QuestionGateway;
+import infrastructure.database.UserGatewayFactory;
+import usecases.inputboundary.ViewInputBoundary;
+import usecases.outputboundary.ViewOutputBoundary;
+import usecases.responses.UserResponseModel;
+import usecases.responses.ViewResponseModel;
+import usecases.dto.QuestionDisplay;
+import usecases.interactors.ViewQuestionInteractor;
+import infrastructure.database.AttorneyRepository;
+import infrastructure.database.ClientRepository;
+import infrastructure.database.QuestionRepo;
+import entities.user.Attorney;
+import entities.user.Client;
+import entities.Question;
 import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class contains test cases for the ViewHistoryUseCase.
+ */
 public class UserViewHistoryUseCaseTest {
     final static int CLIENT_ID = 21345678;
     final static String CLIENT_USERNAME = "test client";
@@ -37,6 +40,9 @@ public class UserViewHistoryUseCaseTest {
     private AttorneyGateway attorneyGateway;
     private ViewInputBoundary viewInputBoundary;
 
+    /**
+     * Set up the test environment by initializing the ViewQuestionUseCase instance.
+     */
     public void setUpViewQuestionUseCase(){
         UserGatewayFactory userGatewayFactory = new UserGatewayFactory();
         questionGateway = new QuestionRepo();
@@ -53,7 +59,7 @@ public class UserViewHistoryUseCaseTest {
             @Override
             public ViewResponseModel prepareSuccess(ViewResponseModel response) {
                 assertEquals(1, response.getQuestionMap().size(), "The Question Map is not correct.");
-                List<QuestionDisplayFormatter> arrayList;
+                List<QuestionDisplay> arrayList;
                 arrayList = new ArrayList<>(response.getQuestionMap().values());
                 assertEquals("test title", arrayList.get(0).getTitle());
                 return null;
@@ -78,6 +84,9 @@ public class UserViewHistoryUseCaseTest {
         attorneyGateway.save(attorney);
     }
 
+    /**
+     * Test the client's view question use case.
+     */
     @Test
     public void TestClientViewUseCase(){
         setUpViewQuestionUseCase();
@@ -89,6 +98,9 @@ public class UserViewHistoryUseCaseTest {
         ClearAllRepository();
     }
 
+    /**
+     * Test the attorney's view question use case.
+     */
     @Test
     public void TestAttorneyViewUseCase(){
         setUpViewQuestionUseCase();
@@ -100,6 +112,9 @@ public class UserViewHistoryUseCaseTest {
         ClearAllRepository();
     }
 
+    /**
+     * Delete all data in clientGateway, questionGateway, attorneyGateway.
+     */
     public void ClearAllRepository(){
         questionGateway = new QuestionRepo();
         clientGateway = new ClientRepository();

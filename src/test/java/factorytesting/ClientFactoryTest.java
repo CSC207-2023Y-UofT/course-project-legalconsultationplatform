@@ -1,13 +1,20 @@
 package factorytesting;
 
-import businessrule.requestmodel.RegistrationData;
-import entity.Client;
-import entity.factory.ClientFactory;
+import usecases.requests.ClientRegistrationData;
+import usecases.requests.RegistrationData;
+import entities.user.Client;
+import entities.factories.ClientFactory;
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
+/**
+ * This class contains unit tests for the ClientFactory class.
+ */
 public class ClientFactoryTest {
 
+    /**
+     * Test the create method of ClientFactory.
+     */
     @Test
     public void testCreate() {
         ClientFactory factory = new ClientFactory();
@@ -26,8 +33,15 @@ public class ClientFactoryTest {
         int numberOfHousehold = 1;
         float annualIncome = 50000.0f;
 
-        RegistrationData inputData = new RegistrationData(userName, email, password, password2, stateAbb,
-                postalCode, ethnicity, age, gender, maritalStatus, numberOfHousehold, annualIncome);
+        RegistrationData registrationData = new RegistrationData(userName, email, password, password2, stateAbb,
+                postalCode);
+        ClientRegistrationData inputData= new ClientRegistrationData.Builder(registrationData).age(age)
+                .annualIncome(annualIncome)
+                .ethnicity(ethnicity)
+                .gender(gender)
+                .maritalStatus(maritalStatus)
+                .numberOfHousehold(numberOfHousehold)
+                .build();
         Client client = factory.createUser(inputData);
         client.setUserId(userId);
 

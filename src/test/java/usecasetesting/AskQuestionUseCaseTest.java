@@ -1,23 +1,29 @@
 package usecasetesting;
 
-import businessrule.SessionManager;
-import businessrule.UserSession;
-import businessrule.gateway.AttorneyGateway;
-import businessrule.gateway.ClientGateway;
-import businessrule.gateway.QuestionGateway;
-import businessrule.inputboundary.QuestionInputBoundary;
-import businessrule.outputboundary.TheQuestionOutputBoundary;
-import businessrule.requestmodel.QuestionRequestModel;
-import businessrule.responsemodel.TheQuestionResponseModel;
-import businessrule.responsemodel.UserResponseModel;
-import businessrule.usecase.AskQuestionInteractor;
-import driver.database.*;
-import entity.*;
-import entity.factory.QuestionFactory;
+import entities.user.Attorney;
+import entities.user.Client;
+import entities.user.User;
+import usecases.session.SessionManager;
+import usecases.session.UserSession;
+import usecases.gateway.AttorneyGateway;
+import usecases.gateway.ClientGateway;
+import usecases.gateway.QuestionGateway;
+import usecases.inputboundary.QuestionInputBoundary;
+import usecases.outputboundary.TheQuestionOutputBoundary;
+import usecases.requests.QuestionRequestModel;
+import usecases.responses.TheQuestionResponseModel;
+import usecases.responses.UserResponseModel;
+import usecases.interactors.AskQuestionInteractor;
+import infrastructure.database.*;
+import entities.factories.QuestionFactory;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.*;
 
+
+/**
+ * This class contains unit tests for the AskQuestionUseCase class.
+ */
 public class AskQuestionUseCaseTest {
     final static int CLIENT_ID = 21345678;
     final static String CLIENT_USERNAME = "test client";
@@ -29,6 +35,9 @@ public class AskQuestionUseCaseTest {
     private AttorneyGateway attorneyGateway;
     private QuestionInputBoundary questionInputBoundary;
 
+    /**
+     * Set up the test environment by initializing the AskQuestionUseCase instance.
+     */
     public void setUpAskQuestionUseCase(){
         questionGateway = new QuestionRepo();
         QuestionFactory questionFactory = new QuestionFactory();
@@ -69,6 +78,9 @@ public class AskQuestionUseCaseTest {
         SessionManager.setSession(session);
     }
 
+    /**
+     * Test the AskQuestionUseCase when the question is created successfully.
+     */
     @Test
     public void TestAskQuestionPassed(){
         setUpAskQuestionUseCase();
@@ -79,9 +91,12 @@ public class AskQuestionUseCaseTest {
 
         User user = clientGateway.get(CLIENT_ID);
         assertEquals(1, user.getQuestionsList().size(), "The ask question use case failed.");
-        ClearAllRepository();
+        clearAllRepository();
     }
 
+    /**
+     * Test the AskQuestionUseCase when the question creation fails due to an empty category.
+     */
     @Test
     public void TestAskQuestionFailByEmptyCategory(){
         setUpAskQuestionUseCase();
@@ -92,10 +107,13 @@ public class AskQuestionUseCaseTest {
 
         User user = clientGateway.get(CLIENT_ID);
         assertEquals(0, user.getQuestionsList().size(), "The ask question use case failed.");
-        ClearAllRepository();
+        clearAllRepository();
     }
 
-    public void ClearAllRepository(){
+    /**
+     * Delete all data in questionGateway, clientGateway and attorneyGateway.
+     */
+    public void clearAllRepository(){
         questionGateway = new QuestionRepo();
         clientGateway = new ClientRepository();
         attorneyGateway = new AttorneyRepository();

@@ -1,19 +1,18 @@
-import adapter.controller.*;
-import adapter.presenter.*;
-import businessrule.UIFactory;
-import businessrule.gateway.*;
-import businessrule.inputboundary.*;
-import businessrule.outputboundary.*;
-import businessrule.responsemodel.BaseResponseModel;
-import businessrule.usecase.*;
-import driver.database.*;
-import driver.screen.UIDesign;
-import driver.screen.UIManager;
-import driver.screen.WelcomeUI;
-import entity.Attorney;
-import entity.factory.ClientFactory;
-import entity.factory.PostFactory;
-import entity.factory.QuestionFactory;
+import adapters.controllers.*;
+import adapters.presenters.*;
+import entities.factories.AttorneyFactory;
+import infrastructure.screens.UIFactory;
+import usecases.gateway.*;
+import usecases.inputboundary.*;
+import usecases.outputboundary.*;
+import usecases.responses.BaseResponseModel;
+import usecases.interactors.*;
+import infrastructure.database.*;
+import infrastructure.screens.utils.UIDesign;
+import infrastructure.screens.utils.UIManager;
+import entities.factories.ClientFactory;
+import entities.factories.PostFactory;
+import entities.factories.QuestionFactory;
 
 import javax.swing.*;
 import java.awt.*;
@@ -25,6 +24,7 @@ public class Main {
     ClientGateway clientGateway = new ClientRepository();
     AttorneyGateway attorneyGateway = new AttorneyRepository();
     ClientFactory clientFactory = new ClientFactory();
+    AttorneyFactory attorneyFactory = new AttorneyFactory();
 
     QuestionFactory questionFactory = new QuestionFactory();
     QuestionGateway questionGateway = new QuestionRepo();
@@ -33,14 +33,14 @@ public class Main {
     System.out.println("System - finished set up repo");
 
 
-        AttorneyRepository attorneyRepo = new AttorneyRepository();
-        attorneyRepo.delete(12345678);
-        Attorney attorney = new Attorney();
-        attorney.setUserName("Kaxi");
-        attorney.setPassword("12345678");
-        attorney.setUserId(12345678);
-        attorney.setEmail("123455@gmail.com");
-        attorneyRepo.save(attorney);
+//        AttorneyRepository attorneyRepo = new AttorneyRepository();
+//        attorneyRepo.delete(12345678);
+//        Attorney attorney = new Attorney();
+//        attorney.setUserName("Kaxi");
+//        attorney.setPassword("12345678");
+//        attorney.setUserId(12345678);
+//        attorney.setEmail("123455@gmail.com");
+//        attorneyRepo.save(attorney);
 
     //set up Jframe
     JFrame application = new JFrame("Legal Consultation Platform");
@@ -64,8 +64,10 @@ public class Main {
     UserLoginInputBoundary userLoginInteractor = new UserLoginInteractor(gatewayFactory, homePageOutputBoundary);
     UserLoginControl loginControl = new UserLoginControl(userLoginInteractor);
 
-    UserRegisterInputBoundary clientRegisterInteractor = new ClientRegisterInteractor(clientGateway, clientFactory, registerOutputBoundary);
-    ClientRegisterControl registerControl = new ClientRegisterControl(clientRegisterInteractor);
+    UserRegisterInputBoundary clientRegisterInteractor = new ClientRegisterInteractor(clientGateway, registerOutputBoundary, clientFactory);
+    UserRegisterInputBoundary attorneyRegisterInteractor = new AttorneyRegisterInteractor(attorneyGateway, registerOutputBoundary, attorneyFactory);
+    RegisterControl registerControl = new RegisterControl(clientRegisterInteractor);
+    RegisterControl attorneyRegisterControl = new RegisterControl(attorneyRegisterInteractor);
 
     QuestionInputBoundary questionInteractor = new AskQuestionInteractor(questionGateway, theQuestionOutputBoundary,
             questionFactory, clientGateway);
@@ -93,7 +95,7 @@ public class Main {
             postFactory, gatewayFactory);
     PostControl postControl = new PostControl(replyInteractor);
 
-    RateInputBoundary rateInteractor = new RateInteractor(questionGateway, homePageOutputBoundary, clientGateway,
+    RateInputBoundary rateInteractor = new RateInteractor(questionGateway, homePageOutputBoundary,
             attorneyGateway);
     RateControl rateControl = new RateControl(rateInteractor);
     System.out.println("System - finished set up use case");
@@ -101,7 +103,7 @@ public class Main {
     //control container
     ControlContainer controlContainer = new ControlContainer(registerControl, closeQuestionControl,
             postControl, questionControl, rateControl, selectQuestionControl, loginControl, viewQuestionControl,
-    browseQuestionControl, recommendationControl);
+    browseQuestionControl, recommendationControl, attorneyRegisterControl);
 
     //feed control container into the response formatter
     UIManager.setControlContainer(controlContainer);
