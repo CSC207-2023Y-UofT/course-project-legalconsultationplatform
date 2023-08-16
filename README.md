@@ -24,6 +24,7 @@ Our mission with **Legal Consultation Platform+** is to democratize access to le
 
 ---
 ## Client User Guide
+<img width="716" alt="Client" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/fcc44779-800d-415f-af11-5b95e54fb5df">
 
 ### Registration and Account Set-Up
 
@@ -52,6 +53,7 @@ Finally, clients can provide binary ratings on their overall experience.
 ---
 
 ## Attorney User Guide
+<img width="1032" alt="DataBase" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/70711ce8-35ad-472a-adf1-4ea085de6211">
 
 ### Registration and Verification
 
@@ -110,6 +112,7 @@ Our software adopts a hybrid Model-View-Controller (MVC) and Model-View-Presente
 ---
 ## Database Specification
 [*In Deevelopment*]
+<img width="1032" alt="DataBase" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/6bc7d8e2-c175-44e5-a3fd-342b16c932e7">
 
 ---
 ## Matching System Specification
@@ -118,6 +121,7 @@ Our system is designed to enhance attorney-client interactions by intelligently 
 Attorneys are matched with up to five unanswered questions weekly, ensuring consistent engagement and timely responses.
 
 ### System Design
+<img width="690" alt="Matching Graph" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/d9253394-1e84-4bc5-9a9d-1793e0d74a7a">
 
 The attorney-question relationship is visualized as a bipartite graph. Each edge symbolizes potential interactions between attorneys and clients, with distinct weights denoting the relevance of the match.
 To find the optimal pairings, we employ the Hungarian algorithm, maximizing the cumulative edge weights.
