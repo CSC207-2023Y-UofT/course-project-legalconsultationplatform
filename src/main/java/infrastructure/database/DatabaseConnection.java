@@ -9,7 +9,9 @@ import javax.persistence.Persistence;
  */
 public class DatabaseConnection {
 
-    private static final String URL = "objectdb:myapp.odb;admin";
+//    uncomment the line below to switch to the local connection
+//    private static final String URL = "objectdb:myapp.odb;admin";
+    private static final String URL = "objectdb://175.24.206.37:39136/myapp.odb;admin";
     private static EntityManagerFactory entityManagerFactory;
 
     /**
