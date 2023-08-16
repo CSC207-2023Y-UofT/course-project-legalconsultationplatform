@@ -1,5 +1,8 @@
 package usecases.utils;
 
+import infrastructure.database.AttorneyRepository;
+import infrastructure.database.ClientRepository;
+import infrastructure.database.QuestionRepo;
 import usecases.dto.Matching;
 import usecases.dto.MatchingResult;
 import usecases.gateway.AttorneyGateway;
@@ -63,11 +66,13 @@ public class MatchingHandler {
     public void updateMatching(MatchingResult matchingResult) {
         // clear all matching
         attorneyGateway.clearAllRecommendations();
-
-        // update
-        for (Matching matching: matchingResult.getMatchingResult()){
-            Question question = questionGateway.get(matching.getQuestionId());
-            attorneyGateway.addRecommendation(matching.getAttorneyId(), question);
+        List<Matching> matchingResultList = matchingResult.getMatchingResult();
+        if (! matchingResultList.isEmpty()) {
+            // update
+            for (Matching matching: matchingResult.getMatchingResult()){
+                Question question = questionGateway.get(matching.getQuestionId());
+                attorneyGateway.addRecommendation(matching.getAttorneyId(), question);
+            }
         }
     }
 
@@ -81,11 +86,13 @@ public class MatchingHandler {
         List<Question> questionList = questionGateway.getNotTakenQuestion();
         List<Attorney> attorneyList = attorneyGateway.getAll();
         Map<Integer[], Double> weights = constructWeight(questionList, attorneyList);
-
-        List<Integer[]> matchingResult = pythonMatching(getQuestionIdList(questionList), getAttorneyIdList(attorneyList), weights);
         List<Matching> matchingList = new ArrayList<>();
-        for (Integer[] match: matchingResult) {
-            matchingList.add(new Matching(match[0], match[1]));
+
+        if (! questionList.isEmpty() && ! attorneyList.isEmpty()){
+            List<Integer[]> matchingResult = pythonMatching(getQuestionIdList(questionList), getAttorneyIdList(attorneyList), weights);
+            for (Integer[] match: matchingResult) {
+                matchingList.add(new Matching(match[0], match[1]));
+            }
         }
         return new MatchingResult(matchingList);
     }
