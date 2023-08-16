@@ -7,6 +7,9 @@ The COVID-19 pandemic has brought numerous challenges to the forefront, one of w
 
 Despite the American Bar Association's (ABA) best efforts, their data reveals a worrying trend. Across the U.S., over 30% of legal questions posed on their platform remain unanswered by attorneys. In certain states like Louisiana, the neglect is even more pronounced with over 70% of inquiries going unanswered. Additionally, among the questions that do receive attention, approximately 35% are inadequately addressed.
 
+<img width="1048" alt="Issue" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/6f8046fd-5268-4a9b-85b0-466e8fe9885e">
+
+
 Addressing this gap, we introduce the **Legal Consultation Platform+** , a solution tailored to serve both individuals seeking legal advice and registered, licensed attorneys willing to provide it. Our platform is designed to create an environment where individuals can post their legal inquiries free of charge, and attorneys can browse and respond to these questions at their convenience.
 
 One of the standout features of **Legal Consultation Platform+** is its intelligent attorney-question matching system. This system recommends up to five questions from the feed to each attorney, based on their expertise and interests. This not only streamlines the process for attorneys, saving them valuable time, but also enhances the quality of responses. To ensure attorneys do not miss out on relevant inquiries, the platform also sends them email notifications.
@@ -71,10 +74,10 @@ Attorneys also receive a weekly email containing a feed of recommended questions
 ## Architecture Overview
 
 ### User Request Flow
-<img width="867" alt="package" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/1007bc31-4b3b-479b-b639-5f390fd71e72">
 
-![Packaging Strategy](https://user-images.githubusercontent.com/123603507/260920851-b043145a-2765-428d-8f04-49d1799400ca)
+<img width="1032" alt="Clean Architecture" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/6c805993-4c06-434a-adbe-181e5fd09adc">
 
+<img width="867" alt="Packaging Strategy" src="https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/1007bc31-4b3b-479b-b639-5f390fd71e72">
 
 Our application's design and packaging strategy rigorously adheres to the principles of Clean Architecture, ensuring a clear separation of concerns and a maintainable structure. Here's a breakdown of how user requests navigate through our system:
 
