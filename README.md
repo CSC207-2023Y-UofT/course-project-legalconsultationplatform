@@ -72,6 +72,8 @@ Attorneys also receive a weekly email containing a feed of recommended questions
 
 ### User Request Flow
 
+![Packaging Strategy]("https://github.com/CSC207-2023Y-UofT/course-project-legalconsultationplatform/assets/123603507/b043145a-2765-428d-8f04-49d1799400ca")
+
 Our application's design and packaging strategy rigorously adheres to the principles of Clean Architecture, ensuring a clear separation of concerns and a maintainable structure. Here's a breakdown of how user requests navigate through our system:
 
 1. **Request Initiation**: Users engage with the system via the UI.
