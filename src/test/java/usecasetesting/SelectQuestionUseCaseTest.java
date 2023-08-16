@@ -3,6 +3,7 @@ package usecasetesting;
 
 import entities.user.Attorney;
 import entities.user.Client;
+import usecases.responses.ViewResponseModel;
 import usecases.session.SessionManager;
 import usecases.session.UserSession;
 import usecases.gateway.*;
@@ -10,7 +11,6 @@ import usecases.inputboundary.SelectInputBoundary;
 import usecases.outputboundary.TheQuestionOutputBoundary;
 import usecases.requests.SelectRequestModel;
 import usecases.responses.TheQuestionResponseModel;
-import usecases.responses.UserResponseModel;
 import usecases.dto.PostDisplay;
 import usecases.interactors.SelectQuestionInteractor;
 import infrastructure.database.*;
@@ -123,11 +123,10 @@ public class SelectQuestionUseCaseTest {
     public void TestClientSelectQuestionUseCase(){
         setUpSelectUseCase();
 
-        UserResponseModel userResponseModel = new UserResponseModel(CLIENT_ID, CLIENT_USERNAME, CLIENT_TYPE);
+        ViewResponseModel userResponseModel = new ViewResponseModel(CLIENT_ID, CLIENT_USERNAME, CLIENT_TYPE, null);
         UserSession session = new UserSession(userResponseModel);
         SessionManager.setSession(session);
         SelectRequestModel inputData = new SelectRequestModel(QUESTION_ID);
-
         selectInputBoundary.selectQuestion(inputData);
         ClearAllRepository();
     }
@@ -138,7 +137,7 @@ public class SelectQuestionUseCaseTest {
     @Test
     public void TestAttorneySelectNonTakenQuestionUseCase(){
         setUpSelectUseCase();
-        UserResponseModel userResponseModel = new UserResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, ATTORNEY_TYPE);
+        ViewResponseModel userResponseModel = new ViewResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, ATTORNEY_TYPE, null);
         UserSession session = new UserSession(userResponseModel);
         SessionManager.setSession(session);
         SelectRequestModel inputData = new SelectRequestModel(QUESTION_ID);
@@ -153,11 +152,10 @@ public class SelectQuestionUseCaseTest {
     @Test
     public void TestAttorneySelectQuestionTakenByHimselfUseCase(){
         setUpSelectUseCase();
-        UserResponseModel userResponseModel = new UserResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, ATTORNEY_TYPE);
+        ViewResponseModel userResponseModel = new ViewResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, ATTORNEY_TYPE, null);
         UserSession session = new UserSession(userResponseModel);
         SessionManager.setSession(session);
         SelectRequestModel inputData = new SelectRequestModel(TAKEN_QUESTION_ID);
-
         selectInputBoundary.selectQuestion(inputData);
         ClearAllRepository();
     }
@@ -168,11 +166,10 @@ public class SelectQuestionUseCaseTest {
     @Test
     public void TestAttorneySelectQuestionFailByClosedQuestion(){
         setUpSelectUseCase();
-        UserResponseModel userResponseModel = new UserResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, ATTORNEY_TYPE);
+        ViewResponseModel userResponseModel = new ViewResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, ATTORNEY_TYPE, null);
         UserSession session = new UserSession(userResponseModel);
         SessionManager.setSession(session);
         SelectRequestModel inputData = new SelectRequestModel(CLOSED_QUESTION_ID);
-
         selectInputBoundary.selectQuestion(inputData);
         ClearAllRepository();
     }
@@ -183,7 +180,7 @@ public class SelectQuestionUseCaseTest {
     @Test
     public void TestAttorneySelectQuestionFailByTakenByOther(){
         setUpSelectUseCase();
-        UserResponseModel userResponseModel = new UserResponseModel(SECOND_ATTORNEY_ID, ATTORNEY_USERNAME, ATTORNEY_TYPE);
+        ViewResponseModel userResponseModel = new ViewResponseModel(SECOND_ATTORNEY_ID, ATTORNEY_USERNAME, ATTORNEY_TYPE, null);
         UserSession session = new UserSession(userResponseModel);
         SessionManager.setSession(session);
         SelectRequestModel inputData = new SelectRequestModel(TAKEN_QUESTION_ID);

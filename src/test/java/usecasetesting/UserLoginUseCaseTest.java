@@ -1,5 +1,7 @@
 package usecasetesting;
 
+import usecases.outputboundary.ViewOutputBoundary;
+import usecases.responses.ViewResponseModel;
 import usecases.session.SessionManager;
 import usecases.gateway.ClientGateway;
 import infrastructure.database.UserGatewayFactory;
@@ -30,21 +32,21 @@ public class UserLoginUseCaseTest {
         UserGatewayFactory userGatewayFactory = new UserGatewayFactory();
         clientGateway = new ClientRepository();
 
-        UserOutputBoundary userOutputBoundary = new UserOutputBoundary() {
+        ViewOutputBoundary viewOutputBoundary = new ViewOutputBoundary() {
 
             @Override
-            public UserResponseModel prepareFail(String msg) {
+            public ViewResponseModel prepareFail(String msg) {
                 System.out.println(msg);
                 return null;
             }
 
             @Override
-            public UserResponseModel prepareSuccess(UserResponseModel userResponseModel) {
+            public ViewResponseModel prepareSuccess(ViewResponseModel viewResponseModel) {
                 assertNotEquals(null, SessionManager.getSession());
                 return null;
             }
         };
-        userLoginInputBoundary = new UserLoginInteractor(userGatewayFactory, userOutputBoundary);
+        userLoginInputBoundary = new UserLoginInteractor(userGatewayFactory, viewOutputBoundary);
 
         Client client = new Client();
         client.setUserId(CLIENT_ID);

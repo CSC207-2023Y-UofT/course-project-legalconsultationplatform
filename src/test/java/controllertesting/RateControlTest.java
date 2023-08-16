@@ -1,6 +1,7 @@
 package controllertesting;
 
 import adapters.controllers.RateControl;
+import usecases.responses.ViewResponseModel;
 import usecases.session.SessionManager;
 import usecases.session.UserSession;
 import usecases.inputboundary.RateInputBoundary;
@@ -28,7 +29,7 @@ public class RateControlTest {
         expectedResponse = new UserResponseModel(USER_ID, "SampleUser", "SampleType");
 
         // Set up user session if needed
-        UserResponseModel userResponseModel = new UserResponseModel(USER_ID, "SampleUser", "SampleType");
+        ViewResponseModel userResponseModel = new ViewResponseModel(USER_ID, "SampleUser", "SampleType", null);
         UserSession userSession = new UserSession(userResponseModel);
         SessionManager.setSession(userSession);
     }

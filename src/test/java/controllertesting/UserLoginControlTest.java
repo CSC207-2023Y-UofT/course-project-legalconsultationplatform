@@ -4,8 +4,8 @@ import adapters.controllers.UserLoginControl;
 import usecases.inputboundary.UserLoginInputBoundary;
 import usecases.requests.UserLoginRequestModel;
 
-import usecases.responses.UserResponseModel;
 import org.junit.jupiter.api.Test;
+import usecases.responses.ViewResponseModel;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
@@ -16,14 +16,14 @@ import static org.mockito.Mockito.*;
 public class UserLoginControlTest {
     private static final int USER_ID = 11234567;
     private static final String PASSWORD = "test password";
-    private static UserResponseModel expectedResponse;
+    private static ViewResponseModel expectedResponse;
 
     /**
      * Sets up the necessary resources for testing UserLoginControl.
      */
     public void setUpUserLoginControl() {
         // Arrange
-        expectedResponse = new UserResponseModel(USER_ID, "SampleUser", "SampleType");
+        expectedResponse = new ViewResponseModel(USER_ID, "SampleUser", "SampleType", null);
     }
 
     /**
@@ -39,7 +39,7 @@ public class UserLoginControlTest {
         UserLoginControl control = new UserLoginControl(mockInputBoundary);
 
         // Act
-        UserResponseModel actualResponse = control.login(USER_ID, PASSWORD);
+        ViewResponseModel actualResponse = control.login(USER_ID, PASSWORD);
 
         // Assert
         assertEquals(expectedResponse, actualResponse);

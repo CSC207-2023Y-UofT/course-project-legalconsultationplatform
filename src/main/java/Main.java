@@ -58,10 +58,11 @@ public class Main {
     BaseOutputBoundary registerOutputBoundary = new RegisterResponseFormatter(UIManager);
     TheQuestionOutputBoundary theQuestionOutputBoundary = new TheQuestionResponseFormatter(UIManager);
     ViewOutputBoundary viewOutputBoundary = new ViewResponseFormatter(UIManager);
+    ViewOutputBoundary loginOutputBoundary = new LoginResponseFormatter(UIManager);
     System.out.println("System = finished set up output boundary");
 
     //define useCase
-    UserLoginInputBoundary userLoginInteractor = new UserLoginInteractor(gatewayFactory, homePageOutputBoundary);
+    UserLoginInputBoundary userLoginInteractor = new UserLoginInteractor(gatewayFactory, loginOutputBoundary);
     UserLoginControl loginControl = new UserLoginControl(userLoginInteractor);
 
     UserRegisterInputBoundary clientRegisterInteractor = new ClientRegisterInteractor(clientGateway, registerOutputBoundary, clientFactory);

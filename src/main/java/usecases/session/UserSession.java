@@ -1,19 +1,19 @@
 package usecases.session;
 
-import usecases.responses.UserResponseModel;
+import usecases.responses.ViewResponseModel;
 
 /**
  * This class represents a session for a specific user.
  * It stores key user information and carries over it once the user login.
  */
 public class UserSession {
-    private final UserResponseModel userResponseModel;
+    private final ViewResponseModel viewResponseModel;
 
-    public UserSession(UserResponseModel userResponseModel) {
-        this.userResponseModel = userResponseModel;
+    public UserSession(ViewResponseModel viewResponseModel) {
+        this.viewResponseModel = viewResponseModel;
     }
 
-    public UserResponseModel getUserResponseModel() {
-        return userResponseModel;
+    public ViewResponseModel getUserResponseModel() {
+        return viewResponseModel;
     }
 }

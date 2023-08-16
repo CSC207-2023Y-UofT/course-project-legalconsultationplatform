@@ -1,12 +1,12 @@
 package controllertesting;
 
 import adapters.controllers.QuestionControl;
+import usecases.responses.ViewResponseModel;
 import usecases.session.SessionManager;
 import usecases.session.UserSession;
 import usecases.inputboundary.QuestionInputBoundary;
 import usecases.requests.QuestionRequestModel;
 import usecases.responses.TheQuestionResponseModel;
-import usecases.responses.UserResponseModel;
 import org.junit.jupiter.api.Test;
 import java.time.LocalDate;
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -28,7 +28,7 @@ public class QuestionControlTest {
      */
     public void setUpQuestionControl(){
         // Arrange
-        UserResponseModel userResponseModel = new UserResponseModel(USER_ID, USER_NAME, TYPE);
+        ViewResponseModel userResponseModel = new ViewResponseModel(USER_ID, USER_NAME, TYPE, null);
         UserSession userSession = new UserSession(userResponseModel);
         SessionManager.setSession(userSession);
 

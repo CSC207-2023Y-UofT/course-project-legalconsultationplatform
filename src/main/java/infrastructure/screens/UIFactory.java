@@ -75,11 +75,7 @@ public class UIFactory {
                     questionResponseModel.getUserId(), uiManager, questionResponseModel.getQuestionId(),
                     questionResponseModel.getTitle(), questionResponseModel.getType(), questionResponseModel.getDeadline(),
                     questionResponseModel.getPostMap());
-        } else if (postMap.isEmpty()) {
-            return new QuestionNewUI(questionResponseModel.getUserName(), questionResponseModel.getUserId(), uiManager,
-                    questionResponseModel.getQuestionId(), questionResponseModel.getTitle(),
-                    questionResponseModel.getType(), questionResponseModel.getDeadline(), questionResponseModel.getPostMap());
-        } else{
+        } else {
             return new QuestionOpenClientUI(questionResponseModel.getUserName(), questionResponseModel.getUserId(), uiManager,
                     questionResponseModel.getQuestionId(), questionResponseModel.getTitle(),
                     questionResponseModel.getType(), questionResponseModel.getDeadline(), questionResponseModel.getPostMap());

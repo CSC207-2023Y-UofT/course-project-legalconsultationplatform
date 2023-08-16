@@ -3,6 +3,7 @@ package usecasetesting;
 import entities.user.Attorney;
 import entities.user.Client;
 import entities.user.User;
+import usecases.responses.ViewResponseModel;
 import usecases.session.SessionManager;
 import usecases.session.UserSession;
 import usecases.gateway.AttorneyGateway;
@@ -12,7 +13,6 @@ import usecases.inputboundary.QuestionInputBoundary;
 import usecases.outputboundary.TheQuestionOutputBoundary;
 import usecases.requests.QuestionRequestModel;
 import usecases.responses.TheQuestionResponseModel;
-import usecases.responses.UserResponseModel;
 import usecases.interactors.AskQuestionInteractor;
 import infrastructure.database.*;
 import entities.factories.QuestionFactory;
@@ -73,7 +73,7 @@ public class AskQuestionUseCaseTest {
         attorney.setUserId(SECOND_ATTORNEY_ID);
         attorneyGateway.save(secondAttorney);
 
-        UserResponseModel userResponseModel = new UserResponseModel(CLIENT_ID, CLIENT_USERNAME, CLIENT_TYPE);
+        ViewResponseModel userResponseModel = new ViewResponseModel(CLIENT_ID, CLIENT_USERNAME, CLIENT_TYPE, null);
         UserSession session = new UserSession(userResponseModel);
         SessionManager.setSession(session);
     }

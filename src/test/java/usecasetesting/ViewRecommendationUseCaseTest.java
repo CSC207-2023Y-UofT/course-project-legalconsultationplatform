@@ -9,7 +9,6 @@ import usecases.gateway.ClientGateway;
 import usecases.gateway.QuestionGateway;
 import usecases.inputboundary.ViewInputBoundary;
 import usecases.outputboundary.ViewOutputBoundary;
-import usecases.responses.UserResponseModel;
 import usecases.responses.ViewResponseModel;
 import usecases.interactors.AttorneyRecommendInteractor;
 import infrastructure.database.*;
@@ -86,7 +85,7 @@ public class ViewRecommendationUseCaseTest {
         client.addQuestion(question2);
         clientGateway.save(client);
 
-        UserResponseModel userResponseModel = new UserResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, ATTORNEY_TYPE);
+        ViewResponseModel userResponseModel = new ViewResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, ATTORNEY_TYPE, null);
         UserSession session = new UserSession(userResponseModel);
         SessionManager.setSession(session);
     }

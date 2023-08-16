@@ -4,6 +4,7 @@ package usecasetesting;
 import entities.user.Attorney;
 import entities.user.Client;
 import entities.user.User;
+import usecases.responses.ViewResponseModel;
 import usecases.session.SessionManager;
 import usecases.session.UserSession;
 import usecases.gateway.*;
@@ -11,7 +12,6 @@ import usecases.inputboundary.PostInputBoundary;
 import usecases.outputboundary.TheQuestionOutputBoundary;
 import usecases.requests.PostRequestModel;
 import usecases.responses.TheQuestionResponseModel;
-import usecases.responses.UserResponseModel;
 import usecases.interactors.ReplyInteractor;
 import infrastructure.database.*;
 import entities.*;
@@ -97,7 +97,7 @@ public class ReplyUseCaseTest {
     @Test
     public void testClientReply(){
         setUpReplyUseCase();
-        UserResponseModel userResponseModel = new UserResponseModel(CLIENT_ID, CLIENT_USERNAME, CLIENT_TYPE);
+        ViewResponseModel userResponseModel = new ViewResponseModel(CLIENT_ID, CLIENT_USERNAME, CLIENT_TYPE, null);
         UserSession session = new UserSession(userResponseModel);
         SessionManager.setSession(session);
         PostRequestModel inputData1 = new PostRequestModel(QUESTION_ID, "Test text");
@@ -116,7 +116,7 @@ public class ReplyUseCaseTest {
     public void testAttorneyFirstReply(){
         setUpReplyUseCase();
 
-        UserResponseModel userResponseModel = new UserResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, ATTORNEY_TYPE);
+        ViewResponseModel userResponseModel = new ViewResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, ATTORNEY_TYPE, null);
         UserSession session = new UserSession(userResponseModel);
         SessionManager.setSession(session);
 
@@ -139,7 +139,7 @@ public class ReplyUseCaseTest {
     @Test
     public void testAttorneyFollowUp(){
         setUpReplyUseCase();
-        UserResponseModel userResponseModel = new UserResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, ATTORNEY_TYPE);
+        ViewResponseModel userResponseModel = new ViewResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, ATTORNEY_TYPE, null);
         UserSession session = new UserSession(userResponseModel);
         SessionManager.setSession(session);
         PostRequestModel inputData = new PostRequestModel(QUESTION_ID, "Test text");
@@ -170,7 +170,7 @@ public class ReplyUseCaseTest {
     @Test
     public void testFailToReplyQuestionClosed(){
         setUpReplyUseCase();
-        UserResponseModel userResponseModel = new UserResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, ATTORNEY_TYPE);
+        ViewResponseModel userResponseModel = new ViewResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, ATTORNEY_TYPE, null);
         UserSession session = new UserSession(userResponseModel);
         SessionManager.setSession(session);
         PostRequestModel inputData = new PostRequestModel(CLOSED_QUESTION_ID, "Test text");
@@ -184,13 +184,13 @@ public class ReplyUseCaseTest {
     @Test
     public void testAttorneyFailToReplyQuestionTakenByOther(){
         setUpReplyUseCase();
-        UserResponseModel userResponseModel = new UserResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, ATTORNEY_TYPE);
+        ViewResponseModel userResponseModel = new ViewResponseModel(ATTORNEY_ID, ATTORNEY_USERNAME, ATTORNEY_TYPE, null);
         UserSession session = new UserSession(userResponseModel);
         SessionManager.setSession(session);
         PostRequestModel inputData = new PostRequestModel(QUESTION_ID, "Test text");
         postInputBoundary.createPost(inputData);
 
-        UserResponseModel userResponseModel2 = new UserResponseModel(SECOND_ATTORNEY_ID, ATTORNEY_USERNAME, "attorney");
+        ViewResponseModel userResponseModel2 = new ViewResponseModel(SECOND_ATTORNEY_ID, ATTORNEY_USERNAME, "attorney", null);
         UserSession session2 = new UserSession(userResponseModel2);
         SessionManager.setSession(session2);
         PostRequestModel inputData2 = new PostRequestModel(QUESTION_ID, "Test text");
